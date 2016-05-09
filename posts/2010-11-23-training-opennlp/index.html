@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Convex Optimized - Training OpenNLP models in Clojure</title>
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          TeX: {
+              extensions: ["AMSmath.js"]
+          },
+          tex2jax: {
+              inlineMath: [  ["\\(","\\)"], ],
+              displayMath: [  ["\\[","\\]"] ]
+          },
+          displayAlign: 'center', // Change this to 'center' to center equations.
+          "HTML-CSS": {
+              styles: {'.MathJax_Display': {"margin": 4}}
+          }
+      });
+    </script>
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    </head>
+    <body>
+        <h1>Convex Optimized</h1>
+        <div id="navigation">
+            <a href="../../">Home</a>
+	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
+	    <a href="../../archive.html">Archive</a>
+	    <a href="../../about.html">About</a>
+	    <a href="../../contact.html">Contact</a>
+        </div>
+
+        <h3>Training OpenNLP models in Clojure</h3>
+by <em>Rob Zinkov</em> on <strong>2010-11-23</strong>
+<p>Lately, I’ve been extending the Clojure wrapper for OpenNLP. In the process I have found little documentation on the format OpenNLP expects its training data. These are my findings.</p>
+<p>While sometimes the models provided with OpenNLP are sufficient, many times they are insufficient. Either because your text is not in one of the supported languages or because the text is provided in an unconventional way.</p>
+<p>In the following document I will show you how to train your own models.</p>
+<p>For these examples you will need:</p>
+<pre><code>(use 'opennlp.nlp)
+(use 'opennlp.tools.train)</code></pre>
+<h3 id="sentence-detector">Sentence Detector</h3>
+<p>To train a sentence splitter, simply provide a training file that includes one sentence on every line.</p>
+<p>sentdetect.train</p>
+<pre><code>Being at the polls was just like being at church.
+I didn't smell a drop of liquor, and we didn't have a bit of trouble.
+The campaign leading to the election was not so quiet.
+It was marked by controversy, anonymous midnight phone calls and veiled threats of violence.
+During the election campaign, both candidates, Davis and Bush, reportedly received anonymous telephone calls.
+Ordinary Williams said he , too , was subjected to anonymous calls soon after he scheduled the election.
+Many local citizens feared that there would be irregularities at the polls. 
+Williams got himself a permit to carry a gun and promised an orderly election.
+He attended New York University before switching to Georgetown University in Washington.</code></pre>
+<p>A model can then be trained and passed into make-sentence-detector</p>
+<pre><code>(def sent-model (train-sentence-detector "sentdetect.train"))
+(def get-sentences (make-sentence-detector sent-model))
+(get-sentences "Being at the polls was just like being at church. I didn't smell a drop of liquor, and we didn't have a bit of trouble.")</code></pre>
+<h3 id="tokenizer">Tokenizer</h3>
+<p>To train the tokenizer, include one sentence per line. The Tokenizer will split on whitespace and explictly marked <SPLIT> tags. <SPLIT> tags are most useful for separating words from punctuation. As an exmaple:</p>
+<p>tokenizer.train</p>
+<pre><code>Being at the polls was just like being at church<SPLIT>.
+I didn't smell a drop of liquor<SPLIT>, and we didn't have a bit of trouble<SPLIT>.
+The campaign leading to the election was not so quiet<SPLIT>.</code></pre>
+<p>A model can then be trained and passed into make-tokenizer</p>
+<pre><code> (def token-model (train-tokenizer "tokenizer.train"))
+ (def tokenize (make-tokenizer token-model))
+ (tokenize "Being at the polls was just like being at church.")</code></pre>
+<h3 id="part-of-speech-tagger">Part Of Speech Tagger</h3>
+<p>To train a Part Of Speech tagger, provide one sentence per line. On each line every token should be separated by whitespace. The tokens themselves should be in <code>word_tag</code> format. Punctuation is tagged as itself. As an example:</p>
+<p>postagger.train</p>
+<pre><code> Being_VBG at_IN the_DT polls_NNS was_VBD just_RB like_IN being_VBG at_IN church_NN ._.
+ I_PRP did_VBD n't_RB smell_VB a_DT drop_NN of_IN liquor_NN ,_, and_CC we_PRP did_VBD n't_RB have_VB a_DT bit_NN of_IN trouble_NN ._.</code></pre>
+<p>A model can then be trained and passed into make-pos-tagger</p>
+<pre><code> (def pos-model (train-pos-tagger "postagger.train"))
+ (def pos-tag (make-pos-tagger pos-model))
+ (pos-tag (tokenize "Being at the polls was just like being at church."))</code></pre>
+<p>Addition information</p>
+<ul>
+<li><a href="http://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html">Succient summary of Treebank tags</a></li>
+<li><a href="ftp://ftp.cis.upenn.edu/pub/treebank/doc/tagguide.ps.gz">LDC Penn Treebank Tagging Guide</a></li>
+</ul>
+<h3 id="treebank-chunker">Treebank Chunker</h3>
+<p>Chunking uses the training format specified in the <a href="http://www.cnts.ua.ac.be/conll2000/chunking/">CONLL 2000</a> shared task.</p>
+<p>Training the chunker requires placing each word on a separate line. Each line should have three whitespace-delimited columns. The first for the <code>word</code>, the second for the part-of-speech <code>tag</code>, and lastly a column for <code>chunk_tag</code>.</p>
+<p>The chunk tags start with a B or I followed by a dash and the type of the chunk. B delimits where a chunks begins, and I delimits where a chunk continues. If the chunk-tag is O, it means the word is not associated with any chunk.</p>
+<p>A blank line should exist between sentences. As an example:</p>
+<p>chunker.train</p>
+<pre><code> He        PRP  B-NP
+ reckons   VBZ  B-VP
+ the       DT   B-NP
+ current   JJ   I-NP
+ account   NN   I-NP
+ deficit   NN   I-NP
+ will      MD   B-VP
+ narrow    VB   I-VP
+ to        TO   B-PP
+ only      RB   B-NP
+ #         #    I-NP
+ 1.8       CD   I-NP
+ billion   CD   I-NP
+ in        IN   B-PP
+ September NNP  B-NP
+ .         .    O
+
+ Chancellor NNP O
+ of IN B-PP
+ the DT B-NP
+ Exchequer NNP I-NP
+ Nigel NNP B-NP
+ Lawson NNP I-NP
+ 's POS B-NP
+ restated VBN I-NP
+ commitment NN I-NP
+ to TO B-PP
+ a DT B-NP
+ firm NN I-NP
+ monetary JJ I-NP
+ policy NN I-NP
+ has VBZ B-VP
+ helped VBN I-VP
+ to TO I-VP
+ prevent VB I-VP
+ a DT B-NP
+ freefall NN I-NP
+ in IN B-PP
+ sterling NN B-NP
+ over IN B-PP
+ the DT B-NP
+ past JJ I-NP
+ week NN I-NP
+ . . O
+ 
+ But CC O
+ analysts NNS B-NP
+ reckon VBP B-VP
+ underlying VBG B-NP
+ support NN I-NP
+ for IN B-PP
+ sterling NN B-NP
+ has VBZ B-VP
+ been VBN I-VP
+ eroded VBN I-VP
+ by IN B-PP
+ the DT B-NP
+ chancellor NN I-NP
+ 's POS B-NP
+ failure NN I-NP
+ to TO B-VP
+ announce VB I-VP
+ any DT B-NP
+ new JJ I-NP
+ policy NN I-NP
+ measures NNS I-NP
+ in IN B-PP
+ his PRP$ B-NP
+ Mansion NNP I-NP
+ House NNP I-NP
+ speech NN I-NP
+ last JJ B-NP
+ Thursday NNP I-NP
+ . . O
+ </code></pre>
+<p>A model can then be trained and passed into make-treebank-chunker</p>
+<pre><code> (def chunk-model (train-treebank-chunker "chunker.train"))
+ (def chunker (make-treebank-chunker chunk-model))
+ (chunker (pos-tag (tokenize "He reckons the current account deficit will narrow to only #1.8 billion in September.")))</code></pre>
+<h3 id="named-entity-finder">Named Entity finder</h3>
+<p>To train the named entity finder, provide a training file with a single sentence on each line. On these lines the entities should be delimited with sgml tags <START> name <END>. An example follows:</p>
+<p>named_org.train</p>
+<pre><code>  The departure of the <START> Giants <END> and the <START> Dodgers <END> to California left New York with only the <START> Yankees <END>.
+  When he was unable to bring about immediate expansion, he sought to convince another <START> National League <END> club to move here.</code></pre>
+<p>A model can then be trained and passed into make-name-finder</p>
+<pre><code>  (def namefinder-model (train-name-finder "named_org.train"))
+  (def name-find (make-name-finder namefinder-model))
+  (name-find (tokenize "The Giants win the World Series."))</code></pre>
+<h3 id="treebank-parser">Treebank Parser</h3>
+<p>To train the treebank parser, provide a single sentence on each line in the treebank format. To get an idea of the format, either read <a href="http://www.ldc.upenn.edu/Catalog/docs/LDC99T42/prsguid1.pdf">Treebank Annotating Guidelines</a> or pass in some sentences with a previously trained model to get a feel.</p>
+<p>parser.train</p>
+<pre><code>  (TOP (S (NP-SBJ (DT Some) )(VP (VBP say) (NP (NNP November) ))(. .) ))
+  (TOP (S (NP-SBJ (PRP I) )(VP (VBP say) (NP (CD 1992) ))(. .) ('' '') ))
+  (TOP (S (NP (DT This)) (VP (VBZ is) (NP (DT a) (NN sentence))) (. .)))</code></pre>
+<p>A model can then be trained and passed into make-treebank-parser Headrules can be obtained from <a href="http://opennlp.sourceforge.net/models/english/parser/head_rules">OpenNLP</a></p>
+<pre><code>  (def parser-model (train-treebank-parser "parser.train" "headrules"))
+  (def treebank-parser (make-treebank-parser parser-model))
+  (treebank-parser ["This is a sentence ."])</code></pre>
+<h3 id="pos-dictionary">POS Dictionary</h3>
+<p>A POS Dictionary, also referred to as a tagdict, is a data structure providing a means of determining which tags are valid for a particular word.</p>
+<p>The format for a tagdict is one word per line. This word should then be followed by a whitespace-delimited list of tags valid for that word.</p>
+<pre><code> word tag1 tag2 ....</code></pre>
+<p>This dictionary can be created with <code>build-posdictionary</code> and then passed to <code>train-pos-tagger</code></p>
+<pre><code> (def tagdict (build-posdictionary "tagdict"))
+ (def pos-tag (make-pos-tagger (train-pos-tagger "en" "postagger.train" tagdict)))</code></pre>
+<h3 id="notes">Notes</h3>
+<p>If you get an Exception, you might just not have enough data.</p>
+<p>You can get the code <a href="https://github.com/zaxtax/clojure-opennlp">on github</a>. Good luck and may these tools help you create models better adapted towards your domain.</p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://convexoptimized.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
+
+<script type="text/javascript">
+var disqus_shortname = 'convexoptimized';
+(function () {
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'http://disqus.com/forums/convexoptimized/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+
+    </body>
+</html>

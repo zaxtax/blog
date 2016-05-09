@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Convex Optimized - How to Read a Paper</title>
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          TeX: {
+              extensions: ["AMSmath.js"]
+          },
+          tex2jax: {
+              inlineMath: [  ["\\(","\\)"], ],
+              displayMath: [  ["\\[","\\]"] ]
+          },
+          displayAlign: 'center', // Change this to 'center' to center equations.
+          "HTML-CSS": {
+              styles: {'.MathJax_Display': {"margin": 4}}
+          }
+      });
+    </script>
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    </head>
+    <body>
+        <h1>Convex Optimized</h1>
+        <div id="navigation">
+            <a href="../../">Home</a>
+	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
+	    <a href="../../archive.html">Archive</a>
+	    <a href="../../about.html">About</a>
+	    <a href="../../contact.html">Contact</a>
+        </div>
+
+        <h3>How to Read a Paper</h3>
+by <em>Rob Zinkov</em> on <strong>2010-12-02</strong>
+<p>When people first start reading research papers they go through them in the most completely wrong way. They read them from start to finish, and waste precious hours and days trying to understand them. This time is wasteful because usually these papers aren’t very useful. Whether it be during a literature review, recent conference proceedings, or skimming papers on arxiv, I am often confronted with hundreds of papers to possibly read. This is an approach I have found that helps me get through many of them.</p>
+<p>Note this isn’t a guide to actually reading and understanding a paper. Many articles have been written about doing that. I found <a href="http://www.eecs.harvard.edu/~michaelm/postscripts/ReadPaper.pdf">this paper</a> by Michael Mitzenmacher to give great advice for understanding a paper. My advice is mostly about determining if a paper is seriously worth reading.</p>
+<h2 id="skip-the-title">Skip the title</h2>
+<p>This seems rather counterintuitive. The title should in principle be a nice concise summary of the contents of the paper. In practice, the titles are so overloaded with insider jargon that unless we are working in that exact subfield there is no chance we will even comprehend what the title means.</p>
+<p>As an example, here are some titles from NIPS 2007 papers:</p>
+<pre><code>A Spectral Regularization Framework for Multi-Task Structure Learning
+Variational Inference for Diffusion Processes 
+Fitted Q-iteration in continuous action-space MDPs
+Robust Regression with Twinned Gaussian Processes</code></pre>
+<p>What is Structure Learning? What are Diffusion Processes? What is Q-Iteration? Even being ignorant of these terms, we might still be qualified to read these papers. This is not a problem unique to any particular conference. All academic papers suffer from this problem to some degree.</p>
+<p>The titles though are not going to help us figure that out. At best, they serve as a unique identifier to aid in finding the paper later.</p>
+<h2 id="read-the-abstract">Read the abstract</h2>
+<p>The abstract on the other hand will help us decide if a paper is seriously worth checking out. The abstract is wonderful. It tells us what the paper is trying to accomplish. Since conferences usually print the abstract separately in proceedings, the abstract will lack pesky citations usually needed to understand the author. Best of all, the abstract is short.</p>
+<p>When reading the abstract we are trying to determine two things. First, we determine the goal of this paper. Second, do we care. These are separate but related tasks. Where the title fails, the abstract does the heavy lifting. The abstract is where authors pitch their paper. It must concisely explain the problem they are trying to solve, why the problem is interesting, and why they have a good solution.</p>
+<p>When we can’t figure out the goal of a paper from reading its abstract it might mean we don’t have the background to understand this paper, or worse the paper is badly written. A paper not solving a problem we care about isn’t worth reading. Set aside the paper if we think we might care about that problem later.</p>
+<h2 id="examine-the-experimental-results">Examine the experimental results</h2>
+<p>Convinced we care about the paper, we politely skip to the end of the paper to see the results. While the authors may have claimed their findings are amazing, its important to get concrete. Figures allow us to see exactly how superior their solution is to the competition. The experimental section is also the easiest section to read. It’s all pictures with some text to elucidate elements that were hard to visually explain.</p>
+<p>This is important, because the competition is usually simpler and has convienent incumbent status. The incumbent solution is likely already have implemented. The extra complexity needs to be justified in terms of obviously superior performance. We are looking for significant improvements. Why would we choose a complicated way to solve a problem if the simple way is just as good? Look to see where their solution performs well and where it performs poorly.</p>
+<p>The results are also important to give a steady reminder of how existing techniques perform. Even not reading any other part of the paper, we are now informed in roughly how difficult the problem is and how far the current state-of-the-art goes to solving it.</p>
+<h2 id="scan-the-bibliography">Scan the bibliography</h2>
+<p>Personally, I don’t consider this an essential step, but it couldn’t hurt. Bibliographies provide context to a paper. More specifically, they provide the context the authors were in when they wrote the paper. This context is handy in figuring out what angle the author will attack the problem.</p>
+<p>The angle they attack the problem also provides hints whether their approach will be interesting or successful. These hints will lose some value though if we review their results before reading the details of their paper. Reading the bibliography gives a sense of what to expect from the paper.</p>
+<p>The bibliography is also handy for reviewing in which community the authors consider themselves. If we are familiar with this community of researchers our opinion of their work can form a reasonable prior for how good this work will be. Ideally all research would stand on its own merits, but heuristics can be handy.</p>
+<h2 id="lastly-read-the-paper">Lastly, read the paper</h2>
+<p>At this point, we are reasonably sure this paper is worth reading. I don’t have much good advice for this section. There are plenty of guides to reading a paper and understanding it. Instead of completely reproducing what these other guides cover, I will instead give general approaches that should help.</p>
+<p>First, try to understand what authors are actually doing. Spend time carefully reading and re-reading sections to confirm we understand the ideas being communicated. Take time to understand what assumptions they are making and why their solution works.</p>
+<p>Second, try to understand the limitations of their solutions. See what problems they can’t solve. Where does their solution break down? Is the break down fundamental to the way the problem is defined? These questions let us evaluate the paper on the merits of what can be built on top of it.</p>
+<h2 id="bonus-recreate-the-experiment">Bonus: recreate the experiment</h2>
+<p>I list this as bonus, since at this point we finished reading. The point of this guide was to explain how to properly read a paper. However, there is more to life than reading papers. The next best step after reading a paper is to reproduce its results. I find I never really understand something until I have reproduced it. No amount of reading can replace that deep intuition only built while actually doing the work.</p>
+<p>Re-read the paper with an eye for the details we need to re-create their experiments. We may be surprised to find that details are missing. Read the footnotes to see what details they reveal. The details we need might be buried in a cited paper. Insights missed on previous readings seem to show up now. The altered perspective almost makes it a whole new paper.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>I hope this documents helps you read many more papers and save lots of time avoiding bad and useless papers.</p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://convexoptimized.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
+
+<script type="text/javascript">
+var disqus_shortname = 'convexoptimized';
+(function () {
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'http://disqus.com/forums/convexoptimized/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+
+    </body>
+</html>

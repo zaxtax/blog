@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Convex Optimized - NIPS 2013: Interesting looking papers</title>
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          TeX: {
+              extensions: ["AMSmath.js"]
+          },
+          tex2jax: {
+              inlineMath: [  ["\\(","\\)"], ],
+              displayMath: [  ["\\[","\\]"] ]
+          },
+          displayAlign: 'center', // Change this to 'center' to center equations.
+          "HTML-CSS": {
+              styles: {'.MathJax_Display': {"margin": 4}}
+          }
+      });
+    </script>
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    </head>
+    <body>
+        <h1>Convex Optimized</h1>
+        <div id="navigation">
+            <a href="../../">Home</a>
+	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
+	    <a href="../../archive.html">Archive</a>
+	    <a href="../../about.html">About</a>
+	    <a href="../../contact.html">Contact</a>
+        </div>
+
+        <h3>NIPS 2013: Interesting looking papers</h3>
+by <em>Rob Zinkov</em> on <strong>2013-12-06</strong>
+<p>Not sure which papers to read? I think the below are pretty cool.</p>
+<p><a href="http://media.nips.cc/nipsbooks/nipspapers/paper_files/nips26/759.pdf"><strong>Approximate Bayesian Image Interpretation using Generative Probabilistic Graphics Programs</strong></a> <br /> Vikash Mansinghka, Tejas D. Kulkarni, Yura N. Perov, Josh Tenenbaum</p>
+<p><strong>Abstract:</strong> The idea of computer vision as the Bayesian inverse problem to computer graphics has a long history and an appealing elegance, but it has proved difficult to directly implement. Instead, most vision tasks are approached via complex bottom-up processing pipelines. Here we show that it is possible to write short, simple probabilistic graphics programs that define flexible generative models and to automatically invert them to interpret real-world images. Generative probabilistic graphics programs consist of a stochastic scene generator, a renderer based on graphics software, a stochastic likelihood model linking the renderer’s output and the data, and latent variables that adjust the fidelity of the renderer and the tolerance of the likelihood model. Representations and algorithms from computer graphics, originally designed to produce high-quality images, are instead used as the deterministic backbone for highly approximate and stochastic generative models. This formulation combines probabilistic programming, computer graphics, and approximate Bayesian computation, and depends only on general-purpose, automatic inference techniques. We describe two applications: reading sequences of degraded and adversarially obscured alphanumeric characters, and inferring 3D road models from vehicle-mounted camera images. Each of the probabilistic graphics programs we present relies on under 20 lines of probabilistic code, and supports accurate, approximately Bayesian inferences about ambiguous real-world images.</p>
+<p><a href="http://media.nips.cc/nipsbooks/nipspapers/paper_files/nips26/600.pdf"><strong>Memoized Online Variational Inference for Dirichlet Process Mixture Models</strong></a> <br /> Michael Hughes, Erik Sudderth</p>
+<p><strong>Abstract:</strong> Variational inference algorithms provide the most effective framework for large-scale training of Bayesian nonparametric models. Stochastic online approaches are promising, but are sensitive to the chosen learning rate and often converge to poor local optima. We present a new algorithm, memoized online variational inference, which scales to very large (yet finite) datasets while avoiding the complexities of stochastic gradient. Our algorithm maintains finite-dimensional sufficient statistics from batches of the full dataset, requiring some additional memory but still scaling to millions of examples. Exploiting nested families of variational bounds for infinite nonparametric models, we develop principled birth and merge moves allowing non-local optimization. Births adaptively add components to the model to escape local optima, while merges remove redundancy and improve speed. Using Dirichlet process mixture models for image clustering and denoising, we demonstrate major improvements in robustness and accuracy.</p>
+<p><a href="http://media.nips.cc/nipsbooks/nipspapers/paper_files/nips26/648.pdf"><strong>On Sampling from the Gibbs Distribution with Random Maximum A-Posteriori Perturbations</strong></a> <br /> Tamir Hazan, Subhransu Maji, Tommi Jaakkola</p>
+<p><strong>Abstract:</strong> In this paper we describe how MAP inference can be used to sample efficiently from Gibbs distributions. Specifically, we provide means for drawing either approximate or unbiased samples from Gibbs’ distributions by introducing low dimensional perturbations and solving the corresponding MAP assignments. Our approach also leads to new ways to derive lower bounds on partition functions. We demonstrate empirically that our method excels in the typical high signal - high coupling’’ regime. The setting results in ragged energy landscapes that are challenging for alternative approaches to sampling and/or lower bounds. "</p>
+<p><a href="http://media.nips.cc/nipsbooks/nipspapers/paper_files/nips26/1449.pdf"><strong>Bayesian Inference and Learning in Gaussian Process State-Space Models with Particle MCMC</strong></a> <br /> Roger Frigola, Fredrik Lindsten, Thomas B. Schon, Carl Rasmussen</p>
+<p><strong>Abstract:</strong> State-space models are successfully used in many areas of science, engineering and economics to model time series and dynamical systems. We present a fully Bayesian approach to inference and learning in nonlinear nonparametric state-space models. We place a Gaussian process prior over the transition dynamics, resulting in a flexible model able to capture complex dynamical phenomena. However, to enable efficient inference, we marginalize over the dynamics of the model and instead infer directly the joint smoothing distribution through the use of specially tailored Particle Markov Chain Monte Carlo samplers. Once an approximation of the smoothing distribution is computed, the state transition predictive distribution can be formulated analytically. We make use of sparse Gaussian process models to greatly reduce the computational complexity of the approach.</p>
+<p><a href="http://media.nips.cc/nipsbooks/nipspapers/paper_files/nips26/388.pdf"><strong>Structured Learning via Logistic Regression</strong></a> <br /> Justin Domke</p>
+<p><strong>Abstract:</strong> A successful approach to structured learning is to write the learning objective as a joint function of linear parameters and inference messages, and iterate between updates to each. This paper observes that if the inference problem through the addition of entropy terms, for fixed messages, the learning objective reduces to a traditional (non-structured) logistic regression problem with respect to parameters. In these logistic regression problems, each training example has a bias term determined by the current set of messages. Based on this insight, the structured energy function can be extended from linear factors to any function class where exists to minimize a logistic loss.oraclean smoothedis</p>
+<p><a href="http://media.nips.cc/nipsbooks/nipspapers/paper_files/nips26/278.pdf"><strong>A Scalable Approach to Probabilistic Latent Space Inference of Large-Scale Networks</strong></a> <br /> Junming Yin, Qirong Ho, Eric Xing</p>
+<p><strong>Abstract:</strong> We propose a scalable approach for making inference about latent spaces of large networks. With a succinct representation of networks as a bag of triangular motifs, a parsimonious statistical model, and an efficient stochastic variational inference algorithm, we are able to analyze real networks with over a million vertices and hundreds of latent roles on a single machine in a matter of hours, a setting that is out of reach for many existing methods. When compared to the state-of-the-art probabilistic approaches, our method is several orders of magnitude faster, with competitive or improved accuracy for latent space recovery and link prediction.</p>
+<p><a href="http://media.nips.cc/nipsbooks/nipspapers/paper_files/nips26/1391.pdf"><strong>Learning Stochastic Inverses</strong></a> <br /> Andreas Stuhlmuller, Jacob Taylor, Noah Goodman</p>
+<p><strong>Abstract:</strong> We describe a class of algorithms for amortized inference in Bayesian networks. In this setting, we invest computation upfront to support rapid online inference for a wide range of queries. Our approach is based on learning an inverse factorization of a model’s joint distribution: a factorization that turns observations into root nodes. Our algorithms accumulate information to estimate the local conditional distributions that constitute such a factorization. These stochastic inverses can be used to invert each of the computation steps leading to an observation, sampling backwards in order to quickly find a likely explanation. We show that estimated inverses converge asymptotically in number of (prior or posterior) training samples. To make use of inverses before convergence, we describe the Inverse MCMC algorithm, which uses stochastic inverses to make block proposals for a Metropolis-Hastings sampler. We explore the efficiency of this sampler for a variety of parameter regimes and Bayes nets.</p>
+<p><a href="http://media.nips.cc/nipsbooks/nipspapers/paper_files/nips26/1418.pdf"><strong>Stochastic Gradient Riemannian Langevin Dynamics on the Probability Simplex</strong></a> <br /> Yee Whye Teh, Sam Patterson</p>
+<p><strong>Abstract:</strong> In this paper we investigate the use of Langevin Monte Carlo methods on the probability simplex and propose a new method, Stochastic gradient Riemannian Langevin dynamics, which is simple to implement and can be applied online. We apply this method to latent Dirichlet allocation in an online setting, and demonstrate that it achieves substantial performance improvements to the state of the art online variational Bayesian methods.</p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://convexoptimized.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
+
+<script type="text/javascript">
+var disqus_shortname = 'convexoptimized';
+(function () {
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'http://disqus.com/forums/convexoptimized/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+
+    </body>
+</html>

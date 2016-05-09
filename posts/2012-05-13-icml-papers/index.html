@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Convex Optimized - ICML 2012: Interesting looking papers</title>
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          TeX: {
+              extensions: ["AMSmath.js"]
+          },
+          tex2jax: {
+              inlineMath: [  ["\\(","\\)"], ],
+              displayMath: [  ["\\[","\\]"] ]
+          },
+          displayAlign: 'center', // Change this to 'center' to center equations.
+          "HTML-CSS": {
+              styles: {'.MathJax_Display': {"margin": 4}}
+          }
+      });
+    </script>
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    </head>
+    <body>
+        <h1>Convex Optimized</h1>
+        <div id="navigation">
+            <a href="../../">Home</a>
+	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
+	    <a href="../../archive.html">Archive</a>
+	    <a href="../../about.html">About</a>
+	    <a href="../../contact.html">Contact</a>
+        </div>
+
+        <h3>ICML 2012: Interesting looking papers</h3>
+by <em>Rob Zinkov</em> on <strong>2012-05-13</strong>
+<p>It’s that time again, when the <a href="http://icml.cc/2012/papers/">accepted papers</a> for ICML are announced. Here are some of the ones that look cool to me. I somehow always miss the important papers so please leave comments if I missed something.</p>
+<p>Generally my interests are in structured learning, Reinforcement Learning, nonparametric Bayesian methods and fun combinations of all the above. This list reflects that bias.</p>
+<p>I haven’t been able to find an online copy for all of these yet. I will update this post with reviews and links as they become available.</p>
+<h4 id="structured-learning"><a href="#struct">Structured Learning</a></h4>
+<h4 id="reinforcement-learning"><a href="#rl">Reinforcement Learning</a></h4>
+<h4 id="bayesian-learning"><a href="#bayes">Bayesian Learning</a></h4>
+<h4 id="fun-applications"><a href="#app">Fun Applications</a></h4>
+<hr />
+<a name="struct">
+<h3>
+Structured Learning
+</h3>
+<p></a></p>
+<p><a href="http://arxiv.org/pdf/1205.4213.pdf"><strong>Online Structured Prediction via Coactive Learning</strong></a> <br /><em>Pannaga Shivaswamy, Thorsten Joachims</em></p>
+<p><strong>Abstract:</strong> We propose Coactive Learning as a model of interaction between a learning system and a human user, where both have the common goal of providing results of maximum utility to the user. At each step, the system (e.g. search engine) receives a context (e.g. query) and predicts an object (e.g. ranking). The user responds by correcting the system if necessary, providing a slightly improved – but not necessarily optimal – object as feedback. We argue that such feedback can be inferred from observable user behavior, specifically clicks in web search. Evaluating predictions by their cardinal utility to the user, we propose efficient learning algorithms that have <span class="math">\(O(\frac{1}{\sqrt{T}})\)</span> average regret, even though the learning algorithm never observes cardinal utility values. We demonstrate the applicability of our model and learning algorithms on a movie recommendation task, as well as ranking for web search.</p>
+<p><strong>Thoughts:</strong> This paper provides a more realistic setting for how active learning should be applied. What struck me about it is how something similar to reinforcement learning is being used for the search step of a structured prediction task. I like this since for problems like ranking and parsing the argmax step is usually intractable.</p>
+<p><a href="http://icml.cc/2012/papers/507.pdf"><strong>Efficient Structured Prediction with Latent Variables for General Graphical Models</strong></a> <br />Alexander Schwing, Tamir Hazan, Marc Pollefeys, Raquel Urtasun</p>
+<p><strong>Abstract</strong> In this paper we propose a unified framework for structured prediction with hidden variables which includes hidden conditional random fields and latent structural support vector machines as special cases. We describe an approximation for this general structured prediction formulation using duality, which is based on a local entropy approximation. We then derive an efficient message passing algorithm that is guaranteed to converge, and demonstrate its effectiveness in the tasks of image segmentation as well as 3D indoor scene understanding from single images, showing that our approach is superior to latent structural support vector machines and hidden conditional random fields.</p>
+<p><strong>Thoughts:</strong> This paper augments an approximation of the likelihood of the data into a loss minimization framework that can be efficiently solved. I am not sure if VMP generalizes this approach, but I feel eventually variational approximations like this need to be automated.</p>
+<a name="rl">
+<h3>
+Reinforcement Learning
+</h3>
+<p></a></p>
+<p><a href="http://www-clmc.usc.edu/publications/K/kalakrishnan-IROS2011"><strong>Learning Force Control Policies for Compliant Robotic Manipulation</strong></a> <br /><em>Mrinal Kalakrishnan, Ludovic Righetti, Peter Pastor, Stefan Schaal</em></p>
+<p><strong>Abstract:</strong> Developing robots capable of fine manipulation skills is of major importance in order to build truly assistive robots. These robots need to be compliant in their actuation and control in order to operate safely in human environments. Manipulation tasks imply complex contact interactions with the external world, and involve reasoning about the forces and torques to be applied. Planning under contact conditions is usually impractical due to computational complexity, and a lack of precise dynamics models of the environment. We present an approach to acquiring manipulation skills on compliant robots through reinforcement learning. The initial position control policy for manipulation is initialized through kinesthetic demonstration. This policy is augmented with a force/torque profile to be controlled in combination with the position trajectories. The Policy Improvement with Path Integrals <span class="math">\(PI^2\)</span> algorithm is used to learn these force/torque profiles by optimizing a cost function that measures task success. We introduce a policy representation that ensures trajectory smoothness during exploration and learning. Our approach is demonstrated on the Barrett WAM robot arm equipped with a 6-DOF force/torque sensor on two different manipulation tasks: opening a door with a lever door handle, and picking up a pen off the table. We show that the learnt force control policies allow successful, robust execution of the tasks.</p>
+<p><strong>Thoughts:</strong> I find this a cool domain, and it illustrates how learning need not just be sequences of labeled data points. Machine learning can be used to teach motion trajectories in a very natural way.</p>
+<p><a href="http://vladlen.org/papers/cioc.pdf"><strong>Continuous Inverse Optimal Control with Locally Optimal Examples</strong></a> <br /><em>Sergey Levine, Vladlen Koltun</em></p>
+<p><strong>Abstract:</strong> Inverse optimal control, also known as inverse reinforcement learning, is the problem of recovering an unknown reward function in a Markov decision process from expert demonstrations of the optimal policy. Prior methods for inverse optimal control assume that the demonstrations are globally optimal (or near-optimal), and are often restricted to tasks with small, discrete state spaces. We introduce an inverse optimal control algorithm designed for high dimensional, continuous state spaces. Our algorithm does not suffer from the curse of dimensionality, and is suitable even for domains where computing a full policy is impractical. Our method also only assumes that the demonstrations are locally optimal, rather than requiring global optimality. This allows it to learn from examples that are unsuitable for prior methods.</p>
+<p><strong>Thoughts:</strong> Inverse RL strikes me as a way to bootstrap hard RL problems, and in a way brings more supervised learning into the field. This paper uses a local linearlization of the summed reward to make learning tractable. In these continuous domains, its hard to see if there are really any other ways to make the problems solvable.</p>
+<p><a href="http://www.cs.duke.edu/~parr/icml2012-full.pdf"><strong>Greedy Algorithms for Sparse Reinforcement Learning</strong></a> <br /><em>Christopher Painter-Wakefield, Ronald Parr</em></p>
+<p><strong>Abstract:</strong> Feature selection and regularization are becoming increasingly prominent tools in the efforts of the reinforcement learning (RL) community to expand the reach and applicability of RL. One approach to the problem of feature selection is to impose a sparsity-inducing form of regularization on the learning method. Recent work on <span class="math">\(L_1\)</span> regularization has adapted techniques from the supervised learning literature for use with RL. Another approach that has received renewed attention in the supervised learning community is that of using a simple algorithm that greedily adds new features. Such algorithms have many of the good properties of the <span class="math">\(L_1\)</span> regularization methods, while also being extremely efficient and, in some cases, allowing theoretical guarantees on recovery of the true form of a sparse target function from sampled data. This paper considers variants of orthogonal matching pursuit (OMP) applied to reinforcement learning. The resulting algorithms are analyzed and compared experimentally with existing <span class="math">\(L_1\)</span> regularized approaches. We demonstrate that perhaps the most natural scenario in which one might hope to achieve sparse recovery fails; however, one variant, OMP-BRM, provides promising theoretical guarantees under certain assumptions on the feature dictionary. Another variant, OMP-TD, empirically outperforms prior methods both in approximation accuracy and efficiency on several benchmark problems.</p>
+<p><strong>Thoughts:</strong> Frequently in RL problems we slam into these massive dimensionality issues that make learning an optimal policy take a long time. Often the best way to handle this is to have some feature selection to make your state space less gigantic. These sparsity inducing methods are only going to help in making better feature representations.</p>
+<p><a href="http://icml.cc/2012/papers/564.pdf"><strong>Compositional Planning Using Optimal Option Models</strong></a> <br /><em>David Silver, Kamil Ciosek</em></p>
+<p><strong>Abstract:</strong> In this paper we introduce a framework for option model composition. Option models are temporal abstractions that, like macro-operators in classical planning, jump directly from a start state to an end state. Prior work has focused on constructing option models from primitive actions, by intra-option model learning; or on using option models to construct a value function, by inter-option planning. We present a unified view of intra- and inter-option model learning, based on a major generalisation of the Bellman equation. Our fundamental operation is the recursive composition of option models into other option models. This key idea enables compositional planning over many levels of abstraction. We illustrate our framework using a dynamic programming algorithm that simultaneously constructs optimal option models for multiple subgoals, and also searches over those option models to provide rapid progress towards other subgoals.</p>
+<p><strong>Thoughts:</strong> This is just a really cool paper that basically unifies option learning, value iteration, and policy learning into a common framework where reward-transition models are these gignantic homogenous matrices you compose by multiplying them together. Looks really fun, and should be make learning multiple policies with overlapping subgoals very efficient.</p>
+<a name="bayes">
+<h3>
+Bayesian Learning
+</h3>
+<p></a></p>
+<p><a href="http://www.princeton.edu/~sjgershm/GershmanHoffmanBlei12.pdf"><strong>Nonparametric variational inference</strong></a> <br /><em>Samuel Gershman, Matt Hoffman, David Blei</em></p>
+<p><strong>Abstract:</strong> Variational methods are widely used for approximate posterior inference. However, their use is typically limited to families of distributions that enjoy particular conjugacy properties. To circumvent this limitation, we propose a family of variational approximations inspired by nonparametric kernel density estimation. The locations of these kernels and their bandwidth are treated as variational parameters and optimized to improve an approximate lower bound on the marginal likelihood of the data. Using multiple kernels allows the approximation to capture multiple modes of the posterior, unlike most other variational approximations. We demonstrate the efficacy of the nonparametric approximation with a hierarchical logistic regression model and a nonlinear matrix factorization model. We obtain predictive performance as good as or better than more specialized variational methods and sample-based approximations. The method is easy to apply to more general graphical models for which standard variational methods are difficult to derive.</p>
+<p><strong>Thoughts:</strong> I always have difficulty using variational methods for my problems. They seem to require really knowing how to pick good approximations to your true distributions. So naturally learning I can get by just using a Gaussian mixture model makes me very happy. I am curious how well this would work as a base to some general graphical model solver.</p>
+<p><a href="http://icml.cc/2012/papers/784.pdf"><strong>Sparse stochastic inference for latent Dirichlet allocation</strong></a> <br />David Mimno, Matt Hoffman, David Blei</p>
+<p><strong>Abstract:</strong> We present a hybrid algorithm for Bayesian topic models that combines the efficiency of sparse Gibbs sampling with the scalability of online stochastic inference. The resulting method scales to a corpus of 1.2 million books comprising 33 billion words with thousands of topics on one CPU. This approach reduces the bias of variational inference and generalizes to many Bayesian hidden-variable models.</p>
+<p><strong>Thoughts:</strong> Large-scale LDA that can be applied online is a sort of window into how many graphical models can be applied at large scales. Sadly most of this papers seems LDA-centric tricks. The neat thing though is how they start with a variational algorithm and end up with something very much like gibbs sampling. I hope more papers are written that combine approaches from both camps.</p>
+<p><a href="http://icml.cc/2012/papers/785.pdf"><strong>An Infinite Latent Attribute Model for Network Data</strong></a> <br /><em>Konstantina Palla, David A. Knowles, Zoubin Ghahramani</em></p>
+<p><strong>Abstract:</strong> Latent variable models for network data extract a summary of the relational structure underlying an observed network. The simplest possible models subdivide nodes of the network into clusters; the probability of a link between any two nodes then depends only on their cluster assignment. Currently available models can be classified by whether clusters are disjoint or are allowed to overlap. These models can explain a “flat” clustering structure. Hierarchical Bayesian models provide a natural approach to capture more complex dependencies. We propose a model in which objects are characterised by a latent feature vector. Each feature is itself partitioned into disjoint groups (subclusters), corresponding to a second layer of hierarchy. In experimental comparisons, the model achieves significantly improved predictive performance on social and biological link prediction tasks. The results indicate that models with a single layer hierarchy over-simplify real networks.</p>
+<p><strong>Thoughts:</strong> A nonparametric model for networks with overlapping clusters sounds great to me. I am not sure how much this model can be extended, since it seems communities are hierarchical with nodes belonging to sub-communities and sub-sub-communities.</p>
+<p><a href="http://arxiv.org/pdf/1106.1157.pdf"><strong>Evaluating Bayesian and L1 Approaches for Sparse Unsupervised Learning</strong></a> <br /><em>Shakir Mohamed, Katherine Heller, Zoubin Ghahramani</em></p>
+<p><strong>Abstract:</strong> The use of <span class="math">\(L_1\)</span> regularisation for sparse learning has generated immense research interest, with many successful applications in diverse areas such as signal acquisition, image coding, genomics and collaborative filtering. While existing work highlights the many advantages of <span class="math">\(L_1\)</span> methods, in this paper we find that <span class="math">\(L_1\)</span> regularisation often dramatically under-performs in terms of predictive performance when compared with other methods for inferring sparsity. We focus on unsupervised latent variable models, and develop <span class="math">\(L_1\)</span> minimising factor models, Bayesian variants of “<span class="math">\(L_1\)</span>”, and Bayesian models with a stronger <span class="math">\(L_0\)</span>-like sparsity induced through spike-and-slab distributions. These spike-and-slab Bayesian factor models encourage sparsity while accounting for uncertainty in a principled manner, and avoid unnecessary shrinkage of non-zero values. We demonstrate on a number of data sets that in practice spike-and-slab Bayesian methods outperform <span class="math">\(L_1\)</span> minimisation, even on a computational budget. We thus highlight the need to re-assess the wide use of <span class="math">\(L_1\)</span> methods in sparsity-reliant applications, particularly when we care about generalising to previously unseen data, and provide an alternative that, over many varying conditions, provides improved generalisation performance.</p>
+<p><strong>Thoughts:</strong> Bayesians really need to get into the sparsity game as most of the sparsity research is coming from the loss-minimization and optimization literature end. This paper is a great step in defining more general sparse priors. Its funny since right after reading this, I found a <a href="http://arxiv.org/abs/1204.4243">preprint</a> on arxiv from Jorden that uses even nicer distributions for sparsity.</p>
+<p><a href="http://www.ic.unicamp.br/~tachard/docs/icml12.pdf"><strong>A General Framework for Inferring Latent Task Structures</strong></a> <br /><em>Alexandre Passos, Piyush Rai, Jacques Wainer, Hal Daume III</em></p>
+<p><strong>Abstract:</strong> When learning multiple related tasks with limited training data per task, it is natural to share parameters across tasks to improve generalization performance. Imposing the correct notion of task relatedness is critical to achieve this goal. However, one rarely knows the correct relatedness notion a priori. We present a generative model that is based on the weight vector of each task being drawn from a nonparametric mixture of nonparametric factor analyzers. The nonparametric aspect of the model makes it broad enough to subsume many types of latent task structures previously considered in the literature as special cases, and also allows it to learn more general task structures, addressing their individual shortcomings. This brings in considerable flexibility as compared to the commonly used multitask learning models that are based on some a priori fixed notion of task relatedness. We also present an efficient variational inference algorithm for our model. Experimental results on synthetic and real-world datasets, on both regression and classification problems, establish the efficacy of the proposed method.</p>
+<p><strong>Thoughts:</strong> Most transfer learning problems are designed assuming there are some parameters that are shared across learning tasks. This paper assumes these parameters are coming from some nonparametric distribution. So basically we can do transfer learning without needing to explicitly say how we think various tasks are related to each other!</p>
+<p><a href="http://www.cs.berkeley.edu/~jpaisley/Papers/Paisley_ICML2012.pdf"><strong>Variational Bayesian Inference with Stochastic Search</strong></a> <br /><em>John Paisley, David Blei, Michael Jordan</em></p>
+<p><strong>Abstract:</strong> Mean-field variational inference is an approximate posterior inference method for Bayesian models. It approximates the full posterior distribution of a model’s variables with a factorized set of distributions by maximizing a lower bound on the marginal likelihood. This requires the ability to integrate the log joint likelihood of the model with respect to the factorized approximation. Often not all integrals are closed-form, which is traditionally handled using lower bound approximations. We present an algorithm based on stochastic optimization that allows for direct optimization of the variational lower bound in all models. This method uses control variates for variance reduction of the stochastic search gradient, in which existing lower bounds can play an important role. We demonstrate the approach on logistic regression and the hierarchical Dirichlet process.</p>
+<p><strong>Thoughts:</strong> This paper shows a way to apply stochastic gradient methods for problems that can be build a variational lower bound. This means that with a bit of work we should be able to use these methods in an online fashion and apply complex models to large datasets.</p>
+<a name="app">
+<h3>
+Fun Applications
+</h3>
+<p></a></p>
+<p><a href="http://icml.cc/2012/papers/407.pdf"><strong>Collaborative Topic Regression with Social Matrix Factorization for Recommendation Systems</strong></a> <br /><em>Sanjay Purushotham, Yan Liu</em></p>
+<p><strong>Abstract:</strong> Social network websites, such as Facebook, YouTube, Lastfm etc, have become a popular platform for users to connect with each other and share content or opinions. They provide rich information to study the influence of user’s social circle in their decision process. In this paper, we are interested in examining the effectiveness of social network information to predict the user’s ratings of items. We propose a novel hierarchical Bayesian model which jointly incorporates topic modeling and probabilistic matrix factorization of social networks. A major advantage of our model is to automatically infer useful latent topics and social information as well as their importance to collaborative filtering from the training data. Empirical experiments on two large-scale datasets show that our algorithm provides a more effective recommendation system than the state-of-the art approaches. Our results also reveal interesting insight that the social circles have more influence on people’s decisions about the usefulness of information (e.g., bookmarking preference on Delicious) than personal taste (e.g., music preference on Lastfm).</p>
+<p><strong>Thoughts:</strong> In a sense, this paper is just a great demonstration of what going Bayesian buys you. The CTR model is extended with nodes for latent social interactions between users. The model then let’s us reason how much of a factor social ties played in how an iten was rated.</p>
+<p><a href="http://research.microsoft.com/pubs/164692/MLIQ-CR.pdf"><strong>How To Grade a Test Without Knowing the Answers — A Bayesian Graphical Model for Adaptive Crowdsourcing and Aptitude Testing</strong></a> <br /><em>Yoram Bachrach, Thore Graepel, Tom Minka, John Guiver</em></p>
+<p><strong>Abstract:</strong> We propose a new probabilistic graphical model that jointly models the difficulties of questions, the abilities of participants and the correct answers to questions in aptitude testing and crowdsourcing settings. We devise an active learning/adaptive testing scheme based on a greedy minimization of expected model entropy, which allows a more efficient resource allocation by dynamically choosing the next question to be asked based on the previous responses. We present experimental results that confirm the ability of our model to infer the required parameters and demonstrate that the adaptive testing scheme requires fewer questions to obtain the same accuracy as a static test scenario.</p>
+<p><strong>Thoughts:</strong> This is just a Bayesian item-response theory model. I can see this being useful for crowdsourcing, but the larger lesson is there are many more models that statisticians know and machine learning researchers don’t know. Also this model was written in Infer.NET and its nice to see some researchers are starting to not write their own solvers by hand.</p>
+<p><a href="http://arxiv.org/pdf/1109.1077.pdf"><strong>Nonparametric Link Prediction in Dynamic Networks</strong></a> <br /><em>Purnamrita Sarkar, Deepayan Chakrabarti, Michael Jordan</em></p>
+<p><strong>Abstract:</strong> We propose a non-parametric link prediction algorithm for a sequence of graph snapshots over time. The model predicts links based on the features of its endpoints, as well as those of the local neighborhood around the endpoints. This allows for different types of neighborhoods in a graph, each with its own dynamics (e.g, growing or shrinking communities). We prove the consistency of our estimator, and give a fast implementation based on locality-sensitive hashing. Experiments with simulated as well as five real-world dynamic graphs show that we outperform the state of the art, especially when sharp fluctuations or non-linearities are present.</p>
+<p><strong>Thoughts:</strong> Link prediction is still a task that hasn’t been solved, and there is plenty of room for new researchers to take a shot at the problem. It’s another nonparametric model but this one feels more extendable. We will see in a year if that was the case.</p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://convexoptimized.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
+
+<script type="text/javascript">
+var disqus_shortname = 'convexoptimized';
+(function () {
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'http://disqus.com/forums/convexoptimized/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+
+    </body>
+</html>

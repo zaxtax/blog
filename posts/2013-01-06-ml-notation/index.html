@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Convex Optimized - Notation popular in mathematical software</title>
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          TeX: {
+              extensions: ["AMSmath.js"]
+          },
+          tex2jax: {
+              inlineMath: [  ["\\(","\\)"], ],
+              displayMath: [  ["\\[","\\]"] ]
+          },
+          displayAlign: 'center', // Change this to 'center' to center equations.
+          "HTML-CSS": {
+              styles: {'.MathJax_Display': {"margin": 4}}
+          }
+      });
+    </script>
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    </head>
+    <body>
+        <h1>Convex Optimized</h1>
+        <div id="navigation">
+            <a href="../../">Home</a>
+	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
+	    <a href="../../archive.html">Archive</a>
+	    <a href="../../about.html">About</a>
+	    <a href="../../contact.html">Contact</a>
+        </div>
+
+        <h3>Notation popular in mathematical software</h3>
+by <em>Rob Zinkov</em> on <strong>2013-01-06</strong>
+<p>Recently, I saw how regular programmers react to numeric code. Numeric code has a different style than code most people are used to. It tends to be based on a pile of equations and is loaded with single-letter variable names. To many programmers they don’t understand why the code can’t be more descriptive.</p>
+<p>What they don’t realize is in field of machine learning x, y, w, z, etc have very well defined conventions associated with them. They are not all that different from i, j, k in loops.</p>
+<ul>
+<li><strong>x</strong> typically refers to your data or features</li>
+<li><strong>y</strong> typically refers to your labels</li>
+<li><strong>z</strong> typically refers to unobserved hidden variables</li>
+<li><strong>w</strong> typically refers to weights</li>
+</ul>
+<p><strong>n</strong>, <strong>m</strong> usually refer to sizes of vectors and dimensions</p>
+<ul>
+<li>vectors are usually lowercase letters</li>
+<li>matrices are uppercase letters</li>
+</ul>
+<p>Greek letters will refer to hyperparameters you tune like learning-rate. The other place you often see greek letters is when referring to parameters of probabilistic distributions. Some popular examples include:</p>
+<ul>
+<li><strong>mu</strong> <span class="math">\(\mu\)</span> refers to the center of a <a href="http://en.wikipedia.org/wiki/Multivariate_Gaussian_distribution">Gaussian distribution</a></li>
+<li><strong>sigma</strong> (<span class="math">\(\sigma\)</span>, <span class="math">\(\Sigma\)</span>) refers to the standard deviation of a Gaussian distribution. You might also see <strong>cov</strong> which refers to the <a href="http://en.wikipedia.org/wiki/Covariance_matrix">covariance matrix</a> of a multivariate distribution</li>
+</ul>
+<p>This list isn’t exhausted, but hopefully it makes some code more readable.</p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://convexoptimized.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
+
+<script type="text/javascript">
+var disqus_shortname = 'convexoptimized';
+(function () {
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'http://disqus.com/forums/convexoptimized/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+
+    </body>
+</html>

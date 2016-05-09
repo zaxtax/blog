@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Convex Optimized - Machine Learning Software</title>
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          TeX: {
+              extensions: ["AMSmath.js"]
+          },
+          tex2jax: {
+              inlineMath: [  ["\\(","\\)"], ],
+              displayMath: [  ["\\[","\\]"] ]
+          },
+          displayAlign: 'center', // Change this to 'center' to center equations.
+          "HTML-CSS": {
+              styles: {'.MathJax_Display': {"margin": 4}}
+          }
+      });
+    </script>
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    </head>
+    <body>
+        <h1>Convex Optimized</h1>
+        <div id="navigation">
+            <a href="../../">Home</a>
+	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
+	    <a href="../../archive.html">Archive</a>
+	    <a href="../../about.html">About</a>
+	    <a href="../../contact.html">Contact</a>
+        </div>
+
+        <h3>Machine Learning Software</h3>
+by <em>Rob Zinkov</em> on <strong>2012-10-05</strong>
+<p>I often get people asking me which software should they use for doing arbitrary machine learning tasks. Generally there is no one library that can achieve everything I want, but I definitely have a few favorites that I like to use often.</p>
+<p>As a quick note, most of my work is actually spent just getting the data cleaned. This isn’t really machine learning, but its important enough that I suggest checking out <a href="http://code.google.com/p/google-refine/">Google Refine</a> and <a href="http://pandas.pydata.org/pandas-docs/stable/install.html">Pandas</a>.</p>
+<p>Google Refine is essentially a webapp to quickly point and click your way to a more usable dataset. Pandas is a python library for really drilling down into the details. It can also do some really cool stuff with time series data so check it out if you need something more involved.</p>
+<p>As a note to machine libraries that I haven’t mentioned. Try to stick to algorithms written by practitioners and sometimes researchers. Hobbyists will often just implement the algorithm and that’s it. They will use some weird data format that is compatible with nothing else and likely have subtle bugs. Many researchers while well-intentioned often don’t write libraries that are reusable or able to actually use the algorithms on real datasets. You want practitioners and industrial researchers writing the code.</p>
+<p>Look at the backgrounds of the people contributing, and remember machine learning code is still code. This means all the standard software engineering design principles still apply.</p>
+<hr />
+<div class="figure">
+<img src="../../images/Rlogo.jpg" />
+</div>
+<p>If you don’t have passing familiarity with <a href="http://www.r-project.org">R</a>, you are setting yourself up for failure. R is partly a language but mostly a statistical development environment. It exists as an easy way to load, process, and visualize data. Many data mining packages are measured in terms of how well they can do the tasks R can do.</p>
+<p>In the past, R was a bit cumbersome to use. Now with <a href="http://rstudio.org">RStudio</a>, there is a full IDE that is fairly intuitive so there is no excuse. You should know how to use R to be able to effectively communicate with other people in this field.</p>
+<p>One of the main advantages of R is the massive amount of <a href="http://www.cran.r-project.org/">packages</a> available for it. Since CRAN can be a bit intimidating there are <a href="http://www.cran.r-project.org/web/views">Task Views</a> for different categories and usecases.</p>
+<p>In addition, <a href="http://www.drewconway.com">Drew</a> has a great <a href="http://www.drewconway.com/zia/?p=1614">list</a> of packages to check out in R. To those listed I would add <a href="http://yihui.name/knitr/">knitr</a> as a relatively recent package that makes it easy to generate webpages that use R plots.</p>
+<p>Passing familiarity with R and how R is used will inform your tastes and help you write shorter and cleaner data analysis code.</p>
+<h3 id="vowpal-wabbit">Vowpal Wabbit</h3>
+<div class="figure">
+<img src="../../images/wabbit.jpg" />
+</div>
+<p><a href="http://hunch.net/~vw/">Vowpal Wabbit</a> or as you will likely refer it in production use vw. Thanks to the recent reductions framework vw is a bit more featureful, but don’t be fooled. VW was designed in the unix tradition of sharp tools that do one thing very fast and very well. Vowpal was designed for binary classification of gigantic amounts of data. It is the only program on this list that can reliably handle 20 GB of data on a single machine.</p>
+<p>It is definitely the most unfriendly from a user interface perspective, but if you follow the <a href="https://github.com/JohnLangford/vowpal_wabbit/wiki/Examples">examples</a> and <a href="https://github.com/JohnLangford/vowpal_wabbit/wiki/Tutorial">tutorial</a> you should be able to get something working without too much difficulty.</p>
+<p>One of the frustrating pain points of vw is that all feature engineering and model evaluation must be done with separate tools. This frequently leads to many people needing to create shell scripts to wrap the training and evaluation steps. Still, it is one of fastest and performant machine learning libraries around.</p>
+<h3 id="patsy">Patsy</h3>
+<p><a href="http://patsy.readthedocs.org/en/latest/index.html">Patsy</a> isn’t quite a machine learning library, but it very good for designing features to then be used in conjuction with something like scikit-learn. Very often the features you want to include in your model are some transformation of the features your input provides. Patsy is nice library to manage these transformations.</p>
+<p>If you have used R’s formula notation then you will feel right at home with this library. The output will be a matrix that can then be passed to scikit-learn. Patsy can also help with understanding the models after they have been learned. If you already have well-designed sets of features the utility of this library declines a bit. Truthfully it seems 30% of my time is spent just doing feature engineering.</p>
+<h3 id="scikit-learn">Scikit-learn</h3>
+<div class="figure">
+<img src="../../images/scikit-learn-logo-small.png" />
+</div>
+<p><a href="http://www.scikit-learn.org">Scikit-learn</a> is as far as I am concerned the machine learning library to use in python. Built on top of numpy and scipy, this library offers a wide variety of machine learning algorithms and a very clean interface to train and validate them.</p>
+<p>All classifiers must conform to a specific fit/predict object method pattern. This can make it frustrating for many contributors but leads to a library that is remarkably composable. Cross validation can be automatically used on all algorithms, and performance metrics are applied in the same way to all algorithms. This makes the package very clean and very easy to learn.</p>
+<p>Nearly all the functionality includes extensive documentation and a working example to see how to use the code. The contributors are practitioners and will often be informed about how the algorithms behave under a wide variety of conditions.</p>
+<p>This is a very active project with multiple commits at least every day. If the release doesn’t have some algorithm, check the <a href="https://github.com/scikit-learn/scikit-learn">development branch</a> as it often has many amazing offerings not yet in a release.</p>
+<h3 id="shogun">Shogun</h3>
+<div class="figure">
+<img src="../../images/shogun_logo.png" />
+</div>
+<p><a href="http://www.shogun-toolbox.org">Shogun</a> is a C++ open source library with a wide variety of libraries. It originally was created as a wrapper around a collection of svm libraries so that kernels could be written in a library agnostic way. Since then it has grown into a robust framework with a wide variety of algorithms. The code is designed to be accessible not just from C++ but also python, R, Octave and MATLAB.</p>
+<p>The early history does inform much of the functionality, so if you are doing anything with kernels you should give it a shot. The performance can be spotty for some of the algorithms but generally that is more a property of the algorithm than shogun so do your homework, you should be aware of the performance characteristics of the algorithms you wish to use. Liberally licensed, its a great place to start when looking for a machine learning algorithm in a commerical setting.</p>
+<h3 id="weka">Weka</h3>
+<div class="figure">
+<img src="../../images/Weka_logo.png" />
+</div>
+<p>I include <a href>Weka</a> here not because I use it, but more as an anti-recommendation. Weka while still maintained is hard to use, and the available algorithms are dated. The arff data type is idiosyncratic. The library uses massive amounts of memory for mysterious reasons. Please try to use any of the above libraries before considering Weka.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>This isn’t all the software I use, but for general machine learning this is what I recommend. As the domain becomes more specialized, more fine-grained tools are available. Many of which I will talk about in future posts.</p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://convexoptimized.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
+
+<script type="text/javascript">
+var disqus_shortname = 'convexoptimized';
+(function () {
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'http://disqus.com/forums/convexoptimized/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+
+    </body>
+</html>

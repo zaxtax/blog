@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Convex Optimized - Stop using Plate Notation</title>
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          TeX: {
+              extensions: ["AMSmath.js"]
+          },
+          tex2jax: {
+              inlineMath: [  ["\\(","\\)"], ],
+              displayMath: [  ["\\[","\\]"] ]
+          },
+          displayAlign: 'center', // Change this to 'center' to center equations.
+          "HTML-CSS": {
+              styles: {'.MathJax_Display': {"margin": 4}}
+          }
+      });
+    </script>
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    </head>
+    <body>
+        <h1>Convex Optimized</h1>
+        <div id="navigation">
+            <a href="../../">Home</a>
+	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
+	    <a href="../../archive.html">Archive</a>
+	    <a href="../../about.html">About</a>
+	    <a href="../../contact.html">Contact</a>
+        </div>
+
+        <h3>Stop using Plate Notation</h3>
+by <em>Rob Zinkov</em> on <strong>2013-07-28</strong>
+<p>There is this practice in many machine learning papers to describe the statistical model using a graphical representation called <a href="http://en.wikipedia.org/wiki/Plate_notation">Plate Notation</a>. Many people use it as a clear and compact way to summarize their models. I would like to argue that plate notation is largely useless, and hinders more than helps readers understand what was done.</p>
+<p>The primary issues with this notation is doesn’t handle complex model very well, it hides too many details while in many ways not hiding enough of them all while being very hard to read and comprehend.</p>
+<h2 id="basic-example">Basic Example</h2>
+<p>What do I mean by hard to read? Quick tell me what these models do?</p>
+<p><img src="../../images/asym_lda.png" /></p>
+<p>These are some models for doing Latent Dirichlet Allocation using asymmetric Dirichlet priors on the topic mixtures. Is it obvious from the above image?</p>
+<p><img src="../../images/asym_lda2.png" /></p>
+<p>Does that help? Do you know everything you need now to understand the model that was used?</p>
+<p>Well, you know everything the caption bothered to tell you. You don’t know the distribution that all the random variables came from.</p>
+<p>Now this isn’t a slight against the research behind <a href="http://people.cs.umass.edu/~wallach/publications/wallach09rethinking.pdf">this paper</a>. Wallach and friends have a cool model on their hands, they just chose a bad way to represent it.</p>
+<p>Keep in the mind plate notation, while good at grouping variables that share a latent variable, it is very bad at compacting models where there are long chains of dependencies. This is most obvious in something like a hidden markov model.</p>
+<p><img src="../../images/ihmm.png" /></p>
+<p>Now you could say, it’s ok to just expand things out when the notation is failing, but these are common models that simply aren’t being expressed compactly. And you want that compactness especially when lots of repeating elements start happening. Something like TrueSkill with its repeating elements is not something you want in its raw form.</p>
+<p><img src="../../images/trueskill.png" /></p>
+<h2 id="basic-solution">Basic Solution</h2>
+<p>So if we aren’t going to use something that looks more like modern art than a diagram. How will we communicate our models?</p>
+<p>Well, we just tell the generative story. We show how we arrive at a sample of our data from all the latent variables in our system. This isn’t even new. Consider the plate notation in the <a href="http://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf">original LDA paper</a>.</p>
+<p><img src="../../images/lda_plate.png" /></p>
+<p>In the <strong>same paper</strong> we have the generative story. Note how much easier and clear the model becomes once expressed in this form.</p>
+<p><img src="../../images/lda_story.png" /></p>
+<p>Yet, we never get such a story/pseudocode in many papers that use complex graphical models. The story has to be put together from scattered jigsaw puzzle pieces laid throughout the paper.</p>
+<p>Describing the model as a story is the better way. Here is a more complicated model trained on twitter data showing how language and word usage varys across the country.</p>
+<p><img src="../../images/geo_plate.png" /></p>
+<p>There is a lot going here, but interestingly Eisenstein and friends, in addition to giving us a pile of boxes and arrows, also provide the generative story in <strong>a single table</strong>.</p>
+<p><img src="../../images/generative_story2.png" /> <img src="../../images/generative_story.png" /></p>
+<p>It does take up more space, but can be scanned and understood entirely on its own! The plate notation is redundant. A generative story is both more compact and more informative.</p>
+<p>So please stop using plate notation. Just tell me the generative story so I can implement it quickly and get what you are doing at a glance.</p>
+<h2 id="papers-mentioned">Papers Mentioned</h2>
+<ul>
+<li><a href="http://people.cs.umass.edu/~wallach/publications/wallach09rethinking.pdf">Why Priors Matter</a></li>
+<li><a href="http://mlg.eng.cam.ac.uk/yunus/iHMMBeam.pdf">Beam Sampling for the Infinite Hidden Markov Model</a></li>
+<li><a href="http://research.microsoft.com/pubs/74419/TR-2006-80.pdf">TrueSkill: A Bayesian Skill Rating System</a></li>
+<li><a href="http://www.cs.cmu.edu/~nasmith/papers/eisenstein+oconnor+smith+xing.emnlp10.pdf">A Latent Variable Model for Geographic Lexical Variation</a></li>
+</ul>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://convexoptimized.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
+
+<script type="text/javascript">
+var disqus_shortname = 'convexoptimized';
+(function () {
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'http://disqus.com/forums/convexoptimized/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+
+    </body>
+</html>

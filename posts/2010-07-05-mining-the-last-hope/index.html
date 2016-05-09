@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Convex Optimized - Mining the Last Hope</title>
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          TeX: {
+              extensions: ["AMSmath.js"]
+          },
+          tex2jax: {
+              inlineMath: [  ["\\(","\\)"], ],
+              displayMath: [  ["\\[","\\]"] ]
+          },
+          displayAlign: 'center', // Change this to 'center' to center equations.
+          "HTML-CSS": {
+              styles: {'.MathJax_Display': {"margin": 4}}
+          }
+      });
+    </script>
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    </head>
+    <body>
+        <h1>Convex Optimized</h1>
+        <div id="navigation">
+            <a href="../../">Home</a>
+	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
+	    <a href="../../archive.html">Archive</a>
+	    <a href="../../about.html">About</a>
+	    <a href="../../contact.html">Contact</a>
+        </div>
+
+        <h3>Mining the Last Hope</h3>
+by <em>Rob Zinkov</em> on <strong>2010-07-05</strong>
+<p>With The Next Hope less than two weeks away, its a great to look back at The Last Hope and the data that was collected during it. This article will explore what was released to the public and some of the cool data mining that is possible with this data.</p>
+<h3 id="getting-the-data">Getting the data</h3>
+<p>To start we can obtain this data from the Crawdad wireless dataset project. The last hope data can be found at <a href="http://crawdad.org/meta.php?name=hope/amd">http://crawdad.org/meta.php?name=hope/amd</a></p>
+<p>In browsing the dataset we will concentrate on different files as we need to relate users in different ways. As this data is heavily normalized, we will usually need two or three files to get at the relationships we are interested in.</p>
+<p>Some of the more interesting csv files are:</p>
+<ul>
+<li><em>creation.csv</em> - This file records when a user created an account, and which registration code they used.</li>
+<li><em>person.csv</em> - This is the profile record. It contains the user’s handle, their stated age, gender, location, cell provider, etc. None of this data is verified or validated. This is data is useful for labeling and getting beyond user ids. Many of these handles are designed to be recognized. Mining forums for these handles could tell us more about the user.</li>
+<li><em>ping.csv</em> - This file records everybody that pinged somebody else and when they did it. Think of this like Facebook’s “poke” feature.</li>
+<li><em>position_snapshot.csv</em> - This file records what zone each user is twice a minute.</li>
+<li><em>talk_presense.csv</em> - This file joins user locations with where talks were being held to infer which talks a user attended. This can be further used with talks.csv to link users with talk descriptions and interests associated with a talk.</li>
+</ul>
+<h3 id="pings-graph">Pings graph</h3>
+<p>One of the simplest things we can do is start by observing that people are connected by the pings they send each other. We can make a graph of the conference attendees, using these pings as edges. In the following examples I will be using a <a href="http://python.org">python</a> library <a href="http://networkx.lanl.gov/">networkx</a> to analyze and display our graphs. To draw the graphs you will need <a href="http://matplotlib.sourceforge.net/">matplotlib</a>.</p>
+<p>Loading this graph is fairly trivial:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="co">#!/usr/bin/env python</span>
+<span class="ch">import</span> networkx <span class="ch">as</span> nx
+<span class="ch">import</span> csv
+<span class="ch">import</span> matplotlib.pylab <span class="ch">as</span> plt
+
+reader = csv.reader(<span class="dt">file</span>(<span class="st">"ping.csv"</span>))
+headers = reader.<span class="dt">next</span>()
+
+G = nx.Graph()
+
+<span class="kw">for</span> line in reader:
+    G.add_edge(line[<span class="dv">0</span>],line[<span class="dv">1</span>])
+
+nx.draw_spring(G,
+               node_color=[<span class="dt">float</span>(G.degree(v)) <span class="kw">for</span> v in G],
+               node_size=<span class="dv">40</span>,
+               with_labels=<span class="ot">False</span>,
+               cmap=plt.cm.Reds,
+               )
+plt.show()</code></pre>
+<p>Running this code, greets us with a graph similar to the one below. <img src="../../images/ping_graphtotalpng.png" width="470" height="390" /></p>
+<p>This display shows that there is a main social network that the majority of users belong. The rest of the users are mostly in their own disjointed cliques. Zooming in we see the structure of the main clique. <img src="../../images/ping_graphpng.png" /></p>
+<p>Careful observation shows there are a few key users through which users are connected. These users might play a role in the hacker social scene. Unfortunately, there are too few nodes and edges to deduce that from the ping network. We will instead explore other possible graphs to find that out.</p>
+<h3 id="talks-graph">Talks graph</h3>
+<p>Another way we can link users is if they attended many of the same talks. The relevant code to create this weighted graph is</p>
+<pre class="sourceCode python"><code class="sourceCode python">        <span class="kw">def</span> jaccard(a, b):
+            c = a.intersection(b)
+            <span class="kw">return</span> <span class="dt">float</span>(<span class="dt">len</span>(c)) / (<span class="dt">len</span>(a) + <span class="dt">len</span>(b) - <span class="dt">len</span>(c))
+
+        <span class="kw">def</span> load_talk_graph():
+            reader = csv.reader(<span class="dt">file</span>(<span class="st">"talk_presence.csv"</span>))
+            headers = reader.<span class="dt">next</span>()
+        
+            talks_seen = {}
+            G = nx.Graph()
+        
+            <span class="kw">for</span> line in reader:
+                <span class="kw">if</span> line[<span class="dv">0</span>] not in talks_seen:
+                    talks_seen[line[<span class="dv">0</span>]] = <span class="dt">set</span>(line[<span class="dv">1</span>])
+                <span class="kw">else</span>: talks_seen[line[<span class="dv">0</span>]].add(line[<span class="dv">1</span>])
+            <span class="kw">for</span> t in talks_seen:
+                <span class="kw">for</span> u in talks_seen:
+                    <span class="kw">if</span> t is not u:
+                        weight = jaccard(talks_seen[t],
+                                         talks_seen[u])
+                        <span class="kw">if</span> weight > <span class="fl">0.4</span>:                
+                            G.add_edge(t,u,weight=weight)
+            pos = nx.spring_layout(G,weighted=<span class="ot">True</span>)     
+            nx.draw(G,
+                    pos,
+                    edge_color=[<span class="dt">float</span>(G[e1][e2][<span class="st">'weight'</span>]+<span class="fl">0.1</span>) <span class="kw">for</span> e1,e2 in G.edges()],
+                    width=<span class="dv">4</span>,
+                    node_size=<span class="dv">40</span>,
+                    edge_cmap=plt.cm.Blues,
+                    with_labels=<span class="ot">False</span>,
+        
+                    node_color=[<span class="dt">float</span>(G.degree(v)) <span class="kw">for</span> v in G],
+                    cmap=plt.cm.Blues,
+                    )
+            <span class="dt">print</span> <span class="st">"Nodes:</span><span class="ot">%d</span><span class="st"> Edges: </span><span class="ot">%d</span><span class="ch">\n</span><span class="st">"</span> % (<span class="dt">len</span>(G.nodes()),<span class="dt">len</span>(G.edges()))
+            plt.show()
+
+        Out[<span class="dv">1</span>]: Nodes:<span class="dv">822</span> Edges: <span class="dv">1903</span></code></pre>
+<p>This code computes the <a href="http://en.wikipedia.org/wiki/Jaccard_index">jaccard index</a> as defined by the set of talks they attended. Then uses them as edge weights. Darker edges mean stronger links. Due to the sheer number of weights, edges are only added if similarity is above a certain threshold. Below is a thumbnail of the resulting graph. <a href="../../images/talk0.4_large.png" title="fullsize"><img src="../../images/talk0.4_small.png" /></a></p>
+<p>The full-size graph is worth study as it reveals the subtle and detailed structure implicit in this network. If we only accept weights at 0.5 and above, the clusters are even more apparent. <img src="../../images/talk0.5.png" " /></p>
+<p>This graph reveals a great deal about our attendees, but its biased towards those that went to talks. To get a more complete picture, we need to make more use of our data.</p>
+<h3 id="locations-graph">Locations graph</h3>
+<p>The principles that applied to linking by talks applies to linking by zones. Ideally the (x,y,z) tuples would have been preserved and a cumulative euclidian distance could have been used. We netheless can extract useful insights from just what we have.</p>
+<pre class="sourceCode python"><code class="sourceCode python">        <span class="kw">def</span> load_location_graph():
+            reader = csv.reader(<span class="dt">file</span>(<span class="st">"position_snapshot.csv"</span>))
+            headers = reader.<span class="dt">next</span>()
+        
+            last_time = <span class="st">""</span>
+        
+            zones = {}
+            edges = {}
+            nodes = {}
+        
+            <span class="kw">for</span> line in reader:
+                nodes[line[<span class="dv">1</span>]] = nodes.get(line[<span class="dv">1</span>],<span class="dv">0</span>)+<span class="dv">1</span>
+                <span class="kw">if</span> line[<span class="dv">0</span>] != last_time:
+                    <span class="kw">for</span> z in zones:
+                        <span class="kw">for</span> i in zones[z]:
+                            <span class="kw">for</span> j in <span class="dt">filter</span>(<span class="kw">lambda</span> x: x!=i,zones[z]):
+                                edges[(i,j)] = edges.get((i,j),<span class="dv">0</span>)+<span class="dv">1</span>
+                                edges[(j,i)] = edges.get((j,i),<span class="dv">0</span>)+<span class="dv">1</span>                       
+                    last_time = line[<span class="dv">0</span>]
+                    zones = {}
+                <span class="kw">else</span>:
+                    zones[line[<span class="dv">2</span>]] = zones.get(line[<span class="dv">2</span>],<span class="dt">set</span>()).union([line[<span class="dv">1</span>]])
+            G = nx.Graph()
+            <span class="kw">for</span> (e1,e2) in edges:
+                weight =         edges[(e1,e2)]/(nodes[e1]+nodes[e2]-edges[(e1,e2)])
+                <span class="kw">if</span> weight > <span class="fl">0.08</span>:
+                    G.add_edge(e1,e2,weight=weight)
+            <span class="dt">print</span> <span class="st">"Nodes:</span><span class="ot">%d</span><span class="st"> Edges: </span><span class="ot">%d</span><span class="ch">\n</span><span class="st">"</span> % (<span class="dt">len</span>(G.nodes()),<span class="dt">len</span>(G.edges()))
+
+            pos = nx.spring_layout(G,weighted=<span class="ot">True</span>)     
+            nx.draw(G,
+                    pos,
+                    node_size=<span class="dv">40</span>,
+                    with_labels=<span class="ot">False</span>,
+                    alpha = <span class="fl">0.5</span>,
+                    node_color=[<span class="dt">float</span>(G.degree(v)) <span class="kw">for</span> v in G],
+                    cmap=plt.cm.Greens,
+                    )
+            plt.show()</code></pre>
+<p>The location graph drawn in a similar way as the talk graph is amazingly dense and hard to read. The <em>weight</em> variable had to be tuned to see anything at all. <a href="../../images/location_large.png" title="fullsize"><img src="../../images/location_small.png" /></a></p>
+<p>Instead we opt for a slightly different metric, and are rewarded with additional insight. Sadly, its not clear if this graph accurately reflects what is going on. Further analysis is clearly required before we can confidently assert anything more about this graph.</p>
+<p>Changing:</p>
+<pre class="sourceCode python"><code class="sourceCode python">        <span class="co"># weight = edges[(e1,e2)]/(nodes[e1]+nodes[e2]-edges[(e1,e2)])</span>
+        weight = edges[(e1,e2)]/<span class="dt">min</span>(nodes[e1],nodes[e2])</code></pre>
+<p><img src="../../images/min_location.png" /></p>
+<p>Similar graphs can be drawn for overlaps in interest data and anything else we can use to relate users.</p>
+<h3 id="centrality-metrics">Centrality metrics</h3>
+<p>For the rest of this article, we will use the talks graph for our analysis. One of the simplest things we can ask is who are the interesting users. The people connected to the most other people. Centrality metrics attempt to get at this notion of importance. I will just be running the standard <a href="http://networkx.lanl.gov/reference/algorithms.centrality.html">centrality algorithms</a> that come with networkx, and hence will just show output.</p>
+<ul>
+<li><p>by degree - people with the most edges connected to them</p>
+<pre><code>techDarko
+autoexec
+daravinne
+testuser
+aestetix
+code6
+faeriebeliever
+pa5kl
+hypo
+TheFallen
+Flarocket</code></pre></li>
+<li><p>by betweenness - people that the most graph traffic goes through</p>
+<pre><code>HorseShit
+sloanroyal
+excimer34
+Sidnicious
+illi
+mattiewho
+chucknorris
+fractal
+Flarocket
+cephear</code></pre></li>
+<li><p>by closeness - people that are close to many other nodes</p>
+<pre><code>Jaypoc
+brob
+orospakr
+code6
+a113n
+tygarsai
+illi
+wolfman1984
+fractal
+sloanroyal
+Sidnicious
+faeriebeliever
+Flarocket</code></pre></li>
+<li><p>by eigenvalue - this is essentially google page rank</p>
+<pre><code>cephear
+pa5kl
+hypo
+TheFallen
+twelve88
+FrodoNJ
+AtomicSunset
+aestetix
+n1nj4j0
+autoexec
+daravinne</code></pre></li>
+</ul>
+<p>These are the people at the center of the social network of the last hope. There is further analysis we can do to determine gatekeeper roles, by looking for people with low degree centrality but high betweenness scores. As another note, these are just the top scoring people that bothered to leave their names. Many of the people at the center of these networks are anonymous.</p>
+<h3 id="community-detection">Community detection</h3>
+<p>Having singled out individual people, an obvious next step is singling out groups of people. There is no standard way to do <a href="http://en.wikipedia.org/wiki/Community_structure">Community Detection</a>, but there are some decent <a href="http://arxiv.org/abs/0902.3788">survey</a> papers on the common approaches. We won’t do anything fancy like <a href="http://www.cs.unm.edu/~aaron/research/fastmodularity.htm">Newman-Moore</a>, and instead concentrate on simple algorithms to start.</p>
+<h4 id="cliques">Cliques</h4>
+<p>Cliques are sets of nodes in a graph that are all connected to each other. They are also decent for finding social cliques.</p>
+<pre class="sourceCode python"><code class="sourceCode python">        cliques = <span class="dt">sorted</span>(nx.find_cliques(G),key=<span class="dt">len</span>,reverse=<span class="ot">True</span>)[:<span class="dv">10</span>]
+        <span class="kw">for</span> c in cliques:
+            c = <span class="dt">filter</span>(<span class="kw">lambda</span> x: name[x] is not <span class="st">""</span>,c)
+            <span class="dt">print</span> <span class="dt">map</span>(<span class="kw">lambda</span> x: name[x], c)
+        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>]
+        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'FrodoNJ'</span>]
+        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'twelve88'</span>]
+        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'aestetix'</span>]
+        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'AtomicSunset'</span>]
+        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>, <span class="st">'Exposure101'</span>, <span class="st">'vol'</span>]
+        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>, <span class="st">'firstohit'</span>]
+        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>, <span class="st">'dvalued'</span>]
+        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>]
+        [<span class="st">'EJL'</span>, <span class="st">'devolut'</span>, <span class="st">'moonmaster9000'</span>]</code></pre>
+<h4 id="connected-components">Connected components</h4>
+<p>Groups nodes into sets based on whether they are reachable from each other.</p>
+<pre class="sourceCode python"><code class="sourceCode python">        parts = nx.connected_components(G)
+        <span class="kw">for</span> p in parts[:<span class="dv">10</span>]:
+            p = <span class="dt">filter</span>(<span class="kw">lambda</span> x: name[x] is not <span class="st">""</span>,p)
+            <span class="dt">print</span> <span class="dt">map</span>(<span class="kw">lambda</span> x: name[x], p)
+
+        [<span class="st">'grapefruit'</span>, <span class="st">'trinisite'</span>, <span class="st">'Flarocket'</span>, <span class="st">'jay'</span>, <span class="st">'bunshri'</span>, <span class="st">'sirloopy'</span>, <span class="st">'orospakr'</span>, <span class="st">'faeriebeliever'</span>, <span class="st">'sloanroyal'</span>, <span class="st">'i80386'</span>, <span class="st">'brob'</span>, <span class="st">'ash'</span>, <span class="st">'LapTop006'</span>, <span class="st">'efk2'</span>]
+        [<span class="st">'pmhesse'</span>, <span class="st">'Exposure101'</span>, <span class="st">'origami'</span>, <span class="st">'meee'</span>, <span class="st">'firstohit'</span>, <span class="st">'vol'</span>, <span class="st">'dvalued'</span>, <span class="st">'earthling'</span>, <span class="st">'MR H'</span>, <span class="st">'Someone else got my bag'</span>]
+        [<span class="st">'echo'</span>, <span class="st">'Rop'</span>, <span class="st">'THE NIGHTSTALKER'</span>, <span class="st">'techDarko'</span>, <span class="st">'kupo'</span>, <span class="st">'bigjosh'</span>, <span class="st">'Bunni3burn'</span>, <span class="st">'shogun'</span>, <span class="st">'bocci'</span>]
+        [<span class="st">'Milosch'</span>, <span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'AtomicSunset'</span>, <span class="st">'FrodoNJ'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'twelve88'</span>, <span class="st">'aestetix'</span>]
+        [<span class="st">'roadtrip'</span>, <span class="st">'moonmaster9000'</span>, <span class="st">'EJL'</span>, <span class="st">'devolut'</span>, <span class="st">'pv2k'</span>, <span class="st">'nightarrow'</span>, <span class="st">'HorseShit'</span>]
+        [<span class="st">'serif'</span>, <span class="st">'wazntme379'</span>, <span class="st">'Vyrus'</span>, <span class="st">'caselaredo'</span>]
+        [<span class="st">'fddi'</span>, <span class="st">'MissInformation'</span>, <span class="st">'das'</span>, <span class="st">'fenrir'</span>, <span class="st">'Cyanide'</span>, <span class="st">'catfish'</span>, <span class="st">'asciimo'</span>]
+        [<span class="st">'jesse'</span>, <span class="st">'missdellion'</span>, <span class="st">'jefigun'</span>]
+        [<span class="st">'benkudria'</span>, <span class="st">'bockman'</span>]</code></pre>
+<h3 id="protovis-graph">Protovis graph</h3>
+<p>These visualizations have shed light on the nature of the attendees at the last hope. Still, sometimes we want a more interactive way of working with these networks. So let’s pop the talk graph into <a href="http://vis.stanford.edu/protovis">protovis</a> and display it.</p>
+<p>Due to the size of the graph. I am displaying it on a separate page. Click the image to get to the full display.</p>
+<p><a href="../../static/talks_network.html"><img src="../../images/hope_mining_js.png" /></a></p>
+<h3 id="more-at-the-next-hope">More at The Next Hope</h3>
+<p>These are some of the more basic techniques you can apply to this data. Also, we are somewhat limited by what is available to us. What is possible when we know more about our attendees? What is possible when we apply for advanced algorithms? You can find out by coming to The Next Hope, July 16th to July 18th at the Hotel Pennsylvania in New York City.</p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://convexoptimized.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
+
+<script type="text/javascript">
+var disqus_shortname = 'convexoptimized';
+(function () {
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'http://disqus.com/forums/convexoptimized/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+
+    </body>
+</html>

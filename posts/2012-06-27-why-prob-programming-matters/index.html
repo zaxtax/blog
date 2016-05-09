@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Convex Optimized - Why Probabilistic Programming Matters</title>
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          TeX: {
+              extensions: ["AMSmath.js"]
+          },
+          tex2jax: {
+              inlineMath: [  ["\\(","\\)"], ],
+              displayMath: [  ["\\[","\\]"] ]
+          },
+          displayAlign: 'center', // Change this to 'center' to center equations.
+          "HTML-CSS": {
+              styles: {'.MathJax_Display': {"margin": 4}}
+          }
+      });
+    </script>
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    </head>
+    <body>
+        <h1>Convex Optimized</h1>
+        <div id="navigation">
+            <a href="../../">Home</a>
+	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
+	    <a href="../../archive.html">Archive</a>
+	    <a href="../../about.html">About</a>
+	    <a href="../../contact.html">Contact</a>
+        </div>
+
+        <h3>Why Probabilistic Programming Matters</h3>
+by <em>Rob Zinkov</em> on <strong>2012-06-27</strong>
+<p><a href="http://probabilistic-programming.org">Probabilistic programming</a> is a newer way of posing machine learning problems. As the models we want to create become more complex it will be necessary to embrace more generic tools for capturing dependencies. I wish to argue that probabilistic programming languages should be the dominant way we perform this modeling, and will demonstrate it by showing the variety of problems that can be trivially modeled with such a language.</p>
+<p>Probabilistic programming also has the potential to give machine learning to the masses by making it very easy to specify realistic models for frequently heterogenous data. Too often, simple models are used because they are popular and implementations are freely available. By shifting focus to a language we remove these artificial constraints.</p>
+<p>Many of the following examples are inspired by models <a href="http://www.johnmyleswhite.com/notebook/2010/08/20/using-jags-in-r-with-the-rjags-package/">John Myles White wrote about</a>. I will use JAGS notation for all these examples, but they will be possible in nearly every probabilistic programming language.</p>
+<p>The concentration on models instead of algorithms is a deliberate decision. Algorithms are the cutting edge and constantly being improved upon. In a sense they are best viewed as compiler optimizations that can be safely tucked behind the curtains. The models are what have staying power.</p>
+<p><strong><em>Normal variables</em></strong></p>
+<p>The simplest use case for a probabilistic language is find the average and standard deviation of a list of numbers. This is the only example where this approach is clearly overkill.</p>
+<pre><code>model {
+	for (i in 1:N) {
+		x[i] ~ dnorm(mu, tau)
+	}
+	mu ~ dnorm(0, .0001)
+	tau <- pow(sigma, -2)
+	sigma ~ dunif(0, 100)
+}</code></pre>
+<p><strong><em>Bayesian Linear Regression</em></strong></p>
+<p>Bayesian Linear Regression is about fitting a line to some data. In this example, we merely fit a slope and intercept. What makes this example interesting is we have priors set on the weights. We are biased towards smaller weights and express this. This example is already more complex than a simple <a href="http://en.wikipedia.org/wiki/Ordinary_least_squares">OLS</a> that comes in most statistics libraries.</p>
+<pre><code>model {
+	for (i in 1:N){
+		y[i] ~ dnorm(y.hat[i], tau)
+		y.hat[i] <- w0 + w1 * x[i]
+	}
+	w0 ~ dnorm(0, .0001)
+	w1 ~ dnorm(0, .0001)
+	tau <- pow(sigma, -2)
+	sigma ~ dunif(0, 100)
+}</code></pre>
+<p><strong><em>Logistic Regression</em></strong></p>
+<p>Logistic Regression can be seen as a generalization of Linear Regression where the output is transformed to lie between 0 and 1. This model only differs from the previous one by a single line, illustrating that adding this complexity does not require starting from scratch. The point with probabilistic programming is you are able to explore slightly more complex models very easily.</p>
+<pre><code>model {
+	for (i in 1:N){
+		y[i] ~ dbern(p[i])
+		p[i] <- 1 / (1 + exp(-z[i]))
+		z[i] <- w0 + w1 * x[i]
+	}
+	w0 ~ dnorm(0, .0001)
+	w1 ~ dnorm(0, .0001)
+}</code></pre>
+<p><strong><em>Naive Bayes</em></strong></p>
+<p>Even spam classification can be modeled as a probabilistic program. The framework is very natural for expressing the dependencies. Note, how we are writing a generative story for how words are tagged as spam.</p>
+<p>We then explicitly say how these spam markings combine to give a spam rating for each of the M documents.</p>
+<pre><code>model {
+        pi <- 0.8 # prior probability its spam
+        # y is label, x is word, w is its spamminess
+        for (v in 1:Vocab.len) {
+           w[v] ~ dbeta(pi,1-pi)
+        }
+
+        for (i in 1:M){
+           y[i] ~ dbern(p[i])
+           p[i] <- 1 / (1 + exp(-sum(z[i,])))
+           for (j in 1:N) {
+                z[i,j] ~ dbern(w[s[i,j]]) #z is spam marker
+                s[i,j] ~ dcat(Vocab[]) #s is word selector
+           }
+        }
+}</code></pre>
+<p><strong><em>K-Means Clustering</em></strong></p>
+<p>What about clustering? We simply make a model that defines how clusters of data are generated from their centers. We observe the data and can later sample the most likely cluster centers (mu) and which datapoints got assigned to them (S).</p>
+<pre><code>var k,
+    pi[k];
+
+model   {
+        for (i in 1:N) {
+                x[i] ~ dnorm(mu[S[i]],tau[S[i]]);
+                S[i] ~ dcat(pi[]); # pick a center
+        }
+        for (j in 1:k) {
+                mu[j] ~ dnorm(0,5e-9);
+                tau[j] ~ dgamma(2,0.05);
+        }
+        pi[] ~ ddirch(K[]);
+}
+</code></pre>
+<p><strong><em>Latent Dirichlet Allocation (LDA)</em></strong></p>
+<p><a href="http://en.wikipedia.org/wiki/Topic_model">Topic models</a> are used to group documents into the topics or concepts they discuss. I intend to dedicate a future post to better explaining how LDA works. For now, it is best understood as a model that assumes each document decides which mixture of topics it is about and each topic decides which words in vocabulary it is about.</p>
+<p>Notice this model is still only a dozen lines of code. If you wanted to use an off-the-shelf library you would be typically looking at hundreds of lines of code. Most of that is specialized software to learn the model, but when you have generic code for learning a model, LDA becomes something you can just write.</p>
+<pre><code>model {
+  alpha <- 1
+  topics <- 20
+  for (i in 1:M) {
+     theta[i] ~ ddirch(alpha) # define a topic mixture per doc
+  }
+  for (i in 1:topics) {
+     phi[i] ~ ddirch(vocab) # define a word mixture per topic
+  }
+  for (i in 1:M) {
+     for (j in 1:N) {
+        z[i,j] ~ dmulti(theta[i]) # pick a topic
+        w[i,j] ~ dmulti(phi[z[i,j]]) # pick a word from topic
+     }
+   }
+}</code></pre>
+<p><strong><em>Coorelated Topic Models (CTM)</em></strong></p>
+<p>Coorelated Topic Models are essentially just like LDA models except we assume topics can coorelate with one another. The only change our model needed was to sample the topic proportions from a multivariate Gaussian. The covariance matrix of this gaussian is what models the coorelations between our topics. This only require a single extra line of code.</p>
+<pre><code>model {
+  sigma[,] ~ dwish(D,topics)
+  topics <- 20
+
+  for (i in 1:M) {
+     theta[i] ~ dmnorm(mu[],sigma[,]) # define a topic mixture per doc
+  }
+  for (i in 1:topics) {
+     phi[i] ~ ddirch(vocab) # define a word mixture per topic
+  }
+  for (i in 1:M) {
+     for (j in 1:N) {
+        z[i,j] ~ dmulti(theta[i]) # pick a topic
+        w[i,j] ~ dmulti(phi[z[i,j]]) # pick a word from topic
+     }
+   }
+}</code></pre>
+<p><strong><em>Autoregressive Integrated Moving Average (ARIMA)</em></strong></p>
+<p>In time series models, we model the current value of a time series as being a function of previous values. There are whole families of models that are all needlessly complicated by using a linear regression representation.</p>
+<p>But if we make a generative model, all these models become cake to represent. ARIMA is a time series model that assumes the present value is a function of past values, some features and some smoothening. That is easy to represent as</p>
+<pre><code>model {
+  y[1] ~ dnorm(0,1e-5)
+  eps[1] <- 0
+
+  for (i in 2:T) {
+     y[i] ~ dnorm(mu[i],tau)
+     mu[i] <- w0 + w1*y[i-1] + x[i] + eps[i-1]
+     eps[i] <- y[i] - mu[i]
+  }
+
+  w0 ~ dnorm(0, .0001)
+  w1 ~ dnorm(0, .0001)
+  tau <- pow(sigma, -2)
+  sigma ~ dunif(0, 100)
+}</code></pre>
+<p>In particular this is ARIMA(1,1,1) but is easy to extend to all the ARIMA models.</p>
+<p><strong><em>Hidden Markov Models (HMM)</em></strong></p>
+<p>Hidden Markov Models assume there is a hidden series of states that are related to each other through some distributions. The classical version consists of the hidden states taking on one of several discrete values, where the probability of the value of the current hidden state is only dependent on the previous hidden state. We then observe a discrete value based on the value of the hidden state.</p>
+<p>This is also something a probabilistic programming language can handle. The following example is adapted from a post on the <a href="https://groups.google.com/forum/?fromgroups#!topic/pymc/U5GLQfjrR0Q">pymc mailing list</a></p>
+<pre><code>var trans[N,N]
+model {
+   # Transition Probability
+      for (i in 1:N) {
+      	  trans[i,] ~ ddirch(alpha[]) # prior on transition matrix
+          emiss[i,] ~ ddirch(beta[])  # prior on emissions matrix
+      }
+      # States
+      state[1] ~ dcat(pi[]) # initial states
+
+      for (t in 2:T) {
+          state[t] ~ dcat(trans[state[t-1]])
+      }
+
+      # Observations
+      for (i in 1:T) {
+	  y[i] ~ dcat(emiss[state[i],])
+      }
+}</code></pre>
+<p><strong><em>Matrix Factorization</em></strong></p>
+<p><a href="https://sites.google.com/site/igorcarron2/matrixfactorizations">Matrix Factorizations</a> are models that assume a given matrix was created from the product of two low-rank or sparse matrices. These models often come up in recommendation engines where the matrix represent how a given user(row) will rate a certain item(column).</p>
+<p>When these are used for recommendation, the approaches are usually called <a href="http://en.wikipedia.org/wiki/Collaborative_filtering">collaborative filtering</a> methods.</p>
+<pre><code>model {
+  theta_u ~ dgamma(1,0.005)
+  theta_v ~ dgamma(1,0.005)
+
+  tau <- pow(sigma, -2)
+  sigma ~ dunif(0, 100)
+
+  for (i in 1:M) {
+      Usigma[,] <- theta_u * I_udim
+      u[i] ~ dmnorm(Zero[],Usigma[,]) # sample latent user vector
+  }
+
+  for (j in 1:N) {
+      Vsigma[,] <- theta_v * I_vdim
+      v[j] ~ dmnorm(Zero[],Vsigma[,]) # sample latent item vector
+  }
+
+  for (i in 1:M) {
+      for (j in 1:N) {
+          r.hat[i,j] <- inprod(u[i,], v[j,])
+      	  R[i,j] ~ dnorm(r.hat[i,j],tau) # sample rating
+      }
+  }     
+}</code></pre>
+<p>These have been extended to allow some groupings of the items into topics among <a href="http://icml.cc/2012/papers/407.pdf">other things</a>.</p>
+<p><strong><em>Sparsity and Sparse Bayes</em></strong></p>
+<p>Part of the power of probabilistic programming languages is they can be updated as our understanding of different distributions grows. This allows new models to be fit that may have been cumbersome before. Note, this is work the library user benefits from without having to be actively involved in the development.</p>
+<p>As an example, suppose we wish to use sparse priors for our linear regression example instead of L2 norms. We can add <a href="http://arxiv.org/abs/1204.4243">EP-GIG</a> priors to our language, and then using something such as:</p>
+<pre><code>model {
+	for (i in 1:N){
+		y[i] ~ dnorm(y.hat[i], tau)
+		y.hat[i] <- w0 + w1 * x[i]
+	}
+	w0 ~ dEP(0, .0001, 0.5)
+	w1 ~ dEP(0, .0001, 0.5)
+	tau <- pow(sigma, -2)
+	sigma ~ dunif(0, 100)
+}</code></pre>
+<p>We now may represent arbitrary sparse priors such as Laplace (L1) and spike-slab (L0). Note, the above is not valid JAGS code, but an extension to support these generalized normal distributions is easy to add to any of these languages.</p>
+<p><strong><em>Conditional Random Fields (CRF)</em></strong></p>
+<p><a href="http://en.wikipedia.org/wiki/Conditional_random_field">Conditional Random Fields</a> allow you to create machine learning models where the label for a piece of label is dependent on not just local features of a data point but also features and labels of neighboring pieces of data. As an example, the part-of-speech of a word is dependent on the part-of-speech of words around it.</p>
+<p>Unfortunately, I could not express CRFs in terms of because it is not a generative model. I include it here to show how succiently this model is expressed in Factorie which supports undirected graphical models.</p>
+<pre><code>  val model = new Model(
+    Foreach[Label] { label => Score(label) },
+    Foreach[Label] { label => Score(label.prev, label, label.token) }
+  )</code></pre>
+<p><strong><em>Conclusion</em></strong></p>
+<p>I chose some of the more popular models just to show how much flexibility we obtain with probabilistic programming languages. These languages make complex modeling and many machine learning tasks accessible to a wide audience.</p>
+<p>I haven’t yet outlined how these models are trained or used. In subsequent articles I will show how to fit these models in different probabilistic programming languages and how well they perform.</p>
+<p>Stay tuned.</p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://convexoptimized.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
+
+<script type="text/javascript">
+var disqus_shortname = 'convexoptimized';
+(function () {
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'http://disqus.com/forums/convexoptimized/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+
+    </body>
+</html>
