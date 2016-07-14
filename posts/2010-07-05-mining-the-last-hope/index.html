@@ -40,7 +40,7 @@
 by <em>Rob Zinkov</em> on <strong>2010-07-05</strong>
 <p>With The Next Hope less than two weeks away, its a great to look back at The Last Hope and the data that was collected during it. This article will explore what was released to the public and some of the cool data mining that is possible with this data.</p>
 <h3 id="getting-the-data">Getting the data</h3>
-<p>To start we can obtain this data from the Crawdad wireless dataset project. The last hope data can be found at <a href="http://crawdad.org/meta.php?name=hope/amd">http://crawdad.org/meta.php?name=hope/amd</a></p>
+<p>To start we can obtain this data from the Crawdad wireless dataset project. The last hope data can be found at <a href="http://crawdad.org/meta.php?name=hope/amd" class="uri">http://crawdad.org/meta.php?name=hope/amd</a></p>
 <p>In browsing the dataset we will concentrate on different files as we need to relate users in different ways. As this data is heavily normalized, we will usually need two or three files to get at the relationships we are interested in.</p>
 <p>Some of the more interesting csv files are:</p>
 <ul>
@@ -53,118 +53,118 @@ by <em>Rob Zinkov</em> on <strong>2010-07-05</strong>
 <h3 id="pings-graph">Pings graph</h3>
 <p>One of the simplest things we can do is start by observing that people are connected by the pings they send each other. We can make a graph of the conference attendees, using these pings as edges. In the following examples I will be using a <a href="http://python.org">python</a> library <a href="http://networkx.lanl.gov/">networkx</a> to analyze and display our graphs. To draw the graphs you will need <a href="http://matplotlib.sourceforge.net/">matplotlib</a>.</p>
 <p>Loading this graph is fairly trivial:</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="co">#!/usr/bin/env python</span>
-<span class="ch">import</span> networkx <span class="ch">as</span> nx
-<span class="ch">import</span> csv
-<span class="ch">import</span> matplotlib.pylab <span class="ch">as</span> plt
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co">#!/usr/bin/env python</span>
+<span class="im">import</span> networkx <span class="im">as</span> nx
+<span class="im">import</span> csv
+<span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt
 
-reader = csv.reader(<span class="dt">file</span>(<span class="st">"ping.csv"</span>))
-headers = reader.<span class="dt">next</span>()
+reader <span class="op">=</span> csv.reader(<span class="bu">file</span>(<span class="st">&quot;ping.csv&quot;</span>))
+headers <span class="op">=</span> reader.<span class="bu">next</span>()
 
-G = nx.Graph()
+G <span class="op">=</span> nx.Graph()
 
-<span class="kw">for</span> line in reader:
+<span class="cf">for</span> line <span class="op">in</span> reader:
     G.add_edge(line[<span class="dv">0</span>],line[<span class="dv">1</span>])
 
 nx.draw_spring(G,
-               node_color=[<span class="dt">float</span>(G.degree(v)) <span class="kw">for</span> v in G],
-               node_size=<span class="dv">40</span>,
-               with_labels=<span class="ot">False</span>,
-               cmap=plt.cm.Reds,
+               node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="op">in</span> G],
+               node_size<span class="op">=</span><span class="dv">40</span>,
+               with_labels<span class="op">=</span><span class="va">False</span>,
+               cmap<span class="op">=</span>plt.cm.Reds,
                )
-plt.show()</code></pre>
+plt.show()</code></pre></div>
 <p>Running this code, greets us with a graph similar to the one below. <img src="../../images/ping_graphtotalpng.png" width="470" height="390" /></p>
 <p>This display shows that there is a main social network that the majority of users belong. The rest of the users are mostly in their own disjointed cliques. Zooming in we see the structure of the main clique. <img src="../../images/ping_graphpng.png" /></p>
 <p>Careful observation shows there are a few key users through which users are connected. These users might play a role in the hacker social scene. Unfortunately, there are too few nodes and edges to deduce that from the ping network. We will instead explore other possible graphs to find that out.</p>
 <h3 id="talks-graph">Talks graph</h3>
 <p>Another way we can link users is if they attended many of the same talks. The relevant code to create this weighted graph is</p>
-<pre class="sourceCode python"><code class="sourceCode python">        <span class="kw">def</span> jaccard(a, b):
-            c = a.intersection(b)
-            <span class="kw">return</span> <span class="dt">float</span>(<span class="dt">len</span>(c)) / (<span class="dt">len</span>(a) + <span class="dt">len</span>(b) - <span class="dt">len</span>(c))
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">        <span class="kw">def</span> jaccard(a, b):
+            c <span class="op">=</span> a.intersection(b)
+            <span class="cf">return</span> <span class="bu">float</span>(<span class="bu">len</span>(c)) <span class="op">/</span> (<span class="bu">len</span>(a) <span class="op">+</span> <span class="bu">len</span>(b) <span class="op">-</span> <span class="bu">len</span>(c))
 
         <span class="kw">def</span> load_talk_graph():
-            reader = csv.reader(<span class="dt">file</span>(<span class="st">"talk_presence.csv"</span>))
-            headers = reader.<span class="dt">next</span>()
+            reader <span class="op">=</span> csv.reader(<span class="bu">file</span>(<span class="st">&quot;talk_presence.csv&quot;</span>))
+            headers <span class="op">=</span> reader.<span class="bu">next</span>()
         
-            talks_seen = {}
-            G = nx.Graph()
+            talks_seen <span class="op">=</span> {}
+            G <span class="op">=</span> nx.Graph()
         
-            <span class="kw">for</span> line in reader:
-                <span class="kw">if</span> line[<span class="dv">0</span>] not in talks_seen:
-                    talks_seen[line[<span class="dv">0</span>]] = <span class="dt">set</span>(line[<span class="dv">1</span>])
-                <span class="kw">else</span>: talks_seen[line[<span class="dv">0</span>]].add(line[<span class="dv">1</span>])
-            <span class="kw">for</span> t in talks_seen:
-                <span class="kw">for</span> u in talks_seen:
-                    <span class="kw">if</span> t is not u:
-                        weight = jaccard(talks_seen[t],
+            <span class="cf">for</span> line <span class="op">in</span> reader:
+                <span class="cf">if</span> line[<span class="dv">0</span>] <span class="op">not</span> <span class="op">in</span> talks_seen:
+                    talks_seen[line[<span class="dv">0</span>]] <span class="op">=</span> <span class="bu">set</span>(line[<span class="dv">1</span>])
+                <span class="cf">else</span>: talks_seen[line[<span class="dv">0</span>]].add(line[<span class="dv">1</span>])
+            <span class="cf">for</span> t <span class="op">in</span> talks_seen:
+                <span class="cf">for</span> u <span class="op">in</span> talks_seen:
+                    <span class="cf">if</span> t <span class="op">is</span> <span class="op">not</span> u:
+                        weight <span class="op">=</span> jaccard(talks_seen[t],
                                          talks_seen[u])
-                        <span class="kw">if</span> weight > <span class="fl">0.4</span>:                
-                            G.add_edge(t,u,weight=weight)
-            pos = nx.spring_layout(G,weighted=<span class="ot">True</span>)     
+                        <span class="cf">if</span> weight <span class="op">&gt;</span> <span class="fl">0.4</span>:                
+                            G.add_edge(t,u,weight<span class="op">=</span>weight)
+            pos <span class="op">=</span> nx.spring_layout(G,weighted<span class="op">=</span><span class="va">True</span>)     
             nx.draw(G,
                     pos,
-                    edge_color=[<span class="dt">float</span>(G[e1][e2][<span class="st">'weight'</span>]+<span class="fl">0.1</span>) <span class="kw">for</span> e1,e2 in G.edges()],
-                    width=<span class="dv">4</span>,
-                    node_size=<span class="dv">40</span>,
-                    edge_cmap=plt.cm.Blues,
-                    with_labels=<span class="ot">False</span>,
+                    edge_color<span class="op">=</span>[<span class="bu">float</span>(G[e1][e2][<span class="st">'weight'</span>]<span class="op">+</span><span class="fl">0.1</span>) <span class="cf">for</span> e1,e2 <span class="op">in</span> G.edges()],
+                    width<span class="op">=</span><span class="dv">4</span>,
+                    node_size<span class="op">=</span><span class="dv">40</span>,
+                    edge_cmap<span class="op">=</span>plt.cm.Blues,
+                    with_labels<span class="op">=</span><span class="va">False</span>,
         
-                    node_color=[<span class="dt">float</span>(G.degree(v)) <span class="kw">for</span> v in G],
-                    cmap=plt.cm.Blues,
+                    node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="op">in</span> G],
+                    cmap<span class="op">=</span>plt.cm.Blues,
                     )
-            <span class="dt">print</span> <span class="st">"Nodes:</span><span class="ot">%d</span><span class="st"> Edges: </span><span class="ot">%d</span><span class="ch">\n</span><span class="st">"</span> % (<span class="dt">len</span>(G.nodes()),<span class="dt">len</span>(G.edges()))
+            <span class="bu">print</span> <span class="st">&quot;Nodes:</span><span class="sc">%d</span><span class="st"> Edges: </span><span class="sc">%d</span><span class="ch">\n</span><span class="st">&quot;</span> <span class="op">%</span> (<span class="bu">len</span>(G.nodes()),<span class="bu">len</span>(G.edges()))
             plt.show()
 
-        Out[<span class="dv">1</span>]: Nodes:<span class="dv">822</span> Edges: <span class="dv">1903</span></code></pre>
+        Out[<span class="dv">1</span>]: Nodes:<span class="dv">822</span> Edges: <span class="dv">1903</span></code></pre></div>
 <p>This code computes the <a href="http://en.wikipedia.org/wiki/Jaccard_index">jaccard index</a> as defined by the set of talks they attended. Then uses them as edge weights. Darker edges mean stronger links. Due to the sheer number of weights, edges are only added if similarity is above a certain threshold. Below is a thumbnail of the resulting graph. <a href="../../images/talk0.4_large.png" title="fullsize"><img src="../../images/talk0.4_small.png" /></a></p>
 <p>The full-size graph is worth study as it reveals the subtle and detailed structure implicit in this network. If we only accept weights at 0.5 and above, the clusters are even more apparent. <img src="../../images/talk0.5.png" " /></p>
 <p>This graph reveals a great deal about our attendees, but its biased towards those that went to talks. To get a more complete picture, we need to make more use of our data.</p>
 <h3 id="locations-graph">Locations graph</h3>
 <p>The principles that applied to linking by talks applies to linking by zones. Ideally the (x,y,z) tuples would have been preserved and a cumulative euclidian distance could have been used. We netheless can extract useful insights from just what we have.</p>
-<pre class="sourceCode python"><code class="sourceCode python">        <span class="kw">def</span> load_location_graph():
-            reader = csv.reader(<span class="dt">file</span>(<span class="st">"position_snapshot.csv"</span>))
-            headers = reader.<span class="dt">next</span>()
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">        <span class="kw">def</span> load_location_graph():
+            reader <span class="op">=</span> csv.reader(<span class="bu">file</span>(<span class="st">&quot;position_snapshot.csv&quot;</span>))
+            headers <span class="op">=</span> reader.<span class="bu">next</span>()
         
-            last_time = <span class="st">""</span>
+            last_time <span class="op">=</span> <span class="st">&quot;&quot;</span>
         
-            zones = {}
-            edges = {}
-            nodes = {}
+            zones <span class="op">=</span> {}
+            edges <span class="op">=</span> {}
+            nodes <span class="op">=</span> {}
         
-            <span class="kw">for</span> line in reader:
-                nodes[line[<span class="dv">1</span>]] = nodes.get(line[<span class="dv">1</span>],<span class="dv">0</span>)+<span class="dv">1</span>
-                <span class="kw">if</span> line[<span class="dv">0</span>] != last_time:
-                    <span class="kw">for</span> z in zones:
-                        <span class="kw">for</span> i in zones[z]:
-                            <span class="kw">for</span> j in <span class="dt">filter</span>(<span class="kw">lambda</span> x: x!=i,zones[z]):
-                                edges[(i,j)] = edges.get((i,j),<span class="dv">0</span>)+<span class="dv">1</span>
-                                edges[(j,i)] = edges.get((j,i),<span class="dv">0</span>)+<span class="dv">1</span>                       
-                    last_time = line[<span class="dv">0</span>]
-                    zones = {}
-                <span class="kw">else</span>:
-                    zones[line[<span class="dv">2</span>]] = zones.get(line[<span class="dv">2</span>],<span class="dt">set</span>()).union([line[<span class="dv">1</span>]])
-            G = nx.Graph()
-            <span class="kw">for</span> (e1,e2) in edges:
-                weight =         edges[(e1,e2)]/(nodes[e1]+nodes[e2]-edges[(e1,e2)])
-                <span class="kw">if</span> weight > <span class="fl">0.08</span>:
-                    G.add_edge(e1,e2,weight=weight)
-            <span class="dt">print</span> <span class="st">"Nodes:</span><span class="ot">%d</span><span class="st"> Edges: </span><span class="ot">%d</span><span class="ch">\n</span><span class="st">"</span> % (<span class="dt">len</span>(G.nodes()),<span class="dt">len</span>(G.edges()))
+            <span class="cf">for</span> line <span class="op">in</span> reader:
+                nodes[line[<span class="dv">1</span>]] <span class="op">=</span> nodes.get(line[<span class="dv">1</span>],<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span>
+                <span class="cf">if</span> line[<span class="dv">0</span>] <span class="op">!=</span> last_time:
+                    <span class="cf">for</span> z <span class="op">in</span> zones:
+                        <span class="cf">for</span> i <span class="op">in</span> zones[z]:
+                            <span class="cf">for</span> j <span class="op">in</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: x<span class="op">!=</span>i,zones[z]):
+                                edges[(i,j)] <span class="op">=</span> edges.get((i,j),<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span>
+                                edges[(j,i)] <span class="op">=</span> edges.get((j,i),<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span>                       
+                    last_time <span class="op">=</span> line[<span class="dv">0</span>]
+                    zones <span class="op">=</span> {}
+                <span class="cf">else</span>:
+                    zones[line[<span class="dv">2</span>]] <span class="op">=</span> zones.get(line[<span class="dv">2</span>],<span class="bu">set</span>()).union([line[<span class="dv">1</span>]])
+            G <span class="op">=</span> nx.Graph()
+            <span class="cf">for</span> (e1,e2) <span class="op">in</span> edges:
+                weight <span class="op">=</span>         edges[(e1,e2)]<span class="op">/</span>(nodes[e1]<span class="op">+</span>nodes[e2]<span class="op">-</span>edges[(e1,e2)])
+                <span class="cf">if</span> weight <span class="op">&gt;</span> <span class="fl">0.08</span>:
+                    G.add_edge(e1,e2,weight<span class="op">=</span>weight)
+            <span class="bu">print</span> <span class="st">&quot;Nodes:</span><span class="sc">%d</span><span class="st"> Edges: </span><span class="sc">%d</span><span class="ch">\n</span><span class="st">&quot;</span> <span class="op">%</span> (<span class="bu">len</span>(G.nodes()),<span class="bu">len</span>(G.edges()))
 
-            pos = nx.spring_layout(G,weighted=<span class="ot">True</span>)     
+            pos <span class="op">=</span> nx.spring_layout(G,weighted<span class="op">=</span><span class="va">True</span>)     
             nx.draw(G,
                     pos,
-                    node_size=<span class="dv">40</span>,
-                    with_labels=<span class="ot">False</span>,
-                    alpha = <span class="fl">0.5</span>,
-                    node_color=[<span class="dt">float</span>(G.degree(v)) <span class="kw">for</span> v in G],
-                    cmap=plt.cm.Greens,
+                    node_size<span class="op">=</span><span class="dv">40</span>,
+                    with_labels<span class="op">=</span><span class="va">False</span>,
+                    alpha <span class="op">=</span> <span class="fl">0.5</span>,
+                    node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="op">in</span> G],
+                    cmap<span class="op">=</span>plt.cm.Greens,
                     )
-            plt.show()</code></pre>
+            plt.show()</code></pre></div>
 <p>The location graph drawn in a similar way as the talk graph is amazingly dense and hard to read. The <em>weight</em> variable had to be tuned to see anything at all. <a href="../../images/location_large.png" title="fullsize"><img src="../../images/location_small.png" /></a></p>
 <p>Instead we opt for a slightly different metric, and are rewarded with additional insight. Sadly, its not clear if this graph accurately reflects what is going on. Further analysis is clearly required before we can confidently assert anything more about this graph.</p>
 <p>Changing:</p>
-<pre class="sourceCode python"><code class="sourceCode python">        <span class="co"># weight = edges[(e1,e2)]/(nodes[e1]+nodes[e2]-edges[(e1,e2)])</span>
-        weight = edges[(e1,e2)]/<span class="dt">min</span>(nodes[e1],nodes[e2])</code></pre>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">        <span class="co"># weight = edges[(e1,e2)]/(nodes[e1]+nodes[e2]-edges[(e1,e2)])</span>
+        weight <span class="op">=</span> edges[(e1,e2)]<span class="op">/</span><span class="bu">min</span>(nodes[e1],nodes[e2])</code></pre></div>
 <p><img src="../../images/min_location.png" /></p>
 <p>Similar graphs can be drawn for overlaps in interest data and anything else we can use to relate users.</p>
 <h3 id="centrality-metrics">Centrality metrics</h3>
@@ -225,10 +225,10 @@ daravinne</code></pre></li>
 <p>Having singled out individual people, an obvious next step is singling out groups of people. There is no standard way to do <a href="http://en.wikipedia.org/wiki/Community_structure">Community Detection</a>, but there are some decent <a href="http://arxiv.org/abs/0902.3788">survey</a> papers on the common approaches. We won’t do anything fancy like <a href="http://www.cs.unm.edu/~aaron/research/fastmodularity.htm">Newman-Moore</a>, and instead concentrate on simple algorithms to start.</p>
 <h4 id="cliques">Cliques</h4>
 <p>Cliques are sets of nodes in a graph that are all connected to each other. They are also decent for finding social cliques.</p>
-<pre class="sourceCode python"><code class="sourceCode python">        cliques = <span class="dt">sorted</span>(nx.find_cliques(G),key=<span class="dt">len</span>,reverse=<span class="ot">True</span>)[:<span class="dv">10</span>]
-        <span class="kw">for</span> c in cliques:
-            c = <span class="dt">filter</span>(<span class="kw">lambda</span> x: name[x] is not <span class="st">""</span>,c)
-            <span class="dt">print</span> <span class="dt">map</span>(<span class="kw">lambda</span> x: name[x], c)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">        cliques <span class="op">=</span> <span class="bu">sorted</span>(nx.find_cliques(G),key<span class="op">=</span><span class="bu">len</span>,reverse<span class="op">=</span><span class="va">True</span>)[:<span class="dv">10</span>]
+        <span class="cf">for</span> c <span class="op">in</span> cliques:
+            c <span class="op">=</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: name[x] <span class="op">is</span> <span class="op">not</span> <span class="st">&quot;&quot;</span>,c)
+            <span class="bu">print</span> <span class="bu">map</span>(<span class="kw">lambda</span> x: name[x], c)
         [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>]
         [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'FrodoNJ'</span>]
         [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'twelve88'</span>]
@@ -238,13 +238,13 @@ daravinne</code></pre></li>
         [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>, <span class="st">'firstohit'</span>]
         [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>, <span class="st">'dvalued'</span>]
         [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>]
-        [<span class="st">'EJL'</span>, <span class="st">'devolut'</span>, <span class="st">'moonmaster9000'</span>]</code></pre>
+        [<span class="st">'EJL'</span>, <span class="st">'devolut'</span>, <span class="st">'moonmaster9000'</span>]</code></pre></div>
 <h4 id="connected-components">Connected components</h4>
 <p>Groups nodes into sets based on whether they are reachable from each other.</p>
-<pre class="sourceCode python"><code class="sourceCode python">        parts = nx.connected_components(G)
-        <span class="kw">for</span> p in parts[:<span class="dv">10</span>]:
-            p = <span class="dt">filter</span>(<span class="kw">lambda</span> x: name[x] is not <span class="st">""</span>,p)
-            <span class="dt">print</span> <span class="dt">map</span>(<span class="kw">lambda</span> x: name[x], p)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">        parts <span class="op">=</span> nx.connected_components(G)
+        <span class="cf">for</span> p <span class="op">in</span> parts[:<span class="dv">10</span>]:
+            p <span class="op">=</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: name[x] <span class="op">is</span> <span class="op">not</span> <span class="st">&quot;&quot;</span>,p)
+            <span class="bu">print</span> <span class="bu">map</span>(<span class="kw">lambda</span> x: name[x], p)
 
         [<span class="st">'grapefruit'</span>, <span class="st">'trinisite'</span>, <span class="st">'Flarocket'</span>, <span class="st">'jay'</span>, <span class="st">'bunshri'</span>, <span class="st">'sirloopy'</span>, <span class="st">'orospakr'</span>, <span class="st">'faeriebeliever'</span>, <span class="st">'sloanroyal'</span>, <span class="st">'i80386'</span>, <span class="st">'brob'</span>, <span class="st">'ash'</span>, <span class="st">'LapTop006'</span>, <span class="st">'efk2'</span>]
         [<span class="st">'pmhesse'</span>, <span class="st">'Exposure101'</span>, <span class="st">'origami'</span>, <span class="st">'meee'</span>, <span class="st">'firstohit'</span>, <span class="st">'vol'</span>, <span class="st">'dvalued'</span>, <span class="st">'earthling'</span>, <span class="st">'MR H'</span>, <span class="st">'Someone else got my bag'</span>]
@@ -254,7 +254,7 @@ daravinne</code></pre></li>
         [<span class="st">'serif'</span>, <span class="st">'wazntme379'</span>, <span class="st">'Vyrus'</span>, <span class="st">'caselaredo'</span>]
         [<span class="st">'fddi'</span>, <span class="st">'MissInformation'</span>, <span class="st">'das'</span>, <span class="st">'fenrir'</span>, <span class="st">'Cyanide'</span>, <span class="st">'catfish'</span>, <span class="st">'asciimo'</span>]
         [<span class="st">'jesse'</span>, <span class="st">'missdellion'</span>, <span class="st">'jefigun'</span>]
-        [<span class="st">'benkudria'</span>, <span class="st">'bockman'</span>]</code></pre>
+        [<span class="st">'benkudria'</span>, <span class="st">'bockman'</span>]</code></pre></div>
 <h3 id="protovis-graph">Protovis graph</h3>
 <p>These visualizations have shed light on the nature of the attendees at the last hope. Still, sometimes we want a more interactive way of working with these networks. So let’s pop the talk graph into <a href="http://vis.stanford.edu/protovis">protovis</a> and display it.</p>
 <p>Due to the size of the graph. I am displaying it on a separate page. Click the image to get to the full display.</p>

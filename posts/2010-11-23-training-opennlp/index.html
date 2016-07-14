@@ -57,28 +57,28 @@ Many local citizens feared that there would be irregularities at the polls.
 Williams got himself a permit to carry a gun and promised an orderly election.
 He attended New York University before switching to Georgetown University in Washington.</code></pre>
 <p>A model can then be trained and passed into make-sentence-detector</p>
-<pre><code>(def sent-model (train-sentence-detector "sentdetect.train"))
+<pre><code>(def sent-model (train-sentence-detector &quot;sentdetect.train&quot;))
 (def get-sentences (make-sentence-detector sent-model))
-(get-sentences "Being at the polls was just like being at church. I didn't smell a drop of liquor, and we didn't have a bit of trouble.")</code></pre>
+(get-sentences &quot;Being at the polls was just like being at church. I didn't smell a drop of liquor, and we didn't have a bit of trouble.&quot;)</code></pre>
 <h3 id="tokenizer">Tokenizer</h3>
 <p>To train the tokenizer, include one sentence per line. The Tokenizer will split on whitespace and explictly marked <SPLIT> tags. <SPLIT> tags are most useful for separating words from punctuation. As an exmaple:</p>
 <p>tokenizer.train</p>
-<pre><code>Being at the polls was just like being at church<SPLIT>.
-I didn't smell a drop of liquor<SPLIT>, and we didn't have a bit of trouble<SPLIT>.
-The campaign leading to the election was not so quiet<SPLIT>.</code></pre>
+<pre><code>Being at the polls was just like being at church&lt;SPLIT&gt;.
+I didn't smell a drop of liquor&lt;SPLIT&gt;, and we didn't have a bit of trouble&lt;SPLIT&gt;.
+The campaign leading to the election was not so quiet&lt;SPLIT&gt;.</code></pre>
 <p>A model can then be trained and passed into make-tokenizer</p>
-<pre><code> (def token-model (train-tokenizer "tokenizer.train"))
+<pre><code> (def token-model (train-tokenizer &quot;tokenizer.train&quot;))
  (def tokenize (make-tokenizer token-model))
- (tokenize "Being at the polls was just like being at church.")</code></pre>
+ (tokenize &quot;Being at the polls was just like being at church.&quot;)</code></pre>
 <h3 id="part-of-speech-tagger">Part Of Speech Tagger</h3>
 <p>To train a Part Of Speech tagger, provide one sentence per line. On each line every token should be separated by whitespace. The tokens themselves should be in <code>word_tag</code> format. Punctuation is tagged as itself. As an example:</p>
 <p>postagger.train</p>
 <pre><code> Being_VBG at_IN the_DT polls_NNS was_VBD just_RB like_IN being_VBG at_IN church_NN ._.
  I_PRP did_VBD n't_RB smell_VB a_DT drop_NN of_IN liquor_NN ,_, and_CC we_PRP did_VBD n't_RB have_VB a_DT bit_NN of_IN trouble_NN ._.</code></pre>
 <p>A model can then be trained and passed into make-pos-tagger</p>
-<pre><code> (def pos-model (train-pos-tagger "postagger.train"))
+<pre><code> (def pos-model (train-pos-tagger &quot;postagger.train&quot;))
  (def pos-tag (make-pos-tagger pos-model))
- (pos-tag (tokenize "Being at the polls was just like being at church."))</code></pre>
+ (pos-tag (tokenize &quot;Being at the polls was just like being at church.&quot;))</code></pre>
 <p>Addition information</p>
 <ul>
 <li><a href="http://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html">Succient summary of Treebank tags</a></li>
@@ -166,18 +166,18 @@ The campaign leading to the election was not so quiet<SPLIT>.</code></pre>
  . . O
  </code></pre>
 <p>A model can then be trained and passed into make-treebank-chunker</p>
-<pre><code> (def chunk-model (train-treebank-chunker "chunker.train"))
+<pre><code> (def chunk-model (train-treebank-chunker &quot;chunker.train&quot;))
  (def chunker (make-treebank-chunker chunk-model))
- (chunker (pos-tag (tokenize "He reckons the current account deficit will narrow to only #1.8 billion in September.")))</code></pre>
+ (chunker (pos-tag (tokenize &quot;He reckons the current account deficit will narrow to only #1.8 billion in September.&quot;)))</code></pre>
 <h3 id="named-entity-finder">Named Entity finder</h3>
 <p>To train the named entity finder, provide a training file with a single sentence on each line. On these lines the entities should be delimited with sgml tags <START> name <END>. An example follows:</p>
 <p>named_org.train</p>
-<pre><code>  The departure of the <START> Giants <END> and the <START> Dodgers <END> to California left New York with only the <START> Yankees <END>.
-  When he was unable to bring about immediate expansion, he sought to convince another <START> National League <END> club to move here.</code></pre>
+<pre><code>  The departure of the &lt;START&gt; Giants &lt;END&gt; and the &lt;START&gt; Dodgers &lt;END&gt; to California left New York with only the &lt;START&gt; Yankees &lt;END&gt;.
+  When he was unable to bring about immediate expansion, he sought to convince another &lt;START&gt; National League &lt;END&gt; club to move here.</code></pre>
 <p>A model can then be trained and passed into make-name-finder</p>
-<pre><code>  (def namefinder-model (train-name-finder "named_org.train"))
+<pre><code>  (def namefinder-model (train-name-finder &quot;named_org.train&quot;))
   (def name-find (make-name-finder namefinder-model))
-  (name-find (tokenize "The Giants win the World Series."))</code></pre>
+  (name-find (tokenize &quot;The Giants win the World Series.&quot;))</code></pre>
 <h3 id="treebank-parser">Treebank Parser</h3>
 <p>To train the treebank parser, provide a single sentence on each line in the treebank format. To get an idea of the format, either read <a href="http://www.ldc.upenn.edu/Catalog/docs/LDC99T42/prsguid1.pdf">Treebank Annotating Guidelines</a> or pass in some sentences with a previously trained model to get a feel.</p>
 <p>parser.train</p>
@@ -185,16 +185,16 @@ The campaign leading to the election was not so quiet<SPLIT>.</code></pre>
   (TOP (S (NP-SBJ (PRP I) )(VP (VBP say) (NP (CD 1992) ))(. .) ('' '') ))
   (TOP (S (NP (DT This)) (VP (VBZ is) (NP (DT a) (NN sentence))) (. .)))</code></pre>
 <p>A model can then be trained and passed into make-treebank-parser Headrules can be obtained from <a href="http://opennlp.sourceforge.net/models/english/parser/head_rules">OpenNLP</a></p>
-<pre><code>  (def parser-model (train-treebank-parser "parser.train" "headrules"))
+<pre><code>  (def parser-model (train-treebank-parser &quot;parser.train&quot; &quot;headrules&quot;))
   (def treebank-parser (make-treebank-parser parser-model))
-  (treebank-parser ["This is a sentence ."])</code></pre>
+  (treebank-parser [&quot;This is a sentence .&quot;])</code></pre>
 <h3 id="pos-dictionary">POS Dictionary</h3>
 <p>A POS Dictionary, also referred to as a tagdict, is a data structure providing a means of determining which tags are valid for a particular word.</p>
 <p>The format for a tagdict is one word per line. This word should then be followed by a whitespace-delimited list of tags valid for that word.</p>
 <pre><code> word tag1 tag2 ....</code></pre>
 <p>This dictionary can be created with <code>build-posdictionary</code> and then passed to <code>train-pos-tagger</code></p>
-<pre><code> (def tagdict (build-posdictionary "tagdict"))
- (def pos-tag (make-pos-tagger (train-pos-tagger "en" "postagger.train" tagdict)))</code></pre>
+<pre><code> (def tagdict (build-posdictionary &quot;tagdict&quot;))
+ (def pos-tag (make-pos-tagger (train-pos-tagger &quot;en&quot; &quot;postagger.train&quot; tagdict)))</code></pre>
 <h3 id="notes">Notes</h3>
 <p>If you get an Exception, you might just not have enough data.</p>
 <p>You can get the code <a href="https://github.com/zaxtax/clojure-opennlp">on github</a>. Good luck and may these tools help you create models better adapted towards your domain.</p>

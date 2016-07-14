@@ -50,76 +50,79 @@ by <em>Rob Zinkov</em> on <strong>2012-09-17</strong>
 <p>Random Variables are usually very poorly explained. Once you get past the deceptive name, you have unintuitive notation that hides and obscures what is actually going on. In the following post, I will first explain what are random variables. Then define probability, conditional probabity, expectation and variance in terms of them.</p>
 <h3 id="probability-spaces">Probability Spaces</h3>
 <p>First, let’s define some things, namely probaility. In the modern formulation probailities are measures in a <a href="http://en.wikipedia.org/wiki/Probability_space">probability space</a>. By this, we mean a model with these three things.</p>
-<p><span class="math">\(\large (\Omega, E, P)\)</span></p>
-<p><span class="math">\(\Omega\)</span> is the sample space. It is the set of world states. These are sometimes called outcomes. If we were gambling, this is possible ways a game could end.</p>
-<p><span class="math">\(E\)</span> is the event space. It is the set of subsets of <span class="math">\(\Omega\)</span>. If we were gambling. Each element of <span class="math">\(E\)</span> is something we could place a bet on.</p>
-<p><span class="math">\(P\)</span> is the probaility measure. This is a function that for each element of <span class="math">\(E\)</span> assigns a probability between 0 and 1.</p>
+<p><span class="math inline">\(\large (\Omega, E, P)\)</span></p>
+<p><span class="math inline">\(\Omega\)</span> is the sample space. It is the set of world states. These are sometimes called outcomes. If we were gambling, this is possible ways a game could end.</p>
+<p><span class="math inline">\(E\)</span> is the event space. It is the set of subsets of <span class="math inline">\(\Omega\)</span>. If we were gambling. Each element of <span class="math inline">\(E\)</span> is something we could place a bet on.</p>
+<p><span class="math inline">\(P\)</span> is the probaility measure. This is a function that for each element of <span class="math inline">\(E\)</span> assigns a probability between 0 and 1.</p>
 <p>As a basic example, consider a six-sided die:</p>
 <div class="figure">
 <img src="../../images/dice.jpg" />
+
 </div>
 <p>The sample space is {1,2,3,4,5,6}. The event space is every subset of that space. Some elements of the event space include {}, {1,3,5}, and {4}. These correspond to betting on none of the outcomes (a bet you will surely lose), betting on an odd number, and betting on the number 4. Assuming all these outcomes are equally likely.</p>
-<p><span class="math">\[ P(\left\{\right\}) = 0 \]</span> <span class="math">\[ P(\left\{1,3,5\right\}) = \frac{1}{2} \]</span> <span class="math">\[ P(\left\{3\right\}) = \frac{1}{6} \]</span></p>
+<p><span class="math display">\[ P(\left\{\right\}) = 0 \]</span> <span class="math display">\[ P(\left\{1,3,5\right\}) = \frac{1}{2} \]</span> <span class="math display">\[ P(\left\{3\right\}) = \frac{1}{6} \]</span></p>
 <p>The trouble with this formulation is its cumbersome to work within directly. Random variables provide a way to summarize the quantities we want to find the probabilities of in terms of samples.</p>
 <p>Enough burying the lead. What are random variables?</p>
 <pre><code>Random Variables are functions from samples to real numbers/vectors</code></pre>
-<p><span class="math">\(\large X : \Omega \rightarrow \mathbb{R^n}\)</span></p>
+<p><span class="math inline">\(\large X : \Omega \rightarrow \mathbb{R^n}\)</span></p>
 <p>That’s it. Nothing complicated or fancy. This is the definition in nearly any probability or statistics book I have opened. If your book does not have a definition that is essentially the above, burn it. Remember its not a number, its a function.</p>
 <p>Random variables exist as a necessary abstraction over probability spaces and allow us to reason about sets of events in a clean way.</p>
 <p>Here is an example random variable:</p>
-<p><span class="math">\[
+<p><span class="math display">\[
 Odd(\omega) = 
 \cases{
-1  & \text{if } \omega \text{ is odd} \cr
-0  & \text{if } \omega \text{ is even}
+1  &amp; \text{if } \omega \text{ is odd} \cr
+0  &amp; \text{if } \omega \text{ is even}
 }
 \]</span></p>
 <p>Random variables implicitly transform a given probability space into a related one where the range of the function defines the new sample space. Since, the range defines a new space, we can compose these functions to produce arbitrary distributions.</p>
 <p>We can define a function to access these probabilities. If our random variable is discrete this is called the probability mass function.</p>
 <div class="figure">
 <img src="../../images/geometric.png" />
+
 </div>
 <p>If our random variable is continuous then this will be referred to as a probability density function. The thing to note with this curve, probabilities aren’t the values on the y-axis, they are they areas under the curve.</p>
 <div class="figure">
 <img src="../../images/normal.png" />
+
 </div>
 <p>For our example random variable the equation becomes:</p>
-<p><span class="math">\(\large \mathbb{P}[Odd = 1] := P(\{\omega \in \Omega : Odd(\omega) = 1\})\)</span></p>
+<p><span class="math inline">\(\large \mathbb{P}[Odd = 1] := P(\{\omega \in \Omega : Odd(\omega) = 1\})\)</span></p>
 <p>Notice those Ps aren’t the same. The left one is the probability mass function. The right one is probability measure from before. In the standard notation X refers to a random variable. x refers to the value it will return.</p>
-<p>When you see P[X], P(X), p(x), or P(X = x) these are probability mass functions. In fact, only P(X = x) even defines a probability. The others are parameterized functions since we don’t know for which value of X do we want the probability. This is why the probability mass function is sometimes written <span class="math">\(f_X(x)\)</span> .</p>
+<p>When you see P[X], P(X), p(x), or P(X = x) these are probability mass functions. In fact, only P(X = x) even defines a probability. The others are parameterized functions since we don’t know for which value of X do we want the probability. This is why the probability mass function is sometimes written <span class="math inline">\(f_X(x)\)</span> .</p>
 <p>Note: in practice we don’t define probability density functions in terms of a sample space. We usually just say the range of random variable comes from one of a standard prefined distributions.</p>
 <h3 id="joint-and-conditional-probability">Joint and Conditional Probability</h3>
 <p>Usually though we will have more than one random variable and they will have different things to same about a probability space.</p>
 <p>The joint probability is probability space defined by the cartesian product of two random variables. It is defined as</p>
-<p><span class="math">\[ \large \mathbb{P}(X = x, Y = y) = P(\{\omega \in \Omega : X(\omega) = x \cap Y(\omega) = y \}) \]</span></p>
+<p><span class="math display">\[ \large \mathbb{P}(X = x, Y = y) = P(\{\omega \in \Omega : X(\omega) = x \cap Y(\omega) = y \}) \]</span></p>
 <p>This can be informally thought of as the probability X = x and Y = y.</p>
 <p>The conditional probability can be thought of asking what is probability X = x assuming we know Y = y. To use our running example, assuming we knew the die was odd what’s the chance it landed 3.</p>
 <p>Conditional probability is defined</p>
-<p><span class="math">\[ \large \mathbb{P}(X = x | Y = y) = \frac{\mathbb{P}(X = x, Y =y)}{\mathbb{P}(Y = y)} \]</span></p>
+<p><span class="math display">\[ \large \mathbb{P}(X = x | Y = y) = \frac{\mathbb{P}(X = x, Y =y)}{\mathbb{P}(Y = y)} \]</span></p>
 <p>This is sometimes called the <em>Chain Rule</em>. Specifically this is phrased as:</p>
-<p><span class="math">\[ P(X, Y) = P(Y)P(X | Y) \]</span></p>
+<p><span class="math display">\[ P(X, Y) = P(Y)P(X | Y) \]</span></p>
 <p>Many times you will see x and y dropped from these definitions. This implies these equations for all values of x and y.</p>
 <h3 id="expectation">Expectation</h3>
 <p>Expectation are the important quantity. Whenever you are discussing the quantities you wish to use probability theory for, the quantities in question will be expectations. Do I expect to make money if I keep playing at this poker table? How much can I expect to lose playing the lottery? How many voters do we expect to vote this election? How many students are expected to pass the class? All these quantities are what is actually cared about. Probabilities are just numbers for weighting the different events. Expectation are one the quantities we learn that really summarize what a distribution is saying.</p>
-<p><span class="math">\[ \large \mathbb{E} [X] = \large \int x p(x) dx \]</span></p>
+<p><span class="math display">\[ \large \mathbb{E} [X] = \large \int x p(x) dx \]</span></p>
 <p>Interestingly, its debatable whether probabilities or expectations are more fundamental. We can describe probabilities are just expectations over indicator functions that return 1 for a desired event and 0 otherwise. This also means, that you do want the probability of an event, who should still take the expectation of the indicator function representing that event.</p>
 <h3 id="conditional-expectation">Conditional Expectation</h3>
 <p>Interestly, we can also take expectations over conditional probability distributions. This is because a conditional distribution is like a distribution.</p>
-<p><span class="math">\[ \large \mathbb{E} [X | Y = y] = \large \int x p(x | y) dx \]</span></p>
+<p><span class="math display">\[ \large \mathbb{E} [X | Y = y] = \large \int x p(x | y) dx \]</span></p>
 <h3 id="law-of-the-lazy-statistician">Law of the Lazy Statistician</h3>
 <p>A large degree of the power of random variables actually comes from a theorem that is used so frequently it never gets mentioned. This theorem is called the Law of the Lazy Statistician. It can essentially stated as follows:</p>
-<p><span class="math">\[ \large \mathbb{E} [g(X)] = \large \int g(x)p(x) dx \]</span></p>
+<p><span class="math display">\[ \large \mathbb{E} [g(X)] = \large \int g(x)p(x) dx \]</span></p>
 <p>This is amazing, because we can take expectations over arbitrary functions on the random variable. Even more amazing is we never need to explicit represent the new probability space denoted by the range of g. We can directly work in the probability distribution associated with X. This is handy, because this new probability distribution can easily be nothing like the base distribution.</p>
 <p>The proof of this is fairly straightfoward. We rearrange the sum to count each possible value of y for g(X)</p>
-<p><span class="math">\[ \large \int g(x) p(x) dx = \large \int y \int_{\{ x : g(x) = y \}} p(x) dx dy \]</span></p>
+<p><span class="math display">\[ \large \int g(x) p(x) dx = \large \int y \int_{\{ x : g(x) = y \}} p(x) dx dy \]</span></p>
 <p>This inner term is equivalent to the probability of each y value</p>
-<p><span class="math">\[  \large \int g(x) p(x) dx = \large \int y p(y) dy \]</span></p>
-<p>Which is the definition of expectation in Y with <span class="math">\(Y = g(X)\)</span></p>
+<p><span class="math display">\[  \large \int g(x) p(x) dx = \large \int y p(y) dy \]</span></p>
+<p>Which is the definition of expectation in Y with <span class="math inline">\(Y = g(X)\)</span></p>
 <h3 id="variance">Variance</h3>
 <p>As an example, we will use this theorem to calculate the variance of a random variable.</p>
-<p><span class="math">\[ \large Var(X) = \large \mathbb{E}[(X - E[X])^2] \]</span></p>
-<p>Now the inner expectation can simply be evaluated for X and give the result <span class="math">\(\mu\)</span>. At this point we are taking the expectation of an implicit function Y</p>
-<p><span class="math">\[ \large Y(\omega) = \large (\omega - \mu)^2 \]</span></p>
+<p><span class="math display">\[ \large Var(X) = \large \mathbb{E}[(X - E[X])^2] \]</span></p>
+<p>Now the inner expectation can simply be evaluated for X and give the result <span class="math inline">\(\mu\)</span>. At this point we are taking the expectation of an implicit function Y</p>
+<p><span class="math display">\[ \large Y(\omega) = \large (\omega - \mu)^2 \]</span></p>
 <p>And thanks to the law of the lazy statistician, we can use the probability mass function of X instead of having to explicitly find the probabilities for each of values of Y. Not having to do that work, means we can define a probability function that is easy to work, and then stack random variables to compute the quantities we actually care about.</p>
 <h3 id="conclusions">Conclusions</h3>
 <p>There are large parts of probability and statistics I haven’t covered. Random Variables are at the core of both fields, so if you do analytics, you really ought to know the definition.</p>

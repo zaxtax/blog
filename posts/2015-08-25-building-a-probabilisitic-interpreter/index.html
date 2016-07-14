@@ -41,7 +41,7 @@ by <em>Rob Zinkov</em> on <strong>2015-08-25</strong>
 <p>Very often interpreters for probabilisitic programming languages (PPLs) can seem a little mysterious. In actuality, if you know how to write an interpreter for a simple language it isn’t that much more work.</p>
 <p>Using Haskell as the host language I’ll show how to write a simple PPL which uses importance sampling as the underlying inference method. There is nothing special about using from haskell other than pattern-matching so this example should be pretty easy to port to other languages.</p>
 <p>To start let’s import some things and set up some basic types</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Data.List</span> <span class="kw">hiding</span> (empty, insert, map)
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Data.List</span> <span class="kw">hiding</span> (empty, insert, map)
 <span class="kw">import </span><span class="dt">Control.Monad</span>
 
 <span class="kw">import </span><span class="dt">Data.HashMap.Strict</span> <span class="kw">hiding</span> (map)
@@ -49,27 +49,27 @@ by <em>Rob Zinkov</em> on <strong>2015-08-25</strong>
 <span class="kw">import </span><span class="dt">System.Random.MWC.Distributions</span> <span class="kw">as</span> <span class="dt">MD</span>
 
 <span class="kw">type</span> <span class="dt">Name</span> <span class="fu">=</span> <span class="dt">String</span>
-<span class="kw">type</span> <span class="dt">Env</span>  <span class="fu">=</span> <span class="dt">HashMap</span> <span class="dt">String</span> <span class="dt">Val</span></code></pre>
+<span class="kw">type</span> <span class="dt">Env</span>  <span class="fu">=</span> <span class="dt">HashMap</span> <span class="dt">String</span> <span class="dt">Val</span></code></pre></div>
 <p>Our language will have as values functions, doubles, bools and pairs of those.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Val</span> <span class="fu">=</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Val</span> <span class="fu">=</span>
     <span class="dt">D</span> <span class="dt">Double</span> <span class="fu">|</span>
     <span class="dt">B</span> <span class="dt">Bool</span>   <span class="fu">|</span>
-    <span class="dt">F</span> (<span class="dt">Val</span> <span class="ot">-></span> <span class="dt">Val</span>) <span class="fu">|</span>
+    <span class="dt">F</span> (<span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span>) <span class="fu">|</span>
     <span class="dt">P</span> <span class="dt">Val</span> <span class="dt">Val</span>
 
 <span class="kw">instance</span> <span class="dt">Eq</span> <span class="dt">Val</span> <span class="kw">where</span>
   <span class="dt">D</span> x <span class="fu">==</span> <span class="dt">D</span> y         <span class="fu">=</span> x <span class="fu">==</span> y
   <span class="dt">B</span> x <span class="fu">==</span> <span class="dt">B</span> y         <span class="fu">=</span> x <span class="fu">==</span> y
-  <span class="dt">P</span> x1 x2 <span class="fu">==</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu">==</span> y1 <span class="fu">&&</span> x2 <span class="fu">==</span> y2
+  <span class="dt">P</span> x1 x2 <span class="fu">==</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu">==</span> y1 <span class="fu">&amp;&amp;</span> x2 <span class="fu">==</span> y2
   _ <span class="fu">==</span> _             <span class="fu">=</span> <span class="dt">False</span>
 
 <span class="kw">instance</span> <span class="dt">Ord</span> <span class="dt">Val</span> <span class="kw">where</span>
-  <span class="dt">D</span> x <span class="fu"><=</span> <span class="dt">D</span> y         <span class="fu">=</span> x <span class="fu"><=</span> y
-  <span class="dt">B</span> x <span class="fu"><=</span> <span class="dt">B</span> y         <span class="fu">=</span> x <span class="fu"><=</span> y
-  <span class="dt">P</span> x1 x2 <span class="fu"><=</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu"><=</span> y1 <span class="fu">&&</span> x2 <span class="fu"><=</span> y2
-  _ <span class="fu"><=</span> _             <span class="fu">=</span> error <span class="st">"Comparing functions is undefined"</span></code></pre>
+  <span class="dt">D</span> x <span class="fu">&lt;=</span> <span class="dt">D</span> y         <span class="fu">=</span> x <span class="fu">&lt;=</span> y
+  <span class="dt">B</span> x <span class="fu">&lt;=</span> <span class="dt">B</span> y         <span class="fu">=</span> x <span class="fu">&lt;=</span> y
+  <span class="dt">P</span> x1 x2 <span class="fu">&lt;=</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu">&lt;=</span> y1 <span class="fu">&amp;&amp;</span> x2 <span class="fu">&lt;=</span> y2
+  _ <span class="fu">&lt;=</span> _             <span class="fu">=</span> error <span class="st">&quot;Comparing functions is undefined&quot;</span></code></pre></div>
 <p>This language will have expressions for these values, conditionals and arithmetic.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Expr</span> <span class="fu">=</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Expr</span> <span class="fu">=</span>
      <span class="dt">Lit</span> <span class="dt">Double</span> <span class="fu">|</span>
      <span class="dt">Var</span> <span class="dt">Name</span> <span class="fu">|</span>
      <span class="dt">Pair</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
@@ -89,18 +89,18 @@ by <em>Rob Zinkov</em> on <strong>2015-08-25</strong>
      <span class="dt">Sub</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
      <span class="dt">Mul</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
      <span class="dt">Div</span> <span class="dt">Expr</span> <span class="dt">Expr</span>
- <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</code></pre>
+ <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</code></pre></div>
 <p>We can evalute expressions in this language without doing anything special.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalT ::</span> <span class="dt">Expr</span> <span class="ot">-></span> <span class="dt">Env</span> <span class="ot">-></span> <span class="dt">Val</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalT ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Env</span> <span class="ot">-&gt;</span> <span class="dt">Val</span>
 evalT (<span class="dt">Lit</span> a) _            <span class="fu">=</span> <span class="dt">D</span> a
 evalT (<span class="dt">Var</span> x)      env     <span class="fu">=</span> env <span class="fu">!</span> x
-evalT (<span class="dt">Lam</span> x body) env     <span class="fu">=</span> <span class="dt">F</span> (\ x' <span class="ot">-></span> evalT body (insert x x' env))
+evalT (<span class="dt">Lam</span> x body) env     <span class="fu">=</span> <span class="dt">F</span> (\ x' <span class="ot">-&gt;</span> evalT body (insert x x' env))
 evalT (<span class="dt">App</span> f x)    env     <span class="fu">=</span> app (evalT f env) (evalT x env)
            
 evalT (<span class="dt">Eql</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">==</span> (evalT y env)
-evalT (<span class="dt">Les</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu"><=</span> (evalT y env)
-evalT (<span class="dt">Gre</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">>=</span> (evalT y env)
-evalT (<span class="dt">And</span> x y)    env     <span class="fu">=</span> liftB (<span class="fu">&&</span>) (evalT x env) (evalT y env)
+evalT (<span class="dt">Les</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">&lt;=</span> (evalT y env)
+evalT (<span class="dt">Gre</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">&gt;=</span> (evalT y env)
+evalT (<span class="dt">And</span> x y)    env     <span class="fu">=</span> liftB (<span class="fu">&amp;&amp;</span>) (evalT x env) (evalT y env)
                 
 evalT (<span class="dt">Add</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">+</span>) (evalT x env) (evalT y env)
 evalT (<span class="dt">Sub</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">-</span>) (evalT x env) (evalT y env)
@@ -116,63 +116,63 @@ evalT (<span class="dt">If</span> b t f)   env     <span class="fu">=</span> if_
  <span class="kw">where</span> if_ (<span class="dt">B</span> <span class="dt">True</span>)  t' f' <span class="fu">=</span> t'
        if_ (<span class="dt">B</span> <span class="dt">False</span>) t' f' <span class="fu">=</span> f'
 
-<span class="ot">app ::</span> <span class="dt">Val</span> <span class="ot">-></span> <span class="dt">Val</span> <span class="ot">-></span> <span class="dt">Val</span>
+<span class="ot">app ::</span> <span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span>
 app (<span class="dt">F</span> f') x'   <span class="fu">=</span> f' x'
 
-<span class="ot">liftOp ::</span> (<span class="dt">Double</span> <span class="ot">-></span> <span class="dt">Double</span> <span class="ot">-></span> <span class="dt">Double</span>) <span class="ot">-></span>
-          <span class="dt">Val</span>     <span class="ot">-></span> <span class="dt">Val</span>    <span class="ot">-></span> <span class="dt">Val</span>
+<span class="ot">liftOp ::</span> (<span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">Double</span>) <span class="ot">-&gt;</span>
+          <span class="dt">Val</span>     <span class="ot">-&gt;</span> <span class="dt">Val</span>    <span class="ot">-&gt;</span> <span class="dt">Val</span>
 liftOp op (<span class="dt">D</span> e1) (<span class="dt">D</span> e2) <span class="fu">=</span> <span class="dt">D</span> (op e1 e2)
 
-<span class="ot">liftB  ::</span> (<span class="dt">Bool</span> <span class="ot">-></span> <span class="dt">Bool</span> <span class="ot">-></span> <span class="dt">Bool</span>) <span class="ot">-></span>
-          <span class="dt">Val</span>     <span class="ot">-></span> <span class="dt">Val</span>    <span class="ot">-></span> <span class="dt">Val</span>
-liftB  op (<span class="dt">B</span> e1) (<span class="dt">B</span> e2) <span class="fu">=</span> <span class="dt">B</span> (op e1 e2)</code></pre>
+<span class="ot">liftB  ::</span> (<span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span>
+          <span class="dt">Val</span>     <span class="ot">-&gt;</span> <span class="dt">Val</span>    <span class="ot">-&gt;</span> <span class="dt">Val</span>
+liftB  op (<span class="dt">B</span> e1) (<span class="dt">B</span> e2) <span class="fu">=</span> <span class="dt">B</span> (op e1 e2)</code></pre></div>
 <p>Of course this isn’t a probabilisitic programming language. So now we extend our language to include measures.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Meas</span> <span class="fu">=</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Meas</span> <span class="fu">=</span>
      <span class="dt">Uniform</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
      <span class="dt">Weight</span>  <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
      <span class="dt">Bind</span> <span class="dt">Name</span> <span class="dt">Meas</span> <span class="dt">Meas</span>
- <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</code></pre>
+ <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</code></pre></div>
 <p>Let’s take a moment to explain what makes something a measure. Measures can considered un-normalized probability distributions. If you take the sum of the probability of each disjoint outcome from a un-normalized probability distribution, the answer may not be 1.</p>
 <p>This is relevant as we will be representing measures as a list of weighted draws from the underlying distribution. Those draws will need to be normalized to be understood as a probability distribution.</p>
 <p>We can construct measures in one of three ways. We may simply have the continuous uniform distribution whose bounds are defined as expressions. We may have a weighted distribution which only returns the value of its second argument, with probability of the first argument. This is only a probability distribution when the first argument evaluates to one. We’ll call this case <code>dirac</code></p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">dirac ::</span> <span class="dt">Expr</span> <span class="ot">-></span> <span class="dt">Meas</span>
-dirac x <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">Lit</span> <span class="dv">1</span><span class="fu">.</span><span class="dv">0</span>) x</code></pre>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">dirac ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Meas</span>
+dirac x <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">Lit</span> <span class="fl">1.0</span>) x</code></pre></div>
 <p>The final form is what let’s us build measure expressions. What <code>Bind</code> does is take a measure as input, and a function from draws in that measure to another measure.</p>
 <p>Because I don’t feel like defining measurable functions in their own form, <code>Bind</code> also takes a name to set what variable will hold values forthe draws, so the last argument to bind may just use that variable when it wants to refer to those draws. As an example if I wish to take a draw from a uniform distribution and then square that value.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">prog1 <span class="fu">=</span> <span class="dt">Bind</span> <span class="st">"x"</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>))   <span class="co">-- x <~ uniform(1, 5)</span>
-        (dirac (<span class="dt">Add</span> (<span class="dt">Var</span> <span class="st">"x"</span>) (<span class="dt">Var</span> <span class="st">"x"</span>)))   <span class="co">-- return (x + x)</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">prog1 <span class="fu">=</span> <span class="dt">Bind</span> <span class="st">&quot;x&quot;</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>))   <span class="co">-- x &lt;~ uniform(1, 5)</span>
+        (dirac (<span class="dt">Add</span> (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>) (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>)))   <span class="co">-- return (x + x)</span></code></pre></div>
 <p>Measures are evaluated by producing a weighted sample from the measure space they represent. This is also called importance sampling.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalM ::</span> <span class="dt">Meas</span> <span class="ot">-></span> <span class="dt">Env</span> <span class="ot">-></span> <span class="dt">MWC.GenIO</span> <span class="ot">-></span> <span class="dt">IO</span> (<span class="dt">Val</span>, <span class="dt">Double</span>)
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalM ::</span> <span class="dt">Meas</span> <span class="ot">-&gt;</span> <span class="dt">Env</span> <span class="ot">-&gt;</span> <span class="dt">MWC.GenIO</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Val</span>, <span class="dt">Double</span>)
 evalM (<span class="dt">Uniform</span> lo hi) env g <span class="fu">=</span> <span class="kw">do</span>
                               <span class="kw">let</span> <span class="dt">D</span> lo' <span class="fu">=</span> evalT lo env
                               <span class="kw">let</span> <span class="dt">D</span> hi' <span class="fu">=</span> evalT hi env
-                              x <span class="ot"><-</span> MWC.uniformR (lo', hi') g
-                              return (<span class="dt">D</span> x, <span class="dv">1</span><span class="fu">.</span><span class="dv">0</span>)
+                              x <span class="ot">&lt;-</span> MWC.uniformR (lo', hi') g
+                              return (<span class="dt">D</span> x, <span class="fl">1.0</span>)
 evalM (<span class="dt">Weight</span> i x)    env g <span class="fu">=</span> <span class="kw">do</span>
                               <span class="kw">let</span> <span class="dt">D</span> i' <span class="fu">=</span> evalT i env
                               return (evalT x env, i')
 evalM (<span class="dt">Bind</span> x m f)    env g <span class="fu">=</span> <span class="kw">do</span>
-                              (x', w)  <span class="ot"><-</span> evalM m env g
+                              (x', w)  <span class="ot">&lt;-</span> evalM m env g
                               <span class="kw">let</span> env' <span class="fu">=</span> insert x x' env
-                              (f', w1) <span class="ot"><-</span> evalM f env' g
-                              return (f', w<span class="fu">*</span>w1)</code></pre>
+                              (f', w1) <span class="ot">&lt;-</span> evalM f env' g
+                              return (f', w<span class="fu">*</span>w1)</code></pre></div>
 <p>We may run these programs as follows</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">test1 ::</span> <span class="dt">IO</span> ()
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">test1 ::</span> <span class="dt">IO</span> ()
 test1 <span class="fu">=</span> <span class="kw">do</span>
-   g <span class="ot"><-</span> MWC.create
-   draw <span class="ot"><-</span> evalM prog1 empty g
+   g <span class="ot">&lt;-</span> MWC.create
+   draw <span class="ot">&lt;-</span> evalM prog1 empty g
    print draw
 
-(<span class="dv">7</span><span class="fu">.</span><span class="dv">926912543562406</span>,<span class="dv">1</span><span class="fu">.</span><span class="dv">0</span>)</code></pre>
+(<span class="fl">7.926912543562406</span>,<span class="fl">1.0</span>)</code></pre></div>
 <p>Evaluating this program repeatedly will allow you to produce as many draws from this measure as you need. This is great in that we can represent any unconditioned probability distribution. But how do we represent conditional distributions?</p>
 <p>For that we will introduce another datatype</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Cond</span> <span class="fu">=</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Cond</span> <span class="fu">=</span>
     <span class="dt">UCond</span> <span class="dt">Meas</span> <span class="fu">|</span>
     <span class="dt">UniformC</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
     <span class="dt">WeightC</span>  <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-    <span class="dt">BindC</span> <span class="dt">Name</span> <span class="dt">Cond</span> <span class="dt">Cond</span></code></pre>
+    <span class="dt">BindC</span> <span class="dt">Name</span> <span class="dt">Cond</span> <span class="dt">Cond</span></code></pre></div>
 <p>This is just an extension of <code>Meas</code> expect now we may say, a measure is either unconditioned, or if its conditioned for each case we may specify additionally which value its conditioned on. To draw from a conditioned measure, we convert it into an unconditional measure.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalC ::</span> <span class="dt">Cond</span> <span class="ot">-></span> <span class="dt">Meas</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalC ::</span> <span class="dt">Cond</span> <span class="ot">-&gt;</span> <span class="dt">Meas</span>
 evalC (<span class="dt">UCond</span>    m      ) <span class="fu">=</span> m
 evalC (<span class="dt">UniformC</span> lo hi x) <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">If</span> (<span class="dt">And</span> (<span class="dt">Gre</span> x lo)
                                                  (<span class="dt">Les</span> x hi))
@@ -181,33 +181,33 @@ evalC (<span class="dt">UniformC</span> lo hi x) <span class="fu">=</span> <span
 evalC (<span class="dt">WeightC</span>  i x   y) <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">If</span> (<span class="dt">Eql</span> x y)
                                          i
                                          (<span class="dt">Lit</span> <span class="dv">0</span>)) y
-evalC (<span class="dt">BindC</span>    x m f)   <span class="fu">=</span> <span class="dt">Bind</span> x (evalC m) (evalC f)</code></pre>
+evalC (<span class="dt">BindC</span>    x m f)   <span class="fu">=</span> <span class="dt">Bind</span> x (evalC m) (evalC f)</code></pre></div>
 <p>What <code>evalC</code> does is determine what weight to assign to a measure given we know it will produce a particular value. This weight is the probability of getting this value from the measure.</p>
 <p>And that’s all you need to express probabilisitic programs. Take the following example. Suppose we have two random variables <code>x</code> and <code>y</code> where the value of <code>y</code> depends on <code>x</code></p>
-<pre><code>x <~ uniform(1, 5)
-y <~ uniform(x, 7)</code></pre>
+<pre><code>x &lt;~ uniform(1, 5)
+y &lt;~ uniform(x, 7)</code></pre>
 <p>What’s the conditional distribution on <code>x</code> given <code>y</code> is <code>3</code>?</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">prog2 <span class="fu">=</span> <span class="dt">BindC</span> <span class="st">"x"</span> (<span class="dt">UCond</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>)))      <span class="co">-- x <~ uniform(1, 5)</span>
-         (<span class="dt">BindC</span> <span class="st">"_"</span> (<span class="dt">UniformC</span> (<span class="dt">Var</span> <span class="st">"x"</span>) (<span class="dt">Lit</span> <span class="dv">7</span>) (<span class="dt">Lit</span> <span class="dv">3</span>)) <span class="co">-- y <~ uniform(x, 7)</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">prog2 <span class="fu">=</span> <span class="dt">BindC</span> <span class="st">&quot;x&quot;</span> (<span class="dt">UCond</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>)))      <span class="co">-- x &lt;~ uniform(1, 5)</span>
+         (<span class="dt">BindC</span> <span class="st">&quot;_&quot;</span> (<span class="dt">UniformC</span> (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>) (<span class="dt">Lit</span> <span class="dv">7</span>) (<span class="dt">Lit</span> <span class="dv">3</span>)) <span class="co">-- y &lt;~ uniform(x, 7)</span>
                                                          <span class="co">-- observe y 3</span>
-          (<span class="dt">UCond</span> (dirac (<span class="dt">Var</span> <span class="st">"x"</span>))))                     <span class="co">-- return x</span>
+          (<span class="dt">UCond</span> (dirac (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>))))                     <span class="co">-- return x</span>
 
 <span class="ot">test2 ::</span> <span class="dt">IO</span> ()
 test2 <span class="fu">=</span> <span class="kw">do</span>
-   g <span class="ot"><-</span> MWC.create
-   samples <span class="ot"><-</span> replicateM <span class="dv">10</span> (evalM (evalC prog2) empty g)
+   g <span class="ot">&lt;-</span> MWC.create
+   samples <span class="ot">&lt;-</span> replicateM <span class="dv">10</span> (evalM (evalC prog2) empty g)
    print samples
 
-[(<span class="dv">1</span><span class="fu">.</span><span class="dv">099241451531848</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">5084092113511076</span>),
- (<span class="dv">3</span><span class="fu">.</span><span class="dv">963456271781203</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">0</span>),
- (<span class="dv">1</span><span class="fu">.</span><span class="dv">637454187135532</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">5594357800735532</span>),
- (<span class="dv">3</span><span class="fu">.</span><span class="dv">781075065891581</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">0</span>),
- (<span class="dv">1</span><span class="fu">.</span><span class="dv">908186342514358</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">5891810269980327</span>),
- (<span class="dv">2</span><span class="fu">.</span><span class="dv">799366130116895</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">714177929552209</span>),
- (<span class="dv">3</span><span class="fu">.</span><span class="dv">091757816253942</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">0</span>),
- (<span class="dv">1</span><span class="fu">.</span><span class="dv">486166046469419</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">5440860253107659</span>),
- (<span class="dv">3</span><span class="fu">.</span><span class="dv">106369061983323</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">0</span>),
- (<span class="dv">1</span><span class="fu">.</span><span class="dv">225163855492708</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">5194952592470413</span>)]</code></pre>
+[(<span class="fl">1.099241451531848</span>, <span class="fl">0.5084092113511076</span>),
+ (<span class="fl">3.963456271781203</span>, <span class="fl">0.0</span>),
+ (<span class="fl">1.637454187135532</span>, <span class="fl">0.5594357800735532</span>),
+ (<span class="fl">3.781075065891581</span>, <span class="fl">0.0</span>),
+ (<span class="fl">1.908186342514358</span>, <span class="fl">0.5891810269980327</span>),
+ (<span class="fl">2.799366130116895</span>, <span class="fl">0.714177929552209</span>),
+ (<span class="fl">3.091757816253942</span>, <span class="fl">0.0</span>),
+ (<span class="fl">1.486166046469419</span>, <span class="fl">0.5440860253107659</span>),
+ (<span class="fl">3.106369061983323</span>, <span class="fl">0.0</span>),
+ (<span class="fl">1.225163855492708</span>, <span class="fl">0.5194952592470413</span>)]</code></pre></div>
 <p>As you can see, anything above <code>3</code> for <code>x</code> has a weight of <code>0</code> because it would be impossible for to observe <code>y</code> with <code>3</code>.</p>
 <h2 id="further-reading">Further reading</h2>
 <p>This implementation for small problems is actually fairly capable. It can be extended to support more probability distributions in a straightforward way.</p>

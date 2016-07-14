@@ -160,13 +160,13 @@ Constant:4.484257</code></pre>
 <p><em>^AGE</em> is the feature name, <em>104042</em> is the hashed value for the feature, <em>28.8</em> is the value of that feature for this example, <em>0.0188122</em> is the weight we have learned thus far for the feature, and <em>1.1849e9</em> is a sum of gradients squared over the feature values, which is used for adjusting the weight on the feature.</p>
 <h2 id="tuning-the-learning-algorithm">Tuning the Learning algorithm</h2>
 <p>Now by default, vw when learning is optimizing this function</p>
-<p><span class="math">\[ \underset{w}{\text{min }} \lambda_1 \|w\|_1 + \frac{\lambda_2}{2} \Vert w \Vert_2^2 + \sum_i \ell(x_i,y_i,w) \]</span></p>
-<p>Where <span class="math">\(\lambda_1\)</span> and <span class="math">\(\lambda_2\)</span> refer to <a href="http://en.wikipedia.org/wiki/Regularization_(mathematics)">L1 and L2 regularization functions</a>. <span class="math">\(\ell\)</span> refers to the <a href="http://en.wikipedia.org/wiki/Loss_function">loss function</a>.</p>
+<p><span class="math display">\[ \underset{w}{\text{min }} \lambda_1 \|w\|_1 + \frac{\lambda_2}{2} \Vert w \Vert_2^2 + \sum_i \ell(x_i,y_i,w) \]</span></p>
+<p>Where <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span> refer to <a href="http://en.wikipedia.org/wiki/Regularization_(mathematics)">L1 and L2 regularization functions</a>. <span class="math inline">\(\ell\)</span> refers to the <a href="http://en.wikipedia.org/wiki/Loss_function">loss function</a>.</p>
 <p>By default there is no explicit regularization, but L1 and L2 regularization may be added with the <code>--l1</code> and <code>--l2</code> options respectively.</p>
 <p>A loss function can be specified with <code>--loss_function</code>. The default is <code>squared</code>, but options include <code>logistic</code>, <code>hinge</code>, or <code>quantile</code></p>
-<p>The optimal weights for <span class="math">\(w\)</span> learned through running an online learning algorithm for each example (x, y). This algorithm is roughly</p>
-<p><span class="math">\[ \hat{y_t} = w_t x_t \]</span> <span class="math">\[ w_{t+1} \leftarrow w_t + \eta_t^2\left(y_t - \hat{y_t}\right)x_t \]</span> where <span class="math">\[ \eta_t = \lambda d^k \left(\frac{t_0}{t_0 + w_t}\right)^p \]</span></p>
-<p>We can adjust the learning-rate <span class="math">\(\lambda\)</span> with argument <code>-l</code>. The other variables, <span class="math">\(d\)</span> <span class="math">\(t_0\)</span> and <span class="math">\(p\)</span> can be changed with <code>--decay_learning_rate</code> <code>--initial_t</code> and <code>--power_t</code> respectively. Unless you are sure you need to change these, the defaults will work fine.</p>
+<p>The optimal weights for <span class="math inline">\(w\)</span> learned through running an online learning algorithm for each example (x, y). This algorithm is roughly</p>
+<p><span class="math display">\[ \hat{y_t} = w_t x_t \]</span> <span class="math display">\[ w_{t+1} \leftarrow w_t + \eta_t^2\left(y_t - \hat{y_t}\right)x_t \]</span> where <span class="math display">\[ \eta_t = \lambda d^k \left(\frac{t_0}{t_0 + w_t}\right)^p \]</span></p>
+<p>We can adjust the learning-rate <span class="math inline">\(\lambda\)</span> with argument <code>-l</code>. The other variables, <span class="math inline">\(d\)</span> <span class="math inline">\(t_0\)</span> and <span class="math inline">\(p\)</span> can be changed with <code>--decay_learning_rate</code> <code>--initial_t</code> and <code>--power_t</code> respectively. Unless you are sure you need to change these, the defaults will work fine.</p>
 <p>Weights unless stated are all initialized at 0, they can start at another value with <code>--initial_weight w</code> or be randomized with the <code>--random_weights seed</code> option.</p>
 <p>By default, weights are updated one example at a time. For trickier learning problems it sometimes helps to consider of minibatch of <code>k</code> examples at a time. This is doable with <code>--minibatch k</code>.</p>
 <h2 id="selecting-and-masking-feature-namespaces">Selecting and Masking feature namespaces</h2>
@@ -231,6 +231,7 @@ vw -d data.vw -i features.model --feature_mask features.model -f final.model</co
 <p>Now quadratic interaction features leads to a massive blowup in possible features. We can approximate these features by assuming these interactions are really explained by <code>k</code> latent features.</p>
 <div class="figure">
 <img src="../../images/MF_illustrations.png" />
+
 </div>
 <p>To specify a matrix factorization, just use the <code>--rank k</code> with how many latent features you think will explain the interactions</p>
 <pre><code>cat data.vw | vw -q ui --rank 10</code></pre>
@@ -274,6 +275,7 @@ Woot    !
 <p>Where the tags as defined from the <a href="http://www.ark.cs.cmu.edu/TweetNLP/annot_guidelines.pdf">Twitter POS guidelines</a> as</p>
 <div class="figure">
 <img src="../../images/twtags.png" />
+
 </div>
 <p>Now to correctly tag each word, its not enough to know the word, we also need to know how the words around it were tagged. The way SEARN tackles this problems is by reducing it into a series of contextual bandit problems.</p>
 <p>SEARN makes a lot more sense as a reinforcement learning agent than a structured prediction algorithm.</p>
@@ -319,7 +321,7 @@ Woot    !
 <pre><code>cat train.txt | vw -c --passes 10 --searn 25 --searn_task sequence \
 --searn_passes_per_policy 2 -b 30 -f twpos.vw</code></pre>
 <p><code>--searn</code> specifies how many possible labels there are. We can also tune how many passes the internal cost-sensitive learner uses for training our policy for selecting actions. This is done with <code>--searn_passes_per_policy</code>.</p>
-<p>In addition, part of the fun in using a structured learner is having interaction features between the current word and the past predictions. <code>--searn_sequencetask_features <k></code> says interact our current example’s features with the past <code>k</code> predictions. The default context for sequential prediction is only the last prediction. We add more using <code>--searn_sequencetask_history h</code>, where <code>h</code> is the number of previous examples to have as context.</p>
+<p>In addition, part of the fun in using a structured learner is having interaction features between the current word and the past predictions. <code>--searn_sequencetask_features &lt;k&gt;</code> says interact our current example’s features with the past <code>k</code> predictions. The default context for sequential prediction is only the last prediction. We add more using <code>--searn_sequencetask_history h</code>, where <code>h</code> is the number of previous examples to have as context.</p>
 <h2 id="neural-network-reduction">Neural Network Reduction</h2>
 <p>Lesser known about vw is that now includes a reductions framework. As an example, instead of a linear model we can learn a feedforward neural network with a single hidden layer. Just pass how many hidden units you want.</p>
 <pre><code>cat data.vw | vw --nn 5</code></pre>
@@ -340,11 +342,11 @@ Woot    !
 done
 sending unlabeled examples ...
 
-request for example 0: tag="", prediction=0: 
+request for example 0: tag=&quot;&quot;, prediction=0: 
 
 Provide? [0/1/skip]: 1
 
-request for example 1: tag="", prediction=0.003411: 
+request for example 1: tag=&quot;&quot;, prediction=0.003411: 
 
 Provide? [0/1/skip]: 0</code></pre>
 <h2 id="topic-modeling">Topic Modeling</h2>
@@ -378,9 +380,9 @@ zv$worker2$ vw --span_server master --total 3 --node 1 -d worker.data
 zv$worker3$ vw --span_server master --total 3 --node 2 -d worker.data</code></pre>
 <p>Alternatively, we can use Hadoop to instrument sending data to workers</p>
 <pre><code>hadoop jar $HADOOP_HOME/hadoop-streaming.jar
--Dmapred.job.map.memory.mb=2500 -input &ltinput>
--output &ltoutput> -file vw -file runvw.sh -mapper
-`runvw.sh &ltoutput> &ltmaster_server>` -reducer NONE</code></pre>
+-Dmapred.job.map.memory.mb=2500 -input &amp;ltinput&amp;gt
+-output &amp;ltoutput&amp;gt -file vw -file runvw.sh -mapper
+`runvw.sh &amp;ltoutput&amp;gt &amp;ltmaster_server&amp;gt` -reducer NONE</code></pre>
 <p>You can find <code>runwv.sh</code> in the <code>cluster/</code> directory as well</p>
 <p>More details are available in this <a href="http://arxiv.org/abs/1110.4198">paper</a> and these <a href="https://raw.github.com/wiki/JohnLangford/vowpal_wabbit/Cluster_parallel.pdf">slides</a></p>
 <h2 id="conclusions">Conclusions</h2>

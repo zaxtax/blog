@@ -49,7 +49,7 @@ by <em>Rob Zinkov</em> on <strong>2012-06-27</strong>
 		x[i] ~ dnorm(mu, tau)
 	}
 	mu ~ dnorm(0, .0001)
-	tau <- pow(sigma, -2)
+	tau &lt;- pow(sigma, -2)
 	sigma ~ dunif(0, 100)
 }</code></pre>
 <p><strong><em>Bayesian Linear Regression</em></strong></p>
@@ -57,11 +57,11 @@ by <em>Rob Zinkov</em> on <strong>2012-06-27</strong>
 <pre><code>model {
 	for (i in 1:N){
 		y[i] ~ dnorm(y.hat[i], tau)
-		y.hat[i] <- w0 + w1 * x[i]
+		y.hat[i] &lt;- w0 + w1 * x[i]
 	}
 	w0 ~ dnorm(0, .0001)
 	w1 ~ dnorm(0, .0001)
-	tau <- pow(sigma, -2)
+	tau &lt;- pow(sigma, -2)
 	sigma ~ dunif(0, 100)
 }</code></pre>
 <p><strong><em>Logistic Regression</em></strong></p>
@@ -69,8 +69,8 @@ by <em>Rob Zinkov</em> on <strong>2012-06-27</strong>
 <pre><code>model {
 	for (i in 1:N){
 		y[i] ~ dbern(p[i])
-		p[i] <- 1 / (1 + exp(-z[i]))
-		z[i] <- w0 + w1 * x[i]
+		p[i] &lt;- 1 / (1 + exp(-z[i]))
+		z[i] &lt;- w0 + w1 * x[i]
 	}
 	w0 ~ dnorm(0, .0001)
 	w1 ~ dnorm(0, .0001)
@@ -79,7 +79,7 @@ by <em>Rob Zinkov</em> on <strong>2012-06-27</strong>
 <p>Even spam classification can be modeled as a probabilistic program. The framework is very natural for expressing the dependencies. Note, how we are writing a generative story for how words are tagged as spam.</p>
 <p>We then explicitly say how these spam markings combine to give a spam rating for each of the M documents.</p>
 <pre><code>model {
-        pi <- 0.8 # prior probability its spam
+        pi &lt;- 0.8 # prior probability its spam
         # y is label, x is word, w is its spamminess
         for (v in 1:Vocab.len) {
            w[v] ~ dbeta(pi,1-pi)
@@ -87,7 +87,7 @@ by <em>Rob Zinkov</em> on <strong>2012-06-27</strong>
 
         for (i in 1:M){
            y[i] ~ dbern(p[i])
-           p[i] <- 1 / (1 + exp(-sum(z[i,])))
+           p[i] &lt;- 1 / (1 + exp(-sum(z[i,])))
            for (j in 1:N) {
                 z[i,j] ~ dbern(w[s[i,j]]) #z is spam marker
                 s[i,j] ~ dcat(Vocab[]) #s is word selector
@@ -115,8 +115,8 @@ model   {
 <p><a href="http://en.wikipedia.org/wiki/Topic_model">Topic models</a> are used to group documents into the topics or concepts they discuss. I intend to dedicate a future post to better explaining how LDA works. For now, it is best understood as a model that assumes each document decides which mixture of topics it is about and each topic decides which words in vocabulary it is about.</p>
 <p>Notice this model is still only a dozen lines of code. If you wanted to use an off-the-shelf library you would be typically looking at hundreds of lines of code. Most of that is specialized software to learn the model, but when you have generic code for learning a model, LDA becomes something you can just write.</p>
 <pre><code>model {
-  alpha <- 1
-  topics <- 20
+  alpha &lt;- 1
+  topics &lt;- 20
   for (i in 1:M) {
      theta[i] ~ ddirch(alpha) # define a topic mixture per doc
   }
@@ -134,7 +134,7 @@ model   {
 <p>Coorelated Topic Models are essentially just like LDA models except we assume topics can coorelate with one another. The only change our model needed was to sample the topic proportions from a multivariate Gaussian. The covariance matrix of this gaussian is what models the coorelations between our topics. This only require a single extra line of code.</p>
 <pre><code>model {
   sigma[,] ~ dwish(D,topics)
-  topics <- 20
+  topics &lt;- 20
 
   for (i in 1:M) {
      theta[i] ~ dmnorm(mu[],sigma[,]) # define a topic mixture per doc
@@ -154,17 +154,17 @@ model   {
 <p>But if we make a generative model, all these models become cake to represent. ARIMA is a time series model that assumes the present value is a function of past values, some features and some smoothening. That is easy to represent as</p>
 <pre><code>model {
   y[1] ~ dnorm(0,1e-5)
-  eps[1] <- 0
+  eps[1] &lt;- 0
 
   for (i in 2:T) {
      y[i] ~ dnorm(mu[i],tau)
-     mu[i] <- w0 + w1*y[i-1] + x[i] + eps[i-1]
-     eps[i] <- y[i] - mu[i]
+     mu[i] &lt;- w0 + w1*y[i-1] + x[i] + eps[i-1]
+     eps[i] &lt;- y[i] - mu[i]
   }
 
   w0 ~ dnorm(0, .0001)
   w1 ~ dnorm(0, .0001)
-  tau <- pow(sigma, -2)
+  tau &lt;- pow(sigma, -2)
   sigma ~ dunif(0, 100)
 }</code></pre>
 <p>In particular this is ARIMA(1,1,1) but is easy to extend to all the ARIMA models.</p>
@@ -197,22 +197,22 @@ model {
   theta_u ~ dgamma(1,0.005)
   theta_v ~ dgamma(1,0.005)
 
-  tau <- pow(sigma, -2)
+  tau &lt;- pow(sigma, -2)
   sigma ~ dunif(0, 100)
 
   for (i in 1:M) {
-      Usigma[,] <- theta_u * I_udim
+      Usigma[,] &lt;- theta_u * I_udim
       u[i] ~ dmnorm(Zero[],Usigma[,]) # sample latent user vector
   }
 
   for (j in 1:N) {
-      Vsigma[,] <- theta_v * I_vdim
+      Vsigma[,] &lt;- theta_v * I_vdim
       v[j] ~ dmnorm(Zero[],Vsigma[,]) # sample latent item vector
   }
 
   for (i in 1:M) {
       for (j in 1:N) {
-          r.hat[i,j] <- inprod(u[i,], v[j,])
+          r.hat[i,j] &lt;- inprod(u[i,], v[j,])
       	  R[i,j] ~ dnorm(r.hat[i,j],tau) # sample rating
       }
   }     
@@ -224,11 +224,11 @@ model {
 <pre><code>model {
 	for (i in 1:N){
 		y[i] ~ dnorm(y.hat[i], tau)
-		y.hat[i] <- w0 + w1 * x[i]
+		y.hat[i] &lt;- w0 + w1 * x[i]
 	}
 	w0 ~ dEP(0, .0001, 0.5)
 	w1 ~ dEP(0, .0001, 0.5)
-	tau <- pow(sigma, -2)
+	tau &lt;- pow(sigma, -2)
 	sigma ~ dunif(0, 100)
 }</code></pre>
 <p>We now may represent arbitrary sparse priors such as Laplace (L1) and spike-slab (L0). Note, the above is not valid JAGS code, but an extension to support these generalized normal distributions is easy to add to any of these languages.</p>
@@ -236,8 +236,8 @@ model {
 <p><a href="http://en.wikipedia.org/wiki/Conditional_random_field">Conditional Random Fields</a> allow you to create machine learning models where the label for a piece of label is dependent on not just local features of a data point but also features and labels of neighboring pieces of data. As an example, the part-of-speech of a word is dependent on the part-of-speech of words around it.</p>
 <p>Unfortunately, I could not express CRFs in terms of because it is not a generative model. I include it here to show how succiently this model is expressed in Factorie which supports undirected graphical models.</p>
 <pre><code>  val model = new Model(
-    Foreach[Label] { label => Score(label) },
-    Foreach[Label] { label => Score(label.prev, label, label.token) }
+    Foreach[Label] { label =&gt; Score(label) },
+    Foreach[Label] { label =&gt; Score(label.prev, label, label.token) }
   )</code></pre>
 <p><strong><em>Conclusion</em></strong></p>
 <p>I chose some of the more popular models just to show how much flexibility we obtain with probabilistic programming languages. These languages make complex modeling and many machine learning tasks accessible to a wide audience.</p>

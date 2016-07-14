@@ -42,9 +42,9 @@ by <em>Rob Zinkov</em> on <strong>2016-01-12</strong>
 <p>For this tutorial, I will use <code>indentation</code> and <code>parsec</code>.</p>
 <pre><code>cabal install indentation parsec</code></pre>
 <p>To get started import Parsec as you normally would</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Indent.Demo</span> <span class="kw">where</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Indent.Demo</span> <span class="kw">where</span>
 
-<span class="kw">import           </span><span class="dt">Data.Functor</span>                  ((<$>), (<$))
+<span class="kw">import           </span><span class="dt">Data.Functor</span>                  ((&lt;$&gt;), (&lt;$))
 <span class="kw">import           </span><span class="dt">Control.Applicative</span>           (<span class="dt">Applicative</span>(..))
 <span class="kw">import qualified</span> <span class="dt">Control.Monad</span>                 <span class="kw">as</span> <span class="dt">M</span>
 <span class="kw">import           </span><span class="dt">Data.Functor.Identity</span>
@@ -53,49 +53,49 @@ by <em>Rob Zinkov</em> on <strong>2016-01-12</strong>
 <span class="kw">import           </span><span class="dt">Text.Parsec</span>                   <span class="kw">hiding</span> (<span class="dt">Empty</span>)
 <span class="kw">import           </span><span class="dt">Text.Parsec.Text</span>              () <span class="co">-- instances only</span>
 <span class="kw">import qualified</span> <span class="dt">Text.Parsec.Expr</span>              <span class="kw">as</span> <span class="dt">Ex</span>
-<span class="kw">import qualified</span> <span class="dt">Text.Parsec.Token</span>             <span class="kw">as</span> <span class="dt">Tok</span></code></pre>
+<span class="kw">import qualified</span> <span class="dt">Text.Parsec.Token</span>             <span class="kw">as</span> <span class="dt">Tok</span></code></pre></div>
 <p>And then add the following modules from <code>indentation</code></p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import           </span><span class="dt">Text.Parsec.Indentation</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import           </span><span class="dt">Text.Parsec.Indentation</span>
 <span class="kw">import           </span><span class="dt">Text.Parsec.Indentation.Char</span>
-<span class="kw">import qualified</span> <span class="dt">Text.Parsec.Indentation.Token</span> <span class="kw">as</span> <span class="dt">ITok</span></code></pre>
+<span class="kw">import qualified</span> <span class="dt">Text.Parsec.Indentation.Token</span> <span class="kw">as</span> <span class="dt">ITok</span></code></pre></div>
 <p>The key thing which needs to be changed is that the lexer needs to be indentation-sensitive. Sadly, there is no easy way to extend the existing LanguageDefs, so we make one from scratch.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">style ::</span> <span class="dt">Tok.GenLanguageDef</span> <span class="dt">ParserStream</span> st <span class="dt">Identity</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">style ::</span> <span class="dt">Tok.GenLanguageDef</span> <span class="dt">ParserStream</span> st <span class="dt">Identity</span>
 style <span class="fu">=</span> ITok.makeIndentLanguageDef <span class="fu">$</span> <span class="dt">Tok.LanguageDef</span>
-    { Tok.commentStart    <span class="fu">=</span> <span class="st">""</span>
-    , Tok.commentEnd      <span class="fu">=</span> <span class="st">""</span>
+    { Tok.commentStart    <span class="fu">=</span> <span class="st">&quot;&quot;</span>
+    , Tok.commentEnd      <span class="fu">=</span> <span class="st">&quot;&quot;</span>
     , Tok.nestedComments  <span class="fu">=</span> <span class="dt">True</span>
-    , Tok.identStart      <span class="fu">=</span> letter <span class="fu"><|></span> char <span class="ch">'_'</span>
-    , Tok.identLetter     <span class="fu">=</span> alphaNum <span class="fu"><|></span> oneOf <span class="st">"_'"</span>
-    , Tok.opStart         <span class="fu">=</span> oneOf <span class="st">"!#$%&*+./<=>?@\\^|-~"</span>
-    , Tok.opLetter        <span class="fu">=</span> oneOf <span class="st">"!#$%&*+./<=>?@\\^|-~"</span>
+    , Tok.identStart      <span class="fu">=</span> letter <span class="fu">&lt;|&gt;</span> char <span class="ch">'_'</span>
+    , Tok.identLetter     <span class="fu">=</span> alphaNum <span class="fu">&lt;|&gt;</span> oneOf <span class="st">&quot;_'&quot;</span>
+    , Tok.opStart         <span class="fu">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span>
+    , Tok.opLetter        <span class="fu">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span>
     , Tok.caseSensitive   <span class="fu">=</span> <span class="dt">True</span>
-    , Tok.commentLine     <span class="fu">=</span> <span class="st">"#"</span>
-    , Tok.reservedOpNames <span class="fu">=</span> [<span class="st">":"</span>]
-    , Tok.reservedNames   <span class="fu">=</span> [<span class="st">"def"</span>, <span class="st">"add"</span>]
+    , Tok.commentLine     <span class="fu">=</span> <span class="st">&quot;#&quot;</span>
+    , Tok.reservedOpNames <span class="fu">=</span> [<span class="st">&quot;:&quot;</span>]
+    , Tok.reservedNames   <span class="fu">=</span> [<span class="st">&quot;def&quot;</span>, <span class="st">&quot;add&quot;</span>]
     }
 
 <span class="ot">lexer ::</span> <span class="dt">Tok.GenTokenParser</span> <span class="dt">ParserStream</span> () <span class="dt">Identity</span>
-lexer <span class="fu">=</span> ITok.makeTokenParser style</code></pre>
+lexer <span class="fu">=</span> ITok.makeTokenParser style</code></pre></div>
 <p>Once you have an indentation-sensitive lexer, you can add the primitives you need in terms of it.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">integer ::</span> <span class="dt">Parser</span> <span class="dt">Integer</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">integer ::</span> <span class="dt">Parser</span> <span class="dt">Integer</span>
 integer <span class="fu">=</span> Tok.integer lexer
 
 <span class="ot">identifier ::</span> <span class="dt">Parser</span> <span class="dt">String</span>
 identifier <span class="fu">=</span> Tok.identifier lexer
 
-<span class="ot">reserved ::</span> <span class="dt">String</span> <span class="ot">-></span> <span class="dt">Parser</span> ()
+<span class="ot">reserved ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()
 reserved <span class="fu">=</span> Tok.reserved lexer
 
-<span class="ot">reservedOp ::</span> <span class="dt">String</span> <span class="ot">-></span> <span class="dt">Parser</span> ()
+<span class="ot">reservedOp ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()
 reservedOp <span class="fu">=</span> Tok.reservedOp lexer
 
-<span class="ot">parens ::</span> <span class="dt">Parser</span> a <span class="ot">-></span> <span class="dt">Parser</span> a
+<span class="ot">parens ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> a
 parens <span class="fu">=</span> Tok.parens lexer <span class="fu">.</span> localIndentation <span class="dt">Any</span>
 
-<span class="ot">commaSep ::</span> <span class="dt">Parser</span> a <span class="ot">-></span> <span class="dt">Parser</span> [a]
-commaSep <span class="fu">=</span> Tok.commaSep lexer</code></pre>
+<span class="ot">commaSep ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> [a]
+commaSep <span class="fu">=</span> Tok.commaSep lexer</code></pre></div>
 <p>All of these are boilerplate except for <code>parens</code>. You will notice, for it we call <code>localIndentation Any</code> before passing the input. This function indicates that indentation rules can be ignored when using this combinator. This gives parentheses the meaning they have in python which is to suspend indentation rules. We will go into more detail how the indentation primitives work, but for now let’s define AST for our language.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Name</span> <span class="fu">=</span> <span class="dt">String</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Name</span> <span class="fu">=</span> <span class="dt">String</span>
 <span class="kw">type</span> <span class="dt">Args</span> <span class="fu">=</span> [<span class="dt">Name</span>]
 
 <span class="kw">type</span> <span class="dt">ParserStream</span>    <span class="fu">=</span> <span class="dt">IndentStream</span> (<span class="dt">CharIndentStream</span> <span class="dt">String</span>)
@@ -107,73 +107,73 @@ commaSep <span class="fu">=</span> Tok.commaSep lexer</code></pre>
    <span class="fu">|</span> <span class="dt">App</span>  <span class="dt">Expr</span> [<span class="dt">Expr</span>]
    <span class="fu">|</span> <span class="dt">Add</span>  <span class="dt">Expr</span> <span class="dt">Expr</span>
    <span class="fu">|</span> <span class="dt">Lit</span>  <span class="dt">Integer</span>
-   <span class="kw">deriving</span> (<span class="dt">Show</span>)</code></pre>
+   <span class="kw">deriving</span> (<span class="dt">Show</span>)</code></pre></div>
 <p>Parsing this language doesn’t involve need to involve indentation rules</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">int ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-int <span class="fu">=</span> <span class="dt">Lit</span> <span class="fu"><$></span> integer
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">int ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
+int <span class="fu">=</span> <span class="dt">Lit</span> <span class="fu">&lt;$&gt;</span> integer
 
 <span class="ot">add ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-add <span class="fu">=</span> reserved <span class="st">"add"</span> <span class="fu">*></span> (<span class="dt">Add</span> <span class="fu"><$></span> expr <span class="fu"><*></span> expr)
+add <span class="fu">=</span> reserved <span class="st">&quot;add&quot;</span> <span class="fu">*&gt;</span> (<span class="dt">Add</span> <span class="fu">&lt;$&gt;</span> expr <span class="fu">&lt;*&gt;</span> expr)
 
 <span class="ot">var ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-var <span class="fu">=</span> <span class="dt">Var</span> <span class="fu"><$></span> identifier
+var <span class="fu">=</span> <span class="dt">Var</span> <span class="fu">&lt;$&gt;</span> identifier
 
 <span class="ot">app ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-app <span class="fu">=</span> <span class="dt">App</span> <span class="fu"><$></span> var <span class="fu"><*></span> parens (commaSep expr)
+app <span class="fu">=</span> <span class="dt">App</span> <span class="fu">&lt;$&gt;</span> var <span class="fu">&lt;*&gt;</span> parens (commaSep expr)
 
 <span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
 def <span class="fu">=</span> <span class="kw">do</span>
-  reserved <span class="st">"def"</span>
-  name <span class="ot"><-</span> identifier
-  args <span class="ot"><-</span> parens (commaSep identifier)
-  body <span class="ot"><-</span> reservedOp <span class="st">":"</span> <span class="fu">*></span> expr
+  reserved <span class="st">&quot;def&quot;</span>
+  name <span class="ot">&lt;-</span> identifier
+  args <span class="ot">&lt;-</span> parens (commaSep identifier)
+  body <span class="ot">&lt;-</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> expr
   return (<span class="dt">Func</span> name args body)
 
 <span class="ot">expr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
 expr <span class="fu">=</span> def
-   <span class="fu"><|></span> try app
-   <span class="fu"><|></span> try var
-   <span class="fu"><|></span> try add
-   <span class="fu"><|></span> int
-   <span class="fu"><|></span> parens expr</code></pre>
+   <span class="fu">&lt;|&gt;</span> try app
+   <span class="fu">&lt;|&gt;</span> try var
+   <span class="fu">&lt;|&gt;</span> try add
+   <span class="fu">&lt;|&gt;</span> int
+   <span class="fu">&lt;|&gt;</span> parens expr</code></pre></div>
 <p>Let’s add some helper code.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">indentConfig ::</span> <span class="dt">String</span> <span class="ot">-></span> <span class="dt">ParserStream</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">indentConfig ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">ParserStream</span>
 indentConfig <span class="fu">=</span>
     mkIndentStream <span class="dv">0</span> infIndentation <span class="dt">True</span> <span class="dt">Ge</span> <span class="fu">.</span> mkCharIndentStream
 
-<span class="ot">parse ::</span> <span class="dt">String</span> <span class="ot">-></span> <span class="dt">Either</span> <span class="dt">ParseError</span> [<span class="dt">Expr</span>]
+<span class="ot">parse ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> <span class="dt">ParseError</span> [<span class="dt">Expr</span>]
 parse <span class="fu">=</span>
-    runParser (many expr <span class="fu"><*</span> eof) () <span class="st">"[input]"</span> <span class="fu">.</span> indentConfig</code></pre>
+    runParser (many expr <span class="fu">&lt;*</span> eof) () <span class="st">&quot;[input]&quot;</span> <span class="fu">.</span> indentConfig</code></pre></div>
 <p>And this parses programs just fine.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">test1 <span class="fu">=</span> unlines
-  [ <span class="st">"def foo(x,y):"</span>
-  , <span class="st">"    add x y"</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test1 <span class="fu">=</span> unlines
+  [ <span class="st">&quot;def foo(x,y):&quot;</span>
+  , <span class="st">&quot;    add x y&quot;</span>
   ]
 
 parse test1
-<span class="co">-- Right [Func "foo" ["x","y"] (Add (Var "x") (Var "y"))]</span></code></pre>
+<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
 <p>The issue is also things which feel invalid.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">test2 <span class="fu">=</span> unlines
-  [ <span class="st">"def foo(x,y):"</span>
-  , <span class="st">"add x y"</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test2 <span class="fu">=</span> unlines
+  [ <span class="st">&quot;def foo(x,y):&quot;</span>
+  , <span class="st">&quot;add x y&quot;</span>
   ]
 
 parse test2
-<span class="co">-- Right [Func "foo" ["x","y"] (Add (Var "x") (Var "y"))]</span></code></pre>
+<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
 <p>We need to change <code>def</code> so that its body must be indented at strictly greater than character where it starts.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">blockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-blockExpr <span class="fu">=</span> reservedOp <span class="st">":"</span> <span class="fu">*></span> localIndentation <span class="dt">Gt</span> expr
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">blockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
+blockExpr <span class="fu">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> localIndentation <span class="dt">Gt</span> expr
 
 <span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
 def <span class="fu">=</span> <span class="kw">do</span>
-  reserved <span class="st">"def"</span>
-  name <span class="ot"><-</span> identifier
-  args <span class="ot"><-</span> parens (commaSep identifier)
-  body <span class="ot"><-</span> blockExpr
-  return (<span class="dt">Func</span> name args body)</code></pre>
+  reserved <span class="st">&quot;def&quot;</span>
+  name <span class="ot">&lt;-</span> identifier
+  args <span class="ot">&lt;-</span> parens (commaSep identifier)
+  body <span class="ot">&lt;-</span> blockExpr
+  return (<span class="dt">Func</span> name args body)</code></pre></div>
 <p>If you now look, we have defined a function for the body, <code>blockExpr</code>, which says we must have the body strictly greater. Now when we parse <code>test2</code> we get the following.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">parse test2
-<span class="co">-- Left "[input]" (line 2, column 2):</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">parse test2
+<span class="co">-- Left &quot;[input]&quot; (line 2, column 2):</span>
 <span class="co">-- expecting identifier</span>
 <span class="fu">--</span>
 <span class="co">-- Invalid indentation.</span>
@@ -184,33 +184,33 @@ def <span class="fu">=</span> <span class="kw">do</span>
 <span class="co">--                                    , maxIndentation = 9223372036854775807</span>
 <span class="co">--                                    , absMode = False</span>
 <span class="co">--                                    , tokenRel = Ge}</span>
-<span class="co">--                , tokenStream = ""}</span></code></pre>
+<span class="co">--                , tokenStream = &quot;&quot;}</span></code></pre></div>
 <p><code>localIndentation</code> takes two arguments, what the indentation of an expression should be relative to the current indentation, and the expression itself. Relative indentations can be greater-than and equal (Ge), strictly greater-than (Gt), equal (Eq), a specific amount (Const 5), or anything (Any).</p>
 <p>While it seems like this is the only primitive you should need, sometimes the indentation level you want can’t be defined in terms of the parent.</p>
 <p>For example, the following is a valid program</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">test3 <span class="fu">=</span> unlines
-  [ <span class="st">"def foo(x, y):"</span>
-  , <span class="st">"    add x"</span>
-  , <span class="st">" y"</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test3 <span class="fu">=</span> unlines
+  [ <span class="st">&quot;def foo(x, y):&quot;</span>
+  , <span class="st">&quot;    add x&quot;</span>
+  , <span class="st">&quot; y&quot;</span>
   ]
 
 parse test4
-<span class="co">-- Right [Func "foo" ["x","y"] (Add (Var "x") (Var "y"))]</span></code></pre>
+<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
 <p>The issue is that “y” is indented greater than the “def” but, we really want it to be indented in terms of “add”. To do this we need to use absolute indentation. This mode says indentation is defined in terms of the first token parsed, and all indentation rules apply in terms of where that first token is found.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">absBlockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-absBlockExpr <span class="fu">=</span> reservedOp <span class="st">":"</span> <span class="fu">*></span> localIndentation <span class="dt">Gt</span> (absoluteIndentation expr)
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">absBlockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
+absBlockExpr <span class="fu">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> localIndentation <span class="dt">Gt</span> (absoluteIndentation expr)
 
 
 <span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
 def <span class="fu">=</span> <span class="kw">do</span>
-  reserved <span class="st">"def"</span>
-  name <span class="ot"><-</span> identifier
-  args <span class="ot"><-</span> parens (commaSep identifier)
-  body <span class="ot"><-</span> absBlockExpr
-  return (<span class="dt">Func</span> name args body)</code></pre>
+  reserved <span class="st">&quot;def&quot;</span>
+  name <span class="ot">&lt;-</span> identifier
+  args <span class="ot">&lt;-</span> parens (commaSep identifier)
+  body <span class="ot">&lt;-</span> absBlockExpr
+  return (<span class="dt">Func</span> name args body)</code></pre></div>
 <p>We define a function absBlockExpr. You’ll notice we also used a <code>localIndentation</code>. The reason for that is <code>absolutionIndentation</code> normally defaults to the first token of the parent. In our case, this is <code>def</code> and we want instead for it to choose <code>add</code>.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">parse test3
-<span class="co">-- Left "[input]" (line 3, column 3):</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">parse test3
+<span class="co">-- Left &quot;[input]&quot; (line 3, column 3):</span>
 <span class="co">-- expecting identifier</span>
 <span class="fu">--</span>
 <span class="co">-- Invalid indentation.</span>
@@ -221,18 +221,18 @@ def <span class="fu">=</span> <span class="kw">do</span>
 <span class="co">--                                    , maxIndentation = 5</span>
 <span class="co">--                                    , absMode = False</span>
 <span class="co">--                                    , tokenRel = Ge}</span>
-<span class="co">--                , tokenStream = ""}</span></code></pre>
+<span class="co">--                , tokenStream = &quot;&quot;}</span></code></pre></div>
 <p>Now it works as expected</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">test4 <span class="fu">=</span> unlines
-  [ <span class="st">"def foo(x, y):"</span>
-  , <span class="st">"    add x"</span>
-  , <span class="st">"     y"</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test4 <span class="fu">=</span> unlines
+  [ <span class="st">&quot;def foo(x, y):&quot;</span>
+  , <span class="st">&quot;    add x&quot;</span>
+  , <span class="st">&quot;     y&quot;</span>
   ]
 
 parse test4
-<span class="co">-- Right [Func "foo" ["x","y"] (Add (Var "x") (Var "y"))]</span>
+<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span>
 parse test1
-<span class="co">-- Right [Func "foo" ["x","y"] (Add (Var "x") (Var "y"))]</span></code></pre>
+<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
 <p>This library has other bits to it, but this should give enough to figure out, how to add indentation sensitivity to your language.</p>
 <p>Special thanks to <a href="http://www.lambdageek.org/aleksey/">Aleksey Kliger</a> for helping me understand this library.</p>
 <div id="disqus_thread"></div>
