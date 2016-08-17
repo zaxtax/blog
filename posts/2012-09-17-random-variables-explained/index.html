@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html> 
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Convex Optimized - Random Variables: Better Explained</title>
@@ -55,10 +54,9 @@ by <em>Rob Zinkov</em> on <strong>2012-09-17</strong>
 <p><span class="math inline">\(E\)</span> is the event space. It is the set of subsets of <span class="math inline">\(\Omega\)</span>. If we were gambling. Each element of <span class="math inline">\(E\)</span> is something we could place a bet on.</p>
 <p><span class="math inline">\(P\)</span> is the probaility measure. This is a function that for each element of <span class="math inline">\(E\)</span> assigns a probability between 0 and 1.</p>
 <p>As a basic example, consider a six-sided die:</p>
-<div class="figure">
+<figure>
 <img src="../../images/dice.jpg" />
-
-</div>
+</figure>
 <p>The sample space is {1,2,3,4,5,6}. The event space is every subset of that space. Some elements of the event space include {}, {1,3,5}, and {4}. These correspond to betting on none of the outcomes (a bet you will surely lose), betting on an odd number, and betting on the number 4. Assuming all these outcomes are equally likely.</p>
 <p><span class="math display">\[ P(\left\{\right\}) = 0 \]</span> <span class="math display">\[ P(\left\{1,3,5\right\}) = \frac{1}{2} \]</span> <span class="math display">\[ P(\left\{3\right\}) = \frac{1}{6} \]</span></p>
 <p>The trouble with this formulation is its cumbersome to work within directly. Random variables provide a way to summarize the quantities we want to find the probabilities of in terms of samples.</p>
@@ -77,15 +75,13 @@ Odd(\omega) =
 \]</span></p>
 <p>Random variables implicitly transform a given probability space into a related one where the range of the function defines the new sample space. Since, the range defines a new space, we can compose these functions to produce arbitrary distributions.</p>
 <p>We can define a function to access these probabilities. If our random variable is discrete this is called the probability mass function.</p>
-<div class="figure">
+<figure>
 <img src="../../images/geometric.png" />
-
-</div>
+</figure>
 <p>If our random variable is continuous then this will be referred to as a probability density function. The thing to note with this curve, probabilities aren’t the values on the y-axis, they are they areas under the curve.</p>
-<div class="figure">
+<figure>
 <img src="../../images/normal.png" />
-
-</div>
+</figure>
 <p>For our example random variable the equation becomes:</p>
 <p><span class="math inline">\(\large \mathbb{P}[Odd = 1] := P(\{\omega \in \Omega : Odd(\omega) = 1\})\)</span></p>
 <p>Notice those Ps aren’t the same. The left one is the probability mass function. The right one is probability measure from before. In the standard notation X refers to a random variable. x refers to the value it will return.</p>

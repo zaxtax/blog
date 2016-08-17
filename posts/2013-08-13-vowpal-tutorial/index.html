@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html> 
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Convex Optimized - Vowpal Wabbit tutorial for the Uninitiated</title>
@@ -229,10 +228,9 @@ vw -d data.vw -i features.model --feature_mask features.model -f final.model</co
 <p>Warning using these features will result in the square or cube of the number of features. To avoid hashing collisions, you may need allocate more bits for each feature bucket with <code>-b</code></p>
 <h2 id="matrix-factorization">Matrix Factorization</h2>
 <p>Now quadratic interaction features leads to a massive blowup in possible features. We can approximate these features by assuming these interactions are really explained by <code>k</code> latent features.</p>
-<div class="figure">
+<figure>
 <img src="../../images/MF_illustrations.png" />
-
-</div>
+</figure>
 <p>To specify a matrix factorization, just use the <code>--rank k</code> with how many latent features you think will explain the interactions</p>
 <pre><code>cat data.vw | vw -q ui --rank 10</code></pre>
 <h2 id="structured-prediction">Structured Prediction</h2>
@@ -273,10 +271,9 @@ Woot    !
 Woot    !
 !       ,</code></pre>
 <p>Where the tags as defined from the <a href="http://www.ark.cs.cmu.edu/TweetNLP/annot_guidelines.pdf">Twitter POS guidelines</a> as</p>
-<div class="figure">
+<figure>
 <img src="../../images/twtags.png" />
-
-</div>
+</figure>
 <p>Now to correctly tag each word, its not enough to know the word, we also need to know how the words around it were tagged. The way SEARN tackles this problems is by reducing it into a series of contextual bandit problems.</p>
 <p>SEARN makes a lot more sense as a reinforcement learning agent than a structured prediction algorithm.</p>
 <p>Reinforcement learning differs from a standard supervised learning problem in that you don’t learn a function mapping input to output. Instead you learn a policy which dictates the best actions to take in each state. Each of these states will then lead into another state until reaching a goal state. The algorithm is then evaluated jointly based on the sequence of states and actions the learner chose to take.</p>

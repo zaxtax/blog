@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
     <channel>
         <title>Convex Optimized feed.</title>
         <link>http://zinkov.com</link>
@@ -10,9 +11,8 @@
         <item>
     <title>Indentation sensitive parsing the easy way</title>
     <link>http://zinkov.com/posts/2016-01-12-indentation-sensitive-parsing/index.html</link>
-    <description><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <description><![CDATA[<!DOCTYPE html> 
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Convex Optimized - Indentation sensitive parsing the easy way</title>
@@ -54,9 +54,9 @@ by <em>Rob Zinkov</em> on <strong>2016-01-12</strong>
 <p>For this tutorial, I will use <code>indentation</code> and <code>parsec</code>.</p>
 <pre><code>cabal install indentation parsec</code></pre>
 <p>To get started import Parsec as you normally would</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Indent.Demo</span> <span class="kw">where</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Indent.Demo</span> <span class="kw">where</span>
 
-<span class="kw">import           </span><span class="dt">Data.Functor</span>                  ((<$>), (<$))
+<span class="kw">import           </span><span class="dt">Data.Functor</span>                  ((&lt;$&gt;), (&lt;$))
 <span class="kw">import           </span><span class="dt">Control.Applicative</span>           (<span class="dt">Applicative</span>(..))
 <span class="kw">import qualified</span> <span class="dt">Control.Monad</span>                 <span class="kw">as</span> <span class="dt">M</span>
 <span class="kw">import           </span><span class="dt">Data.Functor.Identity</span>
@@ -65,49 +65,49 @@ by <em>Rob Zinkov</em> on <strong>2016-01-12</strong>
 <span class="kw">import           </span><span class="dt">Text.Parsec</span>                   <span class="kw">hiding</span> (<span class="dt">Empty</span>)
 <span class="kw">import           </span><span class="dt">Text.Parsec.Text</span>              () <span class="co">-- instances only</span>
 <span class="kw">import qualified</span> <span class="dt">Text.Parsec.Expr</span>              <span class="kw">as</span> <span class="dt">Ex</span>
-<span class="kw">import qualified</span> <span class="dt">Text.Parsec.Token</span>             <span class="kw">as</span> <span class="dt">Tok</span></code></pre>
+<span class="kw">import qualified</span> <span class="dt">Text.Parsec.Token</span>             <span class="kw">as</span> <span class="dt">Tok</span></code></pre></div>
 <p>And then add the following modules from <code>indentation</code></p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import           </span><span class="dt">Text.Parsec.Indentation</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import           </span><span class="dt">Text.Parsec.Indentation</span>
 <span class="kw">import           </span><span class="dt">Text.Parsec.Indentation.Char</span>
-<span class="kw">import qualified</span> <span class="dt">Text.Parsec.Indentation.Token</span> <span class="kw">as</span> <span class="dt">ITok</span></code></pre>
+<span class="kw">import qualified</span> <span class="dt">Text.Parsec.Indentation.Token</span> <span class="kw">as</span> <span class="dt">ITok</span></code></pre></div>
 <p>The key thing which needs to be changed is that the lexer needs to be indentation-sensitive. Sadly, there is no easy way to extend the existing LanguageDefs, so we make one from scratch.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">style ::</span> <span class="dt">Tok.GenLanguageDef</span> <span class="dt">ParserStream</span> st <span class="dt">Identity</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">style ::</span> <span class="dt">Tok.GenLanguageDef</span> <span class="dt">ParserStream</span> st <span class="dt">Identity</span>
 style <span class="fu">=</span> ITok.makeIndentLanguageDef <span class="fu">$</span> <span class="dt">Tok.LanguageDef</span>
-    { Tok.commentStart    <span class="fu">=</span> <span class="st">""</span>
-    , Tok.commentEnd      <span class="fu">=</span> <span class="st">""</span>
+    { Tok.commentStart    <span class="fu">=</span> <span class="st">&quot;&quot;</span>
+    , Tok.commentEnd      <span class="fu">=</span> <span class="st">&quot;&quot;</span>
     , Tok.nestedComments  <span class="fu">=</span> <span class="dt">True</span>
-    , Tok.identStart      <span class="fu">=</span> letter <span class="fu"><|></span> char <span class="ch">'_'</span>
-    , Tok.identLetter     <span class="fu">=</span> alphaNum <span class="fu"><|></span> oneOf <span class="st">"_'"</span>
-    , Tok.opStart         <span class="fu">=</span> oneOf <span class="st">"!#$%&*+./<=>?@\\^|-~"</span>
-    , Tok.opLetter        <span class="fu">=</span> oneOf <span class="st">"!#$%&*+./<=>?@\\^|-~"</span>
+    , Tok.identStart      <span class="fu">=</span> letter <span class="fu">&lt;|&gt;</span> char <span class="ch">'_'</span>
+    , Tok.identLetter     <span class="fu">=</span> alphaNum <span class="fu">&lt;|&gt;</span> oneOf <span class="st">&quot;_'&quot;</span>
+    , Tok.opStart         <span class="fu">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span>
+    , Tok.opLetter        <span class="fu">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span>
     , Tok.caseSensitive   <span class="fu">=</span> <span class="dt">True</span>
-    , Tok.commentLine     <span class="fu">=</span> <span class="st">"#"</span>
-    , Tok.reservedOpNames <span class="fu">=</span> [<span class="st">":"</span>]
-    , Tok.reservedNames   <span class="fu">=</span> [<span class="st">"def"</span>, <span class="st">"add"</span>]
+    , Tok.commentLine     <span class="fu">=</span> <span class="st">&quot;#&quot;</span>
+    , Tok.reservedOpNames <span class="fu">=</span> [<span class="st">&quot;:&quot;</span>]
+    , Tok.reservedNames   <span class="fu">=</span> [<span class="st">&quot;def&quot;</span>, <span class="st">&quot;add&quot;</span>]
     }
 
 <span class="ot">lexer ::</span> <span class="dt">Tok.GenTokenParser</span> <span class="dt">ParserStream</span> () <span class="dt">Identity</span>
-lexer <span class="fu">=</span> ITok.makeTokenParser style</code></pre>
+lexer <span class="fu">=</span> ITok.makeTokenParser style</code></pre></div>
 <p>Once you have an indentation-sensitive lexer, you can add the primitives you need in terms of it.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">integer ::</span> <span class="dt">Parser</span> <span class="dt">Integer</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">integer ::</span> <span class="dt">Parser</span> <span class="dt">Integer</span>
 integer <span class="fu">=</span> Tok.integer lexer
 
 <span class="ot">identifier ::</span> <span class="dt">Parser</span> <span class="dt">String</span>
 identifier <span class="fu">=</span> Tok.identifier lexer
 
-<span class="ot">reserved ::</span> <span class="dt">String</span> <span class="ot">-></span> <span class="dt">Parser</span> ()
+<span class="ot">reserved ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()
 reserved <span class="fu">=</span> Tok.reserved lexer
 
-<span class="ot">reservedOp ::</span> <span class="dt">String</span> <span class="ot">-></span> <span class="dt">Parser</span> ()
+<span class="ot">reservedOp ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()
 reservedOp <span class="fu">=</span> Tok.reservedOp lexer
 
-<span class="ot">parens ::</span> <span class="dt">Parser</span> a <span class="ot">-></span> <span class="dt">Parser</span> a
+<span class="ot">parens ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> a
 parens <span class="fu">=</span> Tok.parens lexer <span class="fu">.</span> localIndentation <span class="dt">Any</span>
 
-<span class="ot">commaSep ::</span> <span class="dt">Parser</span> a <span class="ot">-></span> <span class="dt">Parser</span> [a]
-commaSep <span class="fu">=</span> Tok.commaSep lexer</code></pre>
+<span class="ot">commaSep ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> [a]
+commaSep <span class="fu">=</span> Tok.commaSep lexer</code></pre></div>
 <p>All of these are boilerplate except for <code>parens</code>. You will notice, for it we call <code>localIndentation Any</code> before passing the input. This function indicates that indentation rules can be ignored when using this combinator. This gives parentheses the meaning they have in python which is to suspend indentation rules. We will go into more detail how the indentation primitives work, but for now let’s define AST for our language.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Name</span> <span class="fu">=</span> <span class="dt">String</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Name</span> <span class="fu">=</span> <span class="dt">String</span>
 <span class="kw">type</span> <span class="dt">Args</span> <span class="fu">=</span> [<span class="dt">Name</span>]
 
 <span class="kw">type</span> <span class="dt">ParserStream</span>    <span class="fu">=</span> <span class="dt">IndentStream</span> (<span class="dt">CharIndentStream</span> <span class="dt">String</span>)
@@ -119,73 +119,73 @@ commaSep <span class="fu">=</span> Tok.commaSep lexer</code></pre>
    <span class="fu">|</span> <span class="dt">App</span>  <span class="dt">Expr</span> [<span class="dt">Expr</span>]
    <span class="fu">|</span> <span class="dt">Add</span>  <span class="dt">Expr</span> <span class="dt">Expr</span>
    <span class="fu">|</span> <span class="dt">Lit</span>  <span class="dt">Integer</span>
-   <span class="kw">deriving</span> (<span class="dt">Show</span>)</code></pre>
+   <span class="kw">deriving</span> (<span class="dt">Show</span>)</code></pre></div>
 <p>Parsing this language doesn’t involve need to involve indentation rules</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">int ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-int <span class="fu">=</span> <span class="dt">Lit</span> <span class="fu"><$></span> integer
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">int ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
+int <span class="fu">=</span> <span class="dt">Lit</span> <span class="fu">&lt;$&gt;</span> integer
 
 <span class="ot">add ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-add <span class="fu">=</span> reserved <span class="st">"add"</span> <span class="fu">*></span> (<span class="dt">Add</span> <span class="fu"><$></span> expr <span class="fu"><*></span> expr)
+add <span class="fu">=</span> reserved <span class="st">&quot;add&quot;</span> <span class="fu">*&gt;</span> (<span class="dt">Add</span> <span class="fu">&lt;$&gt;</span> expr <span class="fu">&lt;*&gt;</span> expr)
 
 <span class="ot">var ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-var <span class="fu">=</span> <span class="dt">Var</span> <span class="fu"><$></span> identifier
+var <span class="fu">=</span> <span class="dt">Var</span> <span class="fu">&lt;$&gt;</span> identifier
 
 <span class="ot">app ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-app <span class="fu">=</span> <span class="dt">App</span> <span class="fu"><$></span> var <span class="fu"><*></span> parens (commaSep expr)
+app <span class="fu">=</span> <span class="dt">App</span> <span class="fu">&lt;$&gt;</span> var <span class="fu">&lt;*&gt;</span> parens (commaSep expr)
 
 <span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
 def <span class="fu">=</span> <span class="kw">do</span>
-  reserved <span class="st">"def"</span>
-  name <span class="ot"><-</span> identifier
-  args <span class="ot"><-</span> parens (commaSep identifier)
-  body <span class="ot"><-</span> reservedOp <span class="st">":"</span> <span class="fu">*></span> expr
+  reserved <span class="st">&quot;def&quot;</span>
+  name <span class="ot">&lt;-</span> identifier
+  args <span class="ot">&lt;-</span> parens (commaSep identifier)
+  body <span class="ot">&lt;-</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> expr
   return (<span class="dt">Func</span> name args body)
 
 <span class="ot">expr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
 expr <span class="fu">=</span> def
-   <span class="fu"><|></span> try app
-   <span class="fu"><|></span> try var
-   <span class="fu"><|></span> try add
-   <span class="fu"><|></span> int
-   <span class="fu"><|></span> parens expr</code></pre>
+   <span class="fu">&lt;|&gt;</span> try app
+   <span class="fu">&lt;|&gt;</span> try var
+   <span class="fu">&lt;|&gt;</span> try add
+   <span class="fu">&lt;|&gt;</span> int
+   <span class="fu">&lt;|&gt;</span> parens expr</code></pre></div>
 <p>Let’s add some helper code.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">indentConfig ::</span> <span class="dt">String</span> <span class="ot">-></span> <span class="dt">ParserStream</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">indentConfig ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">ParserStream</span>
 indentConfig <span class="fu">=</span>
     mkIndentStream <span class="dv">0</span> infIndentation <span class="dt">True</span> <span class="dt">Ge</span> <span class="fu">.</span> mkCharIndentStream
 
-<span class="ot">parse ::</span> <span class="dt">String</span> <span class="ot">-></span> <span class="dt">Either</span> <span class="dt">ParseError</span> [<span class="dt">Expr</span>]
+<span class="ot">parse ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> <span class="dt">ParseError</span> [<span class="dt">Expr</span>]
 parse <span class="fu">=</span>
-    runParser (many expr <span class="fu"><*</span> eof) () <span class="st">"[input]"</span> <span class="fu">.</span> indentConfig</code></pre>
+    runParser (many expr <span class="fu">&lt;*</span> eof) () <span class="st">&quot;[input]&quot;</span> <span class="fu">.</span> indentConfig</code></pre></div>
 <p>And this parses programs just fine.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">test1 <span class="fu">=</span> unlines
-  [ <span class="st">"def foo(x,y):"</span>
-  , <span class="st">"    add x y"</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test1 <span class="fu">=</span> unlines
+  [ <span class="st">&quot;def foo(x,y):&quot;</span>
+  , <span class="st">&quot;    add x y&quot;</span>
   ]
 
 parse test1
-<span class="co">-- Right [Func "foo" ["x","y"] (Add (Var "x") (Var "y"))]</span></code></pre>
+<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
 <p>The issue is also things which feel invalid.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">test2 <span class="fu">=</span> unlines
-  [ <span class="st">"def foo(x,y):"</span>
-  , <span class="st">"add x y"</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test2 <span class="fu">=</span> unlines
+  [ <span class="st">&quot;def foo(x,y):&quot;</span>
+  , <span class="st">&quot;add x y&quot;</span>
   ]
 
 parse test2
-<span class="co">-- Right [Func "foo" ["x","y"] (Add (Var "x") (Var "y"))]</span></code></pre>
+<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
 <p>We need to change <code>def</code> so that its body must be indented at strictly greater than character where it starts.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">blockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-blockExpr <span class="fu">=</span> reservedOp <span class="st">":"</span> <span class="fu">*></span> localIndentation <span class="dt">Gt</span> expr
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">blockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
+blockExpr <span class="fu">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> localIndentation <span class="dt">Gt</span> expr
 
 <span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
 def <span class="fu">=</span> <span class="kw">do</span>
-  reserved <span class="st">"def"</span>
-  name <span class="ot"><-</span> identifier
-  args <span class="ot"><-</span> parens (commaSep identifier)
-  body <span class="ot"><-</span> blockExpr
-  return (<span class="dt">Func</span> name args body)</code></pre>
+  reserved <span class="st">&quot;def&quot;</span>
+  name <span class="ot">&lt;-</span> identifier
+  args <span class="ot">&lt;-</span> parens (commaSep identifier)
+  body <span class="ot">&lt;-</span> blockExpr
+  return (<span class="dt">Func</span> name args body)</code></pre></div>
 <p>If you now look, we have defined a function for the body, <code>blockExpr</code>, which says we must have the body strictly greater. Now when we parse <code>test2</code> we get the following.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">parse test2
-<span class="co">-- Left "[input]" (line 2, column 2):</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">parse test2
+<span class="co">-- Left &quot;[input]&quot; (line 2, column 2):</span>
 <span class="co">-- expecting identifier</span>
 <span class="fu">--</span>
 <span class="co">-- Invalid indentation.</span>
@@ -196,33 +196,33 @@ def <span class="fu">=</span> <span class="kw">do</span>
 <span class="co">--                                    , maxIndentation = 9223372036854775807</span>
 <span class="co">--                                    , absMode = False</span>
 <span class="co">--                                    , tokenRel = Ge}</span>
-<span class="co">--                , tokenStream = ""}</span></code></pre>
+<span class="co">--                , tokenStream = &quot;&quot;}</span></code></pre></div>
 <p><code>localIndentation</code> takes two arguments, what the indentation of an expression should be relative to the current indentation, and the expression itself. Relative indentations can be greater-than and equal (Ge), strictly greater-than (Gt), equal (Eq), a specific amount (Const 5), or anything (Any).</p>
 <p>While it seems like this is the only primitive you should need, sometimes the indentation level you want can’t be defined in terms of the parent.</p>
 <p>For example, the following is a valid program</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">test3 <span class="fu">=</span> unlines
-  [ <span class="st">"def foo(x, y):"</span>
-  , <span class="st">"    add x"</span>
-  , <span class="st">" y"</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test3 <span class="fu">=</span> unlines
+  [ <span class="st">&quot;def foo(x, y):&quot;</span>
+  , <span class="st">&quot;    add x&quot;</span>
+  , <span class="st">&quot; y&quot;</span>
   ]
 
 parse test4
-<span class="co">-- Right [Func "foo" ["x","y"] (Add (Var "x") (Var "y"))]</span></code></pre>
+<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
 <p>The issue is that “y” is indented greater than the “def” but, we really want it to be indented in terms of “add”. To do this we need to use absolute indentation. This mode says indentation is defined in terms of the first token parsed, and all indentation rules apply in terms of where that first token is found.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">absBlockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-absBlockExpr <span class="fu">=</span> reservedOp <span class="st">":"</span> <span class="fu">*></span> localIndentation <span class="dt">Gt</span> (absoluteIndentation expr)
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">absBlockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
+absBlockExpr <span class="fu">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> localIndentation <span class="dt">Gt</span> (absoluteIndentation expr)
 
 
 <span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
 def <span class="fu">=</span> <span class="kw">do</span>
-  reserved <span class="st">"def"</span>
-  name <span class="ot"><-</span> identifier
-  args <span class="ot"><-</span> parens (commaSep identifier)
-  body <span class="ot"><-</span> absBlockExpr
-  return (<span class="dt">Func</span> name args body)</code></pre>
+  reserved <span class="st">&quot;def&quot;</span>
+  name <span class="ot">&lt;-</span> identifier
+  args <span class="ot">&lt;-</span> parens (commaSep identifier)
+  body <span class="ot">&lt;-</span> absBlockExpr
+  return (<span class="dt">Func</span> name args body)</code></pre></div>
 <p>We define a function absBlockExpr. You’ll notice we also used a <code>localIndentation</code>. The reason for that is <code>absolutionIndentation</code> normally defaults to the first token of the parent. In our case, this is <code>def</code> and we want instead for it to choose <code>add</code>.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">parse test3
-<span class="co">-- Left "[input]" (line 3, column 3):</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">parse test3
+<span class="co">-- Left &quot;[input]&quot; (line 3, column 3):</span>
 <span class="co">-- expecting identifier</span>
 <span class="fu">--</span>
 <span class="co">-- Invalid indentation.</span>
@@ -233,18 +233,18 @@ def <span class="fu">=</span> <span class="kw">do</span>
 <span class="co">--                                    , maxIndentation = 5</span>
 <span class="co">--                                    , absMode = False</span>
 <span class="co">--                                    , tokenRel = Ge}</span>
-<span class="co">--                , tokenStream = ""}</span></code></pre>
+<span class="co">--                , tokenStream = &quot;&quot;}</span></code></pre></div>
 <p>Now it works as expected</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">test4 <span class="fu">=</span> unlines
-  [ <span class="st">"def foo(x, y):"</span>
-  , <span class="st">"    add x"</span>
-  , <span class="st">"     y"</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test4 <span class="fu">=</span> unlines
+  [ <span class="st">&quot;def foo(x, y):&quot;</span>
+  , <span class="st">&quot;    add x&quot;</span>
+  , <span class="st">&quot;     y&quot;</span>
   ]
 
 parse test4
-<span class="co">-- Right [Func "foo" ["x","y"] (Add (Var "x") (Var "y"))]</span>
+<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span>
 parse test1
-<span class="co">-- Right [Func "foo" ["x","y"] (Add (Var "x") (Var "y"))]</span></code></pre>
+<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
 <p>This library has other bits to it, but this should give enough to figure out, how to add indentation sensitivity to your language.</p>
 <p>Special thanks to <a href="http://www.lambdageek.org/aleksey/">Aleksey Kliger</a> for helping me understand this library.</p>
 <div id="disqus_thread"></div>
@@ -275,13 +275,13 @@ var disqus_shortname = 'convexoptimized';
 ]]></description>
     <pubDate>Tue, 12 Jan 2016 00:00:00 UT</pubDate>
     <guid>http://zinkov.com/posts/2016-01-12-indentation-sensitive-parsing/index.html</guid>
+    <dc:creator>Rob Zinkov</dc:creator>
 </item>
 <item>
     <title>Building a probabilistic programming interpreter</title>
     <link>http://zinkov.com/posts/2015-08-25-building-a-probabilisitic-interpreter/index.html</link>
-    <description><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <description><![CDATA[<!DOCTYPE html> 
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Convex Optimized - Building a probabilistic programming interpreter</title>
@@ -322,7 +322,7 @@ by <em>Rob Zinkov</em> on <strong>2015-08-25</strong>
 <p>Very often interpreters for probabilisitic programming languages (PPLs) can seem a little mysterious. In actuality, if you know how to write an interpreter for a simple language it isn’t that much more work.</p>
 <p>Using Haskell as the host language I’ll show how to write a simple PPL which uses importance sampling as the underlying inference method. There is nothing special about using from haskell other than pattern-matching so this example should be pretty easy to port to other languages.</p>
 <p>To start let’s import some things and set up some basic types</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Data.List</span> <span class="kw">hiding</span> (empty, insert, map)
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Data.List</span> <span class="kw">hiding</span> (empty, insert, map)
 <span class="kw">import </span><span class="dt">Control.Monad</span>
 
 <span class="kw">import </span><span class="dt">Data.HashMap.Strict</span> <span class="kw">hiding</span> (map)
@@ -330,27 +330,27 @@ by <em>Rob Zinkov</em> on <strong>2015-08-25</strong>
 <span class="kw">import </span><span class="dt">System.Random.MWC.Distributions</span> <span class="kw">as</span> <span class="dt">MD</span>
 
 <span class="kw">type</span> <span class="dt">Name</span> <span class="fu">=</span> <span class="dt">String</span>
-<span class="kw">type</span> <span class="dt">Env</span>  <span class="fu">=</span> <span class="dt">HashMap</span> <span class="dt">String</span> <span class="dt">Val</span></code></pre>
+<span class="kw">type</span> <span class="dt">Env</span>  <span class="fu">=</span> <span class="dt">HashMap</span> <span class="dt">String</span> <span class="dt">Val</span></code></pre></div>
 <p>Our language will have as values functions, doubles, bools and pairs of those.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Val</span> <span class="fu">=</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Val</span> <span class="fu">=</span>
     <span class="dt">D</span> <span class="dt">Double</span> <span class="fu">|</span>
     <span class="dt">B</span> <span class="dt">Bool</span>   <span class="fu">|</span>
-    <span class="dt">F</span> (<span class="dt">Val</span> <span class="ot">-></span> <span class="dt">Val</span>) <span class="fu">|</span>
+    <span class="dt">F</span> (<span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span>) <span class="fu">|</span>
     <span class="dt">P</span> <span class="dt">Val</span> <span class="dt">Val</span>
 
 <span class="kw">instance</span> <span class="dt">Eq</span> <span class="dt">Val</span> <span class="kw">where</span>
   <span class="dt">D</span> x <span class="fu">==</span> <span class="dt">D</span> y         <span class="fu">=</span> x <span class="fu">==</span> y
   <span class="dt">B</span> x <span class="fu">==</span> <span class="dt">B</span> y         <span class="fu">=</span> x <span class="fu">==</span> y
-  <span class="dt">P</span> x1 x2 <span class="fu">==</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu">==</span> y1 <span class="fu">&&</span> x2 <span class="fu">==</span> y2
+  <span class="dt">P</span> x1 x2 <span class="fu">==</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu">==</span> y1 <span class="fu">&amp;&amp;</span> x2 <span class="fu">==</span> y2
   _ <span class="fu">==</span> _             <span class="fu">=</span> <span class="dt">False</span>
 
 <span class="kw">instance</span> <span class="dt">Ord</span> <span class="dt">Val</span> <span class="kw">where</span>
-  <span class="dt">D</span> x <span class="fu"><=</span> <span class="dt">D</span> y         <span class="fu">=</span> x <span class="fu"><=</span> y
-  <span class="dt">B</span> x <span class="fu"><=</span> <span class="dt">B</span> y         <span class="fu">=</span> x <span class="fu"><=</span> y
-  <span class="dt">P</span> x1 x2 <span class="fu"><=</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu"><=</span> y1 <span class="fu">&&</span> x2 <span class="fu"><=</span> y2
-  _ <span class="fu"><=</span> _             <span class="fu">=</span> error <span class="st">"Comparing functions is undefined"</span></code></pre>
+  <span class="dt">D</span> x <span class="fu">&lt;=</span> <span class="dt">D</span> y         <span class="fu">=</span> x <span class="fu">&lt;=</span> y
+  <span class="dt">B</span> x <span class="fu">&lt;=</span> <span class="dt">B</span> y         <span class="fu">=</span> x <span class="fu">&lt;=</span> y
+  <span class="dt">P</span> x1 x2 <span class="fu">&lt;=</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu">&lt;=</span> y1 <span class="fu">&amp;&amp;</span> x2 <span class="fu">&lt;=</span> y2
+  _ <span class="fu">&lt;=</span> _             <span class="fu">=</span> error <span class="st">&quot;Comparing functions is undefined&quot;</span></code></pre></div>
 <p>This language will have expressions for these values, conditionals and arithmetic.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Expr</span> <span class="fu">=</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Expr</span> <span class="fu">=</span>
      <span class="dt">Lit</span> <span class="dt">Double</span> <span class="fu">|</span>
      <span class="dt">Var</span> <span class="dt">Name</span> <span class="fu">|</span>
      <span class="dt">Pair</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
@@ -370,18 +370,18 @@ by <em>Rob Zinkov</em> on <strong>2015-08-25</strong>
      <span class="dt">Sub</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
      <span class="dt">Mul</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
      <span class="dt">Div</span> <span class="dt">Expr</span> <span class="dt">Expr</span>
- <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</code></pre>
+ <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</code></pre></div>
 <p>We can evalute expressions in this language without doing anything special.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalT ::</span> <span class="dt">Expr</span> <span class="ot">-></span> <span class="dt">Env</span> <span class="ot">-></span> <span class="dt">Val</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalT ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Env</span> <span class="ot">-&gt;</span> <span class="dt">Val</span>
 evalT (<span class="dt">Lit</span> a) _            <span class="fu">=</span> <span class="dt">D</span> a
 evalT (<span class="dt">Var</span> x)      env     <span class="fu">=</span> env <span class="fu">!</span> x
-evalT (<span class="dt">Lam</span> x body) env     <span class="fu">=</span> <span class="dt">F</span> (\ x' <span class="ot">-></span> evalT body (insert x x' env))
+evalT (<span class="dt">Lam</span> x body) env     <span class="fu">=</span> <span class="dt">F</span> (\ x' <span class="ot">-&gt;</span> evalT body (insert x x' env))
 evalT (<span class="dt">App</span> f x)    env     <span class="fu">=</span> app (evalT f env) (evalT x env)
            
 evalT (<span class="dt">Eql</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">==</span> (evalT y env)
-evalT (<span class="dt">Les</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu"><=</span> (evalT y env)
-evalT (<span class="dt">Gre</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">>=</span> (evalT y env)
-evalT (<span class="dt">And</span> x y)    env     <span class="fu">=</span> liftB (<span class="fu">&&</span>) (evalT x env) (evalT y env)
+evalT (<span class="dt">Les</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">&lt;=</span> (evalT y env)
+evalT (<span class="dt">Gre</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">&gt;=</span> (evalT y env)
+evalT (<span class="dt">And</span> x y)    env     <span class="fu">=</span> liftB (<span class="fu">&amp;&amp;</span>) (evalT x env) (evalT y env)
                 
 evalT (<span class="dt">Add</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">+</span>) (evalT x env) (evalT y env)
 evalT (<span class="dt">Sub</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">-</span>) (evalT x env) (evalT y env)
@@ -397,63 +397,63 @@ evalT (<span class="dt">If</span> b t f)   env     <span class="fu">=</span> if_
  <span class="kw">where</span> if_ (<span class="dt">B</span> <span class="dt">True</span>)  t' f' <span class="fu">=</span> t'
        if_ (<span class="dt">B</span> <span class="dt">False</span>) t' f' <span class="fu">=</span> f'
 
-<span class="ot">app ::</span> <span class="dt">Val</span> <span class="ot">-></span> <span class="dt">Val</span> <span class="ot">-></span> <span class="dt">Val</span>
+<span class="ot">app ::</span> <span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span>
 app (<span class="dt">F</span> f') x'   <span class="fu">=</span> f' x'
 
-<span class="ot">liftOp ::</span> (<span class="dt">Double</span> <span class="ot">-></span> <span class="dt">Double</span> <span class="ot">-></span> <span class="dt">Double</span>) <span class="ot">-></span>
-          <span class="dt">Val</span>     <span class="ot">-></span> <span class="dt">Val</span>    <span class="ot">-></span> <span class="dt">Val</span>
+<span class="ot">liftOp ::</span> (<span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">Double</span>) <span class="ot">-&gt;</span>
+          <span class="dt">Val</span>     <span class="ot">-&gt;</span> <span class="dt">Val</span>    <span class="ot">-&gt;</span> <span class="dt">Val</span>
 liftOp op (<span class="dt">D</span> e1) (<span class="dt">D</span> e2) <span class="fu">=</span> <span class="dt">D</span> (op e1 e2)
 
-<span class="ot">liftB  ::</span> (<span class="dt">Bool</span> <span class="ot">-></span> <span class="dt">Bool</span> <span class="ot">-></span> <span class="dt">Bool</span>) <span class="ot">-></span>
-          <span class="dt">Val</span>     <span class="ot">-></span> <span class="dt">Val</span>    <span class="ot">-></span> <span class="dt">Val</span>
-liftB  op (<span class="dt">B</span> e1) (<span class="dt">B</span> e2) <span class="fu">=</span> <span class="dt">B</span> (op e1 e2)</code></pre>
+<span class="ot">liftB  ::</span> (<span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span>
+          <span class="dt">Val</span>     <span class="ot">-&gt;</span> <span class="dt">Val</span>    <span class="ot">-&gt;</span> <span class="dt">Val</span>
+liftB  op (<span class="dt">B</span> e1) (<span class="dt">B</span> e2) <span class="fu">=</span> <span class="dt">B</span> (op e1 e2)</code></pre></div>
 <p>Of course this isn’t a probabilisitic programming language. So now we extend our language to include measures.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Meas</span> <span class="fu">=</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Meas</span> <span class="fu">=</span>
      <span class="dt">Uniform</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
      <span class="dt">Weight</span>  <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
      <span class="dt">Bind</span> <span class="dt">Name</span> <span class="dt">Meas</span> <span class="dt">Meas</span>
- <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</code></pre>
+ <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</code></pre></div>
 <p>Let’s take a moment to explain what makes something a measure. Measures can considered un-normalized probability distributions. If you take the sum of the probability of each disjoint outcome from a un-normalized probability distribution, the answer may not be 1.</p>
 <p>This is relevant as we will be representing measures as a list of weighted draws from the underlying distribution. Those draws will need to be normalized to be understood as a probability distribution.</p>
 <p>We can construct measures in one of three ways. We may simply have the continuous uniform distribution whose bounds are defined as expressions. We may have a weighted distribution which only returns the value of its second argument, with probability of the first argument. This is only a probability distribution when the first argument evaluates to one. We’ll call this case <code>dirac</code></p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">dirac ::</span> <span class="dt">Expr</span> <span class="ot">-></span> <span class="dt">Meas</span>
-dirac x <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">Lit</span> <span class="dv">1</span><span class="fu">.</span><span class="dv">0</span>) x</code></pre>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">dirac ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Meas</span>
+dirac x <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">Lit</span> <span class="fl">1.0</span>) x</code></pre></div>
 <p>The final form is what let’s us build measure expressions. What <code>Bind</code> does is take a measure as input, and a function from draws in that measure to another measure.</p>
 <p>Because I don’t feel like defining measurable functions in their own form, <code>Bind</code> also takes a name to set what variable will hold values forthe draws, so the last argument to bind may just use that variable when it wants to refer to those draws. As an example if I wish to take a draw from a uniform distribution and then square that value.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">prog1 <span class="fu">=</span> <span class="dt">Bind</span> <span class="st">"x"</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>))   <span class="co">-- x <~ uniform(1, 5)</span>
-        (dirac (<span class="dt">Add</span> (<span class="dt">Var</span> <span class="st">"x"</span>) (<span class="dt">Var</span> <span class="st">"x"</span>)))   <span class="co">-- return (x + x)</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">prog1 <span class="fu">=</span> <span class="dt">Bind</span> <span class="st">&quot;x&quot;</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>))   <span class="co">-- x &lt;~ uniform(1, 5)</span>
+        (dirac (<span class="dt">Add</span> (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>) (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>)))   <span class="co">-- return (x + x)</span></code></pre></div>
 <p>Measures are evaluated by producing a weighted sample from the measure space they represent. This is also called importance sampling.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalM ::</span> <span class="dt">Meas</span> <span class="ot">-></span> <span class="dt">Env</span> <span class="ot">-></span> <span class="dt">MWC.GenIO</span> <span class="ot">-></span> <span class="dt">IO</span> (<span class="dt">Val</span>, <span class="dt">Double</span>)
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalM ::</span> <span class="dt">Meas</span> <span class="ot">-&gt;</span> <span class="dt">Env</span> <span class="ot">-&gt;</span> <span class="dt">MWC.GenIO</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Val</span>, <span class="dt">Double</span>)
 evalM (<span class="dt">Uniform</span> lo hi) env g <span class="fu">=</span> <span class="kw">do</span>
                               <span class="kw">let</span> <span class="dt">D</span> lo' <span class="fu">=</span> evalT lo env
                               <span class="kw">let</span> <span class="dt">D</span> hi' <span class="fu">=</span> evalT hi env
-                              x <span class="ot"><-</span> MWC.uniformR (lo', hi') g
-                              return (<span class="dt">D</span> x, <span class="dv">1</span><span class="fu">.</span><span class="dv">0</span>)
+                              x <span class="ot">&lt;-</span> MWC.uniformR (lo', hi') g
+                              return (<span class="dt">D</span> x, <span class="fl">1.0</span>)
 evalM (<span class="dt">Weight</span> i x)    env g <span class="fu">=</span> <span class="kw">do</span>
                               <span class="kw">let</span> <span class="dt">D</span> i' <span class="fu">=</span> evalT i env
                               return (evalT x env, i')
 evalM (<span class="dt">Bind</span> x m f)    env g <span class="fu">=</span> <span class="kw">do</span>
-                              (x', w)  <span class="ot"><-</span> evalM m env g
+                              (x', w)  <span class="ot">&lt;-</span> evalM m env g
                               <span class="kw">let</span> env' <span class="fu">=</span> insert x x' env
-                              (f', w1) <span class="ot"><-</span> evalM f env' g
-                              return (f', w<span class="fu">*</span>w1)</code></pre>
+                              (f', w1) <span class="ot">&lt;-</span> evalM f env' g
+                              return (f', w<span class="fu">*</span>w1)</code></pre></div>
 <p>We may run these programs as follows</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">test1 ::</span> <span class="dt">IO</span> ()
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">test1 ::</span> <span class="dt">IO</span> ()
 test1 <span class="fu">=</span> <span class="kw">do</span>
-   g <span class="ot"><-</span> MWC.create
-   draw <span class="ot"><-</span> evalM prog1 empty g
+   g <span class="ot">&lt;-</span> MWC.create
+   draw <span class="ot">&lt;-</span> evalM prog1 empty g
    print draw
 
-(<span class="dv">7</span><span class="fu">.</span><span class="dv">926912543562406</span>,<span class="dv">1</span><span class="fu">.</span><span class="dv">0</span>)</code></pre>
+(<span class="fl">7.926912543562406</span>,<span class="fl">1.0</span>)</code></pre></div>
 <p>Evaluating this program repeatedly will allow you to produce as many draws from this measure as you need. This is great in that we can represent any unconditioned probability distribution. But how do we represent conditional distributions?</p>
 <p>For that we will introduce another datatype</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Cond</span> <span class="fu">=</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Cond</span> <span class="fu">=</span>
     <span class="dt">UCond</span> <span class="dt">Meas</span> <span class="fu">|</span>
     <span class="dt">UniformC</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
     <span class="dt">WeightC</span>  <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-    <span class="dt">BindC</span> <span class="dt">Name</span> <span class="dt">Cond</span> <span class="dt">Cond</span></code></pre>
+    <span class="dt">BindC</span> <span class="dt">Name</span> <span class="dt">Cond</span> <span class="dt">Cond</span></code></pre></div>
 <p>This is just an extension of <code>Meas</code> expect now we may say, a measure is either unconditioned, or if its conditioned for each case we may specify additionally which value its conditioned on. To draw from a conditioned measure, we convert it into an unconditional measure.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalC ::</span> <span class="dt">Cond</span> <span class="ot">-></span> <span class="dt">Meas</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalC ::</span> <span class="dt">Cond</span> <span class="ot">-&gt;</span> <span class="dt">Meas</span>
 evalC (<span class="dt">UCond</span>    m      ) <span class="fu">=</span> m
 evalC (<span class="dt">UniformC</span> lo hi x) <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">If</span> (<span class="dt">And</span> (<span class="dt">Gre</span> x lo)
                                                  (<span class="dt">Les</span> x hi))
@@ -462,33 +462,33 @@ evalC (<span class="dt">UniformC</span> lo hi x) <span class="fu">=</span> <span
 evalC (<span class="dt">WeightC</span>  i x   y) <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">If</span> (<span class="dt">Eql</span> x y)
                                          i
                                          (<span class="dt">Lit</span> <span class="dv">0</span>)) y
-evalC (<span class="dt">BindC</span>    x m f)   <span class="fu">=</span> <span class="dt">Bind</span> x (evalC m) (evalC f)</code></pre>
+evalC (<span class="dt">BindC</span>    x m f)   <span class="fu">=</span> <span class="dt">Bind</span> x (evalC m) (evalC f)</code></pre></div>
 <p>What <code>evalC</code> does is determine what weight to assign to a measure given we know it will produce a particular value. This weight is the probability of getting this value from the measure.</p>
 <p>And that’s all you need to express probabilisitic programs. Take the following example. Suppose we have two random variables <code>x</code> and <code>y</code> where the value of <code>y</code> depends on <code>x</code></p>
-<pre><code>x <~ uniform(1, 5)
-y <~ uniform(x, 7)</code></pre>
+<pre><code>x &lt;~ uniform(1, 5)
+y &lt;~ uniform(x, 7)</code></pre>
 <p>What’s the conditional distribution on <code>x</code> given <code>y</code> is <code>3</code>?</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">prog2 <span class="fu">=</span> <span class="dt">BindC</span> <span class="st">"x"</span> (<span class="dt">UCond</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>)))      <span class="co">-- x <~ uniform(1, 5)</span>
-         (<span class="dt">BindC</span> <span class="st">"_"</span> (<span class="dt">UniformC</span> (<span class="dt">Var</span> <span class="st">"x"</span>) (<span class="dt">Lit</span> <span class="dv">7</span>) (<span class="dt">Lit</span> <span class="dv">3</span>)) <span class="co">-- y <~ uniform(x, 7)</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">prog2 <span class="fu">=</span> <span class="dt">BindC</span> <span class="st">&quot;x&quot;</span> (<span class="dt">UCond</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>)))      <span class="co">-- x &lt;~ uniform(1, 5)</span>
+         (<span class="dt">BindC</span> <span class="st">&quot;_&quot;</span> (<span class="dt">UniformC</span> (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>) (<span class="dt">Lit</span> <span class="dv">7</span>) (<span class="dt">Lit</span> <span class="dv">3</span>)) <span class="co">-- y &lt;~ uniform(x, 7)</span>
                                                          <span class="co">-- observe y 3</span>
-          (<span class="dt">UCond</span> (dirac (<span class="dt">Var</span> <span class="st">"x"</span>))))                     <span class="co">-- return x</span>
+          (<span class="dt">UCond</span> (dirac (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>))))                     <span class="co">-- return x</span>
 
 <span class="ot">test2 ::</span> <span class="dt">IO</span> ()
 test2 <span class="fu">=</span> <span class="kw">do</span>
-   g <span class="ot"><-</span> MWC.create
-   samples <span class="ot"><-</span> replicateM <span class="dv">10</span> (evalM (evalC prog2) empty g)
+   g <span class="ot">&lt;-</span> MWC.create
+   samples <span class="ot">&lt;-</span> replicateM <span class="dv">10</span> (evalM (evalC prog2) empty g)
    print samples
 
-[(<span class="dv">1</span><span class="fu">.</span><span class="dv">099241451531848</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">5084092113511076</span>),
- (<span class="dv">3</span><span class="fu">.</span><span class="dv">963456271781203</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">0</span>),
- (<span class="dv">1</span><span class="fu">.</span><span class="dv">637454187135532</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">5594357800735532</span>),
- (<span class="dv">3</span><span class="fu">.</span><span class="dv">781075065891581</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">0</span>),
- (<span class="dv">1</span><span class="fu">.</span><span class="dv">908186342514358</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">5891810269980327</span>),
- (<span class="dv">2</span><span class="fu">.</span><span class="dv">799366130116895</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">714177929552209</span>),
- (<span class="dv">3</span><span class="fu">.</span><span class="dv">091757816253942</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">0</span>),
- (<span class="dv">1</span><span class="fu">.</span><span class="dv">486166046469419</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">5440860253107659</span>),
- (<span class="dv">3</span><span class="fu">.</span><span class="dv">106369061983323</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">0</span>),
- (<span class="dv">1</span><span class="fu">.</span><span class="dv">225163855492708</span>, <span class="dv">0</span><span class="fu">.</span><span class="dv">5194952592470413</span>)]</code></pre>
+[(<span class="fl">1.099241451531848</span>, <span class="fl">0.5084092113511076</span>),
+ (<span class="fl">3.963456271781203</span>, <span class="fl">0.0</span>),
+ (<span class="fl">1.637454187135532</span>, <span class="fl">0.5594357800735532</span>),
+ (<span class="fl">3.781075065891581</span>, <span class="fl">0.0</span>),
+ (<span class="fl">1.908186342514358</span>, <span class="fl">0.5891810269980327</span>),
+ (<span class="fl">2.799366130116895</span>, <span class="fl">0.714177929552209</span>),
+ (<span class="fl">3.091757816253942</span>, <span class="fl">0.0</span>),
+ (<span class="fl">1.486166046469419</span>, <span class="fl">0.5440860253107659</span>),
+ (<span class="fl">3.106369061983323</span>, <span class="fl">0.0</span>),
+ (<span class="fl">1.225163855492708</span>, <span class="fl">0.5194952592470413</span>)]</code></pre></div>
 <p>As you can see, anything above <code>3</code> for <code>x</code> has a weight of <code>0</code> because it would be impossible for to observe <code>y</code> with <code>3</code>.</p>
 <h2 id="further-reading">Further reading</h2>
 <p>This implementation for small problems is actually fairly capable. It can be extended to support more probability distributions in a straightforward way.</p>
@@ -527,13 +527,13 @@ var disqus_shortname = 'convexoptimized';
 ]]></description>
     <pubDate>Tue, 25 Aug 2015 00:00:00 UT</pubDate>
     <guid>http://zinkov.com/posts/2015-08-25-building-a-probabilisitic-interpreter/index.html</guid>
+    <dc:creator>Rob Zinkov</dc:creator>
 </item>
 <item>
     <title>Where priors come from</title>
     <link>http://zinkov.com/posts/2015-06-09-where-priors-come-from/index.html</link>
-    <description><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <description><![CDATA[<!DOCTYPE html> 
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Convex Optimized - Where priors come from</title>
@@ -571,233 +571,233 @@ var disqus_shortname = 'convexoptimized';
 
         <h3>Where priors come from</h3>
 by <em>Rob Zinkov</em> on <strong>2015-06-09</strong>
-<p>When reading up on Bayesian modeling papers it can be bewildering to understand why a paricular prior was chosen. The distributions usually are named after people and have scary density equations. This makes understanding why the models were successful harder to see.</p>
-<p>The reality is that many of these distributions are making assumptions about the type of data we have. Although there are hundreds of probability distributions, its only a dozen or so that are used again and again. The others are often special cases of these dozen or can be made through a clever combination of two or three of these simpler distributions.</p>
-<p>I’d like to outline this small group of distributions and say what assumptions they encode where our data came from and why they get used. Often a prior is employed because the assumptions of the prior match what we know about the parameter generation process.</p>
-<p>Keep in mind, there are multiple effective priors for a particular problem. The best prior to use for a problem is not wisdom that is set in stone. A particular prior is chosen as some combination of analytic tractability, who computationally efficient is it to manipulate and does it make other recognizable distributions when combined with popular likelihood functions. Better priors are always being discovered by researchers.</p>
+<p>When reading up on Bayesian modeling papers it can be bewildering to understand why a paricular prior was chosen. The distributions usually are named after people and the density equations are pretty scary. This makes it harder to see why the models were successful.</p>
+<p>The reality is that many of these distributions are making assumptions about the type of data we have. Although there are hundreds of probability distributions, its only a dozen or so that are used again and again. The others are often special cases of these dozen or can be created through a clever combination of two or three of these simpler distributions.</p>
+<p>I’d like to outline this small group of distributions and say what assumptions they encode, where our data came from, and why they get used. Often a prior is employed because the assumptions of the prior match what we know about the parameter generation process.</p>
+<p>Keep in mind, there are multiple effective priors for a particular problem. The best prior to use for a problem is not some wisdom set in stone. A particular prior is chosen as some combination of analytic tractability, computationally efficiency, and does it make other recognizable distributions when combined with popular likelihood functions. Better priors are always being discovered by researchers.</p>
 <p>Distributions are understandable in many different ways. The most intuitive for me is to plot a histogram of values. Here is some helper code for doing that.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> numpy <span class="ch">as</span> np
-<span class="ch">import</span> numpy.random <span class="ch">as</span> r
-<span class="ch">import</span> matplotlib.pyplot <span class="ch">as</span> plt
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
+<span class="im">import</span> numpy.random <span class="im">as</span> r
+<span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt
 
 
 <span class="kw">def</span> config():
     plt.style.use(<span class="st">'ggplot'</span>)
 
 
-<span class="kw">def</span> display_histogram(dist, samples=<span class="dv">10000</span>, **kwargs):
-    plt.hist(dist(samples), **kwargs)</code></pre>
+<span class="kw">def</span> display_histogram(dist, samples<span class="op">=</span><span class="dv">10000</span>, <span class="op">**</span>kwargs):
+    plt.hist(dist(samples), <span class="op">**</span>kwargs)</code></pre></div>
 <h2 id="uniform-distribution">Uniform distribution</h2>
-<p>The uniform distribution is the simplest distribution to explain. Whether you use this one in its continuous case or its discrete case it is used for the same thing. You have a set of events that are equally likely. Note, the uniform distribution from <span class="math">\(\infty\)</span> to <span class="math">\(-\infty\)</span> is not a probability distribution. This requires you give lower and upper bounds for your values.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> uniform(lo, hi):
-    <span class="kw">return</span> <span class="kw">lambda</span> samples: r.uniform(lo, hi, samples)
+<p>The uniform distribution is the simplest distribution to explain. Whether you use this one in its continuous case or its discrete case it is used for the same thing. You have a set of events that are equally likely. Note, the uniform distribution from <span class="math inline">\(\infty\)</span> to <span class="math inline">\(-\infty\)</span> is not a probability distribution. This requires you give lower and upper bounds for your values.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> uniform(lo, hi):
+    <span class="cf">return</span> <span class="kw">lambda</span> samples: r.uniform(lo, hi, samples)
 
-display_histogram(uniform(<span class="dv">1</span>, <span class="dv">3</span>))</code></pre>
+display_histogram(uniform(<span class="dv">1</span>, <span class="dv">3</span>))</code></pre></div>
 <p><img src="../../images/uniformhist.png" width="600" height="400"></p>
 <p>This distribution isn’t used as often as you’d think, since its rare we want hard boundaries on our values.</p>
 <h2 id="normal-distribution">Normal distribution</h2>
-<p>The normal distribution is possibly the most frequently used distribution. Sometimes called the <em>Gaussian</em> distribution. This has support over the entire real line. It makes it really convenient, because you don’t have to worry about checking boundaries. This is the distribution you want if you find yourself saying things like, “the sensor sayss 20 km/h +/- 5 km/h”. The normal distribution takes as argument a center, <span class="math">\(\mu\)</span> and standard deviation <span class="math">\(\sigma\)</span>. The value <span class="math">\(\sigma^2\)</span> comes up a lot is sometimes called the <em>variance</em>. Standard deviation states that 67% of your data is within one standard deviation of the center, and 95% is within two standard deviation. As an example, if I say my data comes from normal(0, 3) I mean that 95% of my data should be between -6 and 6.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> normal(mu, sd):
-    <span class="kw">return</span> <span class="kw">lambda</span> s: r.normal(mu, sd, s)
+<p>The normal distribution is possibly the most frequently used distribution. Sometimes called the <em>Gaussian</em> distribution. This has support over the entire real line. It makes it really convenient, because you don’t have to worry about checking boundaries. This is the distribution you want if you find yourself saying things like, “the sensor sayss 20 km/h +/- 5 km/h”. The normal distribution takes as arguments a center (<span class="math inline">\(\mu\)</span>) and spread or <em>standard deviation</em> (<span class="math inline">\(\sigma\)</span>). The value <span class="math inline">\(\sigma^2\)</span> comes up a lot is sometimes called the <em>variance</em>. Standard deviation states that 67% of your data is within one standard deviation of the center, and 95% is within two standard deviation. As an example, if I say my data comes from normal(0, 3) I mean that 95% of my data should be between -6 and 6.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> normal(mu, sd):
+    <span class="cf">return</span> <span class="kw">lambda</span> s: r.normal(mu, sd, s)
 
-display_histogram(normal(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre>
+display_histogram(normal(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre></div>
 <p><img src="../../images/normalhist.png" width="600" height="400"></p>
-<p>It will always have a single maximum value, so if the distribution you had in mind if your problem has multiple solutions. The normal also comes up a lot because if you have multiple signals that come from any distribution, with enough signals their average converges to the normal distribution. This is one version of what is called, <em>Central Limit Theorem</em>.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> clt(samples):
-    <span class="kw">return</span> np.array([np.mean(r.uniform(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">100</span>))
-                     <span class="kw">for</span> i in <span class="dt">range</span>(samples)])
+<p>It will always have a single maximum value, so if the distribution you had in mind for your problem has multiple solutions, don’t use it. The normal also comes up a lot because if you have multiple signals that come from any distribution, with enough signals their average converges to the normal distribution. This is one version of what is called, <em>Central Limit Theorem</em>.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> clt(samples):
+    <span class="cf">return</span> np.array([np.mean(r.uniform(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">100</span>))
+                     <span class="cf">for</span> i <span class="op">in</span> <span class="bu">range</span>(samples)])
 
-display_histogram(clt)</code></pre>
+display_histogram(clt)</code></pre></div>
 <p><img src="../../images/clthist.png" width="600" height="400"></p>
 <p>Feel free to change that uniform and its arguments to any other distribution and you’ll see its always a normal.</p>
 <h2 id="bernoulli-distribution">Bernoulli distribution</h2>
-<p>The bernoulli distribution is usually the first distribution people are taught in class. This is the distribution is for deciding two choices. It takes an argument <span class="math">\(\rho\)</span> which dictates how biased are we to select 0 and 1. These numbers are also considered stand-ins for success (1) and failure (0) and usually talked about in these terms. Bernoulli can be written in terms of uniform.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> bern(p):
+<p>The bernoulli distribution is usually the first distribution people are taught in class. This is the distribution is for deciding two choices. It takes an argument <span class="math inline">\(\rho\)</span> which dictates how biased are we to select 0 and 1. These numbers are also considered stand-ins for success (1) and failure (0) and usually talked about in these terms. Bernoulli can be written in terms of uniform.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> bern(p):
     <span class="kw">def</span> samples(s):
-        u = r.uniform(<span class="dv">0</span>, <span class="dv">1</span>, s)
-        <span class="kw">return</span> np.where(u < p, <span class="dv">1</span>, <span class="dv">0</span>)
-    <span class="kw">return</span> samples
+        u <span class="op">=</span> r.uniform(<span class="dv">0</span>, <span class="dv">1</span>, s)
+        <span class="cf">return</span> np.where(u <span class="op">&lt;</span> p, <span class="dv">1</span>, <span class="dv">0</span>)
+    <span class="cf">return</span> samples
 
-display_histogram(bern(<span class="fl">0.7</span>))</code></pre>
-<p>In that example, we made <span class="math">\(\rho\)</span> 0.7 and obtain this histogram:</p>
+display_histogram(bern(<span class="fl">0.7</span>))</code></pre></div>
+<p>In that example, we made <span class="math inline">\(\rho\)</span> 0.7 and obtain this histogram:</p>
 <p><img src="../../images/bernhist.png" width="600" height="400"></p>
-<p>Bernoulli is also handy since you can define a bunch of distributions in terms of them. The <em>Binomial distribution</em> is a distribution on natural numbers from <span class="math">\(0\)</span> to <span class="math">\(n\)</span> inclusive. It takes a bias <span class="math">\(\rho\)</span> and counts how often a coin flip succeeds in n trials.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> binomial(n, p):
+<p>Bernoulli is also handy since you can define a bunch of distributions in terms of them. The <em>Binomial distribution</em> is a distribution on natural numbers from <span class="math inline">\(0\)</span> to <span class="math inline">\(n\)</span> inclusive. It takes a bias <span class="math inline">\(\rho\)</span> and counts how often a coin flip succeeds in n trials.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> binomial(n, p):
     <span class="kw">def</span> samples(s):
-    k = [np.<span class="dt">sum</span>(bern(p)(n)) <span class="kw">for</span> s in <span class="dt">range</span>(s)]
-    <span class="kw">return</span> np.array(k)
-    <span class="kw">return</span> samples
+    k <span class="op">=</span> [np.<span class="bu">sum</span>(bern(p)(n)) <span class="cf">for</span> s <span class="op">in</span> <span class="bu">range</span>(s)]
+    <span class="cf">return</span> np.array(k)
+    <span class="cf">return</span> samples
 
-display_histogram(binomial(<span class="dv">20</span>, <span class="fl">0.7</span>))</code></pre>
+display_histogram(binomial(<span class="dv">20</span>, <span class="fl">0.7</span>))</code></pre></div>
 <p><img src="../../images/binhist.png" width="600" height="400"></p>
-<p>Another distribution which can be encoded with bernoulli is the <em>Negative Binomial</em> distribution. This distribution counts how often the coin flip will succeed if you are allowed to fail up to <span class="math">\(r\)</span> times.</p>
+<p>Another distribution which can be encoded with bernoulli is the <em>Negative Binomial</em> distribution. This distribution counts how often the coin flip will succeed if you are allowed to fail up to <span class="math inline">\(r\)</span> times.</p>
 <h2 id="categorical-distribution">Categorical distribution</h2>
-<p>Categorical is the distribution when you have a variable that can take on a discrete set of values. It arguments are the probability you believe for each value of appearing. This can be simulated by indexing these values with natural numbers.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> categorical(ps):
+<p>Categorical is the distribution when you have a variable that can take on a discrete set of values. Its arguments are the probability you believe for each value of appearing. This can be simulated by indexing these values with natural numbers.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> categorical(ps):
     <span class="kw">def</span> samples(s):
-        <span class="kw">return</span> r.choice(<span class="dt">range</span>(<span class="dt">len</span>(ps)), s, p=ps)
-    <span class="kw">return</span> samples
+        <span class="cf">return</span> r.choice(<span class="bu">range</span>(<span class="bu">len</span>(ps)), s, p<span class="op">=</span>ps)
+    <span class="cf">return</span> samples
 
->> categorical([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">10</span>)
-array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>])</code></pre>
-<p>One thing to note, lots of folks like doing a One-Hot encoding so we represent which sample as a binary vector.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> onehot(n, k):
-    <span class="kw">return</span> np.eye(<span class="dv">1</span>, n, k=k)[<span class="dv">0</span>]
+<span class="op">&gt;&gt;</span> categorical([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">10</span>)
+array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>])</code></pre></div>
+<p>One thing to note, lots of folks like doing a One-Hot encoding so we represent which sample as a binary vector where our choice is one and all the other elements of the vector are zero.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> onehot(n, k):
+    <span class="cf">return</span> np.eye(<span class="dv">1</span>, n, k<span class="op">=</span>k)[<span class="dv">0</span>]
 
 
 <span class="kw">def</span> categorical2(ps):
     <span class="kw">def</span> samples(s):
-        l = <span class="dt">len</span>(ps)
-        <span class="kw">return</span> np.array([onehot(l,
-                                r.choice(<span class="dt">range</span>(l),  p=ps))
-                         <span class="kw">for</span> i in <span class="dt">range</span>(s)])
-    <span class="kw">return</span> samples
+        l <span class="op">=</span> <span class="bu">len</span>(ps)
+        <span class="cf">return</span> np.array([onehot(l,
+                                r.choice(<span class="bu">range</span>(l),  p<span class="op">=</span>ps))
+                         <span class="cf">for</span> i <span class="op">in</span> <span class="bu">range</span>(s)])
+    <span class="cf">return</span> samples
 
->> categorical2([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)
+<span class="op">&gt;&gt;</span> categorical2([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)
 array([[ <span class="dv">0</span>.,  <span class="dv">1</span>.,  <span class="dv">0</span>.],
        [ <span class="dv">0</span>.,  <span class="dv">1</span>.,  <span class="dv">0</span>.],
        [ <span class="dv">0</span>.,  <span class="dv">1</span>.,  <span class="dv">0</span>.],
        [ <span class="dv">0</span>.,  <span class="dv">1</span>.,  <span class="dv">0</span>.],
-       [ <span class="dv">0</span>.,  <span class="dv">0</span>.,  <span class="dv">1</span>.]])</code></pre>
+       [ <span class="dv">0</span>.,  <span class="dv">0</span>.,  <span class="dv">1</span>.]])</code></pre></div>
 <h2 id="gamma-distribution">Gamma distribution</h2>
-<p>The gamma distribution comes up all over the place. The intuition for the gamma is its the prior on positive real numbers. Now there are many ways to get a distribution over positive numbers. We can take the absolute-value of a normal distribution and get what’s called a <em>Half-Normal</em> distribution. If we have a variable <span class="math">\(x\)</span> from the normal distribution, we can also do <span class="math">\(exp(x)\)</span> and <span class="math">\(x^2\)</span> to get distributions over positive numbers. These are the <em>Lognormal</em> and <span class="math">\(\chi^2\)</span> distributions.</p>
-<p>So why use the gamma distribution? Well when you use the other distributions you are really saying, you believe your variable has some latent property that spans the real-line and something made it one-sided. So if you use a lognormal, you are implicitly saying you believe that the log of this variable is symmetric. The assumption of <span class="math">\(\chi^2\)</span> is that your variable is the sum of k squared factors, where each factor came from the normal(0, 1) distribution.</p>
+<p>The gamma distribution comes up all over the place. The intuition for the gamma is it is the prior on positive real numbers. Now there are many ways to get a distribution over positive numbers. We can take the absolute-value of a normal distribution and get what’s called a <em>Half-Normal</em> distribution. If we have a variable <span class="math inline">\(x\)</span> from the normal distribution, we can also do <span class="math inline">\(exp(x)\)</span> and <span class="math inline">\(x^2\)</span> to get distributions over positive numbers. These are the <em>Lognormal</em> and <span class="math inline">\(\chi^2\)</span> distributions.</p>
+<p>So why use the gamma distribution? Well when you use the other distributions, you are really saying you believe your variable has some latent property that spans the real-line and something made it one-sided. So if you use a lognormal, you are implicitly saying you believe that the log of this variable is symmetric. The assumption of <span class="math inline">\(\chi^2\)</span> is that your variable is the sum of k squared factors, where each factor came from the normal(0, 1) distribution.</p>
 <p>If you don’t believe this, why say it?</p>
 <p>Some people suggest using gamma because it is conjugate with lots of distributions. This means that when gamma is a used as prior to something like normal, the posterior of this distribution also is a gamma. I would hesitate to use a prior just because it makes performing a computation easier. It’s better to have your priors actually encode what you believe. You can always go back later and make something conjugate once you need something more efficient.</p>
-<p>The gamma distribution is the main way we encode something to be a postive number. It’s parameters shape <span class="math">\(k\)</span> and scale <span class="math">\(\theta\)</span> roughly let you tune gamma like the normal distribution. <span class="math">\(k \theta\)</span> specifies the mean value we expect, and <span class="math">\(k \theta^2\)</span> specifies the variance. This is a common theme in most distributions. We want two parameters so we can set the mean and variance. Distributions that don’t have this feature are usually generalized until they do.</p>
+<p>The gamma distribution is the main way we encode something to be a postive number. It’s parameters shape <span class="math inline">\(k\)</span> and scale <span class="math inline">\(\theta\)</span> roughly let you tune gamma like the normal distribution. <span class="math inline">\(k \theta\)</span> specifies the mean value we expect, and <span class="math inline">\(k \theta^2\)</span> specifies the variance. This is a common theme in most distributions. We want two parameters so we can set the mean and variance. Distributions that don’t have this feature are usually generalized until they do.</p>
 <p>As an example, here is what gamma(5, 1) looks like. Note where it peaks and how it spreads out. Change the parameters and see how it changes</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> gamma(shape, scale):
-    <span class="kw">return</span> <span class="kw">lambda</span> s: r.gamma(shape, scale, s)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> gamma(shape, scale):
+    <span class="cf">return</span> <span class="kw">lambda</span> s: r.gamma(shape, scale, s)
 
-display_histogram(gamma(<span class="dv">5</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</code></pre>
+display_histogram(gamma(<span class="dv">5</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</code></pre></div>
 <p><img src="../../images/gammahist.png" width="600" height="400"></p>
-<p>Also distributions like <span class="math">\(\chi^2\)</span> (chi-squared) can be defined in terms of gamma. Actually many distributions can be built from gamma. Taking the reciprocal of a variable from the gamma gives you a value from the <em>Inv-gamma</em> distribution. If we normalize this positive number to be between 0 and 1, we get the Beta distribution.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> beta(a, b):
+<p>Also distributions like <span class="math inline">\(\chi^2\)</span> (chi-squared) can be defined in terms of gamma. Actually many distributions can be built from gamma. Taking the reciprocal of a variable from the gamma gives you a value from the <em>Inv-gamma</em> distribution. If we normalize this positive number to be between 0 and 1, we get the Beta distribution.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> beta(a, b):
     <span class="kw">def</span> samples(s):
-        x = r.gamma(a, <span class="dv">1</span>, s)
-        y = r.gamma(b, <span class="dv">1</span>, s)
-        <span class="kw">return</span> x/(x + y)
-    <span class="kw">return</span> samples
+        x <span class="op">=</span> r.gamma(a, <span class="dv">1</span>, s)
+        y <span class="op">=</span> r.gamma(b, <span class="dv">1</span>, s)
+        <span class="cf">return</span> x<span class="op">/</span>(x <span class="op">+</span> y)
+    <span class="cf">return</span> samples
 
-display_histogram(beta(<span class="dv">10</span>, <span class="dv">2</span>), <span class="dv">10000</span>)</code></pre>
+display_histogram(beta(<span class="dv">10</span>, <span class="dv">2</span>), <span class="dv">10000</span>)</code></pre></div>
 <p><img src="../../images/betahist.png" width="600" height="400"></p>
 <p>If we want to a prior on say categorical, which takes as an argument a list of numbers that sum to 1, we can use a gamma to generate k-numbers and then normalize. This is precisely the definition of the <em>Dirichlet distribution</em>.</p>
 <h2 id="poisson-distribution">Poisson Distribution</h2>
-<p>The poisson distribution is seen as the distribution over event arrival times. It takes an average arrival rate <span class="math">\(\lambda\)</span> and returns the number of events you can expect. In this sense, its a distribution over natural numbers. It can be thought of as a discrete analog to the gamma distribution.</p>
-<p>Unfortunely, poisson in this form is a bit cumbersome to use. For one with poisson, mean and variance are both <span class="math">\(\lambda\)</span>. You can’t tune this distribution to have them be different. To do that, we note that <span class="math">\(\lambda\)</span> has to be a positive real number and put a gamma prior on it.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> overdispersed_poisson(shape,scale):
+<p>The poisson distribution is seen as the distribution over event arrival times. It takes an average arrival rate <span class="math inline">\(\lambda\)</span> and returns the number of events you can expect. In this sense, it’s a distribution over natural numbers. It can be thought of as a discrete analog to the gamma distribution.</p>
+<p>Unfortunely, poisson in this form is a bit cumbersome to use. For one with poisson, mean and variance are both <span class="math inline">\(\lambda\)</span>. You can’t tune this distribution to have them be different. To do that, we note that <span class="math inline">\(\lambda\)</span> has to be a positive real number and put a gamma prior on it.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> overdispersed_poisson(shape,scale):
     <span class="kw">def</span> samples(s):
-        lam = r.gamma(shape, scale, s)
-        <span class="kw">return</span> r.poisson(lam)
-    <span class="kw">return</span> samples
+        lam <span class="op">=</span> r.gamma(shape, scale, s)
+        <span class="cf">return</span> r.poisson(lam)
+    <span class="cf">return</span> samples
 
-display_histogram(overdispersed(<span class="dv">3</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</code></pre>
+display_histogram(overdispersed(<span class="dv">3</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</code></pre></div>
 <p><img src="../../images/betterpoissonhist.png" width="600" height="400"></p>
 <p>This is distribution is sometimes called the Overdispersed Poisson, but its also a reparameterized Negative Binomial! Different concept same math equation.</p>
-<p>A related distribution to poisson is the exponential distribution. This distribution measures the time we can expect to elapse between events. If we can tune the rate events happen to change with time, we get distributions that are good at modeling how long until an object fails. One popular distribution is the <em>Weibull distribution</em>. It has a few forms, but the easiest is one that has <span class="math">\(\lambda\)</span> for the rate at which events in this case usually failure, and an extra argument <span class="math">\(k\)</span> which models if the rate of failure should increase as time goes on. A value of <span class="math">\(k=1\)</span> is just the exponential distribution. A value lower than 1 means failure gets less likely over time and a value over 1 means a failure gets more likely over time.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> weibull(lam, k):
+<p>A related distribution to poisson is the exponential distribution. This distribution measures the time we can expect to elapse between events. If we can tune the rate events happen to change with time, we get distributions that are good at modeling how long until an object fails. One example of such a distribution is the <em>Weibull distribution</em>. It has a few forms, but the easiest is one that has <span class="math inline">\(\lambda\)</span> for the rate at which events in this case usually failure, and an extra argument <span class="math inline">\(k\)</span> which models if the rate of failure should increase as time goes on. A value of <span class="math inline">\(k=1\)</span> is just the exponential distribution. A value lower than 1 means failure gets less likely over time and a value over 1 means a failure gets more likely over time.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> weibull(lam, k):
     <span class="kw">def</span> samples(s):
-        <span class="kw">return</span> lam*r.weibull(k, s)
-    <span class="kw">return</span> samples
+        <span class="cf">return</span> lam<span class="op">*</span>r.weibull(k, s)
+    <span class="cf">return</span> samples
 
 
-display_histogram(weibull(<span class="fl">1.0</span>, <span class="fl">1.5</span>), <span class="dv">10000</span>)</code></pre>
+display_histogram(weibull(<span class="fl">1.0</span>, <span class="fl">1.5</span>), <span class="dv">10000</span>)</code></pre></div>
 <p><img src="../../images/weibullhist.png" width="600" height="400"></p>
 <p>For the more morbid, you can ask if human mortality is measured with a weibull distribution. Actually, its the <em>Gompertz distribution</em> that is used. It turns out to be the distribution you get when you call exp on samples from the weibull.</p>
 <h2 id="heavy-tailed-distributions">Heavy-tailed distributions</h2>
-<p>Often distributions are too optimistic about how close a value stays towards the mean. The following are all distributions which are said to have heavy-tails. The major advantage of using a heavy-tail distribution is it’s more robust towards outliers.</p>
-<p>Cauchy is a nasty distribution. It has no well-defined mean or variance or any moments. Typically people this is used by people who are or were at one time physicists. You can make a cauchy by taking two samples from a normal distribution and dividing them. I hesitate to recommend it since its hard to work with and there are other heavy-tailed distributions that aren’t so intractable.</p>
-<p>Student-T or <span class="math">\(t\)</span> can be interpretted as the distribution over a subsampled population from the normal distribution. What’s going on here is that because our sample size is so small, atypical values can occur more often than they do in the general population. As your subpopulation grows, the membership looks more like the underlying population from the normal distribution and the t-distribution becomes the normal distribution. The parameter <span class="math">\(\nu\)</span> lets you state how large you believe this subpopulation to be. The t-distribution can also be generalized to not be centered at 0.</p>
+<p>Often distributions are too optimistic about how close a value stays near the mean. The following are all distributions which are said to have heavy-tails. The major advantage of using a heavy-tail distribution is it’s more robust towards outliers.</p>
+<p>Cauchy is a nasty distribution. It has no well-defined mean or variance or any moments. Typically, this is used by people who are or were at one time physicists. You can make a cauchy by taking two samples from a normal distribution and dividing them. I hesitate to recommend it since its hard to work with and there are other heavy-tailed distributions that aren’t so intractable.</p>
+<p>Student-T or <span class="math inline">\(t\)</span> can be interpretted as the distribution over a subsampled population from the normal distribution. What’s going on here is that because our sample size is so small, atypical values can occur more often than they do in the general population. As your subpopulation grows, the membership looks more like the underlying population from the normal distribution and the t-distribution becomes the normal distribution. The parameter <span class="math inline">\(\nu\)</span> lets you state how large you believe this subpopulation to be. The t-distribution can also be generalized to not be centered at 0.</p>
 <p>Laplace distribution arises as an interesting modification to the normal distribution. Let’s look at the density function for normal</p>
-<p><span class="math">\[ \frac{1}{\sigma\sqrt{2\pi}}\, exp\left({-\frac{(x - \mu)^2}{2 \sigma^2}}\right)\]</span></p>
-<p>That <span class="math">\(exp(\dots)\)</span> can be seen as an L2 norm on our variable. If we replace it with an L1 norm and change the denominator so it all still sums to one we get the laplace. In this way, a laplace centered on 0 can be used to put a strong sparsity prior on a variable while leaving a heavy-tail for it if the value has strong support for another value.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> laplace(loc, scale):
+<p><span class="math display">\[ \frac{1}{\sigma\sqrt{2\pi}}\, exp\left({-\frac{(x - \mu)^2}{2 \sigma^2}}\right)\]</span></p>
+<p>That function inside <span class="math inline">\(exp(\dots)\)</span> can be seen as an L2 norm on our variable. If we replace it with an L1 norm and change the denominator so it all still sums to one we get the laplace. In this way, a laplace centered on 0 can be used to put a strong sparsity prior on a variable while leaving a heavy-tail for it if the value has strong support for another value. There are a whole family of distribution available by putting in different norms.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> laplace(loc, scale):
     <span class="kw">def</span> samples(s):
-        <span class="kw">return</span> r.laplace(loc, scale, s)
-    <span class="kw">return</span> samples
+        <span class="cf">return</span> r.laplace(loc, scale, s)
+    <span class="cf">return</span> samples
 
-display_histogram(laplace(<span class="dv">0</span>,<span class="dv">2</span>), <span class="dv">10000</span>, bins=<span class="dv">50</span>)</code></pre>
+display_histogram(laplace(<span class="dv">0</span>,<span class="dv">2</span>), <span class="dv">10000</span>, bins<span class="op">=</span><span class="dv">50</span>)</code></pre></div>
 <p><img src="../../images/laplacehist.png" width="600" height="400"></p>
 <h2 id="multivariate-normal">Multivariate Normal</h2>
 <p>When working with multivariate distributions, most can be seen as generalizations of univariate distributions. All those assumptions, from those still hold. We already mentioned Dirichlet and Categorical as multivariate distributions. The big thing you get with a multivariate generalization is the ability to encode how you strongly you believe a collection of variables is correlated with each other.</p>
-<p>The <em>Multivariate Normal</em> generalizes the normal distribution to multiple variables. Now <span class="math">\(\mu\)</span> refers to the center of each of them. But <span class="math">\(\sigma\)</span>, our standard deviation isn’t just the standard deviation in each variable. Instead we get a covariance matrix that let’s us dictate how correlated each variable is with each other one. To visualize this we need some helper code.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> display_histogram2d(dist, samples=<span class="dv">1000</span>, **kwargs):
-	x, y = dist(samples)
+<p>The <em>Multivariate Normal</em> generalizes the normal distribution to multiple variables. Now <span class="math inline">\(\mu\)</span> refers to the center of each of them. But <span class="math inline">\(\sigma\)</span>, our standard deviation isn’t just the standard deviation in each variable. Instead we get a covariance matrix that let’s us dictate how correlated each variable is with every other variable. To visualize this we need some helper code.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> display_histogram2d(dist, samples<span class="op">=</span><span class="dv">1000</span>, <span class="op">**</span>kwargs):
+	x, y <span class="op">=</span> dist(samples)
     plt.hist2d(x, y,
-               bins=<span class="dv">100</span>,
-               normed=<span class="ot">False</span>,
-               cmap=<span class="st">"BuPu"</span>,
-               **kwargs)
+               bins<span class="op">=</span><span class="dv">100</span>,
+               normed<span class="op">=</span><span class="va">False</span>,
+               cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>,
+               <span class="op">**</span>kwargs)
 
 
 <span class="kw">def</span> multinorm(mean, cov):
     <span class="kw">def</span> samples(s):
-        <span class="kw">return</span> r.multivariate_normal(mean, cov, s).T
-    <span class="kw">return</span> samples</code></pre>
+        <span class="cf">return</span> r.multivariate_normal(mean, cov, s).T
+    <span class="cf">return</span> samples</code></pre></div>
 <p>So let’s see what happens when we say, the first and second variables are 0.5 correlated.</p>
-<pre class="sourceCode python"><code class="sourceCode python">cov = [[<span class="fl">1.0</span>, <span class="fl">0.5</span>],
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">cov <span class="op">=</span> [[<span class="fl">1.0</span>, <span class="fl">0.5</span>],
        [<span class="fl">0.5</span>, <span class="fl">1.0</span>]]
 
-display_histogram2d(multinorm([<span class="dv">1</span>,<span class="dv">2</span>], cov), <span class="dv">5000</span>)</code></pre>
+display_histogram2d(multinorm([<span class="dv">1</span>,<span class="dv">2</span>], cov), <span class="dv">5000</span>)</code></pre></div>
 <p><img src="../../images/multinormhist.png" width="600" height="400" /></p>
 <p>This shows that values in the first variable will be near values in the second. You don’t see them diverging too often from each other. Keep adjusting the matrix to see what it looks when other values are used.</p>
 <h2 id="wishart-and-lkj">Wishart and LKJ</h2>
-<p>The wishart distribution is the prior on symmetric matrices. It takes as arguments a multivariate normal distribution and a variable <span class="math">\(\nu\)</span> which called the degrees of freedom. I think its best to think of <span class="math">\(\nu\)</span> in terms of matrix factorization. The wishart is made by first making a <span class="math">\(\nu \times p\)</span> matrix <span class="math">\(X\)</span> by concat <span class="math">\(\nu\)</span> draws from the multivariate normal and then squaring it. The degrees of freedom let you set the what you think is the matrix’s true dimensionality.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> wishart(v, n):
-	va = np.asarray(v)
+<p>The wishart distribution is the prior on symmetric matrices. It takes as arguments a multivariate normal distribution and a variable <span class="math inline">\(\nu\)</span> which called the degrees of freedom. I think its best to think of <span class="math inline">\(\nu\)</span> in terms of matrix factorization. The wishart is made by first making a <span class="math inline">\(\nu \times p\)</span> matrix <span class="math inline">\(X\)</span> by concat <span class="math inline">\(\nu\)</span> draws from the multivariate normal and then squaring it. The degrees of freedom let you set the what you think is the matrix’s true dimensionality.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> wishart(v, n):
+	va <span class="op">=</span> np.asarray(v)
     <span class="kw">def</span> one_sample():
-        X = np.matrix(multinorm(np.zeros(va.shape[<span class="dv">0</span>]), va)(n).T)
-        <span class="kw">return</span> X.T*X
+        X <span class="op">=</span> np.matrix(multinorm(np.zeros(va.shape[<span class="dv">0</span>]), va)(n).T)
+        <span class="cf">return</span> X.T<span class="op">*</span>X
 
     <span class="kw">def</span> samples(s):
-        <span class="kw">return</span> np.array([one_sample() <span class="kw">for</span> i in <span class="dt">range</span>(s)])
-    <span class="kw">return</span> samples
+        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="op">in</span> <span class="bu">range</span>(s)])
+    <span class="cf">return</span> samples
 
-m = wishart(np.eye(<span class="dv">30</span>), <span class="dv">10</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]
-plt.matshow(m, cmap=<span class="st">"BuPu"</span>)</code></pre>
+m <span class="op">=</span> wishart(np.eye(<span class="dv">30</span>), <span class="dv">10</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]
+plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</code></pre></div>
 <p><img src="../../images/wishhist.png" width="600" height="600" /></p>
-<p>This is commonly used as a prior on convariance matrices for multivariate normal distributions. Wait, what does this anything in its generative story have to do with covariance matrices? Lots of people have thought this. A more modern alternative is the <a href="http://www.sciencedirect.com/science/article/pii/S0047259X09000876">LKJ</a> distribution. It also takes a covariance matrix and tuning parameter. The difference is here is that the LKJ tuning parameter <span class="math">\(\eta\)</span> controls how independent are the variables. When it is set to 1, it is uniform over the entire matrix. As you set <span class="math">\(\eta\)</span> to larger and larger values, more and more weight is concentrated on the diagnol, meaning we believe that the variables are mostly independent. This prior is easier for some people to tune.</p>
+<p>This is commonly used as a prior on convariance matrices for multivariate normal distributions. But wait! What does this anything in its generative story have to do with covariance matrices? Lots of people have thought this. A more modern alternative is the <a href="http://www.sciencedirect.com/science/article/pii/S0047259X09000876">LKJ</a> distribution. It also takes a covariance matrix and tuning parameter. The difference is here is that the LKJ tuning parameter <span class="math inline">\(\eta\)</span> controls how independent are the variables. When it is set to 1, it is uniform over the entire matrix. As you set <span class="math inline">\(\eta\)</span> to larger and larger values, more and more weight is concentrated on the diagnol, meaning we believe that the variables are mostly independent. This prior is easier for some people to tune.</p>
 <p>The method for generating samples from this distribution is a little bit tedious. See this <a href="http://stats.stackexchange.com/a/125017">fantastic writeup</a> if you are interested in the details. It’s arguably better and more understandable than the original paper.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> vine(eta, d):
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> vine(eta, d):
     <span class="kw">def</span> one_sample():
-        b = eta + (d - <span class="dv">1</span>)/<span class="dv">2</span>
-        P = np.zeros((d, d))
-        S = np.eye(d)
+        b <span class="op">=</span> eta <span class="op">+</span> (d <span class="op">-</span> <span class="dv">1</span>)<span class="op">/</span><span class="dv">2</span>
+        P <span class="op">=</span> np.zeros((d, d))
+        S <span class="op">=</span> np.eye(d)
 
-        <span class="kw">for</span> k in <span class="dt">range</span>(d<span class="dv">-1</span>):
-            b = b - <span class="fl">0.5</span>
-            <span class="kw">for</span> i in <span class="dt">range</span>(k<span class="dv">+1</span>, d):
-                P[k, i] = <span class="dv">2</span>*r.beta(b, b) - <span class="dv">1</span>
-                p = P[k, i]
-                <span class="kw">for</span> l in <span class="dt">range</span>(k<span class="dv">-1</span>, <span class="dv">0</span>, -<span class="dv">1</span>):
-                    p = p * np.sqrt((<span class="dv">1</span>-P[l, i]**<span class="dv">2</span>) *
-                                    (<span class="dv">1</span>-P[<span class="dv">1</span>, k]**<span class="dv">2</span>)) + P[l, i]*P[l, k]
-                S[k, i] = p
-                S[i, k] = p
-        <span class="kw">return</span> S
+        <span class="cf">for</span> k <span class="op">in</span> <span class="bu">range</span>(d<span class="dv">-1</span>):
+            b <span class="op">=</span> b <span class="op">-</span> <span class="fl">0.5</span>
+            <span class="cf">for</span> i <span class="op">in</span> <span class="bu">range</span>(k<span class="dv">+1</span>, d):
+                P[k, i] <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>r.beta(b, b) <span class="op">-</span> <span class="dv">1</span>
+                p <span class="op">=</span> P[k, i]
+                <span class="cf">for</span> l <span class="op">in</span> <span class="bu">range</span>(k<span class="dv">-1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>):
+                    p <span class="op">=</span> p <span class="op">*</span> np.sqrt((<span class="dv">1</span><span class="op">-</span>P[l, i]<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span>
+                                    (<span class="dv">1</span><span class="op">-</span>P[<span class="dv">1</span>, k]<span class="op">**</span><span class="dv">2</span>)) <span class="op">+</span> P[l, i]<span class="op">*</span>P[l, k]
+                S[k, i] <span class="op">=</span> p
+                S[i, k] <span class="op">=</span> p
+        <span class="cf">return</span> S
 
     <span class="kw">def</span> samples(s):
-        <span class="kw">return</span> np.array([one_sample() <span class="kw">for</span> i in <span class="dt">range</span>(s)])
-    <span class="kw">return</span> samples
+        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="op">in</span> <span class="bu">range</span>(s)])
+    <span class="cf">return</span> samples
 
-m = vine(<span class="fl">2.0</span>, <span class="dv">30</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]
-plt.matshow(m, cmap=<span class="st">"BuPu"</span>)</code></pre>
+m <span class="op">=</span> vine(<span class="fl">2.0</span>, <span class="dv">30</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]
+plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</code></pre></div>
 <p><img src="../../images/lkjhist.png" width="600" height="600" /></p>
 <h2 id="multinomial">Multinomial</h2>
-<p>Categorical in the One-Hot encoding can also be seen as a special-case of the <em>Multinomial distribution</em>. The multinomial is to the categorical like bernoulli was to binomial. This distribution given <span class="math">\(n\)</span> trials with the categorical counts how often each of the outcomes happened.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> multinomial(n, ps):
+<p>Categorical in the One-Hot encoding can also be seen as a special-case of the <em>Multinomial distribution</em>. The multinomial is related to the categorical like bernoulli is related to binomial. This distribution given <span class="math inline">\(n\)</span> trials with the categorical counts how often each of the outcomes happened.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> multinomial(n, ps):
     <span class="kw">def</span> samples(s):
-        m = [np.<span class="dt">sum</span>(categorical2(ps)(n), axis=<span class="dv">0</span>) <span class="kw">for</span> s in <span class="dt">range</span>(s)]
-        <span class="kw">return</span> np.array(m)
-    <span class="kw">return</span> samples
+        m <span class="op">=</span> [np.<span class="bu">sum</span>(categorical2(ps)(n), axis<span class="op">=</span><span class="dv">0</span>) <span class="cf">for</span> s <span class="op">in</span> <span class="bu">range</span>(s)]
+        <span class="cf">return</span> np.array(m)
+    <span class="cf">return</span> samples
 
 
->> multinomial(<span class="dv">10</span>, [<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)
+<span class="op">&gt;&gt;</span> multinomial(<span class="dv">10</span>, [<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)
 array([[ <span class="dv">2</span>.,  <span class="dv">4</span>.,  <span class="dv">4</span>.],
        [ <span class="dv">4</span>.,  <span class="dv">6</span>.,  <span class="dv">0</span>.],
        [ <span class="dv">2</span>.,  <span class="dv">4</span>.,  <span class="dv">4</span>.],
        [ <span class="dv">2</span>.,  <span class="dv">6</span>.,  <span class="dv">2</span>.],
-       [ <span class="dv">2</span>.,  <span class="dv">5</span>.,  <span class="dv">3</span>.]])</code></pre>
+       [ <span class="dv">2</span>.,  <span class="dv">5</span>.,  <span class="dv">3</span>.]])</code></pre></div>
 <p>This distribution appears often in natural language processing as a prior on bag-of-word representation for documents. A document can be represented as a list of how often each word occured in that document. The multinomial in that sense can be used to encode our beliefs about the vocabularies.</p>
 <h2 id="conclusions">Conclusions</h2>
 <p>This doesn’t cover all the distributions people are using for priors out there, but it should give an intuition for why the most common ones are in use.</p>
@@ -829,13 +829,13 @@ var disqus_shortname = 'convexoptimized';
 ]]></description>
     <pubDate>Tue, 09 Jun 2015 00:00:00 UT</pubDate>
     <guid>http://zinkov.com/posts/2015-06-09-where-priors-come-from/index.html</guid>
+    <dc:creator>Rob Zinkov</dc:creator>
 </item>
 <item>
     <title>Popular outlines for machine learning papers</title>
     <link>http://zinkov.com/posts/2015-06-05-paper-outline-styles/index.html</link>
-    <description><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <description><![CDATA[<!DOCTYPE html> 
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Convex Optimized - Popular outlines for machine learning papers</title>
@@ -876,7 +876,7 @@ by <em>Rob Zinkov</em> on <strong>2015-06-05</strong>
 <p>When reading machine learning papers, I couldn’t help but notice that I kept seeing the same structures over and over again. Some conferences have one more often than the others. So, I decided to catalog a few of them.</p>
 <h2 id="the-theory-paper">The Theory Paper</h2>
 <p>This is the paper with the simple algorithm. You get this when you proved a nicer bound or the main contribution of your work is a faster convergence rate.</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Introduction</li>
 <li>Background (Graphical Models)</li>
 <li>Algorithm Details</li>
@@ -888,7 +888,7 @@ by <em>Rob Zinkov</em> on <strong>2015-06-05</strong>
 <p>Note even if the algorithm is trivial, you will still see an experiments section. As near as I can tell, this is just because reviewers want to know you didn’t do this entire paper on a whiteboard.</p>
 <h2 id="the-systems-paper">The Systems Paper</h2>
 <p>This paper is for those projects that are more software engineering than new algorithms. Open-source libraries will have paper with this structure. Expect something in here about how contributors or lines of code the software.</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Introduction</li>
 <li>API</li>
 <li>More API</li>
@@ -900,7 +900,7 @@ by <em>Rob Zinkov</em> on <strong>2015-06-05</strong>
 <p>The primary thing this paper advertises is how easy it is to use a particular piece of software.</p>
 <h2 id="the-programming-languages-paper">The Programming Languages Paper</h2>
 <p>This is really a systems paper when you see it show up in a machine learning conference. PL papers that end to be more theoretical will just go to POPL or ICFP. This comes up a lot for probabilistic programming.</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Introduction</li>
 <li>Language Description (types, terms, semantics, compilers)</li>
 <li>Example Programs</li>
@@ -909,7 +909,7 @@ by <em>Rob Zinkov</em> on <strong>2015-06-05</strong>
 </ol>
 <h2 id="the-algorithms-paper">The Algorithms Paper</h2>
 <p>This happens when you made a really complicated algorithm, that solves a particular problem. This comes up often because this algorithm is to solve a problem specific to a particular domain. You’ll see this for natural language processing and computer vision papers. Theory is something that is given little space in these papers.</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Introduction</li>
 <li>Algorithm Details</li>
 <li>Example Problem</li>
@@ -948,13 +948,13 @@ var disqus_shortname = 'convexoptimized';
 ]]></description>
     <pubDate>Fri, 05 Jun 2015 00:00:00 UT</pubDate>
     <guid>http://zinkov.com/posts/2015-06-05-paper-outline-styles/index.html</guid>
+    <dc:creator>Rob Zinkov</dc:creator>
 </item>
 <item>
     <title>ICML 2014: Interesting looking papers</title>
     <link>http://zinkov.com/posts/2014-06-19-icml-reviews/index.html</link>
-    <description><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <description><![CDATA[<!DOCTYPE html> 
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Convex Optimized - ICML 2014: Interesting looking papers</title>
@@ -1032,7 +1032,8 @@ var disqus_shortname = 'convexoptimized';
 ]]></description>
     <pubDate>Thu, 19 Jun 2014 00:00:00 UT</pubDate>
     <guid>http://zinkov.com/posts/2014-06-19-icml-reviews/index.html</guid>
+    <dc:creator>Rob Zinkov</dc:creator>
 </item>
 
-    </channel> 
+    </channel>
 </rss>
