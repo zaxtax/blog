@@ -1,0 +1,96 @@
+<!DOCTYPE html> 
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="shortcut icon" href="../../favicon.ico">
+        <title>Convex Optimized - Calculating the golden-era of The Simpsons</title>
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          TeX: {
+              extensions: ["AMSmath.js"]
+          },
+          tex2jax: {
+              inlineMath: [  ["\\(","\\)"], ],
+              displayMath: [  ["\\[","\\]"] ]
+          },
+          displayAlign: 'center', // Change this to 'center' to center equations.
+          "HTML-CSS": {
+              styles: {'.MathJax_Display': {"margin": 4}}
+          }
+      });
+    </script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    </head>
+    <body>
+        <h1>Convex Optimized</h1>
+        <div id="navigation">
+            <a href="../../">Home</a>
+	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
+	    <a href="../../archive.html">Archive</a>
+	    <a href="../../about.html">About</a>
+	    <a href="../../contact.html">Contact</a>
+        </div>
+
+        <h3>Calculating the golden-era of The Simpsons</h3>
+by <em>Rob Zinkov</em> on <strong>2017-11-03</strong>
+<p><a href="http://www.nathancunn.com/">Nathan Cunningham</a> published last week a <a href="http://www.nathancunn.com/2017-10-26-simpsons-decline/">fantastic</a> article about using some stats to estimate at what episode did Simpsons start to decline.</p>
+<p>Cameron Davidson-Pilon suggested this would make a great application of Bayesian changepoint models.</p>
+<blockquote class="twitter-tweet" data-lang="en-gb">
+<p lang="en" dir="ltr">
+Someone want to Bayesian switchpoint model this? See first chapter of BMH <a href="https://t.co/QiGwzA0khD">https://t.co/QiGwzA0khD</a>
+</p>
+— Cam DP 👨🏽‍💻 (<span class="citation" data-cites="Cmrn_DP">@Cmrn_DP</span>) <a href="https://twitter.com/Cmrn_DP/status/924360674041585664?ref_src=twsrc%5Etfw">28 October 2017</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>In turns out, he was totally right. Taking the <a href="http://docs.pymc.io/notebooks/getting_started.html#Case-study-2:-Coal-mining-disasters">Coal-mining disaster</a> example from the pymc3 quickstart guide and slightly modifying it is enough to do the job.</p>
+<p>First we load the data</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">data <span class="op">=</span> pd.read_csv(<span class="st">&quot;simpsons_ratings.csv&quot;</span>)
+index <span class="op">=</span> data.index</code></pre></div>
+<p>Then we use some Gaussians to describe the average rating, and how that mean rate translates to the quality of any particular episode.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="cf">with</span> pm.Model() <span class="im">as</span> model:
+    switch <span class="op">=</span> pm.DiscreteUniform(<span class="st">'switch'</span>, lower<span class="op">=</span>index.<span class="bu">min</span>(), upper<span class="op">=</span>index.<span class="bu">max</span>())
+    early_mean <span class="op">=</span> pm.Normal(<span class="st">'early_mean'</span>, mu<span class="op">=</span><span class="dv">5</span>., sd<span class="op">=</span><span class="dv">1</span>.)
+    late_mean <span class="op">=</span> pm.Normal(<span class="st">'late_mean'</span>, mu<span class="op">=</span><span class="dv">5</span>., sd<span class="op">=</span><span class="dv">1</span>.)
+    mean <span class="op">=</span> tt.switch(switch <span class="op">&gt;=</span> index.values, early_mean, late_mean)
+    ratings <span class="op">=</span> pm.Normal(<span class="st">'ratings'</span>, mu<span class="op">=</span>mean, sd<span class="op">=</span><span class="dv">1</span>.,
+                        observed<span class="op">=</span>data[<span class="st">&quot;UserRating&quot;</span>].values)
+
+    tr <span class="op">=</span> pm.sample(<span class="dv">10000</span>, tune<span class="op">=</span><span class="dv">500</span>)
+    pm.traceplot(tr)</code></pre></div>
+<p><img src="../../images/simpsons_trace.png" width="600" height="300" /></p>
+<p>As we can see around 220 is when our model thinks the Simpsons was starting to downward slide.</p>
+<p>That would be</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st">: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(data[<span class="st">&quot;EpisodeID&quot;</span>][<span class="dv">220</span>], data[<span class="st">&quot;Episode&quot;</span>][<span class="dv">220</span>]))
+<span class="co"># &gt;&gt;&gt; S10E18: Simpsons Bible Stories</span></code></pre></div>
+<p>An episode I remember being <em>alright</em>. Generally the 10th season is acknowledged as the last of the golden years. In fact, <a href="https://twitter.com/woohootriviachi">Chicago Simpsons Trivia Night</a> bills itself as not asking any questions from seasons after 10.</p>
+<p>Apologies in advance for not using more Simpsons jokes in this post. You can find the code and data I used on <a href="https://github.com/zaxtax/simpsons_changepoint">github</a>.</p>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'https://convexoptimized.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
+
+<script type="text/javascript">
+var disqus_shortname = 'convexoptimized';
+(function () {
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'https://disqus.com/forums/convexoptimized/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+
+
+    </body>
+</html>
