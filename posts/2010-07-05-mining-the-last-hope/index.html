@@ -63,11 +63,11 @@ headers <span class="op">=</span> reader.<span class="bu">next</span>()
 
 G <span class="op">=</span> nx.Graph()
 
-<span class="cf">for</span> line <span class="op">in</span> reader:
+<span class="cf">for</span> line <span class="kw">in</span> reader:
     G.add_edge(line[<span class="dv">0</span>],line[<span class="dv">1</span>])
 
 nx.draw_spring(G,
-               node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="op">in</span> G],
+               node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="kw">in</span> G],
                node_size<span class="op">=</span><span class="dv">40</span>,
                with_labels<span class="op">=</span><span class="va">False</span>,
                cmap<span class="op">=</span>plt.cm.Reds,
@@ -89,13 +89,13 @@ plt.show()</code></pre></div>
             talks_seen <span class="op">=</span> {}
             G <span class="op">=</span> nx.Graph()
         
-            <span class="cf">for</span> line <span class="op">in</span> reader:
-                <span class="cf">if</span> line[<span class="dv">0</span>] <span class="op">not</span> <span class="op">in</span> talks_seen:
+            <span class="cf">for</span> line <span class="kw">in</span> reader:
+                <span class="cf">if</span> line[<span class="dv">0</span>] <span class="kw">not</span> <span class="kw">in</span> talks_seen:
                     talks_seen[line[<span class="dv">0</span>]] <span class="op">=</span> <span class="bu">set</span>(line[<span class="dv">1</span>])
                 <span class="cf">else</span>: talks_seen[line[<span class="dv">0</span>]].add(line[<span class="dv">1</span>])
-            <span class="cf">for</span> t <span class="op">in</span> talks_seen:
-                <span class="cf">for</span> u <span class="op">in</span> talks_seen:
-                    <span class="cf">if</span> t <span class="op">is</span> <span class="op">not</span> u:
+            <span class="cf">for</span> t <span class="kw">in</span> talks_seen:
+                <span class="cf">for</span> u <span class="kw">in</span> talks_seen:
+                    <span class="cf">if</span> t <span class="kw">is</span> <span class="kw">not</span> u:
                         weight <span class="op">=</span> jaccard(talks_seen[t],
                                          talks_seen[u])
                         <span class="cf">if</span> weight <span class="op">&gt;</span> <span class="fl">0.4</span>:                
@@ -103,13 +103,13 @@ plt.show()</code></pre></div>
             pos <span class="op">=</span> nx.spring_layout(G,weighted<span class="op">=</span><span class="va">True</span>)     
             nx.draw(G,
                     pos,
-                    edge_color<span class="op">=</span>[<span class="bu">float</span>(G[e1][e2][<span class="st">'weight'</span>]<span class="op">+</span><span class="fl">0.1</span>) <span class="cf">for</span> e1,e2 <span class="op">in</span> G.edges()],
+                    edge_color<span class="op">=</span>[<span class="bu">float</span>(G[e1][e2][<span class="st">'weight'</span>]<span class="op">+</span><span class="fl">0.1</span>) <span class="cf">for</span> e1,e2 <span class="kw">in</span> G.edges()],
                     width<span class="op">=</span><span class="dv">4</span>,
                     node_size<span class="op">=</span><span class="dv">40</span>,
                     edge_cmap<span class="op">=</span>plt.cm.Blues,
                     with_labels<span class="op">=</span><span class="va">False</span>,
         
-                    node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="op">in</span> G],
+                    node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="kw">in</span> G],
                     cmap<span class="op">=</span>plt.cm.Blues,
                     )
             <span class="bu">print</span> <span class="st">&quot;Nodes:</span><span class="sc">%d</span><span class="st"> Edges: </span><span class="sc">%d</span><span class="ch">\n</span><span class="st">&quot;</span> <span class="op">%</span> (<span class="bu">len</span>(G.nodes()),<span class="bu">len</span>(G.edges()))
@@ -131,12 +131,12 @@ plt.show()</code></pre></div>
             edges <span class="op">=</span> {}
             nodes <span class="op">=</span> {}
         
-            <span class="cf">for</span> line <span class="op">in</span> reader:
+            <span class="cf">for</span> line <span class="kw">in</span> reader:
                 nodes[line[<span class="dv">1</span>]] <span class="op">=</span> nodes.get(line[<span class="dv">1</span>],<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span>
                 <span class="cf">if</span> line[<span class="dv">0</span>] <span class="op">!=</span> last_time:
-                    <span class="cf">for</span> z <span class="op">in</span> zones:
-                        <span class="cf">for</span> i <span class="op">in</span> zones[z]:
-                            <span class="cf">for</span> j <span class="op">in</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: x<span class="op">!=</span>i,zones[z]):
+                    <span class="cf">for</span> z <span class="kw">in</span> zones:
+                        <span class="cf">for</span> i <span class="kw">in</span> zones[z]:
+                            <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: x<span class="op">!=</span>i,zones[z]):
                                 edges[(i,j)] <span class="op">=</span> edges.get((i,j),<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span>
                                 edges[(j,i)] <span class="op">=</span> edges.get((j,i),<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span>                       
                     last_time <span class="op">=</span> line[<span class="dv">0</span>]
@@ -144,7 +144,7 @@ plt.show()</code></pre></div>
                 <span class="cf">else</span>:
                     zones[line[<span class="dv">2</span>]] <span class="op">=</span> zones.get(line[<span class="dv">2</span>],<span class="bu">set</span>()).union([line[<span class="dv">1</span>]])
             G <span class="op">=</span> nx.Graph()
-            <span class="cf">for</span> (e1,e2) <span class="op">in</span> edges:
+            <span class="cf">for</span> (e1,e2) <span class="kw">in</span> edges:
                 weight <span class="op">=</span>         edges[(e1,e2)]<span class="op">/</span>(nodes[e1]<span class="op">+</span>nodes[e2]<span class="op">-</span>edges[(e1,e2)])
                 <span class="cf">if</span> weight <span class="op">&gt;</span> <span class="fl">0.08</span>:
                     G.add_edge(e1,e2,weight<span class="op">=</span>weight)
@@ -156,7 +156,7 @@ plt.show()</code></pre></div>
                     node_size<span class="op">=</span><span class="dv">40</span>,
                     with_labels<span class="op">=</span><span class="va">False</span>,
                     alpha <span class="op">=</span> <span class="fl">0.5</span>,
-                    node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="op">in</span> G],
+                    node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="kw">in</span> G],
                     cmap<span class="op">=</span>plt.cm.Greens,
                     )
             plt.show()</code></pre></div>
@@ -226,8 +226,8 @@ daravinne</code></pre></li>
 <h4 id="cliques">Cliques</h4>
 <p>Cliques are sets of nodes in a graph that are all connected to each other. They are also decent for finding social cliques.</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">        cliques <span class="op">=</span> <span class="bu">sorted</span>(nx.find_cliques(G),key<span class="op">=</span><span class="bu">len</span>,reverse<span class="op">=</span><span class="va">True</span>)[:<span class="dv">10</span>]
-        <span class="cf">for</span> c <span class="op">in</span> cliques:
-            c <span class="op">=</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: name[x] <span class="op">is</span> <span class="op">not</span> <span class="st">&quot;&quot;</span>,c)
+        <span class="cf">for</span> c <span class="kw">in</span> cliques:
+            c <span class="op">=</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: name[x] <span class="kw">is</span> <span class="kw">not</span> <span class="st">&quot;&quot;</span>,c)
             <span class="bu">print</span> <span class="bu">map</span>(<span class="kw">lambda</span> x: name[x], c)
         [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>]
         [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'FrodoNJ'</span>]
@@ -242,8 +242,8 @@ daravinne</code></pre></li>
 <h4 id="connected-components">Connected components</h4>
 <p>Groups nodes into sets based on whether they are reachable from each other.</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">        parts <span class="op">=</span> nx.connected_components(G)
-        <span class="cf">for</span> p <span class="op">in</span> parts[:<span class="dv">10</span>]:
-            p <span class="op">=</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: name[x] <span class="op">is</span> <span class="op">not</span> <span class="st">&quot;&quot;</span>,p)
+        <span class="cf">for</span> p <span class="kw">in</span> parts[:<span class="dv">10</span>]:
+            p <span class="op">=</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: name[x] <span class="kw">is</span> <span class="kw">not</span> <span class="st">&quot;&quot;</span>,p)
             <span class="bu">print</span> <span class="bu">map</span>(<span class="kw">lambda</span> x: name[x], p)
 
         [<span class="st">'grapefruit'</span>, <span class="st">'trinisite'</span>, <span class="st">'Flarocket'</span>, <span class="st">'jay'</span>, <span class="st">'bunshri'</span>, <span class="st">'sirloopy'</span>, <span class="st">'orospakr'</span>, <span class="st">'faeriebeliever'</span>, <span class="st">'sloanroyal'</span>, <span class="st">'i80386'</span>, <span class="st">'brob'</span>, <span class="st">'ash'</span>, <span class="st">'LapTop006'</span>, <span class="st">'efk2'</span>]
@@ -261,28 +261,24 @@ daravinne</code></pre></li>
 <p><a href="../../static/talks_network.html"><img src="../../images/hope_mining_js.png" /></a></p>
 <h3 id="more-at-the-next-hope">More at The Next Hope</h3>
 <p>These are some of the more basic techniques you can apply to this data. Also, we are somewhat limited by what is available to us. What is possible when we know more about our attendees? What is possible when we apply for advanced algorithms? You can find out by coming to The Next Hope, July 16th to July 18th at the Hotel Pennsylvania in New York City.</p>
+
 <div id="disqus_thread"></div>
-<script type="text/javascript">
-  /**
-    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
-    */
-  (function() {
-   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-   dsq.src = 'https://convexoptimized.disqus.com/embed.js';
-   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script>
+    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+        var d = document, s = d.createElement('script');
+        
+        // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        s.src = 'https://convexoptimized.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
-
-<script type="text/javascript">
-var disqus_shortname = 'convexoptimized';
-(function () {
-  var s = document.createElement('script'); s.async = true;
-  s.src = 'https://disqus.com/forums/convexoptimized/count.js';
-  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-}());
-</script>
-
+<noscript>
+    Please enable JavaScript to view the 
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+        comments powered by Disqus.
+    </a>
 
     </body>
 </html>

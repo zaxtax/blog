@@ -175,7 +175,7 @@ def <span class="fu">=</span> <span class="kw">do</span>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">parse test2
 <span class="co">-- Left &quot;[input]&quot; (line 2, column 2):</span>
 <span class="co">-- expecting identifier</span>
-<span class="fu">--</span>
+<span class="co">--</span>
 <span class="co">-- Invalid indentation.</span>
 <span class="co">--   Found a token at indentation 1.</span>
 <span class="co">--   Expecting a token at an indentation greater than or equal to 2.</span>
@@ -212,7 +212,7 @@ def <span class="fu">=</span> <span class="kw">do</span>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">parse test3
 <span class="co">-- Left &quot;[input]&quot; (line 3, column 3):</span>
 <span class="co">-- expecting identifier</span>
-<span class="fu">--</span>
+<span class="co">--</span>
 <span class="co">-- Invalid indentation.</span>
 <span class="co">--   Found a token at indentation 2.</span>
 <span class="co">--   Expecting a token at an indentation greater than or equal to 5.</span>
@@ -235,28 +235,24 @@ parse test1
 <span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
 <p>This library has other bits to it, but this should give enough to figure out, how to add indentation sensitivity to your language.</p>
 <p>Special thanks to <a href="http://www.lambdageek.org/aleksey/">Aleksey Kliger</a> for helping me understand this library.</p>
+
 <div id="disqus_thread"></div>
-<script type="text/javascript">
-  /**
-    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
-    */
-  (function() {
-   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-   dsq.src = 'https://convexoptimized.disqus.com/embed.js';
-   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script>
+    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+        var d = document, s = d.createElement('script');
+        
+        // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        s.src = 'https://convexoptimized.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
-
-<script type="text/javascript">
-var disqus_shortname = 'convexoptimized';
-(function () {
-  var s = document.createElement('script'); s.async = true;
-  s.src = 'https://disqus.com/forums/convexoptimized/count.js';
-  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-}());
-</script>
-
+<noscript>
+    Please enable JavaScript to view the 
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+        comments powered by Disqus.
+    </a>
 
     </body>
 </html>

@@ -82,28 +82,24 @@ index <span class="op">=</span> data.index</code></pre></div>
 <span class="co"># &gt;&gt;&gt; S10E18: Simpsons Bible Stories</span></code></pre></div>
 <p>An episode I remember being <em>alright</em>. Generally the 10th season is acknowledged as the last of the golden years. In fact, <a href="https://twitter.com/woohootriviachi">Chicago Simpsons Trivia Night</a> bills itself as not asking any questions from seasons after 10.</p>
 <p>Apologies in advance for not using more Simpsons jokes in this post. You can find the code and data I used on <a href="https://github.com/zaxtax/simpsons_changepoint">github</a>.</p>
+
 <div id="disqus_thread"></div>
-<script type="text/javascript">
-  /**
-    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
-    */
-  (function() {
-   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-   dsq.src = 'https://convexoptimized.disqus.com/embed.js';
-   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script>
+    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+        var d = document, s = d.createElement('script');
+        
+        // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        s.src = 'https://convexoptimized.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
-
-<script type="text/javascript">
-var disqus_shortname = 'convexoptimized';
-(function () {
-  var s = document.createElement('script'); s.async = true;
-  s.src = 'https://disqus.com/forums/convexoptimized/count.js';
-  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-}());
-</script>
-
+<noscript>
+    Please enable JavaScript to view the 
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+        comments powered by Disqus.
+    </a>
 
     </body>
 </html>
@@ -292,7 +288,7 @@ def <span class="fu">=</span> <span class="kw">do</span>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">parse test2
 <span class="co">-- Left &quot;[input]&quot; (line 2, column 2):</span>
 <span class="co">-- expecting identifier</span>
-<span class="fu">--</span>
+<span class="co">--</span>
 <span class="co">-- Invalid indentation.</span>
 <span class="co">--   Found a token at indentation 1.</span>
 <span class="co">--   Expecting a token at an indentation greater than or equal to 2.</span>
@@ -329,7 +325,7 @@ def <span class="fu">=</span> <span class="kw">do</span>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">parse test3
 <span class="co">-- Left &quot;[input]&quot; (line 3, column 3):</span>
 <span class="co">-- expecting identifier</span>
-<span class="fu">--</span>
+<span class="co">--</span>
 <span class="co">-- Invalid indentation.</span>
 <span class="co">--   Found a token at indentation 2.</span>
 <span class="co">--   Expecting a token at an indentation greater than or equal to 5.</span>
@@ -352,28 +348,24 @@ parse test1
 <span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
 <p>This library has other bits to it, but this should give enough to figure out, how to add indentation sensitivity to your language.</p>
 <p>Special thanks to <a href="http://www.lambdageek.org/aleksey/">Aleksey Kliger</a> for helping me understand this library.</p>
+
 <div id="disqus_thread"></div>
-<script type="text/javascript">
-  /**
-    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
-    */
-  (function() {
-   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-   dsq.src = 'https://convexoptimized.disqus.com/embed.js';
-   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script>
+    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+        var d = document, s = d.createElement('script');
+        
+        // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        s.src = 'https://convexoptimized.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
-
-<script type="text/javascript">
-var disqus_shortname = 'convexoptimized';
-(function () {
-  var s = document.createElement('script'); s.async = true;
-  s.src = 'https://disqus.com/forums/convexoptimized/count.js';
-  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-}());
-</script>
-
+<noscript>
+    Please enable JavaScript to view the 
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+        comments powered by Disqus.
+    </a>
 
     </body>
 </html>
@@ -605,28 +597,24 @@ test2 <span class="fu">=</span> <span class="kw">do</span>
 <li><a href="http://arxiv.org/abs/1507.00996">A New Approach to Probabilistic Programming Inference</a></li>
 <li><a href="http://arxiv.org/abs/1403.0504">A Compilation Target for Probabilistic Programming Languages</a></li>
 </ul>
+
 <div id="disqus_thread"></div>
-<script type="text/javascript">
-  /**
-    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
-    */
-  (function() {
-   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-   dsq.src = 'https://convexoptimized.disqus.com/embed.js';
-   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script>
+    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+        var d = document, s = d.createElement('script');
+        
+        // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        s.src = 'https://convexoptimized.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
-
-<script type="text/javascript">
-var disqus_shortname = 'convexoptimized';
-(function () {
-  var s = document.createElement('script'); s.async = true;
-  s.src = 'https://disqus.com/forums/convexoptimized/count.js';
-  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-}());
-</script>
-
+<noscript>
+    Please enable JavaScript to view the 
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+        comments powered by Disqus.
+    </a>
 
     </body>
 </html>
@@ -712,7 +700,7 @@ display_histogram(normal(<span class="dv">1</span>, <span class="dv">2</span>))<
 <p>It will always have a single maximum value, so if the distribution you had in mind for your problem has multiple solutions, don’t use it. The normal also comes up a lot because if you have multiple signals that come from any distribution, with enough signals their average converges to the normal distribution. This is one version of what is called, <em>Central Limit Theorem</em>.</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> clt(samples):
     <span class="cf">return</span> np.array([np.mean(r.uniform(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">100</span>))
-                     <span class="cf">for</span> i <span class="op">in</span> <span class="bu">range</span>(samples)])
+                     <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(samples)])
 
 display_histogram(clt)</code></pre></div>
 <p><img src="../../images/clthist.png" width="600" height="400"></p>
@@ -731,7 +719,7 @@ display_histogram(bern(<span class="fl">0.7</span>))</code></pre></div>
 <p>Bernoulli is also handy since you can define a bunch of distributions in terms of them. The <em>Binomial distribution</em> is a distribution on natural numbers from <span class="math inline">\(0\)</span> to <span class="math inline">\(n\)</span> inclusive. It takes a bias <span class="math inline">\(\rho\)</span> and counts how often a coin flip succeeds in n trials.</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> binomial(n, p):
     <span class="kw">def</span> samples(s):
-    k <span class="op">=</span> [np.<span class="bu">sum</span>(bern(p)(n)) <span class="cf">for</span> s <span class="op">in</span> <span class="bu">range</span>(s)]
+    k <span class="op">=</span> [np.<span class="bu">sum</span>(bern(p)(n)) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]
     <span class="cf">return</span> np.array(k)
     <span class="cf">return</span> samples
 
@@ -757,7 +745,7 @@ array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1<
         l <span class="op">=</span> <span class="bu">len</span>(ps)
         <span class="cf">return</span> np.array([onehot(l,
                                 r.choice(<span class="bu">range</span>(l),  p<span class="op">=</span>ps))
-                         <span class="cf">for</span> i <span class="op">in</span> <span class="bu">range</span>(s)])
+                         <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])
     <span class="cf">return</span> samples
 
 <span class="op">&gt;&gt;</span> categorical2([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)
@@ -857,7 +845,7 @@ display_histogram2d(multinorm([<span class="dv">1</span>,<span class="dv">2</spa
         <span class="cf">return</span> X.T<span class="op">*</span>X
 
     <span class="kw">def</span> samples(s):
-        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="op">in</span> <span class="bu">range</span>(s)])
+        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])
     <span class="cf">return</span> samples
 
 m <span class="op">=</span> wishart(np.eye(<span class="dv">30</span>), <span class="dv">10</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]
@@ -871,12 +859,12 @@ plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</s
         P <span class="op">=</span> np.zeros((d, d))
         S <span class="op">=</span> np.eye(d)
 
-        <span class="cf">for</span> k <span class="op">in</span> <span class="bu">range</span>(d<span class="dv">-1</span>):
+        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(d<span class="op">-</span><span class="dv">1</span>):
             b <span class="op">=</span> b <span class="op">-</span> <span class="fl">0.5</span>
-            <span class="cf">for</span> i <span class="op">in</span> <span class="bu">range</span>(k<span class="dv">+1</span>, d):
+            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k<span class="op">+</span><span class="dv">1</span>, d):
                 P[k, i] <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>r.beta(b, b) <span class="op">-</span> <span class="dv">1</span>
                 p <span class="op">=</span> P[k, i]
-                <span class="cf">for</span> l <span class="op">in</span> <span class="bu">range</span>(k<span class="dv">-1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>):
+                <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">range</span>(k<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>):
                     p <span class="op">=</span> p <span class="op">*</span> np.sqrt((<span class="dv">1</span><span class="op">-</span>P[l, i]<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span>
                                     (<span class="dv">1</span><span class="op">-</span>P[<span class="dv">1</span>, k]<span class="op">**</span><span class="dv">2</span>)) <span class="op">+</span> P[l, i]<span class="op">*</span>P[l, k]
                 S[k, i] <span class="op">=</span> p
@@ -884,7 +872,7 @@ plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</s
         <span class="cf">return</span> S
 
     <span class="kw">def</span> samples(s):
-        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="op">in</span> <span class="bu">range</span>(s)])
+        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])
     <span class="cf">return</span> samples
 
 m <span class="op">=</span> vine(<span class="fl">2.0</span>, <span class="dv">30</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]
@@ -894,7 +882,7 @@ plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</s
 <p>Categorical in the One-Hot encoding can also be seen as a special-case of the <em>Multinomial distribution</em>. The multinomial is related to the categorical like bernoulli is related to binomial. This distribution given <span class="math inline">\(n\)</span> trials with the categorical counts how often each of the outcomes happened.</p>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> multinomial(n, ps):
     <span class="kw">def</span> samples(s):
-        m <span class="op">=</span> [np.<span class="bu">sum</span>(categorical2(ps)(n), axis<span class="op">=</span><span class="dv">0</span>) <span class="cf">for</span> s <span class="op">in</span> <span class="bu">range</span>(s)]
+        m <span class="op">=</span> [np.<span class="bu">sum</span>(categorical2(ps)(n), axis<span class="op">=</span><span class="dv">0</span>) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]
         <span class="cf">return</span> np.array(m)
     <span class="cf">return</span> samples
 
@@ -908,28 +896,24 @@ array([[ <span class="dv">2</span>.,  <span class="dv">4</span>.,  <span class="
 <p>This distribution appears often in natural language processing as a prior on bag-of-word representation for documents. A document can be represented as a list of how often each word occured in that document. The multinomial in that sense can be used to encode our beliefs about the vocabularies.</p>
 <h2 id="conclusions">Conclusions</h2>
 <p>This doesn’t cover all the distributions people are using for priors out there, but it should give an intuition for why the most common ones are in use.</p>
+
 <div id="disqus_thread"></div>
-<script type="text/javascript">
-  /**
-    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
-    */
-  (function() {
-   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-   dsq.src = 'https://convexoptimized.disqus.com/embed.js';
-   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script>
+    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+        var d = document, s = d.createElement('script');
+        
+        // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        s.src = 'https://convexoptimized.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
-
-<script type="text/javascript">
-var disqus_shortname = 'convexoptimized';
-(function () {
-  var s = document.createElement('script'); s.async = true;
-  s.src = 'https://disqus.com/forums/convexoptimized/count.js';
-  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-}());
-</script>
-
+<noscript>
+    Please enable JavaScript to view the 
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+        comments powered by Disqus.
+    </a>
 
     </body>
 </html>
@@ -1028,28 +1012,24 @@ by <em>Rob Zinkov</em> on <strong>2015-06-05</strong>
 <p>Note, this isn’t a systems paper. APIs are not talked about and you won’t be seeing many diagrams about the different components of the system. The authors had a concrete problem and this was how they solved it.</p>
 <h2 id="more-to-come">More to come</h2>
 <p>Think I missed a style? Tell me and I’ll add it.</p>
+
 <div id="disqus_thread"></div>
-<script type="text/javascript">
-  /**
-    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
-    */
-  (function() {
-   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-   dsq.src = 'https://convexoptimized.disqus.com/embed.js';
-   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
+<script>
+    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+        var d = document, s = d.createElement('script');
+        
+        // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        s.src = 'https://convexoptimized.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript=convexoptimized">comments powered by Disqus.</a></noscript>
-
-<script type="text/javascript">
-var disqus_shortname = 'convexoptimized';
-(function () {
-  var s = document.createElement('script'); s.async = true;
-  s.src = 'https://disqus.com/forums/convexoptimized/count.js';
-  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-}());
-</script>
-
+<noscript>
+    Please enable JavaScript to view the 
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+        comments powered by Disqus.
+    </a>
 
     </body>
 </html>
