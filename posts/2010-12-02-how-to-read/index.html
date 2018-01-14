@@ -1,43 +1,109 @@
-<!DOCTYPE html> 
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en-us">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" href="../../favicon.ico">
-        <title>Convex Optimized - How to Read a Paper</title>
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
-        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          TeX: {
-              extensions: ["AMSmath.js"]
-          },
-          tex2jax: {
-              inlineMath: [  ["\\(","\\)"], ],
-              displayMath: [  ["\\[","\\]"] ]
-          },
-          displayAlign: 'center', // Change this to 'center' to center equations.
-          "HTML-CSS": {
-              styles: {'.MathJax_Display': {"margin": 4}}
-          }
-      });
-    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>How to Read a Paper</title>
+        <style>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-    </head>
-    <body>
-        <h1>Convex Optimized</h1>
-        <div id="navigation">
-            <a href="../../">Home</a>
-	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
-	    <a href="../../archive.html">Archive</a>
-	    <a href="../../about.html">About</a>
-	    <a href="../../contact.html">Contact</a>
-        </div>
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
 
-        <h3>How to Read a Paper</h3>
-by <em>Rob Zinkov</em> on <strong>2010-12-02</strong>
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+	  extensions: ["AMSmath.js"]
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>How to Read a Paper</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2010-12-02</h5>
+</div>
+
+<div class="text-left">
+
 <p>When people first start reading research papers they go through them in the most completely wrong way. They read them from start to finish, and waste precious hours and days trying to understand them. This time is wasteful because usually these papers aren’t very useful. Whether it be during a literature review, recent conference proceedings, or skimming papers on arxiv, I am often confronted with hundreds of papers to possibly read. This is an approach I have found that helps me get through many of them.</p>
 <p>Note this isn’t a guide to actually reading and understanding a paper. Many articles have been written about doing that. I found <a href="http://www.eecs.harvard.edu/~michaelm/postscripts/ReadPaper.pdf">this paper</a> by Michael Mitzenmacher to give great advice for understanding a paper. My advice is mostly about determining if a paper is seriously worth reading.</p>
 <h2 id="skip-the-title">Skip the title</h2>
@@ -71,14 +137,16 @@ Robust Regression with Twinned Gaussian Processes</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>I hope this documents helps you read many more papers and save lots of time avoiding bad and useless papers.</p>
 
+</div>
+
 <div id="disqus_thread"></div>
 <script>
     (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
         var d = document, s = d.createElement('script');
-        
+
         // IMPORTANT: Replace EXAMPLE with your forum shortname!
         s.src = 'https://convexoptimized.disqus.com/embed.js';
-        
+
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
@@ -89,5 +157,8 @@ Robust Regression with Twinned Gaussian Processes</code></pre>
         comments powered by Disqus.
     </a>
 
-    </body>
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
 </html>

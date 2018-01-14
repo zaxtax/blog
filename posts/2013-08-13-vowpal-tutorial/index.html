@@ -1,43 +1,109 @@
-<!DOCTYPE html> 
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en-us">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" href="../../favicon.ico">
-        <title>Convex Optimized - Vowpal Wabbit tutorial for the Uninitiated</title>
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
-        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          TeX: {
-              extensions: ["AMSmath.js"]
-          },
-          tex2jax: {
-              inlineMath: [  ["\\(","\\)"], ],
-              displayMath: [  ["\\[","\\]"] ]
-          },
-          displayAlign: 'center', // Change this to 'center' to center equations.
-          "HTML-CSS": {
-              styles: {'.MathJax_Display': {"margin": 4}}
-          }
-      });
-    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Vowpal Wabbit tutorial for the Uninitiated</title>
+        <style>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-    </head>
-    <body>
-        <h1>Convex Optimized</h1>
-        <div id="navigation">
-            <a href="../../">Home</a>
-	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
-	    <a href="../../archive.html">Archive</a>
-	    <a href="../../about.html">About</a>
-	    <a href="../../contact.html">Contact</a>
-        </div>
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
 
-        <h3>Vowpal Wabbit tutorial for the Uninitiated</h3>
-by <em>Rob Zinkov</em> on <strong>2013-08-13</strong>
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+	  extensions: ["AMSmath.js"]
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>Vowpal Wabbit tutorial for the Uninitiated</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2013-08-13</h5>
+</div>
+
+<div class="text-left">
+
 <p>Whenever I have a classification task with lots of data and lots of features, I love throwing Vowpal Wabbit or <a href="https://github.com/JohnLangford/vowpal_wabbit">VW</a> at the problem. Unfortunately, I find the array of commandline options in vw very intimidating. The github wiki is really good, but the information you need to be productive is scattered all over the place. This is my attempt to put everything you need in one place.</p>
 <p>Note most of this is directly cribbed from the <a href="https://github.com/JohnLangford/vowpal_wabbit/wiki">wiki</a>. So always check there for the latest instructions. Also I have only covered the arguments and options I use the most often. Check the <a href="https://github.com/JohnLangford/vowpal_wabbit/wiki/Command-line-arguments">complete reference</a> on the wiki for more information.</p>
 <h2 id="installation">Installation</h2>
@@ -229,9 +295,7 @@ vw -d data.vw -i features.model --feature_mask features.model -f final.model</co
 <p>Warning using these features will result in the square or cube of the number of features. To avoid hashing collisions, you may need allocate more bits for each feature bucket with <code>-b</code></p>
 <h2 id="matrix-factorization">Matrix Factorization</h2>
 <p>Now quadratic interaction features leads to a massive blowup in possible features. We can approximate these features by assuming these interactions are really explained by <code>k</code> latent features.</p>
-<figure>
-<img src="../../images/MF_illustrations.png" />
-</figure>
+<p><img src="../../images/MF_illustrations.png" /></p>
 <p>To specify a matrix factorization, just use the <code>--rank k</code> with how many latent features you think will explain the interactions</p>
 <pre><code>cat data.vw | vw -q ui --rank 10</code></pre>
 <h2 id="structured-prediction">Structured Prediction</h2>
@@ -272,9 +336,7 @@ Woot    !
 Woot    !
 !       ,</code></pre>
 <p>Where the tags as defined from the <a href="http://www.ark.cs.cmu.edu/TweetNLP/annot_guidelines.pdf">Twitter POS guidelines</a> as</p>
-<figure>
-<img src="../../images/twtags.png" />
-</figure>
+<p><img src="../../images/twtags.png" /></p>
 <p>Now to correctly tag each word, its not enough to know the word, we also need to know how the words around it were tagged. The way SEARN tackles this problems is by reducing it into a series of contextual bandit problems.</p>
 <p>SEARN makes a lot more sense as a reinforcement learning agent than a structured prediction algorithm.</p>
 <p>Reinforcement learning differs from a standard supervised learning problem in that you don’t learn a function mapping input to output. Instead you learn a policy which dictates the best actions to take in each state. Each of these states will then lead into another state until reaching a goal state. The algorithm is then evaluated jointly based on the sequence of states and actions the learner chose to take.</p>
@@ -386,14 +448,16 @@ zv$worker3$ vw --span_server master --total 3 --node 2 -d worker.data</code></pr
 <h2 id="conclusions">Conclusions</h2>
 <p>Vowpal Wabbit is still being actively developed and there are lots of details I haven’t covered. Hopefully this guide makes it easier to navigate.</p>
 
+</div>
+
 <div id="disqus_thread"></div>
 <script>
     (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
         var d = document, s = d.createElement('script');
-        
+
         // IMPORTANT: Replace EXAMPLE with your forum shortname!
         s.src = 'https://convexoptimized.disqus.com/embed.js';
-        
+
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
@@ -404,5 +468,8 @@ zv$worker3$ vw --span_server master --total 3 --node 2 -d worker.data</code></pr
         comments powered by Disqus.
     </a>
 
-    </body>
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
 </html>

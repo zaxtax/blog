@@ -1,46 +1,112 @@
-<!DOCTYPE html> 
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en-us">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" href="../../favicon.ico">
-        <title>Convex Optimized - Calculating the golden-era of The Simpsons</title>
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
-        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          TeX: {
-              extensions: ["AMSmath.js"]
-          },
-          tex2jax: {
-              inlineMath: [  ["\\(","\\)"], ],
-              displayMath: [  ["\\[","\\]"] ]
-          },
-          displayAlign: 'center', // Change this to 'center' to center equations.
-          "HTML-CSS": {
-              styles: {'.MathJax_Display': {"margin": 4}}
-          }
-      });
-    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Calculating the golden-era of The Simpsons</title>
+        <style>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-    </head>
-    <body>
-        <h1>Convex Optimized</h1>
-        <div id="navigation">
-            <a href="../../">Home</a>
-	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
-	    <a href="../../archive.html">Archive</a>
-	    <a href="../../about.html">About</a>
-	    <a href="../../contact.html">Contact</a>
-        </div>
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
 
-        <h3>Calculating the golden-era of The Simpsons</h3>
-by <em>Rob Zinkov</em> on <strong>2017-11-03</strong>
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+	  extensions: ["AMSmath.js"]
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>Calculating the golden-era of The Simpsons</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2017-11-03</h5>
+</div>
+
+<div class="text-left">
+
 <p><a href="http://www.nathancunn.com/">Nathan Cunningham</a> published last week a <a href="http://www.nathancunn.com/2017-10-26-simpsons-decline/">fantastic</a> article about using some stats to estimate at what episode did Simpsons start to decline.</p>
 <p>Cameron Davidson-Pilon suggested this would make a great application of Bayesian changepoint models.</p>
-<blockquote class="twitter-tweet" data-lang="en-gb">
+<blockquote class="twitter-tweet" data-theme="dark" data-lang="en-gb">
 <p lang="en" dir="ltr">
 Someone want to Bayesian switchpoint model this? See first chapter of BMH <a href="https://t.co/QiGwzA0khD">https://t.co/QiGwzA0khD</a>
 </p>
@@ -49,35 +115,37 @@ Someone want to Bayesian switchpoint model this? See first chapter of BMH <a hre
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p>In turns out, he was totally right. Taking the <a href="http://docs.pymc.io/notebooks/getting_started.html#Case-study-2:-Coal-mining-disasters">Coal-mining disaster</a> example from the pymc3 quickstart guide and slightly modifying it is enough to do the job.</p>
 <p>First we load the data</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">data <span class="op">=</span> pd.read_csv(<span class="st">&quot;simpsons_ratings.csv&quot;</span>)
-index <span class="op">=</span> data.index</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1">data <span class="op">=</span> pd.read_csv(<span class="st">&quot;simpsons_ratings.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">index <span class="op">=</span> data.index</a></code></pre></div>
 <p>Then we use some Gaussians to describe the average rating, and how that mean rate translates to the quality of any particular episode.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="cf">with</span> pm.Model() <span class="im">as</span> model:
-    switch <span class="op">=</span> pm.DiscreteUniform(<span class="st">'switch'</span>, lower<span class="op">=</span>index.<span class="bu">min</span>(), upper<span class="op">=</span>index.<span class="bu">max</span>())
-    early_mean <span class="op">=</span> pm.Normal(<span class="st">'early_mean'</span>, mu<span class="op">=</span><span class="dv">5</span>., sd<span class="op">=</span><span class="dv">1</span>.)
-    late_mean <span class="op">=</span> pm.Normal(<span class="st">'late_mean'</span>, mu<span class="op">=</span><span class="dv">5</span>., sd<span class="op">=</span><span class="dv">1</span>.)
-    mean <span class="op">=</span> tt.switch(switch <span class="op">&gt;=</span> index.values, early_mean, late_mean)
-    ratings <span class="op">=</span> pm.Normal(<span class="st">'ratings'</span>, mu<span class="op">=</span>mean, sd<span class="op">=</span><span class="dv">1</span>.,
-                        observed<span class="op">=</span>data[<span class="st">&quot;UserRating&quot;</span>].values)
-
-    tr <span class="op">=</span> pm.sample(<span class="dv">10000</span>, tune<span class="op">=</span><span class="dv">500</span>)
-    pm.traceplot(tr)</code></pre></div>
-<p><img src="../../images/simpsons_trace.png" width="600" height="300" /></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="cf">with</span> pm.Model() <span class="im">as</span> model:</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    switch <span class="op">=</span> pm.DiscreteUniform(<span class="st">'switch'</span>, lower<span class="op">=</span>index.<span class="bu">min</span>(), upper<span class="op">=</span>index.<span class="bu">max</span>())</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    early_mean <span class="op">=</span> pm.Normal(<span class="st">'early_mean'</span>, mu<span class="op">=</span><span class="fl">5.</span>, sd<span class="op">=</span><span class="fl">1.</span>)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    late_mean <span class="op">=</span> pm.Normal(<span class="st">'late_mean'</span>, mu<span class="op">=</span><span class="fl">5.</span>, sd<span class="op">=</span><span class="fl">1.</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    mean <span class="op">=</span> tt.switch(switch <span class="op">&gt;=</span> index.values, early_mean, late_mean)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    ratings <span class="op">=</span> pm.Normal(<span class="st">'ratings'</span>, mu<span class="op">=</span>mean, sd<span class="op">=</span><span class="fl">1.</span>,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">                        observed<span class="op">=</span>data[<span class="st">&quot;UserRating&quot;</span>].values)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    tr <span class="op">=</span> pm.sample(<span class="dv">10000</span>, tune<span class="op">=</span><span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    pm.traceplot(tr)</a></code></pre></div>
+<p><img src="../../images/simpsons_trace.png" /></p>
 <p>As we can see around 220 is when our model thinks the Simpsons was starting to downward slide.</p>
 <p>That would be</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st">: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(data[<span class="st">&quot;EpisodeID&quot;</span>][<span class="dv">220</span>], data[<span class="st">&quot;Episode&quot;</span>][<span class="dv">220</span>]))
-<span class="co"># &gt;&gt;&gt; S10E18: Simpsons Bible Stories</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st">: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(data[<span class="st">&quot;EpisodeID&quot;</span>][<span class="dv">220</span>], data[<span class="st">&quot;Episode&quot;</span>][<span class="dv">220</span>]))</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># &gt;&gt;&gt; S10E18: Simpsons Bible Stories</span></a></code></pre></div>
 <p>An episode I remember being <em>alright</em>. Generally the 10th season is acknowledged as the last of the golden years. In fact, <a href="https://twitter.com/woohootriviachi">Chicago Simpsons Trivia Night</a> bills itself as not asking any questions from seasons after 10.</p>
 <p>Apologies in advance for not using more Simpsons jokes in this post. You can find the code and data I used on <a href="https://github.com/zaxtax/simpsons_changepoint">github</a>.</p>
+
+</div>
 
 <div id="disqus_thread"></div>
 <script>
     (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
         var d = document, s = d.createElement('script');
-        
+
         // IMPORTANT: Replace EXAMPLE with your forum shortname!
         s.src = 'https://convexoptimized.disqus.com/embed.js';
-        
+
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
@@ -88,5 +156,8 @@ index <span class="op">=</span> data.index</code></pre></div>
         comments powered by Disqus.
     </a>
 
-    </body>
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
 </html>

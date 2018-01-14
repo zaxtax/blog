@@ -1,92 +1,134 @@
-<!DOCTYPE html> 
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en-us">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" href="./favicon.ico">
-        <title>Convex Optimized - Home</title>
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="./rss.xml" />
-        <link rel="stylesheet" type="text/css" href="./css/default.css" />
-        <link rel="stylesheet" type="text/css" href="./css/code2.css" />
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          TeX: {
-              extensions: ["AMSmath.js"]
-          },
-          tex2jax: {
-              inlineMath: [  ["\\(","\\)"], ],
-              displayMath: [  ["\\[","\\]"] ]
-          },
-          displayAlign: 'center', // Change this to 'center' to center equations.
-          "HTML-CSS": {
-              styles: {'.MathJax_Display': {"margin": 4}}
-          }
-      });
-    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Home</title>
+        <style>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-    </head>
-    <body>
-        <h1>Convex Optimized</h1>
-        <div id="navigation">
-            <a href="./">Home</a>
-	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
-	    <a href="./archive.html">Archive</a>
-	    <a href="./about.html">About</a>
-	    <a href="./contact.html">Contact</a>
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
+
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="./rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="./rss.xml" />
+
+<link rel="stylesheet" href="./css/minimal.css">
+<link rel="stylesheet" type="text/css" href="./css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+	  extensions: ["AMSmath.js"]
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="./">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="./archive/">Archive</a></li>
+	<li><a href="./pubs/">Publications</a></li>
+	<li><a href="./about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <h2>Recent Posts</h2>
+    
+        <div class="item">
+        <h4><a href="./posts/2017-11-03-simpsons-changepoint/">Calculating the golden-era of The Simpsons</a></h4>
+        <h5>2017-11-03</h5>
         </div>
-
-        <h3>Recent Posts</h3>
-<ul>
     
-        <li>
-            2017-11-03 - <a href="./posts/2017-11-03-simpsons-changepoint/">Calculating the golden-era of The Simpsons</a> 
-        </li>
+        <div class="item">
+        <h4><a href="./posts/2016-01-12-indentation-sensitive-parsing/">Indentation sensitive parsing the easy way</a></h4>
+        <h5>2016-01-12</h5>
+        </div>
     
-        <li>
-            2016-01-12 - <a href="./posts/2016-01-12-indentation-sensitive-parsing/">Indentation sensitive parsing the easy way</a> 
-        </li>
+        <div class="item">
+        <h4><a href="./posts/2015-08-25-building-a-probabilisitic-interpreter/">Building a probabilistic programming interpreter</a></h4>
+        <h5>2015-08-25</h5>
+        </div>
     
-        <li>
-            2015-08-25 - <a href="./posts/2015-08-25-building-a-probabilisitic-interpreter/">Building a probabilistic programming interpreter</a> 
-        </li>
+        <div class="item">
+        <h4><a href="./posts/2015-06-09-where-priors-come-from/">Where priors come from</a></h4>
+        <h5>2015-06-09</h5>
+        </div>
     
-        <li>
-            2015-06-09 - <a href="./posts/2015-06-09-where-priors-come-from/">Where priors come from</a> 
-        </li>
+        <div class="item">
+        <h4><a href="./posts/2015-06-05-paper-outline-styles/">Popular outlines for machine learning papers</a></h4>
+        <h5>2015-06-05</h5>
+        </div>
     
-        <li>
-            2015-06-05 - <a href="./posts/2015-06-05-paper-outline-styles/">Popular outlines for machine learning papers</a> 
-        </li>
-    
-        <li>
-            2014-06-19 - <a href="./posts/2014-06-19-icml-reviews/">ICML 2014: Interesting looking papers</a> 
-        </li>
-    
-        <li>
-            2013-12-06 - <a href="./posts/2013-12-06-nips-reviews/">NIPS 2013: Interesting looking papers</a> 
-        </li>
-    
-        <li>
-            2013-08-13 - <a href="./posts/2013-08-13-vowpal-tutorial/">Vowpal Wabbit tutorial for the Uninitiated</a> 
-        </li>
-    
-        <li>
-            2013-07-28 - <a href="./posts/2013-07-28-stop-using-plates/">Stop using Plate Notation</a> 
-        </li>
-    
-        <li>
-            2013-01-06 - <a href="./posts/2013-01-06-ml-notation/">Notation popular in mathematical software</a> 
-        </li>
-    
-        <li>
-            2012-10-05 - <a href="./posts/2012-10-05-datamining-software/">Machine Learning Software</a> 
-        </li>
-    
-</ul>
 
 
-<p><a href="./archive.html">All posts …</a>
+<p><a href="./archive/">All posts …</a>
 
-    </body>
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
 </html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Publications</title>
+        <style>
+
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
+
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="/rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml" />
+
+<link rel="stylesheet" href="/css/minimal.css">
+<link rel="stylesheet" type="text/css" href="/css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+	  extensions: ["AMSmath.js"]
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="/archive/">Archive</a></li>
+	<li><a href="/pubs/">Publications</a></li>
+	<li><a href="/about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <h2>Publications</h2>
+<br />
+
+<div class="text-left">
+    
+            <p><strong>Automating Expectation Maximixation</strong>
+            <br />Robert Zinkov 
+            <br />In NIPS Workshop on Advances in Approximate Bayesian Inference, 2017 
+            <br />
+            { <a href onclick="toggle('zinkov2017autoem-abs'); return false;">Abstract</a> |
+	    <a href onclick="toggle('zinkov2017autoem'); return false;">BibTex</a>
+	     | <a href="http://approximateinference.org/2017/accepted/Zinkov2017.pdf">PDF</a>  }
+	    <blockquote style="display: none;" id="zinkov2017autoem-abs">Existing probabilistic programming systems frequently treat machine learning problems as purely inference tasks. But real-world problems often require a novel combination of inference and optimization. For example when implementing Expectation Maximization for a model, one must alternate between performing an inference and an optimization step. We show that by treating optimization as a program transformation it is possible to implement Expectation Maximization in a generic and composable way.</blockquote>
+	    
+	    <pre style="display: none;" id="zinkov2017autoem"><code>@inproceedings{zinkov2017autoem,
+  title = {Automating Expectation Maximixation},
+  author = {Robert Zinkov},
+  booktitle = {NIPS Workshop on Advances in Approximate Bayesian Inference},
+  year = {2017},
+}
+</code></pre>
+	    
+    
+            <p><strong>End-to-end Training of Differentiable Pipelines Across Machine Learning Frameworks</strong>
+            <br />Mitar Milutinovic, Atılım Güneş Baydin, Robert Zinkov, William Harvey, Dawn Song, Frank Wood, and Wade Shen 
+            <br />In NIPS Workshop on Autodiff, 2017 
+            <br />
+            { <a href onclick="toggle('milutinovic2017pipeline-abs'); return false;">Abstract</a> |
+	    <a href onclick="toggle('milutinovic2017pipeline'); return false;">BibTex</a>
+	     }
+	    <blockquote style="display: none;" id="milutinovic2017pipeline-abs">In this work we present a unified interface and methodology for performing end-to-end gradient-based refinement of pipelines of differentiable machine-learning primitives. This is distinguished from recent interoperability efforts such as the Open Neural Network Exchange (ONNX) format and other language-centric cross-compilation approaches in that the final pipeline does not need to be implemented nor trained in the same language nor cross-compiled into any single language; in other words, primitives may be written and pre-trained in PyTorch, TensorFlow, Caffe, scikit-learn or any of the other popular machine learning frameworks and fine-tuned end-to-end while being executed directly in their host frameworks. Provided primitives expose our proposed interface, it is possible to automatically compose all such primitives and refine them based on an end-to-end loss.</blockquote>
+	    
+	    <pre style="display: none;" id="milutinovic2017pipeline"><code>@inproceedings{milutinovic2017pipeline,
+  title = {End-to-end Training of Differentiable Pipelines Across Machine Learning Frameworks},
+  author = {Mitar Milutinovic and Atılım Güneş Baydin and Robert
+            Zinkov and William Harvey and Dawn Song and Frank
+            Wood and Wade Shen},
+  booktitle = {NIPS Workshop on Autodiff},
+  year = {2017},
+}
+</code></pre>
+	    
+    
+            <p><strong>Principled Inference Networks in Deep Generative Models</strong>
+            <br />Stefan Webb, Adam Golinski, Robert Zinkov, and Frank Wood 
+            <br />In NIPS Workshop on Bayesian Deep Learning, 2017 
+            <br />
+            { <a href onclick="toggle('webb2017deepbayes-abs'); return false;">Abstract</a> |
+	    <a href onclick="toggle('webb2017deepbayes'); return false;">BibTex</a>
+	     | <a href="http://bayesiandeeplearning.org/2017/papers/30.pdf">PDF</a>  }
+	    <blockquote style="display: none;" id="webb2017deepbayes-abs">In learning deep generative models, the encoder for variational inference is typically formed in an ad hoc manner with a structure and parametrization analogous to the forward model. Our chief insight is that this results in coarse approximations to the posterior, and that the d-separation properties of the BN structure of the forward model should be used, in a principled way, to produce ones that are faithful to the posterior, for which we introduce the novel Compact Minimal I-map (CoMI) algorithm. Applying our method to common models reveals that standard encoder design choices lack many important edges, and through experiments we demonstrate that modelling these edges is important for optimal learning. We show how using a faithful encoder is crucial when modelling with continuous relaxations of categorical distributions.</blockquote>
+	    
+	    <pre style="display: none;" id="webb2017deepbayes"><code>@inproceedings{webb2017deepbayes,
+  title = {Principled Inference Networks in Deep Generative Models},
+  author = {Stefan Webb and Adam Golinski and Robert Zinkov and Frank Wood},
+  booktitle = {NIPS Workshop on Bayesian Deep Learning},
+  year = {2017},
+}
+</code></pre>
+	    
+    
+            <p><strong>Composing inference algorithms as program transformations</strong>
+            <br />Robert Zinkov and Chung-chieh Shan 
+            <br />In Proceedings of Uncertainty in Artificial Intelligence, 2017 
+            <br />
+            { <a href onclick="toggle('zinkov-composing-abs'); return false;">Abstract</a> |
+	    <a href onclick="toggle('zinkov-composing'); return false;">BibTex</a>
+	     | <a href="http://auai.org/uai2017/proceedings/papers/163.pdf">PDF</a>  }
+	    <blockquote style="display: none;" id="zinkov-composing-abs">Probabilistic inference procedures are usually coded painstakingly from scratch, for each target model and each inference algorithm. We reduce this effort by generating inference procedures from models automatically. We make this code generation modular by decomposing inference algorithms into reusable program-to-program transformations. These transformations perform exact inference as well as generate probabilistic programs that compute expectations, densities, and MCMC samples. The resulting inference procedures are about as accurate and fast as other probabilistic programming systems on real-world problems.</blockquote>
+	    
+	    <pre style="display: none;" id="zinkov-composing"><code>@inproceedings{zinkov-composing,
+  title = {Composing inference algorithms as program transformations},
+  author = {Robert Zinkov and Shan, Chung-chieh},
+  booktitle = {Proceedings of Uncertainty in Artificial Intelligence},
+  year = {2017},
+}
+</code></pre>
+	    
+    
+            <p><strong>Using Synthetic Data to Train Neural Networks is Model-Based Reasoning</strong>
+            <br />Tuan Anh Le, At<span>i</span>l<span>i</span>m G<span>ü</span>neş Baydin, Robert Zinkov, and Frank Wood 
+            <br />In International Joint Conference on Neural Networks (<span>IJCNN</span>), 2017 
+            <br />
+            { <a href onclick="toggle('le2017using-abs'); return false;">Abstract</a> |
+	    <a href onclick="toggle('le2017using'); return false;">BibTex</a>
+	     | <a href="https://arxiv.org/pdf/1703.00868">PDF</a>  }
+	    <blockquote style="display: none;" id="le2017using-abs">We draw a formal connection between using synthetic training data to optimize neural network parameters and approximate, Bayesian, model-based reasoning. In particular, training a neural network using synthetic data can be viewed as learning a proposal distribution generator for approximate inference in the synthetic-data generative model. We demonstrate this connection in a recognition task where we develop a novel Captcha-breaking architecture and train it using synthetic data, demonstrating both state-of-the-art performance and a way of computing task-specific posterior uncertainty. Using a neural network trained this way, we also demonstrate successful breaking of real-world Captchas currently used by Facebook and Wikipedia. Reasoning from these empirical results and drawing connections with Bayesian modeling, we discuss the robustness of synthetic data results and suggest important considerations for ensuring good neural network generalization when training with synthetic data.</blockquote>
+	    
+	    <pre style="display: none;" id="le2017using"><code>@article{le2017using,
+  title = {Using Synthetic Data to Train Neural Networks is Model-Based Reasoning},
+  author = {Le, Tuan Anh and Baydin, At{\i}l{\i}m G{\"u}ne\c{s} and Zinkov, Robert and Wood, Frank},
+  booktitle = {International Joint Conference on Neural Networks ({IJCNN})},
+  pages = {3514--3521},
+  year = {2017},
+}
+</code></pre>
+	    
+    
+            <p><strong>Probabilistic Inference by Program Transformation in <span>Hakaru</span> (System Description)</strong>
+            <br />Praveen Narayanan, Jacques Carette, Wren Romano, Chung-chieh Shan, and Robert Zinkov 
+            <br />In Functional and Logic Programming: 13th International Symposium, <span>FLOPS</span> 2016, 2016 
+            <br />
+            { <a href onclick="toggle('hakaru-system-description-abs'); return false;">Abstract</a> |
+	    <a href onclick="toggle('hakaru-system-description'); return false;">BibTex</a>
+	     | <a href="http://homes.soic.indiana.edu/pravnar/system.pdf">PDF</a>  }
+	    <blockquote style="display: none;" id="hakaru-system-description-abs">We present Hakaru, a new probabilistic programming system that allows modular and composable reuse of distributions, queries, and inference algorithms, all expressed in a single language of measures. The system implements two automatic and semantics-preserving transformations — <em>disintegration</em>, for calculating conditional distributions, and <em>simplification</em>, for subsuming exact inference via computer algebra. We show how these features work together by describing the ideal workflow of a Hakaru user on two small problems. We highlight details of the system’s design, and discuss our experience building it.</blockquote>
+	    
+	    <pre style="display: none;" id="hakaru-system-description"><code>@inproceedings{hakaru-system-description,
+  author = {Praveen Narayanan and Jacques Carette and Wren Romano and
+            Chung-chieh Shan and Robert Zinkov},
+  title = {Probabilistic Inference by Program Transformation in {Hakaru} (System Description)},
+  booktitle = {Functional and Logic Programming: 13th International Symposium, {FLOPS} 2016},
+  year = {2016},
+  address = {Berlin},
+  publisher = {Springer},
+  series = {{L}ecture {N}otes in {C}omputer {S}cience},
+  number = {9613},
+  pages = {62--79},
+}
+</code></pre>
+	    
+    
+            <p><strong>Building blocks for exact and approximate inference</strong>
+            <br />Jacques Carette, Praveen Narayanan, Wren Romano, Chung-chieh Shan, and Robert Zinkov 
+            <br />In NIPS Workshop on Black Box Learning and Inference, 2015 
+            <br />
+            { <a href onclick="toggle('caretteblocks-abs'); return false;">Abstract</a> |
+	    <a href onclick="toggle('caretteblocks'); return false;">BibTex</a>
+	     | <a href="http://www.blackboxworkshop.org/pdf/indiana.pdf">PDF</a>  }
+	    <blockquote style="display: none;" id="caretteblocks-abs">A promising approach to implementing black-box inference is to search a space of inference strategies. However, a search space has not been defined to date that includes combinations of exact and approximate inference methods, such as Rao-Blackwellized Metropolis-Hastings and Gibbs sampling of continuous distributions. We present a handful of inference building blocks that not only constitute black-box inference methods themselves but also generate a search space of inference strategies that includes such combinations. The building blocks include simplifying and sampling from distributions, based in turn on calculating their expectation, disintegration, and density. We have implemented these building blocks as probabilistic-program transformations and specified them in terms of a distribution semantics.</blockquote>
+	    
+	    <pre style="display: none;" id="caretteblocks"><code>@article{caretteblocks,
+  title = {Building blocks for exact and approximate inference},
+  author = {Carette, Jacques and Narayanan, Praveen and Romano, Wren
+            and Shan, Chung-chieh and Zinkov, Robert},
+  booktitle = {NIPS Workshop on Black Box Learning and Inference},
+  year = {2015},
+}
+</code></pre>
+	    
+    
+            <p><strong>Designing a MCMC library for Probabilistic Programming</strong>
+            <br />Robert Zinkov, Praveen Narayanan, and Chung-chieh Shan 
+            <br />In PLDI Workshop on Probabilistic and Approximate Computing, 2014 
+            <br />
+            { <a href onclick="toggle('zinkov2014approx-abs'); return false;">Abstract</a> |
+	    <a href onclick="toggle('zinkov2014approx'); return false;">BibTex</a>
+	     }
+	    <blockquote style="display: none;" id="zinkov2014approx-abs">Markov Chain Monte Carlo methods have proven effective for performing Bayesian inference. Unfortunately, writing an MCMC sampler is tedious and error-prone. We present a design for a combinator library which shows how samplers may be described as the composition of transition probability kernels. This representation makes it easy to extend an existing sampler and highlights the relationships between existing MCMC methods.</blockquote>
+	    
+	    <pre style="display: none;" id="zinkov2014approx"><code>@article{zinkov2014approx,
+  title = {Designing a MCMC library for Probabilistic Programming},
+  author = {Robert Zinkov and Praveen Narayanan and Chung-chieh Shan},
+  booktitle = {PLDI Workshop on Probabilistic and Approximate Computing},
+  year = {2014},
+}
+</code></pre>
+	    
+    
+            <p><strong>Sensitivity analysis for distributed optimization with resource constraints</strong>
+            <br />Emma Bowring, Zhengyu Yin, Rob Zinkov, and Milind Tambe 
+            <br />In 8th International Joint Conference on Autonomous Agents and Multiagent Systems (<span>AAMAS</span>), 2009 
+            <br />
+            { <a href onclick="toggle('BowringYZT09-abs'); return false;">Abstract</a> |
+	    <a href onclick="toggle('BowringYZT09'); return false;">BibTex</a>
+	     | <a href="http://teamcore.usc.edu/papers/2009/BowringAAMAS09.pdf">PDF</a>  }
+	    <blockquote style="display: none;" id="BowringYZT09-abs">Previous work in multiagent coordination has addressed the challenge of planning in domains where agents must optimize a global goal, while satisfying local resource constraints. However, the imposition of resource constraints naturally raises the question of whether the agents could significantly improve their team performance if a few more resources were made available. Sensitivity analysis aims to answer that question. This paper focuses on sensitivity analysis in the context of the distributed coordination framework, Multiply-Constrained DCOP (MC-DCOP). There are three main challenges in performing sensitivity analysis: (i) to perform it in a distributed fashion, (ii) to avoid re-solving an NP-hard MC-DCOP optimization from scratch, and (iii) to avoid considering unproductive uses for extra resources. To meet these challenges, this paper presents three types of locally optimal algorithms: link analysis, local reoptimization and local constraint propagation. These algorithms are distributed and avoid redundant computation by ascertaining just the effects of local perturbations on the original problem. Deploying our algorithms on a large number of MC-DCOP problems revealed several results. While our cheapest algorithm successfully identified quality improvements for a few problems, our more complex techniques were necessary to identify the best uses for additional resources. Furthermore, we identified two heuristics that can help identify a priori which agents might benefit most from additional resources: density rank, which works well when nodes received identical resources and remaining resource rank, which works well when nodes received resources based on the number of neighbors they had.</blockquote>
+	    
+	    <pre style="display: none;" id="BowringYZT09"><code>@inproceedings{BowringYZT09,
+  author = {Emma Bowring and
+               Zhengyu Yin and
+               Rob Zinkov and
+               Milind Tambe},
+  title = {Sensitivity analysis for distributed optimization with resource constraints},
+  booktitle = {8th International Joint Conference on Autonomous Agents and Multiagent
+               Systems ({AAMAS})},
+  pages = {633--640},
+  year = {2009},
+}
+</code></pre>
+	    
+    
+            <p><strong>Potential-based Shaping in Model-based Reinforcement Learning</strong>
+            <br />John Asmuth, Michael L. Littman, and Robert Zinkov 
+            <br />In Proceedings of the Twenty-Third <span>AAAI</span> Conference on Artificial Intelligence (<span>AAAI</span>), 2008 
+            <br />
+            { <a href onclick="toggle('asmuth2008potential-abs'); return false;">Abstract</a> |
+	    <a href onclick="toggle('asmuth2008potential'); return false;">BibTex</a>
+	     | <a href="http://www.aaai.org/Papers/AAAI/2008/AAAI08-096.pdf">PDF</a>  }
+	    <blockquote style="display: none;" id="asmuth2008potential-abs">Potential-based shaping was designed as a way of introducing background knowledge into model-free reinforcement-learning algorithms. By identifying states that are likely to have high value, this approach can decrease experience complexity—the number of trials needed to find near-optimal behavior. An orthogonal way of decreasing experience complexity is to use a model-based learning approach, building and exploiting an explicit transition model. In this paper, we show how potential-based shaping can be redefined to work in the model-based setting to produce an algorithm that shares the benefits of both ideas.</blockquote>
+	    
+	    <pre style="display: none;" id="asmuth2008potential"><code>@inproceedings{asmuth2008potential,
+  title = {Potential-based Shaping in Model-based Reinforcement Learning},
+  author = {Asmuth, John and Littman, Michael L. and Zinkov, Robert},
+  booktitle = {Proceedings of the Twenty-Third {AAAI} Conference on Artificial Intelligence
+               ({AAAI})},
+  pages = {604--609},
+  year = {2008},
+}
+</code></pre>
+	    
+    
+
+</div>
+
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
+</html>

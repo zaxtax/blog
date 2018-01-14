@@ -11,49 +11,115 @@
         <item>
     <title>Calculating the golden-era of The Simpsons</title>
     <link>http://zinkov.com/posts/2017-11-03-simpsons-changepoint/index.html</link>
-    <description><![CDATA[<!DOCTYPE html> 
-<html lang="en">
+    <description><![CDATA[<!DOCTYPE html>
+<html lang="en-us">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" href="../../favicon.ico">
-        <title>Convex Optimized - Calculating the golden-era of The Simpsons</title>
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
-        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          TeX: {
-              extensions: ["AMSmath.js"]
-          },
-          tex2jax: {
-              inlineMath: [  ["\\(","\\)"], ],
-              displayMath: [  ["\\[","\\]"] ]
-          },
-          displayAlign: 'center', // Change this to 'center' to center equations.
-          "HTML-CSS": {
-              styles: {'.MathJax_Display': {"margin": 4}}
-          }
-      });
-    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Calculating the golden-era of The Simpsons</title>
+        <style>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-    </head>
-    <body>
-        <h1>Convex Optimized</h1>
-        <div id="navigation">
-            <a href="../../">Home</a>
-	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
-	    <a href="../../archive.html">Archive</a>
-	    <a href="../../about.html">About</a>
-	    <a href="../../contact.html">Contact</a>
-        </div>
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
 
-        <h3>Calculating the golden-era of The Simpsons</h3>
-by <em>Rob Zinkov</em> on <strong>2017-11-03</strong>
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+	  extensions: ["AMSmath.js"]
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>Calculating the golden-era of The Simpsons</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2017-11-03</h5>
+</div>
+
+<div class="text-left">
+
 <p><a href="http://www.nathancunn.com/">Nathan Cunningham</a> published last week a <a href="http://www.nathancunn.com/2017-10-26-simpsons-decline/">fantastic</a> article about using some stats to estimate at what episode did Simpsons start to decline.</p>
 <p>Cameron Davidson-Pilon suggested this would make a great application of Bayesian changepoint models.</p>
-<blockquote class="twitter-tweet" data-lang="en-gb">
+<blockquote class="twitter-tweet" data-theme="dark" data-lang="en-gb">
 <p lang="en" dir="ltr">
 Someone want to Bayesian switchpoint model this? See first chapter of BMH <a href="https://t.co/QiGwzA0khD">https://t.co/QiGwzA0khD</a>
 </p>
@@ -62,35 +128,37 @@ Someone want to Bayesian switchpoint model this? See first chapter of BMH <a hre
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p>In turns out, he was totally right. Taking the <a href="http://docs.pymc.io/notebooks/getting_started.html#Case-study-2:-Coal-mining-disasters">Coal-mining disaster</a> example from the pymc3 quickstart guide and slightly modifying it is enough to do the job.</p>
 <p>First we load the data</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">data <span class="op">=</span> pd.read_csv(<span class="st">&quot;simpsons_ratings.csv&quot;</span>)
-index <span class="op">=</span> data.index</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1">data <span class="op">=</span> pd.read_csv(<span class="st">&quot;simpsons_ratings.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">index <span class="op">=</span> data.index</a></code></pre></div>
 <p>Then we use some Gaussians to describe the average rating, and how that mean rate translates to the quality of any particular episode.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="cf">with</span> pm.Model() <span class="im">as</span> model:
-    switch <span class="op">=</span> pm.DiscreteUniform(<span class="st">'switch'</span>, lower<span class="op">=</span>index.<span class="bu">min</span>(), upper<span class="op">=</span>index.<span class="bu">max</span>())
-    early_mean <span class="op">=</span> pm.Normal(<span class="st">'early_mean'</span>, mu<span class="op">=</span><span class="dv">5</span>., sd<span class="op">=</span><span class="dv">1</span>.)
-    late_mean <span class="op">=</span> pm.Normal(<span class="st">'late_mean'</span>, mu<span class="op">=</span><span class="dv">5</span>., sd<span class="op">=</span><span class="dv">1</span>.)
-    mean <span class="op">=</span> tt.switch(switch <span class="op">&gt;=</span> index.values, early_mean, late_mean)
-    ratings <span class="op">=</span> pm.Normal(<span class="st">'ratings'</span>, mu<span class="op">=</span>mean, sd<span class="op">=</span><span class="dv">1</span>.,
-                        observed<span class="op">=</span>data[<span class="st">&quot;UserRating&quot;</span>].values)
-
-    tr <span class="op">=</span> pm.sample(<span class="dv">10000</span>, tune<span class="op">=</span><span class="dv">500</span>)
-    pm.traceplot(tr)</code></pre></div>
-<p><img src="../../images/simpsons_trace.png" width="600" height="300" /></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="cf">with</span> pm.Model() <span class="im">as</span> model:</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    switch <span class="op">=</span> pm.DiscreteUniform(<span class="st">'switch'</span>, lower<span class="op">=</span>index.<span class="bu">min</span>(), upper<span class="op">=</span>index.<span class="bu">max</span>())</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    early_mean <span class="op">=</span> pm.Normal(<span class="st">'early_mean'</span>, mu<span class="op">=</span><span class="fl">5.</span>, sd<span class="op">=</span><span class="fl">1.</span>)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    late_mean <span class="op">=</span> pm.Normal(<span class="st">'late_mean'</span>, mu<span class="op">=</span><span class="fl">5.</span>, sd<span class="op">=</span><span class="fl">1.</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    mean <span class="op">=</span> tt.switch(switch <span class="op">&gt;=</span> index.values, early_mean, late_mean)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    ratings <span class="op">=</span> pm.Normal(<span class="st">'ratings'</span>, mu<span class="op">=</span>mean, sd<span class="op">=</span><span class="fl">1.</span>,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">                        observed<span class="op">=</span>data[<span class="st">&quot;UserRating&quot;</span>].values)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    tr <span class="op">=</span> pm.sample(<span class="dv">10000</span>, tune<span class="op">=</span><span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    pm.traceplot(tr)</a></code></pre></div>
+<p><img src="../../images/simpsons_trace.png" /></p>
 <p>As we can see around 220 is when our model thinks the Simpsons was starting to downward slide.</p>
 <p>That would be</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st">: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(data[<span class="st">&quot;EpisodeID&quot;</span>][<span class="dv">220</span>], data[<span class="st">&quot;Episode&quot;</span>][<span class="dv">220</span>]))
-<span class="co"># &gt;&gt;&gt; S10E18: Simpsons Bible Stories</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="bu">print</span>(<span class="st">&quot;</span><span class="sc">{}</span><span class="st">: </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(data[<span class="st">&quot;EpisodeID&quot;</span>][<span class="dv">220</span>], data[<span class="st">&quot;Episode&quot;</span>][<span class="dv">220</span>]))</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># &gt;&gt;&gt; S10E18: Simpsons Bible Stories</span></a></code></pre></div>
 <p>An episode I remember being <em>alright</em>. Generally the 10th season is acknowledged as the last of the golden years. In fact, <a href="https://twitter.com/woohootriviachi">Chicago Simpsons Trivia Night</a> bills itself as not asking any questions from seasons after 10.</p>
 <p>Apologies in advance for not using more Simpsons jokes in this post. You can find the code and data I used on <a href="https://github.com/zaxtax/simpsons_changepoint">github</a>.</p>
+
+</div>
 
 <div id="disqus_thread"></div>
 <script>
     (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
         var d = document, s = d.createElement('script');
-        
+
         // IMPORTANT: Replace EXAMPLE with your forum shortname!
         s.src = 'https://convexoptimized.disqus.com/embed.js';
-        
+
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
@@ -101,7 +169,10 @@ index <span class="op">=</span> data.index</code></pre></div>
         comments powered by Disqus.
     </a>
 
-    </body>
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
 </html>
 ]]></description>
     <pubDate>Fri, 03 Nov 2017 00:00:00 UT</pubDate>
@@ -111,252 +182,320 @@ index <span class="op">=</span> data.index</code></pre></div>
 <item>
     <title>Indentation sensitive parsing the easy way</title>
     <link>http://zinkov.com/posts/2016-01-12-indentation-sensitive-parsing/index.html</link>
-    <description><![CDATA[<!DOCTYPE html> 
-<html lang="en">
+    <description><![CDATA[<!DOCTYPE html>
+<html lang="en-us">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" href="../../favicon.ico">
-        <title>Convex Optimized - Indentation sensitive parsing the easy way</title>
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
-        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          TeX: {
-              extensions: ["AMSmath.js"]
-          },
-          tex2jax: {
-              inlineMath: [  ["\\(","\\)"], ],
-              displayMath: [  ["\\[","\\]"] ]
-          },
-          displayAlign: 'center', // Change this to 'center' to center equations.
-          "HTML-CSS": {
-              styles: {'.MathJax_Display': {"margin": 4}}
-          }
-      });
-    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Indentation sensitive parsing the easy way</title>
+        <style>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-    </head>
-    <body>
-        <h1>Convex Optimized</h1>
-        <div id="navigation">
-            <a href="../../">Home</a>
-	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
-	    <a href="../../archive.html">Archive</a>
-	    <a href="../../about.html">About</a>
-	    <a href="../../contact.html">Contact</a>
-        </div>
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
 
-        <h3>Indentation sensitive parsing the easy way</h3>
-by <em>Rob Zinkov</em> on <strong>2016-01-12</strong>
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+	  extensions: ["AMSmath.js"]
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>Indentation sensitive parsing the easy way</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2016-01-12</h5>
+</div>
+
+<div class="text-left">
+
 <p>Recently, I had to write an parser for <a href="https://github.com/hakaru-dev/hakaru">Hakaru</a>. Writing parsers in Haskell is generally a treat as there are muliple parser libraries to choose from including Happy, parsec, attoparsec, megaparsec, trifecta, and many others. The trouble occurs when you want to parse and indentation-sensitive language like Python or Haskell. For that task the choices are more limited and far less documented. Which is unfortunate as my favorite library <a href="https://hackage.haskell.org/package/indentation">indentation</a> of the bunch is the least documented. The following is how to use <code>indentation</code> to write an indentation-sensitive parser.</p>
 <p>For this tutorial, I will use <code>indentation</code> and <code>parsec</code>.</p>
 <pre><code>cabal install indentation parsec</code></pre>
 <p>To get started import Parsec as you normally would</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Indent.Demo</span> <span class="kw">where</span>
-
-<span class="kw">import           </span><span class="dt">Data.Functor</span>                  ((&lt;$&gt;), (&lt;$))
-<span class="kw">import           </span><span class="dt">Control.Applicative</span>           (<span class="dt">Applicative</span>(..))
-<span class="kw">import qualified</span> <span class="dt">Control.Monad</span>                 <span class="kw">as</span> <span class="dt">M</span>
-<span class="kw">import           </span><span class="dt">Data.Functor.Identity</span>
-<span class="kw">import           </span><span class="dt">Data.Text</span>                     (<span class="dt">Text</span>)
-<span class="kw">import qualified</span> <span class="dt">Data.Text</span>                     <span class="kw">as</span> <span class="dt">Text</span>
-<span class="kw">import           </span><span class="dt">Text.Parsec</span>                   <span class="kw">hiding</span> (<span class="dt">Empty</span>)
-<span class="kw">import           </span><span class="dt">Text.Parsec.Text</span>              () <span class="co">-- instances only</span>
-<span class="kw">import qualified</span> <span class="dt">Text.Parsec.Expr</span>              <span class="kw">as</span> <span class="dt">Ex</span>
-<span class="kw">import qualified</span> <span class="dt">Text.Parsec.Token</span>             <span class="kw">as</span> <span class="dt">Tok</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">module</span> <span class="dt">Indent.Demo</span> <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">import</span>           <span class="dt">Data.Functor</span>                  ((&lt;$&gt;), (&lt;$))</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">import</span>           <span class="dt">Control.Applicative</span>           (<span class="dt">Applicative</span>(..))</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Control.Monad</span>                 <span class="kw">as</span> <span class="dt">M</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw">import</span>           <span class="dt">Data.Functor.Identity</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw">import</span>           <span class="dt">Data.Text</span>                     (<span class="dt">Text</span>)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Text</span>                     <span class="kw">as</span> <span class="dt">Text</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="kw">import</span>           <span class="dt">Text.Parsec</span>                   <span class="kw">hiding</span> (<span class="dt">Empty</span>)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">import</span>           <span class="dt">Text.Parsec.Text</span>              () <span class="co">-- instances only</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Text.Parsec.Expr</span>              <span class="kw">as</span> <span class="dt">Ex</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Text.Parsec.Token</span>             <span class="kw">as</span> <span class="dt">Tok</span></a></code></pre></div>
 <p>And then add the following modules from <code>indentation</code></p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import           </span><span class="dt">Text.Parsec.Indentation</span>
-<span class="kw">import           </span><span class="dt">Text.Parsec.Indentation.Char</span>
-<span class="kw">import qualified</span> <span class="dt">Text.Parsec.Indentation.Token</span> <span class="kw">as</span> <span class="dt">ITok</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">import</span>           <span class="dt">Text.Parsec.Indentation</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">import</span>           <span class="dt">Text.Parsec.Indentation.Char</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Text.Parsec.Indentation.Token</span> <span class="kw">as</span> <span class="dt">ITok</span></a></code></pre></div>
 <p>The key thing which needs to be changed is that the lexer needs to be indentation-sensitive. Sadly, there is no easy way to extend the existing LanguageDefs, so we make one from scratch.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">style ::</span> <span class="dt">Tok.GenLanguageDef</span> <span class="dt">ParserStream</span> st <span class="dt">Identity</span>
-style <span class="fu">=</span> ITok.makeIndentLanguageDef <span class="fu">$</span> <span class="dt">Tok.LanguageDef</span>
-    { Tok.commentStart    <span class="fu">=</span> <span class="st">&quot;&quot;</span>
-    , Tok.commentEnd      <span class="fu">=</span> <span class="st">&quot;&quot;</span>
-    , Tok.nestedComments  <span class="fu">=</span> <span class="dt">True</span>
-    , Tok.identStart      <span class="fu">=</span> letter <span class="fu">&lt;|&gt;</span> char <span class="ch">'_'</span>
-    , Tok.identLetter     <span class="fu">=</span> alphaNum <span class="fu">&lt;|&gt;</span> oneOf <span class="st">&quot;_'&quot;</span>
-    , Tok.opStart         <span class="fu">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span>
-    , Tok.opLetter        <span class="fu">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span>
-    , Tok.caseSensitive   <span class="fu">=</span> <span class="dt">True</span>
-    , Tok.commentLine     <span class="fu">=</span> <span class="st">&quot;#&quot;</span>
-    , Tok.reservedOpNames <span class="fu">=</span> [<span class="st">&quot;:&quot;</span>]
-    , Tok.reservedNames   <span class="fu">=</span> [<span class="st">&quot;def&quot;</span>, <span class="st">&quot;add&quot;</span>]
-    }
-
-<span class="ot">lexer ::</span> <span class="dt">Tok.GenTokenParser</span> <span class="dt">ParserStream</span> () <span class="dt">Identity</span>
-lexer <span class="fu">=</span> ITok.makeTokenParser style</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ot">style ::</span> <span class="dt">Tok.GenLanguageDef</span> <span class="dt">ParserStream</span> st <span class="dt">Identity</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">style <span class="fu">=</span> ITok.makeIndentLanguageDef <span class="fu">$</span> <span class="dt">Tok.LanguageDef</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    { Tok.commentStart    <span class="fu">=</span> <span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    , Tok.commentEnd      <span class="fu">=</span> <span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    , Tok.nestedComments  <span class="fu">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">    , Tok.identStart      <span class="fu">=</span> letter <span class="fu">&lt;|&gt;</span> char <span class="ch">'_'</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">    , Tok.identLetter     <span class="fu">=</span> alphaNum <span class="fu">&lt;|&gt;</span> oneOf <span class="st">&quot;_'&quot;</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">    , Tok.opStart         <span class="fu">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">    , Tok.opLetter        <span class="fu">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">    , Tok.caseSensitive   <span class="fu">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">    , Tok.commentLine     <span class="fu">=</span> <span class="st">&quot;#&quot;</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">    , Tok.reservedOpNames <span class="fu">=</span> [<span class="st">&quot;:&quot;</span>]</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">    , Tok.reservedNames   <span class="fu">=</span> [<span class="st">&quot;def&quot;</span>, <span class="st">&quot;add&quot;</span>]</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">    }</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="ot">lexer ::</span> <span class="dt">Tok.GenTokenParser</span> <span class="dt">ParserStream</span> () <span class="dt">Identity</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">lexer <span class="fu">=</span> ITok.makeTokenParser style</a></code></pre></div>
 <p>Once you have an indentation-sensitive lexer, you can add the primitives you need in terms of it.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">integer ::</span> <span class="dt">Parser</span> <span class="dt">Integer</span>
-integer <span class="fu">=</span> Tok.integer lexer
-
-<span class="ot">identifier ::</span> <span class="dt">Parser</span> <span class="dt">String</span>
-identifier <span class="fu">=</span> Tok.identifier lexer
-
-<span class="ot">reserved ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()
-reserved <span class="fu">=</span> Tok.reserved lexer
-
-<span class="ot">reservedOp ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()
-reservedOp <span class="fu">=</span> Tok.reservedOp lexer
-
-<span class="ot">parens ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> a
-parens <span class="fu">=</span> Tok.parens lexer <span class="fu">.</span> localIndentation <span class="dt">Any</span>
-
-<span class="ot">commaSep ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> [a]
-commaSep <span class="fu">=</span> Tok.commaSep lexer</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ot">integer ::</span> <span class="dt">Parser</span> <span class="dt">Integer</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">integer <span class="fu">=</span> Tok.integer lexer</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="ot">identifier ::</span> <span class="dt">Parser</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">identifier <span class="fu">=</span> Tok.identifier lexer</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="ot">reserved ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">reserved <span class="fu">=</span> Tok.reserved lexer</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="ot">reservedOp ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">reservedOp <span class="fu">=</span> Tok.reservedOp lexer</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="ot">parens ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> a</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">parens <span class="fu">=</span> Tok.parens lexer <span class="fu">.</span> localIndentation <span class="dt">Any</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="ot">commaSep ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> [a]</a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">commaSep <span class="fu">=</span> Tok.commaSep lexer</a></code></pre></div>
 <p>All of these are boilerplate except for <code>parens</code>. You will notice, for it we call <code>localIndentation Any</code> before passing the input. This function indicates that indentation rules can be ignored when using this combinator. This gives parentheses the meaning they have in python which is to suspend indentation rules. We will go into more detail how the indentation primitives work, but for now let’s define AST for our language.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Name</span> <span class="fu">=</span> <span class="dt">String</span>
-<span class="kw">type</span> <span class="dt">Args</span> <span class="fu">=</span> [<span class="dt">Name</span>]
-
-<span class="kw">type</span> <span class="dt">ParserStream</span>    <span class="fu">=</span> <span class="dt">IndentStream</span> (<span class="dt">CharIndentStream</span> <span class="dt">String</span>)
-<span class="kw">type</span> <span class="dt">Parser</span>          <span class="fu">=</span> <span class="dt">ParsecT</span>     <span class="dt">ParserStream</span> () <span class="dt">Identity</span>
-
-<span class="kw">data</span> <span class="dt">Expr</span> <span class="fu">=</span>
-     <span class="dt">Func</span> <span class="dt">Name</span> <span class="dt">Args</span> <span class="dt">Expr</span>
-   <span class="fu">|</span> <span class="dt">Var</span>  <span class="dt">Name</span>
-   <span class="fu">|</span> <span class="dt">App</span>  <span class="dt">Expr</span> [<span class="dt">Expr</span>]
-   <span class="fu">|</span> <span class="dt">Add</span>  <span class="dt">Expr</span> <span class="dt">Expr</span>
-   <span class="fu">|</span> <span class="dt">Lit</span>  <span class="dt">Integer</span>
-   <span class="kw">deriving</span> (<span class="dt">Show</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">type</span> <span class="dt">Name</span> <span class="fu">=</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">type</span> <span class="dt">Args</span> <span class="fu">=</span> [<span class="dt">Name</span>]</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw">type</span> <span class="dt">ParserStream</span>    <span class="fu">=</span> <span class="dt">IndentStream</span> (<span class="dt">CharIndentStream</span> <span class="dt">String</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw">type</span> <span class="dt">Parser</span>          <span class="fu">=</span> <span class="dt">ParsecT</span>     <span class="dt">ParserStream</span> () <span class="dt">Identity</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw">data</span> <span class="dt">Expr</span> <span class="fu">=</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">     <span class="dt">Func</span> <span class="dt">Name</span> <span class="dt">Args</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">   <span class="fu">|</span> <span class="dt">Var</span>  <span class="dt">Name</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">   <span class="fu">|</span> <span class="dt">App</span>  <span class="dt">Expr</span> [<span class="dt">Expr</span>]</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">   <span class="fu">|</span> <span class="dt">Add</span>  <span class="dt">Expr</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">   <span class="fu">|</span> <span class="dt">Lit</span>  <span class="dt">Integer</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">   <span class="kw">deriving</span> (<span class="dt">Show</span>)</a></code></pre></div>
 <p>Parsing this language doesn’t involve need to involve indentation rules</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">int ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-int <span class="fu">=</span> <span class="dt">Lit</span> <span class="fu">&lt;$&gt;</span> integer
-
-<span class="ot">add ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-add <span class="fu">=</span> reserved <span class="st">&quot;add&quot;</span> <span class="fu">*&gt;</span> (<span class="dt">Add</span> <span class="fu">&lt;$&gt;</span> expr <span class="fu">&lt;*&gt;</span> expr)
-
-<span class="ot">var ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-var <span class="fu">=</span> <span class="dt">Var</span> <span class="fu">&lt;$&gt;</span> identifier
-
-<span class="ot">app ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-app <span class="fu">=</span> <span class="dt">App</span> <span class="fu">&lt;$&gt;</span> var <span class="fu">&lt;*&gt;</span> parens (commaSep expr)
-
-<span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-def <span class="fu">=</span> <span class="kw">do</span>
-  reserved <span class="st">&quot;def&quot;</span>
-  name <span class="ot">&lt;-</span> identifier
-  args <span class="ot">&lt;-</span> parens (commaSep identifier)
-  body <span class="ot">&lt;-</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> expr
-  return (<span class="dt">Func</span> name args body)
-
-<span class="ot">expr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-expr <span class="fu">=</span> def
-   <span class="fu">&lt;|&gt;</span> try app
-   <span class="fu">&lt;|&gt;</span> try var
-   <span class="fu">&lt;|&gt;</span> try add
-   <span class="fu">&lt;|&gt;</span> int
-   <span class="fu">&lt;|&gt;</span> parens expr</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ot">int ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">int <span class="fu">=</span> <span class="dt">Lit</span> <span class="fu">&lt;$&gt;</span> integer</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="ot">add ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">add <span class="fu">=</span> reserved <span class="st">&quot;add&quot;</span> <span class="fu">*&gt;</span> (<span class="dt">Add</span> <span class="fu">&lt;$&gt;</span> expr <span class="fu">&lt;*&gt;</span> expr)</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="ot">var ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">var <span class="fu">=</span> <span class="dt">Var</span> <span class="fu">&lt;$&gt;</span> identifier</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="ot">app ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">app <span class="fu">=</span> <span class="dt">App</span> <span class="fu">&lt;$&gt;</span> var <span class="fu">&lt;*&gt;</span> parens (commaSep expr)</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">def <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">  reserved <span class="st">&quot;def&quot;</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">  name <span class="ot">&lt;-</span> identifier</a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">  args <span class="ot">&lt;-</span> parens (commaSep identifier)</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">  body <span class="ot">&lt;-</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> expr</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19">  return (<span class="dt">Func</span> name args body)</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="ot">expr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22">expr <span class="fu">=</span> def</a>
+<a class="sourceLine" id="cb7-23" data-line-number="23">   <span class="fu">&lt;|&gt;</span> try app</a>
+<a class="sourceLine" id="cb7-24" data-line-number="24">   <span class="fu">&lt;|&gt;</span> try var</a>
+<a class="sourceLine" id="cb7-25" data-line-number="25">   <span class="fu">&lt;|&gt;</span> try add</a>
+<a class="sourceLine" id="cb7-26" data-line-number="26">   <span class="fu">&lt;|&gt;</span> int</a>
+<a class="sourceLine" id="cb7-27" data-line-number="27">   <span class="fu">&lt;|&gt;</span> parens expr</a></code></pre></div>
 <p>Let’s add some helper code.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">indentConfig ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">ParserStream</span>
-indentConfig <span class="fu">=</span>
-    mkIndentStream <span class="dv">0</span> infIndentation <span class="dt">True</span> <span class="dt">Ge</span> <span class="fu">.</span> mkCharIndentStream
-
-<span class="ot">parse ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> <span class="dt">ParseError</span> [<span class="dt">Expr</span>]
-parse <span class="fu">=</span>
-    runParser (many expr <span class="fu">&lt;*</span> eof) () <span class="st">&quot;[input]&quot;</span> <span class="fu">.</span> indentConfig</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ot">indentConfig ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">ParserStream</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">indentConfig <span class="fu">=</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">    mkIndentStream <span class="dv">0</span> infIndentation <span class="dt">True</span> <span class="dt">Ge</span> <span class="fu">.</span> mkCharIndentStream</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="ot">parse ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> <span class="dt">ParseError</span> [<span class="dt">Expr</span>]</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">parse <span class="fu">=</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">    runParser (many expr <span class="fu">&lt;*</span> eof) () <span class="st">&quot;[input]&quot;</span> <span class="fu">.</span> indentConfig</a></code></pre></div>
 <p>And this parses programs just fine.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test1 <span class="fu">=</span> unlines
-  [ <span class="st">&quot;def foo(x,y):&quot;</span>
-  , <span class="st">&quot;    add x y&quot;</span>
-  ]
-
-parse test1
-<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb9-1" data-line-number="1">test1 <span class="fu">=</span> unlines</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  [ <span class="st">&quot;def foo(x,y):&quot;</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">  , <span class="st">&quot;    add x y&quot;</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">  ]</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">parse test1</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
 <p>The issue is also things which feel invalid.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test2 <span class="fu">=</span> unlines
-  [ <span class="st">&quot;def foo(x,y):&quot;</span>
-  , <span class="st">&quot;add x y&quot;</span>
-  ]
-
-parse test2
-<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb10-1" data-line-number="1">test2 <span class="fu">=</span> unlines</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">  [ <span class="st">&quot;def foo(x,y):&quot;</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">  , <span class="st">&quot;add x y&quot;</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">  ]</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">parse test2</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
 <p>We need to change <code>def</code> so that its body must be indented at strictly greater than character where it starts.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">blockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-blockExpr <span class="fu">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> localIndentation <span class="dt">Gt</span> expr
-
-<span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-def <span class="fu">=</span> <span class="kw">do</span>
-  reserved <span class="st">&quot;def&quot;</span>
-  name <span class="ot">&lt;-</span> identifier
-  args <span class="ot">&lt;-</span> parens (commaSep identifier)
-  body <span class="ot">&lt;-</span> blockExpr
-  return (<span class="dt">Func</span> name args body)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="ot">blockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">blockExpr <span class="fu">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> localIndentation <span class="dt">Gt</span> expr</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">def <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">  reserved <span class="st">&quot;def&quot;</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">  name <span class="ot">&lt;-</span> identifier</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">  args <span class="ot">&lt;-</span> parens (commaSep identifier)</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">  body <span class="ot">&lt;-</span> blockExpr</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">  return (<span class="dt">Func</span> name args body)</a></code></pre></div>
 <p>If you now look, we have defined a function for the body, <code>blockExpr</code>, which says we must have the body strictly greater. Now when we parse <code>test2</code> we get the following.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">parse test2
-<span class="co">-- Left &quot;[input]&quot; (line 2, column 2):</span>
-<span class="co">-- expecting identifier</span>
-<span class="co">--</span>
-<span class="co">-- Invalid indentation.</span>
-<span class="co">--   Found a token at indentation 1.</span>
-<span class="co">--   Expecting a token at an indentation greater than or equal to 2.</span>
-<span class="co">--   IndentStream { indentationState =</span>
-<span class="co">--                   IndentationState { minIndentation = 2</span>
-<span class="co">--                                    , maxIndentation = 9223372036854775807</span>
-<span class="co">--                                    , absMode = False</span>
-<span class="co">--                                    , tokenRel = Ge}</span>
-<span class="co">--                , tokenStream = &quot;&quot;}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb12-1" data-line-number="1">parse test2</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">-- Left &quot;[input]&quot; (line 2, column 2):</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">-- expecting identifier</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">--</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">-- Invalid indentation.</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">--   Found a token at indentation 1.</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">--   Expecting a token at an indentation greater than or equal to 2.</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">--   IndentStream { indentationState =</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">--                   IndentationState { minIndentation = 2</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">--                                    , maxIndentation = 9223372036854775807</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">--                                    , absMode = False</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">--                                    , tokenRel = Ge}</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">--                , tokenStream = &quot;&quot;}</span></a></code></pre></div>
 <p><code>localIndentation</code> takes two arguments, what the indentation of an expression should be relative to the current indentation, and the expression itself. Relative indentations can be greater-than and equal (Ge), strictly greater-than (Gt), equal (Eq), a specific amount (Const 5), or anything (Any).</p>
 <p>While it seems like this is the only primitive you should need, sometimes the indentation level you want can’t be defined in terms of the parent.</p>
 <p>For example, the following is a valid program</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test3 <span class="fu">=</span> unlines
-  [ <span class="st">&quot;def foo(x, y):&quot;</span>
-  , <span class="st">&quot;    add x&quot;</span>
-  , <span class="st">&quot; y&quot;</span>
-  ]
-
-parse test4
-<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb13-1" data-line-number="1">test3 <span class="fu">=</span> unlines</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">  [ <span class="st">&quot;def foo(x, y):&quot;</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">  , <span class="st">&quot;    add x&quot;</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">  , <span class="st">&quot; y&quot;</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">  ]</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">parse test4</a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
 <p>The issue is that “y” is indented greater than the “def” but, we really want it to be indented in terms of “add”. To do this we need to use absolute indentation. This mode says indentation is defined in terms of the first token parsed, and all indentation rules apply in terms of where that first token is found.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">absBlockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-absBlockExpr <span class="fu">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> localIndentation <span class="dt">Gt</span> (absoluteIndentation expr)
-
-
-<span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span>
-def <span class="fu">=</span> <span class="kw">do</span>
-  reserved <span class="st">&quot;def&quot;</span>
-  name <span class="ot">&lt;-</span> identifier
-  args <span class="ot">&lt;-</span> parens (commaSep identifier)
-  body <span class="ot">&lt;-</span> absBlockExpr
-  return (<span class="dt">Func</span> name args body)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="ot">absBlockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">absBlockExpr <span class="fu">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> localIndentation <span class="dt">Gt</span> (absoluteIndentation expr)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">def <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">  reserved <span class="st">&quot;def&quot;</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">  name <span class="ot">&lt;-</span> identifier</a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">  args <span class="ot">&lt;-</span> parens (commaSep identifier)</a>
+<a class="sourceLine" id="cb14-10" data-line-number="10">  body <span class="ot">&lt;-</span> absBlockExpr</a>
+<a class="sourceLine" id="cb14-11" data-line-number="11">  return (<span class="dt">Func</span> name args body)</a></code></pre></div>
 <p>We define a function absBlockExpr. You’ll notice we also used a <code>localIndentation</code>. The reason for that is <code>absolutionIndentation</code> normally defaults to the first token of the parent. In our case, this is <code>def</code> and we want instead for it to choose <code>add</code>.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">parse test3
-<span class="co">-- Left &quot;[input]&quot; (line 3, column 3):</span>
-<span class="co">-- expecting identifier</span>
-<span class="co">--</span>
-<span class="co">-- Invalid indentation.</span>
-<span class="co">--   Found a token at indentation 2.</span>
-<span class="co">--   Expecting a token at an indentation greater than or equal to 5.</span>
-<span class="co">--   IndentStream { indentationState =</span>
-<span class="co">--                   IndentationState { minIndentation = 5</span>
-<span class="co">--                                    , maxIndentation = 5</span>
-<span class="co">--                                    , absMode = False</span>
-<span class="co">--                                    , tokenRel = Ge}</span>
-<span class="co">--                , tokenStream = &quot;&quot;}</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb15-1" data-line-number="1">parse test3</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">-- Left &quot;[input]&quot; (line 3, column 3):</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">-- expecting identifier</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">--</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">-- Invalid indentation.</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">--   Found a token at indentation 2.</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">--   Expecting a token at an indentation greater than or equal to 5.</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">--   IndentStream { indentationState =</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">--                   IndentationState { minIndentation = 5</span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">--                                    , maxIndentation = 5</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">--                                    , absMode = False</span></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">--                                    , tokenRel = Ge}</span></a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">--                , tokenStream = &quot;&quot;}</span></a></code></pre></div>
 <p>Now it works as expected</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">test4 <span class="fu">=</span> unlines
-  [ <span class="st">&quot;def foo(x, y):&quot;</span>
-  , <span class="st">&quot;    add x&quot;</span>
-  , <span class="st">&quot;     y&quot;</span>
-  ]
-
-parse test4
-<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span>
-parse test1
-<span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb16-1" data-line-number="1">test4 <span class="fu">=</span> unlines</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">  [ <span class="st">&quot;def foo(x, y):&quot;</span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">  , <span class="st">&quot;    add x&quot;</span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">  , <span class="st">&quot;     y&quot;</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">  ]</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7">parse test4</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9">parse test1</a>
+<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
 <p>This library has other bits to it, but this should give enough to figure out, how to add indentation sensitivity to your language.</p>
 <p>Special thanks to <a href="http://www.lambdageek.org/aleksey/">Aleksey Kliger</a> for helping me understand this library.</p>
+
+</div>
 
 <div id="disqus_thread"></div>
 <script>
     (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
         var d = document, s = d.createElement('script');
-        
+
         // IMPORTANT: Replace EXAMPLE with your forum shortname!
         s.src = 'https://convexoptimized.disqus.com/embed.js';
-        
+
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
@@ -367,7 +506,10 @@ parse test1
         comments powered by Disqus.
     </a>
 
-    </body>
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
 </html>
 ]]></description>
     <pubDate>Tue, 12 Jan 2016 00:00:00 UT</pubDate>
@@ -377,216 +519,282 @@ parse test1
 <item>
     <title>Building a probabilistic programming interpreter</title>
     <link>http://zinkov.com/posts/2015-08-25-building-a-probabilisitic-interpreter/index.html</link>
-    <description><![CDATA[<!DOCTYPE html> 
-<html lang="en">
+    <description><![CDATA[<!DOCTYPE html>
+<html lang="en-us">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" href="../../favicon.ico">
-        <title>Convex Optimized - Building a probabilistic programming interpreter</title>
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
-        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          TeX: {
-              extensions: ["AMSmath.js"]
-          },
-          tex2jax: {
-              inlineMath: [  ["\\(","\\)"], ],
-              displayMath: [  ["\\[","\\]"] ]
-          },
-          displayAlign: 'center', // Change this to 'center' to center equations.
-          "HTML-CSS": {
-              styles: {'.MathJax_Display': {"margin": 4}}
-          }
-      });
-    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Building a probabilistic programming interpreter</title>
+        <style>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-    </head>
-    <body>
-        <h1>Convex Optimized</h1>
-        <div id="navigation">
-            <a href="../../">Home</a>
-	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
-	    <a href="../../archive.html">Archive</a>
-	    <a href="../../about.html">About</a>
-	    <a href="../../contact.html">Contact</a>
-        </div>
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
 
-        <h3>Building a probabilistic programming interpreter</h3>
-by <em>Rob Zinkov</em> on <strong>2015-08-25</strong>
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+	  extensions: ["AMSmath.js"]
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>Building a probabilistic programming interpreter</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2015-08-25</h5>
+</div>
+
+<div class="text-left">
+
 <p>Very often interpreters for probabilisitic programming languages (PPLs) can seem a little mysterious. In actuality, if you know how to write an interpreter for a simple language it isn’t that much more work.</p>
 <p>Using Haskell as the host language I’ll show how to write a simple PPL which uses importance sampling as the underlying inference method. There is nothing special about using from haskell other than pattern-matching so this example should be pretty easy to port to other languages.</p>
 <p>To start let’s import some things and set up some basic types</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Data.List</span> <span class="kw">hiding</span> (empty, insert, map)
-<span class="kw">import </span><span class="dt">Control.Monad</span>
-
-<span class="kw">import </span><span class="dt">Data.HashMap.Strict</span> <span class="kw">hiding</span> (map)
-<span class="kw">import </span><span class="dt">System.Random.MWC</span> <span class="kw">as</span> <span class="dt">MWC</span>
-<span class="kw">import </span><span class="dt">System.Random.MWC.Distributions</span> <span class="kw">as</span> <span class="dt">MD</span>
-
-<span class="kw">type</span> <span class="dt">Name</span> <span class="fu">=</span> <span class="dt">String</span>
-<span class="kw">type</span> <span class="dt">Env</span>  <span class="fu">=</span> <span class="dt">HashMap</span> <span class="dt">String</span> <span class="dt">Val</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">import</span> <span class="dt">Data.List</span> <span class="kw">hiding</span> (empty, insert, map)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">import</span> <span class="dt">Control.Monad</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">import</span> <span class="dt">Data.HashMap.Strict</span> <span class="kw">hiding</span> (map)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">import</span> <span class="dt">System.Random.MWC</span> <span class="kw">as</span> <span class="dt">MWC</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">import</span> <span class="dt">System.Random.MWC.Distributions</span> <span class="kw">as</span> <span class="dt">MD</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">type</span> <span class="dt">Name</span> <span class="fu">=</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">type</span> <span class="dt">Env</span>  <span class="fu">=</span> <span class="dt">HashMap</span> <span class="dt">String</span> <span class="dt">Val</span></a></code></pre></div>
 <p>Our language will have as values functions, doubles, bools and pairs of those.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Val</span> <span class="fu">=</span>
-    <span class="dt">D</span> <span class="dt">Double</span> <span class="fu">|</span>
-    <span class="dt">B</span> <span class="dt">Bool</span>   <span class="fu">|</span>
-    <span class="dt">F</span> (<span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span>) <span class="fu">|</span>
-    <span class="dt">P</span> <span class="dt">Val</span> <span class="dt">Val</span>
-
-<span class="kw">instance</span> <span class="dt">Eq</span> <span class="dt">Val</span> <span class="kw">where</span>
-  <span class="dt">D</span> x <span class="fu">==</span> <span class="dt">D</span> y         <span class="fu">=</span> x <span class="fu">==</span> y
-  <span class="dt">B</span> x <span class="fu">==</span> <span class="dt">B</span> y         <span class="fu">=</span> x <span class="fu">==</span> y
-  <span class="dt">P</span> x1 x2 <span class="fu">==</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu">==</span> y1 <span class="fu">&amp;&amp;</span> x2 <span class="fu">==</span> y2
-  _ <span class="fu">==</span> _             <span class="fu">=</span> <span class="dt">False</span>
-
-<span class="kw">instance</span> <span class="dt">Ord</span> <span class="dt">Val</span> <span class="kw">where</span>
-  <span class="dt">D</span> x <span class="fu">&lt;=</span> <span class="dt">D</span> y         <span class="fu">=</span> x <span class="fu">&lt;=</span> y
-  <span class="dt">B</span> x <span class="fu">&lt;=</span> <span class="dt">B</span> y         <span class="fu">=</span> x <span class="fu">&lt;=</span> y
-  <span class="dt">P</span> x1 x2 <span class="fu">&lt;=</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu">&lt;=</span> y1 <span class="fu">&amp;&amp;</span> x2 <span class="fu">&lt;=</span> y2
-  _ <span class="fu">&lt;=</span> _             <span class="fu">=</span> error <span class="st">&quot;Comparing functions is undefined&quot;</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">data</span> <span class="dt">Val</span> <span class="fu">=</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="dt">D</span> <span class="dt">Double</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="dt">B</span> <span class="dt">Bool</span>   <span class="fu">|</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="dt">F</span> (<span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span>) <span class="fu">|</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dt">P</span> <span class="dt">Val</span> <span class="dt">Val</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw">instance</span> <span class="dt">Eq</span> <span class="dt">Val</span> <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="dt">D</span> x <span class="fu">==</span> <span class="dt">D</span> y         <span class="fu">=</span> x <span class="fu">==</span> y</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">  <span class="dt">B</span> x <span class="fu">==</span> <span class="dt">B</span> y         <span class="fu">=</span> x <span class="fu">==</span> y</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">  <span class="dt">P</span> x1 x2 <span class="fu">==</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu">==</span> y1 <span class="fu">&amp;&amp;</span> x2 <span class="fu">==</span> y2</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">  _ <span class="fu">==</span> _             <span class="fu">=</span> <span class="dt">False</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="kw">instance</span> <span class="dt">Ord</span> <span class="dt">Val</span> <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">  <span class="dt">D</span> x <span class="fu">&lt;=</span> <span class="dt">D</span> y         <span class="fu">=</span> x <span class="fu">&lt;=</span> y</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">  <span class="dt">B</span> x <span class="fu">&lt;=</span> <span class="dt">B</span> y         <span class="fu">=</span> x <span class="fu">&lt;=</span> y</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">  <span class="dt">P</span> x1 x2 <span class="fu">&lt;=</span> <span class="dt">P</span> y1 y2 <span class="fu">=</span> x1 <span class="fu">&lt;=</span> y1 <span class="fu">&amp;&amp;</span> x2 <span class="fu">&lt;=</span> y2</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">  _ <span class="fu">&lt;=</span> _             <span class="fu">=</span> error <span class="st">&quot;Comparing functions is undefined&quot;</span></a></code></pre></div>
 <p>This language will have expressions for these values, conditionals and arithmetic.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Expr</span> <span class="fu">=</span>
-     <span class="dt">Lit</span> <span class="dt">Double</span> <span class="fu">|</span>
-     <span class="dt">Var</span> <span class="dt">Name</span> <span class="fu">|</span>
-     <span class="dt">Pair</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">Fst</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">Snd</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">If</span>  <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-
-     <span class="dt">Eql</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">Les</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">Gre</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">And</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-
-     <span class="dt">Lam</span> <span class="dt">Name</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">App</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-
-     <span class="dt">Add</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">Sub</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">Mul</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">Div</span> <span class="dt">Expr</span> <span class="dt">Expr</span>
- <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">data</span> <span class="dt">Expr</span> <span class="fu">=</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">     <span class="dt">Lit</span> <span class="dt">Double</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">     <span class="dt">Var</span> <span class="dt">Name</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">     <span class="dt">Pair</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">     <span class="dt">Fst</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">     <span class="dt">Snd</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">     <span class="dt">If</span>  <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">     <span class="dt">Eql</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">     <span class="dt">Les</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">     <span class="dt">Gre</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">     <span class="dt">And</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">     <span class="dt">Lam</span> <span class="dt">Name</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">     <span class="dt">App</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">     <span class="dt">Add</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">     <span class="dt">Sub</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">     <span class="dt">Mul</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">     <span class="dt">Div</span> <span class="dt">Expr</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"> <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</a></code></pre></div>
 <p>We can evalute expressions in this language without doing anything special.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalT ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Env</span> <span class="ot">-&gt;</span> <span class="dt">Val</span>
-evalT (<span class="dt">Lit</span> a) _            <span class="fu">=</span> <span class="dt">D</span> a
-evalT (<span class="dt">Var</span> x)      env     <span class="fu">=</span> env <span class="fu">!</span> x
-evalT (<span class="dt">Lam</span> x body) env     <span class="fu">=</span> <span class="dt">F</span> (\ x' <span class="ot">-&gt;</span> evalT body (insert x x' env))
-evalT (<span class="dt">App</span> f x)    env     <span class="fu">=</span> app (evalT f env) (evalT x env)
-           
-evalT (<span class="dt">Eql</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">==</span> (evalT y env)
-evalT (<span class="dt">Les</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">&lt;=</span> (evalT y env)
-evalT (<span class="dt">Gre</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">&gt;=</span> (evalT y env)
-evalT (<span class="dt">And</span> x y)    env     <span class="fu">=</span> liftB (<span class="fu">&amp;&amp;</span>) (evalT x env) (evalT y env)
-                
-evalT (<span class="dt">Add</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">+</span>) (evalT x env) (evalT y env)
-evalT (<span class="dt">Sub</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">-</span>) (evalT x env) (evalT y env)
-evalT (<span class="dt">Mul</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">*</span>) (evalT x env) (evalT y env)
-evalT (<span class="dt">Div</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">/</span>) (evalT x env) (evalT y env)
-                           
-evalT (<span class="dt">Pair</span> x y)   env     <span class="fu">=</span> <span class="dt">P</span> (evalT x env) (evalT y env)
-evalT (<span class="dt">Fst</span> x)      env     <span class="fu">=</span> fst_ <span class="fu">$</span> evalT x env
- <span class="kw">where</span> fst_ (<span class="dt">P</span> a b)        <span class="fu">=</span> a
-evalT (<span class="dt">Snd</span> x)      env     <span class="fu">=</span> snd_ <span class="fu">$</span> evalT x env
- <span class="kw">where</span> snd_ (<span class="dt">P</span> a b)        <span class="fu">=</span> b
-evalT (<span class="dt">If</span> b t f)   env     <span class="fu">=</span> if_ (evalT b env) (evalT t env) (evalT f env)
- <span class="kw">where</span> if_ (<span class="dt">B</span> <span class="dt">True</span>)  t' f' <span class="fu">=</span> t'
-       if_ (<span class="dt">B</span> <span class="dt">False</span>) t' f' <span class="fu">=</span> f'
-
-<span class="ot">app ::</span> <span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span>
-app (<span class="dt">F</span> f') x'   <span class="fu">=</span> f' x'
-
-<span class="ot">liftOp ::</span> (<span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">Double</span>) <span class="ot">-&gt;</span>
-          <span class="dt">Val</span>     <span class="ot">-&gt;</span> <span class="dt">Val</span>    <span class="ot">-&gt;</span> <span class="dt">Val</span>
-liftOp op (<span class="dt">D</span> e1) (<span class="dt">D</span> e2) <span class="fu">=</span> <span class="dt">D</span> (op e1 e2)
-
-<span class="ot">liftB  ::</span> (<span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span>
-          <span class="dt">Val</span>     <span class="ot">-&gt;</span> <span class="dt">Val</span>    <span class="ot">-&gt;</span> <span class="dt">Val</span>
-liftB  op (<span class="dt">B</span> e1) (<span class="dt">B</span> e2) <span class="fu">=</span> <span class="dt">B</span> (op e1 e2)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ot">evalT ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Env</span> <span class="ot">-&gt;</span> <span class="dt">Val</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">evalT (<span class="dt">Lit</span> a) _            <span class="fu">=</span> <span class="dt">D</span> a</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">evalT (<span class="dt">Var</span> x)      env     <span class="fu">=</span> env <span class="fu">!</span> x</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">evalT (<span class="dt">Lam</span> x body) env     <span class="fu">=</span> <span class="dt">F</span> (\ x' <span class="ot">-&gt;</span> evalT body (insert x x' env))</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">evalT (<span class="dt">App</span> f x)    env     <span class="fu">=</span> app (evalT f env) (evalT x env)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">           </a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">evalT (<span class="dt">Eql</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">==</span> (evalT y env)</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">evalT (<span class="dt">Les</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">&lt;=</span> (evalT y env)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">evalT (<span class="dt">Gre</span> x y)    env     <span class="fu">=</span> <span class="dt">B</span> <span class="fu">$</span> (evalT x env) <span class="fu">&gt;=</span> (evalT y env)</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">evalT (<span class="dt">And</span> x y)    env     <span class="fu">=</span> liftB (<span class="fu">&amp;&amp;</span>) (evalT x env) (evalT y env)</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">                </a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">evalT (<span class="dt">Add</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">+</span>) (evalT x env) (evalT y env)</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">evalT (<span class="dt">Sub</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">-</span>) (evalT x env) (evalT y env)</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">evalT (<span class="dt">Mul</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">*</span>) (evalT x env) (evalT y env)</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">evalT (<span class="dt">Div</span> x y)    env     <span class="fu">=</span> liftOp (<span class="fu">/</span>) (evalT x env) (evalT y env)</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">                           </a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">evalT (<span class="dt">Pair</span> x y)   env     <span class="fu">=</span> <span class="dt">P</span> (evalT x env) (evalT y env)</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">evalT (<span class="dt">Fst</span> x)      env     <span class="fu">=</span> fst_ <span class="fu">$</span> evalT x env</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"> <span class="kw">where</span> fst_ (<span class="dt">P</span> a b)        <span class="fu">=</span> a</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">evalT (<span class="dt">Snd</span> x)      env     <span class="fu">=</span> snd_ <span class="fu">$</span> evalT x env</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"> <span class="kw">where</span> snd_ (<span class="dt">P</span> a b)        <span class="fu">=</span> b</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">evalT (<span class="dt">If</span> b t f)   env     <span class="fu">=</span> if_ (evalT b env) (evalT t env) (evalT f env)</a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"> <span class="kw">where</span> if_ (<span class="dt">B</span> <span class="dt">True</span>)  t' f' <span class="fu">=</span> t'</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">       if_ (<span class="dt">B</span> <span class="dt">False</span>) t' f' <span class="fu">=</span> f'</a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="ot">app ::</span> <span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span> <span class="ot">-&gt;</span> <span class="dt">Val</span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">app (<span class="dt">F</span> f') x'   <span class="fu">=</span> f' x'</a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="ot">liftOp ::</span> (<span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">Double</span>) <span class="ot">-&gt;</span></a>
+<a class="sourceLine" id="cb4-30" data-line-number="30">          <span class="dt">Val</span>     <span class="ot">-&gt;</span> <span class="dt">Val</span>    <span class="ot">-&gt;</span> <span class="dt">Val</span></a>
+<a class="sourceLine" id="cb4-31" data-line-number="31">liftOp op (<span class="dt">D</span> e1) (<span class="dt">D</span> e2) <span class="fu">=</span> <span class="dt">D</span> (op e1 e2)</a>
+<a class="sourceLine" id="cb4-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb4-33" data-line-number="33"><span class="ot">liftB  ::</span> (<span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>) <span class="ot">-&gt;</span></a>
+<a class="sourceLine" id="cb4-34" data-line-number="34">          <span class="dt">Val</span>     <span class="ot">-&gt;</span> <span class="dt">Val</span>    <span class="ot">-&gt;</span> <span class="dt">Val</span></a>
+<a class="sourceLine" id="cb4-35" data-line-number="35">liftB  op (<span class="dt">B</span> e1) (<span class="dt">B</span> e2) <span class="fu">=</span> <span class="dt">B</span> (op e1 e2)</a></code></pre></div>
 <p>Of course this isn’t a probabilisitic programming language. So now we extend our language to include measures.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Meas</span> <span class="fu">=</span>
-     <span class="dt">Uniform</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">Weight</span>  <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-     <span class="dt">Bind</span> <span class="dt">Name</span> <span class="dt">Meas</span> <span class="dt">Meas</span>
- <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">data</span> <span class="dt">Meas</span> <span class="fu">=</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">     <span class="dt">Uniform</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">     <span class="dt">Weight</span>  <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">     <span class="dt">Bind</span> <span class="dt">Name</span> <span class="dt">Meas</span> <span class="dt">Meas</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"> <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>)</a></code></pre></div>
 <p>Let’s take a moment to explain what makes something a measure. Measures can considered un-normalized probability distributions. If you take the sum of the probability of each disjoint outcome from a un-normalized probability distribution, the answer may not be 1.</p>
 <p>This is relevant as we will be representing measures as a list of weighted draws from the underlying distribution. Those draws will need to be normalized to be understood as a probability distribution.</p>
 <p>We can construct measures in one of three ways. We may simply have the continuous uniform distribution whose bounds are defined as expressions. We may have a weighted distribution which only returns the value of its second argument, with probability of the first argument. This is only a probability distribution when the first argument evaluates to one. We’ll call this case <code>dirac</code></p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">dirac ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Meas</span>
-dirac x <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">Lit</span> <span class="fl">1.0</span>) x</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ot">dirac ::</span> <span class="dt">Expr</span> <span class="ot">-&gt;</span> <span class="dt">Meas</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">dirac x <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">Lit</span> <span class="fl">1.0</span>) x</a></code></pre></div>
 <p>The final form is what let’s us build measure expressions. What <code>Bind</code> does is take a measure as input, and a function from draws in that measure to another measure.</p>
 <p>Because I don’t feel like defining measurable functions in their own form, <code>Bind</code> also takes a name to set what variable will hold values forthe draws, so the last argument to bind may just use that variable when it wants to refer to those draws. As an example if I wish to take a draw from a uniform distribution and then square that value.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">prog1 <span class="fu">=</span> <span class="dt">Bind</span> <span class="st">&quot;x&quot;</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>))   <span class="co">-- x &lt;~ uniform(1, 5)</span>
-        (dirac (<span class="dt">Add</span> (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>) (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>)))   <span class="co">-- return (x + x)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" data-line-number="1">prog1 <span class="fu">=</span> <span class="dt">Bind</span> <span class="st">&quot;x&quot;</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>))   <span class="co">-- x &lt;~ uniform(1, 5)</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">        (dirac (<span class="dt">Add</span> (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>) (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>)))   <span class="co">-- return (x + x)</span></a></code></pre></div>
 <p>Measures are evaluated by producing a weighted sample from the measure space they represent. This is also called importance sampling.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalM ::</span> <span class="dt">Meas</span> <span class="ot">-&gt;</span> <span class="dt">Env</span> <span class="ot">-&gt;</span> <span class="dt">MWC.GenIO</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Val</span>, <span class="dt">Double</span>)
-evalM (<span class="dt">Uniform</span> lo hi) env g <span class="fu">=</span> <span class="kw">do</span>
-                              <span class="kw">let</span> <span class="dt">D</span> lo' <span class="fu">=</span> evalT lo env
-                              <span class="kw">let</span> <span class="dt">D</span> hi' <span class="fu">=</span> evalT hi env
-                              x <span class="ot">&lt;-</span> MWC.uniformR (lo', hi') g
-                              return (<span class="dt">D</span> x, <span class="fl">1.0</span>)
-evalM (<span class="dt">Weight</span> i x)    env g <span class="fu">=</span> <span class="kw">do</span>
-                              <span class="kw">let</span> <span class="dt">D</span> i' <span class="fu">=</span> evalT i env
-                              return (evalT x env, i')
-evalM (<span class="dt">Bind</span> x m f)    env g <span class="fu">=</span> <span class="kw">do</span>
-                              (x', w)  <span class="ot">&lt;-</span> evalM m env g
-                              <span class="kw">let</span> env' <span class="fu">=</span> insert x x' env
-                              (f', w1) <span class="ot">&lt;-</span> evalM f env' g
-                              return (f', w<span class="fu">*</span>w1)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ot">evalM ::</span> <span class="dt">Meas</span> <span class="ot">-&gt;</span> <span class="dt">Env</span> <span class="ot">-&gt;</span> <span class="dt">MWC.GenIO</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Val</span>, <span class="dt">Double</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">evalM (<span class="dt">Uniform</span> lo hi) env g <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">                              <span class="kw">let</span> <span class="dt">D</span> lo' <span class="fu">=</span> evalT lo env</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">                              <span class="kw">let</span> <span class="dt">D</span> hi' <span class="fu">=</span> evalT hi env</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">                              x <span class="ot">&lt;-</span> MWC.uniformR (lo', hi') g</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">                              return (<span class="dt">D</span> x, <span class="fl">1.0</span>)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">evalM (<span class="dt">Weight</span> i x)    env g <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">                              <span class="kw">let</span> <span class="dt">D</span> i' <span class="fu">=</span> evalT i env</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">                              return (evalT x env, i')</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">evalM (<span class="dt">Bind</span> x m f)    env g <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">                              (x', w)  <span class="ot">&lt;-</span> evalM m env g</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">                              <span class="kw">let</span> env' <span class="fu">=</span> insert x x' env</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">                              (f', w1) <span class="ot">&lt;-</span> evalM f env' g</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">                              return (f', w<span class="fu">*</span>w1)</a></code></pre></div>
 <p>We may run these programs as follows</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">test1 ::</span> <span class="dt">IO</span> ()
-test1 <span class="fu">=</span> <span class="kw">do</span>
-   g <span class="ot">&lt;-</span> MWC.create
-   draw <span class="ot">&lt;-</span> evalM prog1 empty g
-   print draw
-
-(<span class="fl">7.926912543562406</span>,<span class="fl">1.0</span>)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ot">test1 ::</span> <span class="dt">IO</span> ()</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">test1 <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">   g <span class="ot">&lt;-</span> MWC.create</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">   draw <span class="ot">&lt;-</span> evalM prog1 empty g</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">   print draw</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">(<span class="fl">7.926912543562406</span>,<span class="fl">1.0</span>)</a></code></pre></div>
 <p>Evaluating this program repeatedly will allow you to produce as many draws from this measure as you need. This is great in that we can represent any unconditioned probability distribution. But how do we represent conditional distributions?</p>
 <p>For that we will introduce another datatype</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Cond</span> <span class="fu">=</span>
-    <span class="dt">UCond</span> <span class="dt">Meas</span> <span class="fu">|</span>
-    <span class="dt">UniformC</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-    <span class="dt">WeightC</span>  <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span>
-    <span class="dt">BindC</span> <span class="dt">Name</span> <span class="dt">Cond</span> <span class="dt">Cond</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">data</span> <span class="dt">Cond</span> <span class="fu">=</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">    <span class="dt">UCond</span> <span class="dt">Meas</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">    <span class="dt">UniformC</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">    <span class="dt">WeightC</span>  <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="dt">Expr</span> <span class="fu">|</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">    <span class="dt">BindC</span> <span class="dt">Name</span> <span class="dt">Cond</span> <span class="dt">Cond</span></a></code></pre></div>
 <p>This is just an extension of <code>Meas</code> expect now we may say, a measure is either unconditioned, or if its conditioned for each case we may specify additionally which value its conditioned on. To draw from a conditioned measure, we convert it into an unconditional measure.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">evalC ::</span> <span class="dt">Cond</span> <span class="ot">-&gt;</span> <span class="dt">Meas</span>
-evalC (<span class="dt">UCond</span>    m      ) <span class="fu">=</span> m
-evalC (<span class="dt">UniformC</span> lo hi x) <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">If</span> (<span class="dt">And</span> (<span class="dt">Gre</span> x lo)
-                                                 (<span class="dt">Les</span> x hi))
-                                         (<span class="dt">Div</span> x (<span class="dt">Sub</span> hi lo))
-                                         (<span class="dt">Lit</span> <span class="dv">0</span>)) x
-evalC (<span class="dt">WeightC</span>  i x   y) <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">If</span> (<span class="dt">Eql</span> x y)
-                                         i
-                                         (<span class="dt">Lit</span> <span class="dv">0</span>)) y
-evalC (<span class="dt">BindC</span>    x m f)   <span class="fu">=</span> <span class="dt">Bind</span> x (evalC m) (evalC f)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="ot">evalC ::</span> <span class="dt">Cond</span> <span class="ot">-&gt;</span> <span class="dt">Meas</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">evalC (<span class="dt">UCond</span>    m      ) <span class="fu">=</span> m</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">evalC (<span class="dt">UniformC</span> lo hi x) <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">If</span> (<span class="dt">And</span> (<span class="dt">Gre</span> x lo)</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">                                                 (<span class="dt">Les</span> x hi))</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">                                         (<span class="dt">Div</span> x (<span class="dt">Sub</span> hi lo))</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">                                         (<span class="dt">Lit</span> <span class="dv">0</span>)) x</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">evalC (<span class="dt">WeightC</span>  i x   y) <span class="fu">=</span> <span class="dt">Weight</span> (<span class="dt">If</span> (<span class="dt">Eql</span> x y)</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">                                         i</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">                                         (<span class="dt">Lit</span> <span class="dv">0</span>)) y</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">evalC (<span class="dt">BindC</span>    x m f)   <span class="fu">=</span> <span class="dt">Bind</span> x (evalC m) (evalC f)</a></code></pre></div>
 <p>What <code>evalC</code> does is determine what weight to assign to a measure given we know it will produce a particular value. This weight is the probability of getting this value from the measure.</p>
 <p>And that’s all you need to express probabilisitic programs. Take the following example. Suppose we have two random variables <code>x</code> and <code>y</code> where the value of <code>y</code> depends on <code>x</code></p>
 <pre><code>x &lt;~ uniform(1, 5)
 y &lt;~ uniform(x, 7)</code></pre>
 <p>What’s the conditional distribution on <code>x</code> given <code>y</code> is <code>3</code>?</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">prog2 <span class="fu">=</span> <span class="dt">BindC</span> <span class="st">&quot;x&quot;</span> (<span class="dt">UCond</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>)))      <span class="co">-- x &lt;~ uniform(1, 5)</span>
-         (<span class="dt">BindC</span> <span class="st">&quot;_&quot;</span> (<span class="dt">UniformC</span> (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>) (<span class="dt">Lit</span> <span class="dv">7</span>) (<span class="dt">Lit</span> <span class="dv">3</span>)) <span class="co">-- y &lt;~ uniform(x, 7)</span>
-                                                         <span class="co">-- observe y 3</span>
-          (<span class="dt">UCond</span> (dirac (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>))))                     <span class="co">-- return x</span>
-
-<span class="ot">test2 ::</span> <span class="dt">IO</span> ()
-test2 <span class="fu">=</span> <span class="kw">do</span>
-   g <span class="ot">&lt;-</span> MWC.create
-   samples <span class="ot">&lt;-</span> replicateM <span class="dv">10</span> (evalM (evalC prog2) empty g)
-   print samples
-
-[(<span class="fl">1.099241451531848</span>, <span class="fl">0.5084092113511076</span>),
- (<span class="fl">3.963456271781203</span>, <span class="fl">0.0</span>),
- (<span class="fl">1.637454187135532</span>, <span class="fl">0.5594357800735532</span>),
- (<span class="fl">3.781075065891581</span>, <span class="fl">0.0</span>),
- (<span class="fl">1.908186342514358</span>, <span class="fl">0.5891810269980327</span>),
- (<span class="fl">2.799366130116895</span>, <span class="fl">0.714177929552209</span>),
- (<span class="fl">3.091757816253942</span>, <span class="fl">0.0</span>),
- (<span class="fl">1.486166046469419</span>, <span class="fl">0.5440860253107659</span>),
- (<span class="fl">3.106369061983323</span>, <span class="fl">0.0</span>),
- (<span class="fl">1.225163855492708</span>, <span class="fl">0.5194952592470413</span>)]</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb13-1" data-line-number="1">prog2 <span class="fu">=</span> <span class="dt">BindC</span> <span class="st">&quot;x&quot;</span> (<span class="dt">UCond</span> (<span class="dt">Uniform</span> (<span class="dt">Lit</span> <span class="dv">1</span>) (<span class="dt">Lit</span> <span class="dv">5</span>)))      <span class="co">-- x &lt;~ uniform(1, 5)</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">         (<span class="dt">BindC</span> <span class="st">&quot;_&quot;</span> (<span class="dt">UniformC</span> (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>) (<span class="dt">Lit</span> <span class="dv">7</span>) (<span class="dt">Lit</span> <span class="dv">3</span>)) <span class="co">-- y &lt;~ uniform(x, 7)</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">                                                         <span class="co">-- observe y 3</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">          (<span class="dt">UCond</span> (dirac (<span class="dt">Var</span> <span class="st">&quot;x&quot;</span>))))                     <span class="co">-- return x</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="ot">test2 ::</span> <span class="dt">IO</span> ()</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">test2 <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">   g <span class="ot">&lt;-</span> MWC.create</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">   samples <span class="ot">&lt;-</span> replicateM <span class="dv">10</span> (evalM (evalC prog2) empty g)</a>
+<a class="sourceLine" id="cb13-10" data-line-number="10">   print samples</a>
+<a class="sourceLine" id="cb13-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12">[(<span class="fl">1.099241451531848</span>, <span class="fl">0.5084092113511076</span>),</a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"> (<span class="fl">3.963456271781203</span>, <span class="fl">0.0</span>),</a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"> (<span class="fl">1.637454187135532</span>, <span class="fl">0.5594357800735532</span>),</a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"> (<span class="fl">3.781075065891581</span>, <span class="fl">0.0</span>),</a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"> (<span class="fl">1.908186342514358</span>, <span class="fl">0.5891810269980327</span>),</a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"> (<span class="fl">2.799366130116895</span>, <span class="fl">0.714177929552209</span>),</a>
+<a class="sourceLine" id="cb13-18" data-line-number="18"> (<span class="fl">3.091757816253942</span>, <span class="fl">0.0</span>),</a>
+<a class="sourceLine" id="cb13-19" data-line-number="19"> (<span class="fl">1.486166046469419</span>, <span class="fl">0.5440860253107659</span>),</a>
+<a class="sourceLine" id="cb13-20" data-line-number="20"> (<span class="fl">3.106369061983323</span>, <span class="fl">0.0</span>),</a>
+<a class="sourceLine" id="cb13-21" data-line-number="21"> (<span class="fl">1.225163855492708</span>, <span class="fl">0.5194952592470413</span>)]</a></code></pre></div>
 <p>As you can see, anything above <code>3</code> for <code>x</code> has a weight of <code>0</code> because it would be impossible for to observe <code>y</code> with <code>3</code>.</p>
 <h2 id="further-reading">Further reading</h2>
 <p>This implementation for small problems is actually fairly capable. It can be extended to support more probability distributions in a straightforward way.</p>
@@ -598,14 +806,16 @@ test2 <span class="fu">=</span> <span class="kw">do</span>
 <li><a href="http://arxiv.org/abs/1403.0504">A Compilation Target for Probabilistic Programming Languages</a></li>
 </ul>
 
+</div>
+
 <div id="disqus_thread"></div>
 <script>
     (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
         var d = document, s = d.createElement('script');
-        
+
         // IMPORTANT: Replace EXAMPLE with your forum shortname!
         s.src = 'https://convexoptimized.disqus.com/embed.js';
-        
+
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
@@ -616,7 +826,10 @@ test2 <span class="fu">=</span> <span class="kw">do</span>
         comments powered by Disqus.
     </a>
 
-    </body>
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
 </html>
 ]]></description>
     <pubDate>Tue, 25 Aug 2015 00:00:00 UT</pubDate>
@@ -626,134 +839,200 @@ test2 <span class="fu">=</span> <span class="kw">do</span>
 <item>
     <title>Where priors come from</title>
     <link>http://zinkov.com/posts/2015-06-09-where-priors-come-from/index.html</link>
-    <description><![CDATA[<!DOCTYPE html> 
-<html lang="en">
+    <description><![CDATA[<!DOCTYPE html>
+<html lang="en-us">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" href="../../favicon.ico">
-        <title>Convex Optimized - Where priors come from</title>
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
-        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          TeX: {
-              extensions: ["AMSmath.js"]
-          },
-          tex2jax: {
-              inlineMath: [  ["\\(","\\)"], ],
-              displayMath: [  ["\\[","\\]"] ]
-          },
-          displayAlign: 'center', // Change this to 'center' to center equations.
-          "HTML-CSS": {
-              styles: {'.MathJax_Display': {"margin": 4}}
-          }
-      });
-    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Where priors come from</title>
+        <style>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-    </head>
-    <body>
-        <h1>Convex Optimized</h1>
-        <div id="navigation">
-            <a href="../../">Home</a>
-	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
-	    <a href="../../archive.html">Archive</a>
-	    <a href="../../about.html">About</a>
-	    <a href="../../contact.html">Contact</a>
-        </div>
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
 
-        <h3>Where priors come from</h3>
-by <em>Rob Zinkov</em> on <strong>2015-06-09</strong>
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+	  extensions: ["AMSmath.js"]
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>Where priors come from</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2015-06-09</h5>
+</div>
+
+<div class="text-left">
+
 <p>When reading up on Bayesian modeling papers it can be bewildering to understand why a paricular prior was chosen. The distributions usually are named after people and the density equations are pretty scary. This makes it harder to see why the models were successful.</p>
 <p>The reality is that many of these distributions are making assumptions about the type of data we have. Although there are hundreds of probability distributions, its only a dozen or so that are used again and again. The others are often special cases of these dozen or can be created through a clever combination of two or three of these simpler distributions.</p>
 <p>I’d like to outline this small group of distributions and say what assumptions they encode, where our data came from, and why they get used. Often a prior is employed because the assumptions of the prior match what we know about the parameter generation process.</p>
 <p>Keep in mind, there are multiple effective priors for a particular problem. The best prior to use for a problem is not some wisdom set in stone. A particular prior is chosen as some combination of analytic tractability, computationally efficiency, and does it make other recognizable distributions when combined with popular likelihood functions. Better priors are always being discovered by researchers.</p>
 <p>Distributions are understandable in many different ways. The most intuitive for me is to plot a histogram of values. Here is some helper code for doing that.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">import</span> numpy <span class="im">as</span> np
-<span class="im">import</span> numpy.random <span class="im">as</span> r
-<span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt
-
-
-<span class="kw">def</span> config():
-    plt.style.use(<span class="st">'ggplot'</span>)
-
-
-<span class="kw">def</span> display_histogram(dist, samples<span class="op">=</span><span class="dv">10000</span>, <span class="op">**</span>kwargs):
-    plt.hist(dist(samples), <span class="op">**</span>kwargs)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="im">import</span> numpy.random <span class="im">as</span> r</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">def</span> config():</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    plt.style.use(<span class="st">'ggplot'</span>)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw">def</span> display_histogram(dist, samples<span class="op">=</span><span class="dv">10000</span>, <span class="op">**</span>kwargs):</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">    plt.hist(dist(samples), <span class="op">**</span>kwargs)</a></code></pre></div>
 <h2 id="uniform-distribution">Uniform distribution</h2>
 <p>The uniform distribution is the simplest distribution to explain. Whether you use this one in its continuous case or its discrete case it is used for the same thing. You have a set of events that are equally likely. Note, the uniform distribution from <span class="math inline">\(\infty\)</span> to <span class="math inline">\(-\infty\)</span> is not a probability distribution. This requires you give lower and upper bounds for your values.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> uniform(lo, hi):
-    <span class="cf">return</span> <span class="kw">lambda</span> samples: r.uniform(lo, hi, samples)
-
-display_histogram(uniform(<span class="dv">1</span>, <span class="dv">3</span>))</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">def</span> uniform(lo, hi):</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="cf">return</span> <span class="kw">lambda</span> samples: r.uniform(lo, hi, samples)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">display_histogram(uniform(<span class="dv">1</span>, <span class="dv">3</span>))</a></code></pre></div>
 <p><img src="../../images/uniformhist.png" width="600" height="400"></p>
 <p>This distribution isn’t used as often as you’d think, since its rare we want hard boundaries on our values.</p>
 <h2 id="normal-distribution">Normal distribution</h2>
 <p>The normal distribution is possibly the most frequently used distribution. Sometimes called the <em>Gaussian</em> distribution. This has support over the entire real line. It makes it really convenient, because you don’t have to worry about checking boundaries. This is the distribution you want if you find yourself saying things like, “the sensor sayss 20 km/h +/- 5 km/h”. The normal distribution takes as arguments a center (<span class="math inline">\(\mu\)</span>) and spread or <em>standard deviation</em> (<span class="math inline">\(\sigma\)</span>). The value <span class="math inline">\(\sigma^2\)</span> comes up a lot is sometimes called the <em>variance</em>. Standard deviation states that 67% of your data is within one standard deviation of the center, and 95% is within two standard deviation. As an example, if I say my data comes from normal(0, 3) I mean that 95% of my data should be between -6 and 6.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> normal(mu, sd):
-    <span class="cf">return</span> <span class="kw">lambda</span> s: r.normal(mu, sd, s)
-
-display_histogram(normal(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">def</span> normal(mu, sd):</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">    <span class="cf">return</span> <span class="kw">lambda</span> s: r.normal(mu, sd, s)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">display_histogram(normal(<span class="dv">1</span>, <span class="dv">2</span>))</a></code></pre></div>
 <p><img src="../../images/normalhist.png" width="600" height="400"></p>
 <p>It will always have a single maximum value, so if the distribution you had in mind for your problem has multiple solutions, don’t use it. The normal also comes up a lot because if you have multiple signals that come from any distribution, with enough signals their average converges to the normal distribution. This is one version of what is called, <em>Central Limit Theorem</em>.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> clt(samples):
-    <span class="cf">return</span> np.array([np.mean(r.uniform(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">100</span>))
-                     <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(samples)])
-
-display_histogram(clt)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">def</span> clt(samples):</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="cf">return</span> np.array([np.mean(r.uniform(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">                     <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(samples)])</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">display_histogram(clt)</a></code></pre></div>
 <p><img src="../../images/clthist.png" width="600" height="400"></p>
 <p>Feel free to change that uniform and its arguments to any other distribution and you’ll see its always a normal.</p>
 <h2 id="bernoulli-distribution">Bernoulli distribution</h2>
 <p>The bernoulli distribution is usually the first distribution people are taught in class. This is the distribution is for deciding two choices. It takes an argument <span class="math inline">\(\rho\)</span> which dictates how biased are we to select 0 and 1. These numbers are also considered stand-ins for success (1) and failure (0) and usually talked about in these terms. Bernoulli can be written in terms of uniform.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> bern(p):
-    <span class="kw">def</span> samples(s):
-        u <span class="op">=</span> r.uniform(<span class="dv">0</span>, <span class="dv">1</span>, s)
-        <span class="cf">return</span> np.where(u <span class="op">&lt;</span> p, <span class="dv">1</span>, <span class="dv">0</span>)
-    <span class="cf">return</span> samples
-
-display_histogram(bern(<span class="fl">0.7</span>))</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">def</span> bern(p):</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">        u <span class="op">=</span> r.uniform(<span class="dv">0</span>, <span class="dv">1</span>, s)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">        <span class="cf">return</span> np.where(u <span class="op">&lt;</span> p, <span class="dv">1</span>, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">display_histogram(bern(<span class="fl">0.7</span>))</a></code></pre></div>
 <p>In that example, we made <span class="math inline">\(\rho\)</span> 0.7 and obtain this histogram:</p>
 <p><img src="../../images/bernhist.png" width="600" height="400"></p>
 <p>Bernoulli is also handy since you can define a bunch of distributions in terms of them. The <em>Binomial distribution</em> is a distribution on natural numbers from <span class="math inline">\(0\)</span> to <span class="math inline">\(n\)</span> inclusive. It takes a bias <span class="math inline">\(\rho\)</span> and counts how often a coin flip succeeds in n trials.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> binomial(n, p):
-    <span class="kw">def</span> samples(s):
-    k <span class="op">=</span> [np.<span class="bu">sum</span>(bern(p)(n)) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]
-    <span class="cf">return</span> np.array(k)
-    <span class="cf">return</span> samples
-
-display_histogram(binomial(<span class="dv">20</span>, <span class="fl">0.7</span>))</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">def</span> binomial(n, p):</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">    k <span class="op">=</span> [np.<span class="bu">sum</span>(bern(p)(n)) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="cf">return</span> np.array(k)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">display_histogram(binomial(<span class="dv">20</span>, <span class="fl">0.7</span>))</a></code></pre></div>
 <p><img src="../../images/binhist.png" width="600" height="400"></p>
 <p>Another distribution which can be encoded with bernoulli is the <em>Negative Binomial</em> distribution. This distribution counts how often the coin flip will succeed if you are allowed to fail up to <span class="math inline">\(r\)</span> times.</p>
 <h2 id="categorical-distribution">Categorical distribution</h2>
 <p>Categorical is the distribution when you have a variable that can take on a discrete set of values. Its arguments are the probability you believe for each value of appearing. This can be simulated by indexing these values with natural numbers.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> categorical(ps):
-    <span class="kw">def</span> samples(s):
-        <span class="cf">return</span> r.choice(<span class="bu">range</span>(<span class="bu">len</span>(ps)), s, p<span class="op">=</span>ps)
-    <span class="cf">return</span> samples
-
-<span class="op">&gt;&gt;</span> categorical([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">10</span>)
-array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>])</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">def</span> categorical(ps):</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">        <span class="cf">return</span> r.choice(<span class="bu">range</span>(<span class="bu">len</span>(ps)), s, p<span class="op">=</span>ps)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="op">&gt;&gt;</span> categorical([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>])</a></code></pre></div>
 <p>One thing to note, lots of folks like doing a One-Hot encoding so we represent which sample as a binary vector where our choice is one and all the other elements of the vector are zero.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> onehot(n, k):
-    <span class="cf">return</span> np.eye(<span class="dv">1</span>, n, k<span class="op">=</span>k)[<span class="dv">0</span>]
-
-
-<span class="kw">def</span> categorical2(ps):
-    <span class="kw">def</span> samples(s):
-        l <span class="op">=</span> <span class="bu">len</span>(ps)
-        <span class="cf">return</span> np.array([onehot(l,
-                                r.choice(<span class="bu">range</span>(l),  p<span class="op">=</span>ps))
-                         <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])
-    <span class="cf">return</span> samples
-
-<span class="op">&gt;&gt;</span> categorical2([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)
-array([[ <span class="dv">0</span>.,  <span class="dv">1</span>.,  <span class="dv">0</span>.],
-       [ <span class="dv">0</span>.,  <span class="dv">1</span>.,  <span class="dv">0</span>.],
-       [ <span class="dv">0</span>.,  <span class="dv">1</span>.,  <span class="dv">0</span>.],
-       [ <span class="dv">0</span>.,  <span class="dv">1</span>.,  <span class="dv">0</span>.],
-       [ <span class="dv">0</span>.,  <span class="dv">0</span>.,  <span class="dv">1</span>.]])</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">def</span> onehot(n, k):</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">    <span class="cf">return</span> np.eye(<span class="dv">1</span>, n, k<span class="op">=</span>k)[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">def</span> categorical2(ps):</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">        l <span class="op">=</span> <span class="bu">len</span>(ps)</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">        <span class="cf">return</span> np.array([onehot(l,</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">                                r.choice(<span class="bu">range</span>(l),  p<span class="op">=</span>ps))</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">                         <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="op">&gt;&gt;</span> categorical2([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">array([[ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">       [ <span class="fl">0.</span>,  <span class="fl">0.</span>,  <span class="fl">1.</span>]])</a></code></pre></div>
 <h2 id="gamma-distribution">Gamma distribution</h2>
 <p>The gamma distribution comes up all over the place. The intuition for the gamma is it is the prior on positive real numbers. Now there are many ways to get a distribution over positive numbers. We can take the absolute-value of a normal distribution and get what’s called a <em>Half-Normal</em> distribution. If we have a variable <span class="math inline">\(x\)</span> from the normal distribution, we can also do <span class="math inline">\(exp(x)\)</span> and <span class="math inline">\(x^2\)</span> to get distributions over positive numbers. These are the <em>Lognormal</em> and <span class="math inline">\(\chi^2\)</span> distributions.</p>
 <p>So why use the gamma distribution? Well when you use the other distributions, you are really saying you believe your variable has some latent property that spans the real-line and something made it one-sided. So if you use a lognormal, you are implicitly saying you believe that the log of this variable is symmetric. The assumption of <span class="math inline">\(\chi^2\)</span> is that your variable is the sum of k squared factors, where each factor came from the normal(0, 1) distribution.</p>
@@ -761,42 +1040,42 @@ array([[ <span class="dv">0</span>.,  <span class="dv">1</span>.,  <span class="
 <p>Some people suggest using gamma because it is conjugate with lots of distributions. This means that when gamma is a used as prior to something like normal, the posterior of this distribution also is a gamma. I would hesitate to use a prior just because it makes performing a computation easier. It’s better to have your priors actually encode what you believe. You can always go back later and make something conjugate once you need something more efficient.</p>
 <p>The gamma distribution is the main way we encode something to be a postive number. It’s parameters shape <span class="math inline">\(k\)</span> and scale <span class="math inline">\(\theta\)</span> roughly let you tune gamma like the normal distribution. <span class="math inline">\(k \theta\)</span> specifies the mean value we expect, and <span class="math inline">\(k \theta^2\)</span> specifies the variance. This is a common theme in most distributions. We want two parameters so we can set the mean and variance. Distributions that don’t have this feature are usually generalized until they do.</p>
 <p>As an example, here is what gamma(5, 1) looks like. Note where it peaks and how it spreads out. Change the parameters and see how it changes</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> gamma(shape, scale):
-    <span class="cf">return</span> <span class="kw">lambda</span> s: r.gamma(shape, scale, s)
-
-display_histogram(gamma(<span class="dv">5</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">def</span> gamma(shape, scale):</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">    <span class="cf">return</span> <span class="kw">lambda</span> s: r.gamma(shape, scale, s)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">display_histogram(gamma(<span class="dv">5</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</a></code></pre></div>
 <p><img src="../../images/gammahist.png" width="600" height="400"></p>
 <p>Also distributions like <span class="math inline">\(\chi^2\)</span> (chi-squared) can be defined in terms of gamma. Actually many distributions can be built from gamma. Taking the reciprocal of a variable from the gamma gives you a value from the <em>Inv-gamma</em> distribution. If we normalize this positive number to be between 0 and 1, we get the Beta distribution.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> beta(a, b):
-    <span class="kw">def</span> samples(s):
-        x <span class="op">=</span> r.gamma(a, <span class="dv">1</span>, s)
-        y <span class="op">=</span> r.gamma(b, <span class="dv">1</span>, s)
-        <span class="cf">return</span> x<span class="op">/</span>(x <span class="op">+</span> y)
-    <span class="cf">return</span> samples
-
-display_histogram(beta(<span class="dv">10</span>, <span class="dv">2</span>), <span class="dv">10000</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">def</span> beta(a, b):</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">        x <span class="op">=</span> r.gamma(a, <span class="dv">1</span>, s)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">        y <span class="op">=</span> r.gamma(b, <span class="dv">1</span>, s)</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">        <span class="cf">return</span> x<span class="op">/</span>(x <span class="op">+</span> y)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">display_histogram(beta(<span class="dv">10</span>, <span class="dv">2</span>), <span class="dv">10000</span>)</a></code></pre></div>
 <p><img src="../../images/betahist.png" width="600" height="400"></p>
 <p>If we want to a prior on say categorical, which takes as an argument a list of numbers that sum to 1, we can use a gamma to generate k-numbers and then normalize. This is precisely the definition of the <em>Dirichlet distribution</em>.</p>
 <h2 id="poisson-distribution">Poisson Distribution</h2>
 <p>The poisson distribution is seen as the distribution over event arrival times. It takes an average arrival rate <span class="math inline">\(\lambda\)</span> and returns the number of events you can expect. In this sense, it’s a distribution over natural numbers. It can be thought of as a discrete analog to the gamma distribution.</p>
 <p>Unfortunely, poisson in this form is a bit cumbersome to use. For one with poisson, mean and variance are both <span class="math inline">\(\lambda\)</span>. You can’t tune this distribution to have them be different. To do that, we note that <span class="math inline">\(\lambda\)</span> has to be a positive real number and put a gamma prior on it.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> overdispersed_poisson(shape,scale):
-    <span class="kw">def</span> samples(s):
-        lam <span class="op">=</span> r.gamma(shape, scale, s)
-        <span class="cf">return</span> r.poisson(lam)
-    <span class="cf">return</span> samples
-
-display_histogram(overdispersed(<span class="dv">3</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">def</span> overdispersed_poisson(shape,scale):</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">        lam <span class="op">=</span> r.gamma(shape, scale, s)</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">        <span class="cf">return</span> r.poisson(lam)</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">display_histogram(overdispersed(<span class="dv">3</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</a></code></pre></div>
 <p><img src="../../images/betterpoissonhist.png" width="600" height="400"></p>
 <p>This is distribution is sometimes called the Overdispersed Poisson, but its also a reparameterized Negative Binomial! Different concept same math equation.</p>
 <p>A related distribution to poisson is the exponential distribution. This distribution measures the time we can expect to elapse between events. If we can tune the rate events happen to change with time, we get distributions that are good at modeling how long until an object fails. One example of such a distribution is the <em>Weibull distribution</em>. It has a few forms, but the easiest is one that has <span class="math inline">\(\lambda\)</span> for the rate at which events in this case usually failure, and an extra argument <span class="math inline">\(k\)</span> which models if the rate of failure should increase as time goes on. A value of <span class="math inline">\(k=1\)</span> is just the exponential distribution. A value lower than 1 means failure gets less likely over time and a value over 1 means a failure gets more likely over time.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> weibull(lam, k):
-    <span class="kw">def</span> samples(s):
-        <span class="cf">return</span> lam<span class="op">*</span>r.weibull(k, s)
-    <span class="cf">return</span> samples
-
-
-display_histogram(weibull(<span class="fl">1.0</span>, <span class="fl">1.5</span>), <span class="dv">10000</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">def</span> weibull(lam, k):</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">        <span class="cf">return</span> lam<span class="op">*</span>r.weibull(k, s)</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">display_histogram(weibull(<span class="fl">1.0</span>, <span class="fl">1.5</span>), <span class="dv">10000</span>)</a></code></pre></div>
 <p><img src="../../images/weibullhist.png" width="600" height="400"></p>
 <p>For the more morbid, you can ask if human mortality is measured with a weibull distribution. Actually, its the <em>Gompertz distribution</em> that is used. It turns out to be the distribution you get when you call exp on samples from the weibull.</p>
 <h2 id="heavy-tailed-distributions">Heavy-tailed distributions</h2>
@@ -806,105 +1085,107 @@ display_histogram(weibull(<span class="fl">1.0</span>, <span class="fl">1.5</spa
 <p>Laplace distribution arises as an interesting modification to the normal distribution. Let’s look at the density function for normal</p>
 <p><span class="math display">\[ \frac{1}{\sigma\sqrt{2\pi}}\, exp\left({-\frac{(x - \mu)^2}{2 \sigma^2}}\right)\]</span></p>
 <p>That function inside <span class="math inline">\(exp(\dots)\)</span> can be seen as an L2 norm on our variable. If we replace it with an L1 norm and change the denominator so it all still sums to one we get the laplace. In this way, a laplace centered on 0 can be used to put a strong sparsity prior on a variable while leaving a heavy-tail for it if the value has strong support for another value. There are a whole family of distribution available by putting in different norms.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> laplace(loc, scale):
-    <span class="kw">def</span> samples(s):
-        <span class="cf">return</span> r.laplace(loc, scale, s)
-    <span class="cf">return</span> samples
-
-display_histogram(laplace(<span class="dv">0</span>,<span class="dv">2</span>), <span class="dv">10000</span>, bins<span class="op">=</span><span class="dv">50</span>)</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">def</span> laplace(loc, scale):</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">        <span class="cf">return</span> r.laplace(loc, scale, s)</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">display_histogram(laplace(<span class="dv">0</span>,<span class="dv">2</span>), <span class="dv">10000</span>, bins<span class="op">=</span><span class="dv">50</span>)</a></code></pre></div>
 <p><img src="../../images/laplacehist.png" width="600" height="400"></p>
 <h2 id="multivariate-normal">Multivariate Normal</h2>
 <p>When working with multivariate distributions, most can be seen as generalizations of univariate distributions. All those assumptions, from those still hold. We already mentioned Dirichlet and Categorical as multivariate distributions. The big thing you get with a multivariate generalization is the ability to encode how you strongly you believe a collection of variables is correlated with each other.</p>
 <p>The <em>Multivariate Normal</em> generalizes the normal distribution to multiple variables. Now <span class="math inline">\(\mu\)</span> refers to the center of each of them. But <span class="math inline">\(\sigma\)</span>, our standard deviation isn’t just the standard deviation in each variable. Instead we get a covariance matrix that let’s us dictate how correlated each variable is with every other variable. To visualize this we need some helper code.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> display_histogram2d(dist, samples<span class="op">=</span><span class="dv">1000</span>, <span class="op">**</span>kwargs):
-	x, y <span class="op">=</span> dist(samples)
-    plt.hist2d(x, y,
-               bins<span class="op">=</span><span class="dv">100</span>,
-               normed<span class="op">=</span><span class="va">False</span>,
-               cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>,
-               <span class="op">**</span>kwargs)
-
-
-<span class="kw">def</span> multinorm(mean, cov):
-    <span class="kw">def</span> samples(s):
-        <span class="cf">return</span> r.multivariate_normal(mean, cov, s).T
-    <span class="cf">return</span> samples</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">def</span> display_histogram2d(dist, samples<span class="op">=</span><span class="dv">1000</span>, <span class="op">**</span>kwargs):</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">	x, y <span class="op">=</span> dist(samples)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">    plt.hist2d(x, y,</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">               bins<span class="op">=</span><span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">               normed<span class="op">=</span><span class="va">False</span>,</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">               cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>,</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">               <span class="op">**</span>kwargs)</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="kw">def</span> multinorm(mean, cov):</a>
+<a class="sourceLine" id="cb14-11" data-line-number="11">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb14-12" data-line-number="12">        <span class="cf">return</span> r.multivariate_normal(mean, cov, s).T</a>
+<a class="sourceLine" id="cb14-13" data-line-number="13">    <span class="cf">return</span> samples</a></code></pre></div>
 <p>So let’s see what happens when we say, the first and second variables are 0.5 correlated.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">cov <span class="op">=</span> [[<span class="fl">1.0</span>, <span class="fl">0.5</span>],
-       [<span class="fl">0.5</span>, <span class="fl">1.0</span>]]
-
-display_histogram2d(multinorm([<span class="dv">1</span>,<span class="dv">2</span>], cov), <span class="dv">5000</span>)</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb15-1" data-line-number="1">cov <span class="op">=</span> [[<span class="fl">1.0</span>, <span class="fl">0.5</span>],</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">       [<span class="fl">0.5</span>, <span class="fl">1.0</span>]]</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">display_histogram2d(multinorm([<span class="dv">1</span>,<span class="dv">2</span>], cov), <span class="dv">5000</span>)</a></code></pre></div>
 <p><img src="../../images/multinormhist.png" width="600" height="400" /></p>
 <p>This shows that values in the first variable will be near values in the second. You don’t see them diverging too often from each other. Keep adjusting the matrix to see what it looks when other values are used.</p>
 <h2 id="wishart-and-lkj">Wishart and LKJ</h2>
 <p>The wishart distribution is the prior on symmetric matrices. It takes as arguments a multivariate normal distribution and a variable <span class="math inline">\(\nu\)</span> which called the degrees of freedom. I think its best to think of <span class="math inline">\(\nu\)</span> in terms of matrix factorization. The wishart is made by first making a <span class="math inline">\(\nu \times p\)</span> matrix <span class="math inline">\(X\)</span> by concat <span class="math inline">\(\nu\)</span> draws from the multivariate normal and then squaring it. The degrees of freedom let you set the what you think is the matrix’s true dimensionality.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> wishart(v, n):
-	va <span class="op">=</span> np.asarray(v)
-    <span class="kw">def</span> one_sample():
-        X <span class="op">=</span> np.matrix(multinorm(np.zeros(va.shape[<span class="dv">0</span>]), va)(n).T)
-        <span class="cf">return</span> X.T<span class="op">*</span>X
-
-    <span class="kw">def</span> samples(s):
-        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])
-    <span class="cf">return</span> samples
-
-m <span class="op">=</span> wishart(np.eye(<span class="dv">30</span>), <span class="dv">10</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]
-plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">def</span> wishart(v, n):</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">	va <span class="op">=</span> np.asarray(v)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">    <span class="kw">def</span> one_sample():</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">        X <span class="op">=</span> np.matrix(multinorm(np.zeros(va.shape[<span class="dv">0</span>]), va)(n).T)</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">        <span class="cf">return</span> X.T<span class="op">*</span>X</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8">        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
+<a class="sourceLine" id="cb16-9" data-line-number="9">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb16-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb16-11" data-line-number="11">m <span class="op">=</span> wishart(np.eye(<span class="dv">30</span>), <span class="dv">10</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb16-12" data-line-number="12">plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</a></code></pre></div>
 <p><img src="../../images/wishhist.png" width="600" height="600" /></p>
 <p>This is commonly used as a prior on convariance matrices for multivariate normal distributions. But wait! What does this anything in its generative story have to do with covariance matrices? Lots of people have thought this. A more modern alternative is the <a href="http://www.sciencedirect.com/science/article/pii/S0047259X09000876">LKJ</a> distribution. It also takes a covariance matrix and tuning parameter. The difference is here is that the LKJ tuning parameter <span class="math inline">\(\eta\)</span> controls how independent are the variables. When it is set to 1, it is uniform over the entire matrix. As you set <span class="math inline">\(\eta\)</span> to larger and larger values, more and more weight is concentrated on the diagnol, meaning we believe that the variables are mostly independent. This prior is easier for some people to tune.</p>
 <p>The method for generating samples from this distribution is a little bit tedious. See this <a href="http://stats.stackexchange.com/a/125017">fantastic writeup</a> if you are interested in the details. It’s arguably better and more understandable than the original paper.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> vine(eta, d):
-    <span class="kw">def</span> one_sample():
-        b <span class="op">=</span> eta <span class="op">+</span> (d <span class="op">-</span> <span class="dv">1</span>)<span class="op">/</span><span class="dv">2</span>
-        P <span class="op">=</span> np.zeros((d, d))
-        S <span class="op">=</span> np.eye(d)
-
-        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(d<span class="op">-</span><span class="dv">1</span>):
-            b <span class="op">=</span> b <span class="op">-</span> <span class="fl">0.5</span>
-            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k<span class="op">+</span><span class="dv">1</span>, d):
-                P[k, i] <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>r.beta(b, b) <span class="op">-</span> <span class="dv">1</span>
-                p <span class="op">=</span> P[k, i]
-                <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">range</span>(k<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>):
-                    p <span class="op">=</span> p <span class="op">*</span> np.sqrt((<span class="dv">1</span><span class="op">-</span>P[l, i]<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span>
-                                    (<span class="dv">1</span><span class="op">-</span>P[<span class="dv">1</span>, k]<span class="op">**</span><span class="dv">2</span>)) <span class="op">+</span> P[l, i]<span class="op">*</span>P[l, k]
-                S[k, i] <span class="op">=</span> p
-                S[i, k] <span class="op">=</span> p
-        <span class="cf">return</span> S
-
-    <span class="kw">def</span> samples(s):
-        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])
-    <span class="cf">return</span> samples
-
-m <span class="op">=</span> vine(<span class="fl">2.0</span>, <span class="dv">30</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]
-plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">def</span> vine(eta, d):</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">    <span class="kw">def</span> one_sample():</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">        b <span class="op">=</span> eta <span class="op">+</span> (d <span class="op">-</span> <span class="dv">1</span>)<span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">        P <span class="op">=</span> np.zeros((d, d))</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">        S <span class="op">=</span> np.eye(d)</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7">        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(d<span class="dv">-1</span>):</a>
+<a class="sourceLine" id="cb17-8" data-line-number="8">            b <span class="op">=</span> b <span class="op">-</span> <span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9">            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k<span class="op">+</span><span class="dv">1</span>, d):</a>
+<a class="sourceLine" id="cb17-10" data-line-number="10">                P[k, i] <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>r.beta(b, b) <span class="op">-</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11">                p <span class="op">=</span> P[k, i]</a>
+<a class="sourceLine" id="cb17-12" data-line-number="12">                <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">range</span>(k<span class="dv">-1</span>, <span class="dv">0</span>, <span class="dv">-1</span>):</a>
+<a class="sourceLine" id="cb17-13" data-line-number="13">                    p <span class="op">=</span> p <span class="op">*</span> np.sqrt((<span class="dv">1</span><span class="op">-</span>P[l, i]<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span></a>
+<a class="sourceLine" id="cb17-14" data-line-number="14">                                    (<span class="dv">1</span><span class="op">-</span>P[<span class="dv">1</span>, k]<span class="op">**</span><span class="dv">2</span>)) <span class="op">+</span> P[l, i]<span class="op">*</span>P[l, k]</a>
+<a class="sourceLine" id="cb17-15" data-line-number="15">                S[k, i] <span class="op">=</span> p</a>
+<a class="sourceLine" id="cb17-16" data-line-number="16">                S[i, k] <span class="op">=</span> p</a>
+<a class="sourceLine" id="cb17-17" data-line-number="17">        <span class="cf">return</span> S</a>
+<a class="sourceLine" id="cb17-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb17-19" data-line-number="19">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb17-20" data-line-number="20">        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
+<a class="sourceLine" id="cb17-21" data-line-number="21">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb17-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb17-23" data-line-number="23">m <span class="op">=</span> vine(<span class="fl">2.0</span>, <span class="dv">30</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb17-24" data-line-number="24">plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</a></code></pre></div>
 <p><img src="../../images/lkjhist.png" width="600" height="600" /></p>
 <h2 id="multinomial">Multinomial</h2>
 <p>Categorical in the One-Hot encoding can also be seen as a special-case of the <em>Multinomial distribution</em>. The multinomial is related to the categorical like bernoulli is related to binomial. This distribution given <span class="math inline">\(n\)</span> trials with the categorical counts how often each of the outcomes happened.</p>
-<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> multinomial(n, ps):
-    <span class="kw">def</span> samples(s):
-        m <span class="op">=</span> [np.<span class="bu">sum</span>(categorical2(ps)(n), axis<span class="op">=</span><span class="dv">0</span>) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]
-        <span class="cf">return</span> np.array(m)
-    <span class="cf">return</span> samples
-
-
-<span class="op">&gt;&gt;</span> multinomial(<span class="dv">10</span>, [<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)
-array([[ <span class="dv">2</span>.,  <span class="dv">4</span>.,  <span class="dv">4</span>.],
-       [ <span class="dv">4</span>.,  <span class="dv">6</span>.,  <span class="dv">0</span>.],
-       [ <span class="dv">2</span>.,  <span class="dv">4</span>.,  <span class="dv">4</span>.],
-       [ <span class="dv">2</span>.,  <span class="dv">6</span>.,  <span class="dv">2</span>.],
-       [ <span class="dv">2</span>.,  <span class="dv">5</span>.,  <span class="dv">3</span>.]])</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">def</span> multinomial(n, ps):</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">        m <span class="op">=</span> [np.<span class="bu">sum</span>(categorical2(ps)(n), axis<span class="op">=</span><span class="dv">0</span>) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">        <span class="cf">return</span> np.array(m)</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="op">&gt;&gt;</span> multinomial(<span class="dv">10</span>, [<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb18-9" data-line-number="9">array([[ <span class="fl">2.</span>,  <span class="fl">4.</span>,  <span class="fl">4.</span>],</a>
+<a class="sourceLine" id="cb18-10" data-line-number="10">       [ <span class="fl">4.</span>,  <span class="fl">6.</span>,  <span class="fl">0.</span>],</a>
+<a class="sourceLine" id="cb18-11" data-line-number="11">       [ <span class="fl">2.</span>,  <span class="fl">4.</span>,  <span class="fl">4.</span>],</a>
+<a class="sourceLine" id="cb18-12" data-line-number="12">       [ <span class="fl">2.</span>,  <span class="fl">6.</span>,  <span class="fl">2.</span>],</a>
+<a class="sourceLine" id="cb18-13" data-line-number="13">       [ <span class="fl">2.</span>,  <span class="fl">5.</span>,  <span class="fl">3.</span>]])</a></code></pre></div>
 <p>This distribution appears often in natural language processing as a prior on bag-of-word representation for documents. A document can be represented as a list of how often each word occured in that document. The multinomial in that sense can be used to encode our beliefs about the vocabularies.</p>
 <h2 id="conclusions">Conclusions</h2>
 <p>This doesn’t cover all the distributions people are using for priors out there, but it should give an intuition for why the most common ones are in use.</p>
+
+</div>
 
 <div id="disqus_thread"></div>
 <script>
     (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
         var d = document, s = d.createElement('script');
-        
+
         // IMPORTANT: Replace EXAMPLE with your forum shortname!
         s.src = 'https://convexoptimized.disqus.com/embed.js';
-        
+
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
@@ -915,7 +1196,10 @@ array([[ <span class="dv">2</span>.,  <span class="dv">4</span>.,  <span class="
         comments powered by Disqus.
     </a>
 
-    </body>
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
 </html>
 ]]></description>
     <pubDate>Tue, 09 Jun 2015 00:00:00 UT</pubDate>
@@ -925,46 +1209,112 @@ array([[ <span class="dv">2</span>.,  <span class="dv">4</span>.,  <span class="
 <item>
     <title>Popular outlines for machine learning papers</title>
     <link>http://zinkov.com/posts/2015-06-05-paper-outline-styles/index.html</link>
-    <description><![CDATA[<!DOCTYPE html> 
-<html lang="en">
+    <description><![CDATA[<!DOCTYPE html>
+<html lang="en-us">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" href="../../favicon.ico">
-        <title>Convex Optimized - Popular outlines for machine learning papers</title>
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
-        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          TeX: {
-              extensions: ["AMSmath.js"]
-          },
-          tex2jax: {
-              inlineMath: [  ["\\(","\\)"], ],
-              displayMath: [  ["\\[","\\]"] ]
-          },
-          displayAlign: 'center', // Change this to 'center' to center equations.
-          "HTML-CSS": {
-              styles: {'.MathJax_Display': {"margin": 4}}
-          }
-      });
-    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Popular outlines for machine learning papers</title>
+        <style>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-    </head>
-    <body>
-        <h1>Convex Optimized</h1>
-        <div id="navigation">
-            <a href="../../">Home</a>
-	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
-	    <a href="../../archive.html">Archive</a>
-	    <a href="../../about.html">About</a>
-	    <a href="../../contact.html">Contact</a>
-        </div>
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
 
-        <h3>Popular outlines for machine learning papers</h3>
-by <em>Rob Zinkov</em> on <strong>2015-06-05</strong>
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+	  extensions: ["AMSmath.js"]
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>Popular outlines for machine learning papers</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2015-06-05</h5>
+</div>
+
+<div class="text-left">
+
 <p>When reading machine learning papers, I couldn’t help but notice that I kept seeing the same structures over and over again. Some conferences have one more often than the others. So, I decided to catalog a few of them.</p>
 <h2 id="the-theory-paper">The Theory Paper</h2>
 <p>This is the paper with the simple algorithm. You get this when you proved a nicer bound or the main contribution of your work is a faster convergence rate.</p>
@@ -1013,14 +1363,16 @@ by <em>Rob Zinkov</em> on <strong>2015-06-05</strong>
 <h2 id="more-to-come">More to come</h2>
 <p>Think I missed a style? Tell me and I’ll add it.</p>
 
+</div>
+
 <div id="disqus_thread"></div>
 <script>
     (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
         var d = document, s = d.createElement('script');
-        
+
         // IMPORTANT: Replace EXAMPLE with your forum shortname!
         s.src = 'https://convexoptimized.disqus.com/embed.js';
-        
+
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
@@ -1031,7 +1383,10 @@ by <em>Rob Zinkov</em> on <strong>2015-06-05</strong>
         comments powered by Disqus.
     </a>
 
-    </body>
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
 </html>
 ]]></description>
     <pubDate>Fri, 05 Jun 2015 00:00:00 UT</pubDate>

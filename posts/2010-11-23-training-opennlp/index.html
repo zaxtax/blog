@@ -1,50 +1,116 @@
-<!DOCTYPE html> 
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en-us">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="shortcut icon" href="../../favicon.ico">
-        <title>Convex Optimized - Training OpenNLP models in Clojure</title>
-        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
-        <link rel="stylesheet" type="text/css" href="../../css/default.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/code2.css" />
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          TeX: {
-              extensions: ["AMSmath.js"]
-          },
-          tex2jax: {
-              inlineMath: [  ["\\(","\\)"], ],
-              displayMath: [  ["\\[","\\]"] ]
-          },
-          displayAlign: 'center', // Change this to 'center' to center equations.
-          "HTML-CSS": {
-              styles: {'.MathJax_Display': {"margin": 4}}
-          }
-      });
-    </script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Training OpenNLP models in Clojure</title>
+        <style>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-    </head>
-    <body>
-        <h1>Convex Optimized</h1>
-        <div id="navigation">
-            <a href="../../">Home</a>
-	    <a href="http://github.com/zaxtax" target="_blank">Projects</a>
-	    <a href="../../archive.html">Archive</a>
-	    <a href="../../about.html">About</a>
-	    <a href="../../contact.html">Contact</a>
-        </div>
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
 
-        <h3>Training OpenNLP models in Clojure</h3>
-by <em>Rob Zinkov</em> on <strong>2010-11-23</strong>
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+	  extensions: ["AMSmath.js"]
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>Training OpenNLP models in Clojure</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2010-11-23</h5>
+</div>
+
+<div class="text-left">
+
 <p>Lately, I’ve been extending the Clojure wrapper for OpenNLP. In the process I have found little documentation on the format OpenNLP expects its training data. These are my findings.</p>
 <p>While sometimes the models provided with OpenNLP are sufficient, many times they are insufficient. Either because your text is not in one of the supported languages or because the text is provided in an unconventional way.</p>
 <p>In the following document I will show you how to train your own models.</p>
 <p>For these examples you will need:</p>
 <pre><code>(use 'opennlp.nlp)
 (use 'opennlp.tools.train)</code></pre>
-<h3 id="sentence-detector">Sentence Detector</h3>
+<p>###Sentence Detector</p>
 <p>To train a sentence splitter, simply provide a training file that includes one sentence on every line.</p>
 <p>sentdetect.train</p>
 <pre><code>Being at the polls was just like being at church.
@@ -60,7 +126,7 @@ He attended New York University before switching to Georgetown University in Was
 <pre><code>(def sent-model (train-sentence-detector &quot;sentdetect.train&quot;))
 (def get-sentences (make-sentence-detector sent-model))
 (get-sentences &quot;Being at the polls was just like being at church. I didn't smell a drop of liquor, and we didn't have a bit of trouble.&quot;)</code></pre>
-<h3 id="tokenizer">Tokenizer</h3>
+<p>###Tokenizer</p>
 <p>To train the tokenizer, include one sentence per line. The Tokenizer will split on whitespace and explictly marked <SPLIT> tags. <SPLIT> tags are most useful for separating words from punctuation. As an exmaple:</p>
 <p>tokenizer.train</p>
 <pre><code>Being at the polls was just like being at church&lt;SPLIT&gt;.
@@ -70,7 +136,7 @@ The campaign leading to the election was not so quiet&lt;SPLIT&gt;.</code></pre>
 <pre><code> (def token-model (train-tokenizer &quot;tokenizer.train&quot;))
  (def tokenize (make-tokenizer token-model))
  (tokenize &quot;Being at the polls was just like being at church.&quot;)</code></pre>
-<h3 id="part-of-speech-tagger">Part Of Speech Tagger</h3>
+<p>###Part Of Speech Tagger</p>
 <p>To train a Part Of Speech tagger, provide one sentence per line. On each line every token should be separated by whitespace. The tokens themselves should be in <code>word_tag</code> format. Punctuation is tagged as itself. As an example:</p>
 <p>postagger.train</p>
 <pre><code> Being_VBG at_IN the_DT polls_NNS was_VBD just_RB like_IN being_VBG at_IN church_NN ._.
@@ -84,7 +150,7 @@ The campaign leading to the election was not so quiet&lt;SPLIT&gt;.</code></pre>
 <li><a href="http://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html">Succient summary of Treebank tags</a></li>
 <li><a href="ftp://ftp.cis.upenn.edu/pub/treebank/doc/tagguide.ps.gz">LDC Penn Treebank Tagging Guide</a></li>
 </ul>
-<h3 id="treebank-chunker">Treebank Chunker</h3>
+<p>###Treebank Chunker</p>
 <p>Chunking uses the training format specified in the <a href="http://www.cnts.ua.ac.be/conll2000/chunking/">CONLL 2000</a> shared task.</p>
 <p>Training the chunker requires placing each word on a separate line. Each line should have three whitespace-delimited columns. The first for the <code>word</code>, the second for the part-of-speech <code>tag</code>, and lastly a column for <code>chunk_tag</code>.</p>
 <p>The chunk tags start with a B or I followed by a dash and the type of the chunk. B delimits where a chunks begins, and I delimits where a chunk continues. If the chunk-tag is O, it means the word is not associated with any chunk.</p>
@@ -169,7 +235,7 @@ The campaign leading to the election was not so quiet&lt;SPLIT&gt;.</code></pre>
 <pre><code> (def chunk-model (train-treebank-chunker &quot;chunker.train&quot;))
  (def chunker (make-treebank-chunker chunk-model))
  (chunker (pos-tag (tokenize &quot;He reckons the current account deficit will narrow to only #1.8 billion in September.&quot;)))</code></pre>
-<h3 id="named-entity-finder">Named Entity finder</h3>
+<p>###Named Entity finder</p>
 <p>To train the named entity finder, provide a training file with a single sentence on each line. On these lines the entities should be delimited with sgml tags <START> name <END>. An example follows:</p>
 <p>named_org.train</p>
 <pre><code>  The departure of the &lt;START&gt; Giants &lt;END&gt; and the &lt;START&gt; Dodgers &lt;END&gt; to California left New York with only the &lt;START&gt; Yankees &lt;END&gt;.
@@ -178,7 +244,7 @@ The campaign leading to the election was not so quiet&lt;SPLIT&gt;.</code></pre>
 <pre><code>  (def namefinder-model (train-name-finder &quot;named_org.train&quot;))
   (def name-find (make-name-finder namefinder-model))
   (name-find (tokenize &quot;The Giants win the World Series.&quot;))</code></pre>
-<h3 id="treebank-parser">Treebank Parser</h3>
+<p>###Treebank Parser</p>
 <p>To train the treebank parser, provide a single sentence on each line in the treebank format. To get an idea of the format, either read <a href="http://www.ldc.upenn.edu/Catalog/docs/LDC99T42/prsguid1.pdf">Treebank Annotating Guidelines</a> or pass in some sentences with a previously trained model to get a feel.</p>
 <p>parser.train</p>
 <pre><code>  (TOP (S (NP-SBJ (DT Some) )(VP (VBP say) (NP (NNP November) ))(. .) ))
@@ -188,25 +254,27 @@ The campaign leading to the election was not so quiet&lt;SPLIT&gt;.</code></pre>
 <pre><code>  (def parser-model (train-treebank-parser &quot;parser.train&quot; &quot;headrules&quot;))
   (def treebank-parser (make-treebank-parser parser-model))
   (treebank-parser [&quot;This is a sentence .&quot;])</code></pre>
-<h3 id="pos-dictionary">POS Dictionary</h3>
+<p>###POS Dictionary</p>
 <p>A POS Dictionary, also referred to as a tagdict, is a data structure providing a means of determining which tags are valid for a particular word.</p>
 <p>The format for a tagdict is one word per line. This word should then be followed by a whitespace-delimited list of tags valid for that word.</p>
 <pre><code> word tag1 tag2 ....</code></pre>
 <p>This dictionary can be created with <code>build-posdictionary</code> and then passed to <code>train-pos-tagger</code></p>
 <pre><code> (def tagdict (build-posdictionary &quot;tagdict&quot;))
  (def pos-tag (make-pos-tagger (train-pos-tagger &quot;en&quot; &quot;postagger.train&quot; tagdict)))</code></pre>
-<h3 id="notes">Notes</h3>
+<p>###Notes</p>
 <p>If you get an Exception, you might just not have enough data.</p>
 <p>You can get the code <a href="https://github.com/zaxtax/clojure-opennlp">on github</a>. Good luck and may these tools help you create models better adapted towards your domain.</p>
+
+</div>
 
 <div id="disqus_thread"></div>
 <script>
     (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
         var d = document, s = d.createElement('script');
-        
+
         // IMPORTANT: Replace EXAMPLE with your forum shortname!
         s.src = 'https://convexoptimized.disqus.com/embed.js';
-        
+
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
@@ -217,5 +285,8 @@ The campaign leading to the election was not so quiet&lt;SPLIT&gt;.</code></pre>
         comments powered by Disqus.
     </a>
 
-    </body>
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
 </html>
