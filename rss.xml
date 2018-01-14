@@ -125,7 +125,6 @@ Someone want to Bayesian switchpoint model this? See first chapter of BMH <a hre
 </p>
 — Cam DP 👨🏽‍💻 (<span class="citation" data-cites="Cmrn_DP">@Cmrn_DP</span>) <a href="https://twitter.com/Cmrn_DP/status/924360674041585664?ref_src=twsrc%5Etfw">28 October 2017</a>
 </blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p>In turns out, he was totally right. Taking the <a href="http://docs.pymc.io/notebooks/getting_started.html#Case-study-2:-Coal-mining-disasters">Coal-mining disaster</a> example from the pymc3 quickstart guide and slightly modifying it is enough to do the job.</p>
 <p>First we load the data</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1">data <span class="op">=</span> pd.read_csv(<span class="st">&quot;simpsons_ratings.csv&quot;</span>)</a>
