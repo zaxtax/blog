@@ -96,6 +96,9 @@ function toggle(id) {
 	<li><a href="../../about/">About</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+    <li class="navbar-icon">
+      <a href="mailto:com.zinkov@rob"><i class="fa fa-envelope-o"></i></a>
+    </li>
 	<li class="navbar-icon">
       <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
     </li>
@@ -267,6 +270,9 @@ function toggle(id) {
 	<li><a href="../../about/">About</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+    <li class="navbar-icon">
+      <a href="mailto:com.zinkov@rob"><i class="fa fa-envelope-o"></i></a>
+    </li>
 	<li class="navbar-icon">
       <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
     </li>
@@ -605,6 +611,9 @@ function toggle(id) {
 	<li><a href="../../about/">About</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+    <li class="navbar-icon">
+      <a href="mailto:com.zinkov@rob"><i class="fa fa-envelope-o"></i></a>
+    </li>
 	<li class="navbar-icon">
       <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
     </li>
@@ -926,6 +935,9 @@ function toggle(id) {
 	<li><a href="../../about/">About</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+    <li class="navbar-icon">
+      <a href="mailto:com.zinkov@rob"><i class="fa fa-envelope-o"></i></a>
+    </li>
 	<li class="navbar-icon">
       <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
     </li>
@@ -1297,6 +1309,9 @@ function toggle(id) {
 	<li><a href="../../about/">About</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+    <li class="navbar-icon">
+      <a href="mailto:com.zinkov@rob"><i class="fa fa-envelope-o"></i></a>
+    </li>
 	<li class="navbar-icon">
       <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
     </li>
