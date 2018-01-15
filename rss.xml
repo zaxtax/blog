@@ -40,7 +40,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
 
 <link rel="stylesheet" href="../../css/minimal.css">
-<link rel="stylesheet" type="text/css" href="../../css/code4.css" />
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
 
 
 
@@ -211,7 +211,7 @@ Someone want to Bayesian switchpoint model this? See first chapter of BMH <a hre
 <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
 
 <link rel="stylesheet" href="../../css/minimal.css">
-<link rel="stylesheet" type="text/css" href="../../css/code4.css" />
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
 
 
 
@@ -549,7 +549,7 @@ function toggle(id) {
 <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
 
 <link rel="stylesheet" href="../../css/minimal.css">
-<link rel="stylesheet" type="text/css" href="../../css/code4.css" />
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
 
 
 
@@ -870,7 +870,7 @@ y &lt;~ uniform(x, 7)</code></pre>
 <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
 
 <link rel="stylesheet" href="../../css/minimal.css">
-<link rel="stylesheet" type="text/css" href="../../css/code4.css" />
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
 
 
 
@@ -1241,7 +1241,7 @@ function toggle(id) {
 <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
 
 <link rel="stylesheet" href="../../css/minimal.css">
-<link rel="stylesheet" type="text/css" href="../../css/code4.css" />
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
 
 
 
@@ -1364,11 +1364,7 @@ function toggle(id) {
 </ol>
 <p>Note, this isn’t a systems paper. APIs are not talked about and you won’t be seeing many diagrams about the different components of the system. The authors had a concrete problem and this was how they solved it.</p>
 <h2 id="more-to-come">More to come</h2>
-Think I missed a style? Tell me and I’ll add it.
-<div class="coda">
-<p><code> style :: Tok.GenLanguageDef ParserStream st Identity style = ITok.makeIndentLanguageDef $ Tok.LanguageDef { Tok.commentStart = “” , Tok.commentEnd = “” , Tok.nestedComments = True , Tok.identStart = letter &lt;|&gt; char ’_’ , Tok.identLetter = alphaNum &lt;|&gt; oneOf “_’&quot; , Tok.opStart = oneOf “!#<span class="math inline">\(%&amp;*+./&lt;=&gt;?@\\^|-~&quot;  , Tok.opLetter = oneOf &quot;!#\)</span>%&amp;*+./&lt;=&gt;?@\^|-~&quot; , Tok.caseSensitive = True , Tok.commentLine = “#” , Tok.reservedOpNames = [“:”] , Tok.reservedNames = [“def”, “add”] }</p>
-<p>lexer :: Tok.GenTokenParser ParserStream () Identity lexer = ITok.makeTokenParser style </code></p>
-</div>
+<p>Think I missed a style? Tell me and I’ll add it.</p>
 
 </div>
 
