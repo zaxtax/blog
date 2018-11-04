@@ -166,7 +166,7 @@ function toggle(id) {
 <p>With that we can decompose our KL on the prior into a mutual information term that encourages each <span class="math inline">\(q_\phi(\v{z} \mid \v{x})\)</span> we create to be near the average one <span class="math inline">\(\overline{q}_\phi(\v{z})\)</span> and a KL between this average distribution and the prior. The encourages the representation generated for <span class="math inline">\(\v{z}\)</span> to be useful.</p>
 <p><span class="math display">\[ \mathcal{L}(\phi) = \Expect_{q_\phi(\v{z} \mid \v{x})}[\log p(\v{x} \mid \v{z})] - \mathbb{I}_q(\v{x},\v{z})  - \text{KL}(\overline{q}_\phi(\v{z}) \;\|\; p(\v{z})) \]</span></p>
 <p>where</p>
-<p><span class="math display">\[ \mathbb{I}_q(\v{x},\v{z}) = \Expect_{p_d}\big[\Expect_{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x})\big] \big]
+<p><span class="math display">\[ \mathbb{I}_q(\v{x},\v{z}) \triangleq \Expect_{p_d}\big[\Expect_{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x})\big] \big]
 - \Expect_{\overline{q}_\phi(\v{z})} \log \overline{q}_\phi(\v{z}) \]</span></p>
 <h2 id="full-decomposition">Full decomposition</h2>
 <p>Of course with more aggressive rearranging, we can just have a term to encourage learning better latent representations. In a setting where you aren’t learning <span class="math inline">\(p\)</span> some of these terms are constant and can generally be ignored. I provide them here for completeness.</p>
