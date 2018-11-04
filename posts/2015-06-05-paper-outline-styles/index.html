@@ -45,7 +45,12 @@ function toggle(id) {
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
       TeX: {
-	  extensions: ["AMSmath.js"]
+          extensions: ["AMSmath.js"],
+          Macros: {
+              Expect: '{\\mathbb E}',
+              real: '{\\mathbb R}',
+              v: ['{\\mathbf{#1}}',1],
+    }
       },
       tex2jax: {
 	  inlineMath: [	 ["\\(","\\)"], ],

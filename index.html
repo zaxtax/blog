@@ -45,7 +45,12 @@ function toggle(id) {
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
       TeX: {
-	  extensions: ["AMSmath.js"]
+          extensions: ["AMSmath.js"],
+          Macros: {
+              Expect: '{\\mathbb E}',
+              real: '{\\mathbb R}',
+              v: ['{\\mathbf{#1}}',1],
+    }
       },
       tex2jax: {
 	  inlineMath: [	 ["\\(","\\)"], ],
@@ -102,6 +107,11 @@ function toggle(id) {
   <h2>Recent Posts</h2>
     
         <div class="item">
+        <h4><a href="./posts/2018-11-02-decomposing-the-elbo/">Decomposing the ELBO</a></h4>
+        <h5>2018-11-02</h5>
+        </div>
+    
+        <div class="item">
         <h4><a href="./posts/2017-11-03-simpsons-changepoint/">Calculating the golden-era of The Simpsons</a></h4>
         <h5>2017-11-03</h5>
         </div>
@@ -119,11 +129,6 @@ function toggle(id) {
         <div class="item">
         <h4><a href="./posts/2015-06-09-where-priors-come-from/">Where priors come from</a></h4>
         <h5>2015-06-09</h5>
-        </div>
-    
-        <div class="item">
-        <h4><a href="./posts/2015-06-05-paper-outline-styles/">Popular outlines for machine learning papers</a></h4>
-        <h5>2015-06-05</h5>
         </div>
     
 

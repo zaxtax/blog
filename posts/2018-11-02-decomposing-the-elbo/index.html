@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Decomposing the ELBO</title>
+        <style>
+
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
+
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+          extensions: ["AMSmath.js"],
+          Macros: {
+              Expect: '{\\mathbb E}',
+              real: '{\\mathbb R}',
+              v: ['{\\mathbf{#1}}',1],
+    }
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+	  styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+    <li class="navbar-icon">
+      <a href="mailto:com.zinkov@rob"><i class="fa fa-envelope-o"></i></a>
+    </li>
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>Decomposing the ELBO</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2018-11-02</h5>
+</div>
+
+<div class="text-left">
+
+<p>When performing Variational Inference, we are minimizing the KL divergence between some distribution we care about <span class="math inline">\(p(\v{z} \mid \v{x})\)</span> and some distribution that is easier to work with <span class="math inline">\(q_\phi(\v{z} \mid \v{x})\)</span>.</p>
+<p><span class="math display">\[
+\begin{align}
+	\phi^* &amp;= \underset{\phi}{\mathrm{argmin}}\, \text{KL}(q_\phi(\v{z} \mid \v{x}) \;\|\; p(\v{z} \mid \v{x})) \\
+		&amp;= \underset{\phi}{\mathrm{argmin}}\,
+  \mathbb{E}_{q_\phi(\v{z} \mid \v{x})}
+  \big[\log q_\phi(\v{z} \mid \v{x})
+  -
+  \log p(\v{z} \mid \v{x})
+  \big]\\
+\end{align}
+\]</span></p>
+<p>Now because the term <span class="math inline">\(p(\mathbf{z} \mid \mathbf{x})\)</span> usually isn’t tractable, we use a property of the log model evidence <span class="math inline">\(\log\, p(\v{x})\)</span> to define a different objective to optimize.</p>
+<p><span class="math display">\[
+\begin{align}
+\Expect_{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x}) - \log p(\v{z} \mid \v{x})\big]
+&amp;\geq \Expect_{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x}) - \log p(\v{z} \mid \v{x})\big] - \log p(\v{x}) \\
+&amp;= \Expect _{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x}) - \log p(\v{z} \mid \v{x}) - \log p(\v{x})\big] \\
+&amp;= \Expect _{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x}) - \log p(\v{x}, \v{z})\big]\\
+&amp;= -\mathcal{L}(\phi)
+\end{align}
+\]</span></p>
+<p>As <span class="math inline">\(\mathcal{L}(\phi) = \log p(\v{x}) - \text{KL}(q_\phi(\v{z} \mid \v{x}) \;\|\; p(\v{z} \mid \v{x}))\)</span> maximizing <span class="math inline">\(\mathcal{L}(\phi)\)</span> effectively minimizes our original KL.</p>
+<p>This term <span class="math inline">\(\mathcal{L}(\phi)\)</span> is sometimes called the ELBO.</p>
+<p>Due to various linearity properties of expectations, this can be rearranged into many different forms. This is useful to get an intuition for what can be going wrong when you learn <span class="math inline">\(q_\phi(\v{z} \mid \v{x})\)</span></p>
+<p>Now why does this matter? Couldn’t I just optimize this loss with SGD and be done? Well you can, but often making these tradeoffs in the loss function explicit means you can adjust it to favor different properties of your learned representation. Either by hand or automatically.</p>
+<h2 id="entropy-form">Entropy form</h2>
+<p>The classic form is in terms of an energy term and an entropy term. The first term encourages <span class="math inline">\(q\)</span> to put high probability mass wherever <span class="math inline">\(p\)</span> does so. The second term is encouraging that <span class="math inline">\(q\)</span> should as much as possible maximize it’s entropy and put probability mass everywhere it can.</p>
+<p><span class="math display">\[ \mathcal{L}(\phi) = \Expect_{q_\phi(\v{z} \mid \v{x})}[\log p(x, z)] + H(q_\phi(\v{z} \mid \v{x})) \]</span></p>
+<p>where</p>
+<p><span class="math display">\[ H(q_\phi(\v{z} \mid \v{x})) \triangleq - \Expect_{q_\phi(\v{z} \mid \v{x})}[\log q_\phi(\v{z} \mid \v{x})] \]</span></p>
+<h2 id="reconstruction-error-minus-kl-on-the-prior">Reconstruction error minus KL on the prior</h2>
+<p>More often these days, we describe the <span class="math inline">\(\mathcal{L}\)</span> in terms of a reconstruction term and KL on the prior for <span class="math inline">\(p\)</span>. Here the first term is saying we should put mass on latent codes <span class="math inline">\(\v{z}\)</span> from which <span class="math inline">\(p\)</span> is likely to generate our observation <span class="math inline">\(\v{x}\)</span>. The second term then suggests to this trade off with <span class="math inline">\(q\)</span> also being near the prior.</p>
+<p><span class="math display">\[ \mathcal{L}(\phi) = \Expect_{q_\phi(\v{z} \mid \v{x})}[\log p(\v{x} \mid \v{z})] - \text{KL}(q_\phi(\v{z} \mid \v{x}) \;\|\; p(\v{z}))\]</span></p>
+<h2 id="elbo-surgery">ELBO surgery</h2>
+<p>But there are other ways to think about this decomposition. Because we frequently use amortized inference to learn a <span class="math inline">\(\phi\)</span> useful for describing all kinds of <span class="math inline">\(q\)</span> distributions regardless of our choice of observation <span class="math inline">\(\v{x}\)</span>. We can talk about the average distribution we learn over our observed data, with <span class="math inline">\(p_d\)</span> being the empirical distribution of our observations.</p>
+<p><span class="math display">\[ \overline{q}_\phi(\v{z}) = \Expect_{p_d(\v{x})} \big[ q_\phi(\v{z} \mid \v{x}) \big] \]</span></p>
+<p>This is sometimes called the aggregate posterior.</p>
+<p>With that we can decompose our KL on the prior into a mutual information term that encourages each <span class="math inline">\(q_\phi(\v{z} \mid \v{x})\)</span> we create to be near the average one <span class="math inline">\(\overline{q}_\phi(\v{z})\)</span> and a KL between this average distribution and the prior. The encourages the representation generated for <span class="math inline">\(\v{z}\)</span> to be useful.</p>
+<p><span class="math display">\[ \mathcal{L}(\phi) = \Expect_{q_\phi(\v{z} \mid \v{x})}[\log p(\v{x} \mid \v{z})] - \mathbb{I}_q(\v{x},\v{z})  - \text{KL}(\overline{q}_\phi(\v{z}) \;\|\; p(\v{z})) \]</span></p>
+<p>where</p>
+<p><span class="math display">\[ \mathbb{I}_q(\v{x},\v{z}) = \Expect_{p_d}\big[\Expect_{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x})\big] \big]
+- \Expect_{\overline{q}_\phi(\v{z})} \log \overline{q}_\phi(\v{z}) \]</span></p>
+<h2 id="full-decomposition">Full decomposition</h2>
+<p>Of course with more aggressive rearranging, we can just have a term to encourage learning better latent representations. In a setting where you aren’t learning <span class="math inline">\(p\)</span> some of these terms are constant and can generally be ignored. I provide them here for completeness.</p>
+<p><span class="math display">\[ \mathcal{L}(\phi) = \Expect_{q_\phi(\v{z} \mid \v{x})}\left[ \log\frac{p(\v{x} \mid \v{z})}{p(\v{x})}
+- \log\frac{q_\phi(\v{z} \mid \v{x})}{q_\phi(\v{z})} \right]
+- \text{KL}(p_d(\v{x}) \;\|\; p(\v{x}))
+- \text{KL}(\overline{q}_\phi(\v{z}) \;\|\; p(\v{z}))\]</span></p>
+<p>I highly encourage checking out the Appendix of the Structured Disentangled Representations paper to see how much further this can be pushed.</p>
+<h2 id="final-notes">Final notes</h2>
+<p>Of course, all the above still holds in the VAE setting where <span class="math inline">\(p\)</span> becomes <span class="math inline">\(p_\theta\)</span> but I felt the notation was cluttered enough already. It’s kind of amazing how much insight can be gained through expanding and collapsing one loss function.</p>
+<h2 id="further-references">Further references</h2>
+<ul>
+<li><a href="http://approximateinference.org/accepted/HoffmanJohnson2016.pdf">ELBO Surgery: yet another way to carve up the variational evidence lower bound</a></li>
+<li><a href="https://arxiv.org/pdf/1711.00464.pdf">Fixing a Broken ELBO</a></li>
+<li><a href="https://arxiv.org/pdf/1804.02086.pdf">Structured Disentangled Representations</a></li>
+<li><a href="https://arxiv.org/abs/1511.06349">Generating Sentences from a Continuous Space</a></li>
+</ul>
+
+</div>
+
+<div id="disqus_thread"></div>
+<script>
+    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+        var d = document, s = d.createElement('script');
+
+        // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        s.src = 'https://convexoptimized.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view the 
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+        comments powered by Disqus.
+    </a>
+</noscript>
+
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
+</html>

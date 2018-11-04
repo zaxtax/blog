@@ -45,7 +45,12 @@ function toggle(id) {
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
       TeX: {
-	  extensions: ["AMSmath.js"]
+          extensions: ["AMSmath.js"],
+          Macros: {
+              Expect: '{\\mathbb E}',
+              real: '{\\mathbb R}',
+              v: ['{\\mathbf{#1}}',1],
+    }
       },
       tex2jax: {
 	  inlineMath: [	 ["\\(","\\)"], ],
@@ -100,6 +105,11 @@ function toggle(id) {
   <main>
   <div class="item">
   <h2>All posts</h2>
+    
+        <div class="item">
+        <h4><a href="../posts/2018-11-02-decomposing-the-elbo/">Decomposing the ELBO</a></h4>
+        <h5>2018-11-02</h5>
+        </div>
     
         <div class="item">
         <h4><a href="../posts/2017-11-03-simpsons-changepoint/">Calculating the golden-era of The Simpsons</a></h4>
