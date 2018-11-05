@@ -15,6 +15,7 @@
             --accent: #002147;
             --border-width: 5px ;
 	  }
+	  
         </style>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
@@ -50,7 +51,7 @@ function toggle(id) {
               Expect: '{\\mathbb E}',
               real: '{\\mathbb R}',
               v: ['{\\mathbf{#1}}',1],
-    }
+          }
       },
       tex2jax: {
 	  inlineMath: [	 ["\\(","\\)"], ],
@@ -58,7 +59,7 @@ function toggle(id) {
       },
       displayAlign: 'center', // Change this to 'center' to center equations.
       "HTML-CSS": {
-	  styles: {'.MathJax_Display': {"margin": 4}}
+          styles: {'.MathJax_Display': {"margin": 4}}
       }
   });
 </script>
@@ -128,14 +129,14 @@ function toggle(id) {
 <p><span class="math display">\[
 \begin{align}
 \Expect_{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x}) - \log p(\v{z} \mid \v{x})\big]
-&amp;\geq \Expect_{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x}) - \log p(\v{z} \mid \v{x})\big] - \log p(\v{x}) \\
+&amp;\leq \Expect_{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x}) - \log p(\v{z} \mid \v{x})\big] - \log p(\v{x}) \\
 &amp;= \Expect _{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x}) - \log p(\v{z} \mid \v{x}) - \log p(\v{x})\big] \\
 &amp;= \Expect _{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x}) - \log p(\v{x}, \v{z})\big]\\
 &amp;= -\mathcal{L}(\phi)
 \end{align}
 \]</span></p>
 <p>As <span class="math inline">\(\mathcal{L}(\phi) = \log p(\v{x}) - \text{KL}(q_\phi(\v{z} \mid \v{x}) \;\|\; p(\v{z} \mid \v{x}))\)</span> maximizing <span class="math inline">\(\mathcal{L}(\phi)\)</span> effectively minimizes our original KL.</p>
-<p>This term <span class="math inline">\(\mathcal{L}(\phi)\)</span> is sometimes called the ELBO.</p>
+<p>This term <span class="math inline">\(\mathcal{L}(\phi)\)</span> is sometimes called the ELBO, because the KL term must always be greater-than or equal to zero, <span class="math inline">\(\mathcal{L}(\phi)\)</span> can be seen as a lower-bound estimate of <span class="math inline">\(\log p(\v{x})\)</span>.</p>
 <p>Due to various linearity properties of expectations, this can be rearranged into many different forms. This is useful to get an intuition for what can be going wrong when you learn <span class="math inline">\(q_\phi(\v{z} \mid \v{x})\)</span></p>
 <p>Now why does this matter? Couldn’t I just optimize this loss with SGD and be done? Well you can, but often if something is going wrong it will show up as one or some terms being unusually off. By making these tradeoffs in the loss function explicit means you can adjust it to favor different properties of your learned representation. Either by hand or automatically.</p>
 <h2 id="entropy-form">Entropy form</h2>
