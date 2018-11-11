@@ -149,7 +149,7 @@ function toggle(id) {
 \end{align}
 \]</span></p>
 <p>As <span class="math inline">\(\mathcal{L}(\phi) = \log p(\v{x}) - \text{KL}(q_\phi(\v{z} \mid \v{x}) \;\|\; p(\v{z} \mid \v{x}))\)</span> maximizing <span class="math inline">\(\mathcal{L}(\phi)\)</span> effectively minimizes our original KL.</p>
-<p>This term <span class="math inline">\(\mathcal{L}(\phi)\)</span> is sometimes called the ELBO, because the KL term must always be greater-than or equal to zero, <span class="math inline">\(\mathcal{L}(\phi)\)</span> can be seen as a lower-bound estimate of <span class="math inline">\(\log p(\v{x})\)</span>.</p>
+<p>This term <span class="math inline">\(\mathcal{L}(\phi)\)</span> is sometimes called the evidence lower-bound or ELBO, because the KL term must always be greater-than or equal to zero, <span class="math inline">\(\mathcal{L}(\phi)\)</span> can be seen as a lower-bound estimate of <span class="math inline">\(\log p(\v{x})\)</span>.</p>
 <p>Due to various linearity properties of expectations, this can be rearranged into many different forms. This is useful to get an intuition for what can be going wrong when you learn <span class="math inline">\(q_\phi(\v{z} \mid \v{x})\)</span></p>
 <p>Now why does this matter? Couldn’t I just optimize this loss with SGD and be done? Well you can, but often if something is going wrong it will show up as one or some terms being unusually off. By making these tradeoffs in the loss function explicit means you can adjust it to favor different properties of your learned representation. Either by hand or automatically.</p>
 <h2 id="entropy-form">Entropy form</h2>
