@@ -7,8 +7,295 @@
         <description><![CDATA[Various ruminations on machine learning and mathematics]]></description>
         <atom:link href="http://zinkov.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Fri, 02 Nov 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Fri, 21 Dec 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>NeurIPS 2018: Papers to check out</title>
+    <link>http://zinkov.com/posts/2018-12-21-nips-reviews/index.html</link>
+    <description><![CDATA[<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NeurIPS 2018: Papers to check out</title>
+        <style>
+
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
+
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+	  
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+          extensions: ["AMSmath.js"],
+          Macros: {
+              Expect: '{\\mathbb E}',
+              real: '{\\mathbb R}',
+              v: ['{\\mathbf{#1}}',1],
+          }
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+          styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+    <li class="navbar-icon">
+      <a href="mailto:com.zinkov@rob"><i class="fa fa-envelope-o"></i></a>
+    </li>
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>NeurIPS 2018: Papers to check out</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2018-12-21</h5>
+</div>
+
+<div class="text-left">
+
+<p>It’s been a long time since I’ve done one of these, so below are some of the papers I found exciting at this past NeurIPS. One notable thing is as the conference has gotten larger is there are simply more papers being presented. Some people worry that in becoming a gigantic conference the quality is declining but thanks to the great efforts of community, more people has meant more interesting ideas and more great papers to read.</p>
+<h4 id="approximate-inference"><a href="#approx">Approximate Inference</a></h4>
+<h4 id="program-synthesis"><a href="#progsynth">Program Synthesis</a></h4>
+<h4 id="applications"><a href="#app">Applications</a></h4>
+<h4 id="misc"><a href="#misc">Misc</a></h4>
+<hr />
+<h2 id="conference-papers">Conference papers:</h2>
+<a name="approx">
+<h3>
+Approximate Inference
+</h3>
+<p></a></p>
+<p><strong>Implicit Reparameterization Gradients</strong></p>
+<p><em>Mikhail Figurnov, Shakir Mohamed, Andriy Mnih</em></p>
+<p>By providing a simple and efficient way of computing low-variance gradients of continuous random variables, the reparameterization trick has become the technique of choice for training a variety of latent variable models. However, it is not applicable to a number of important continuous distributions. We introduce an alternative approach to computing reparameterization gradients based on implicit differentiation and demonstrate its broader applicability by applying it to Gamma, Beta, Dirichlet, and von Mises distributions, which cannot be used with the classic reparameterization trick. Our experiments show that the proposed approach is faster and more accurate than the existing gradient estimators for these distributions.</p>
+<p><strong>Random Feature Stein Discrepancies</strong></p>
+<p><em>Jonathan Huggins, Lester Mackey</em></p>
+<p>Computable Stein discrepancies have been deployed for a variety of applications, ranging from sampler selection in posterior inference to approximate Bayesian inference to goodness-of-fit testing. Existing convergence-determining Stein discrepancies admit strong theoretical guarantees but suffer from a computational cost that grows quadratically in the sample size. While linear-time Stein discrepancies have been proposed for goodness-of-fit testing, they exhibit avoidable degradations in testing power—even when power is explicitly optimized. To address these shortcomings, we introduce feature Stein discrepancies (ΦSDs), a new family of quality measures that can be cheaply approximated using importance sampling. We show how to construct ΦSDs that provably determine the convergence of a sample to its target and develop high-accuracy approximations—random ΦSDs (RΦSDs)—which are computable in near-linear time. In our experiments with sampler selection for approximate posterior inference and goodness-of-fit testing, RΦSDs perform as well or better than quadratic-time KSDs while being orders of magnitude faster to compute.</p>
+<p><strong>Wasserstein Variational Inference</strong></p>
+<p><em>Luca Ambrogioni, Umut Güçlü, Yağmur Güçlütürk, Max Hinne, Marcel A. J. van Gerven, Eric Maris</em></p>
+<p>This paper introduces Wasserstein variational inference, a new form of approximate Bayesian inference based on optimal transport theory. Wasserstein variational inference uses a new family of divergences that includes both f-divergences and the Wasserstein distance as special cases. The gradients of the Wasserstein variational loss are obtained by backpropagating through the Sinkhorn iterations. This technique results in a very stable likelihood-free training method that can be used with implicit distributions and probabilistic programs. Using the Wasserstein variational inference framework, we introduce several new forms of autoencoders and test their robustness and performance against existing variational autoencoding techniques.</p>
+<p><strong>DeepProbLog: Neural Probabilistic Logic Programming</strong></p>
+<p><em>Robin Manhaeve, Sebastijan Dumancic, Angelika Kimmig, Thomas Demeester, Luc De Raedt</em></p>
+<p>We introduce DeepProbLog, a probabilistic logic programming language that incorporates deep learning by means of neural predicates. We show how existing inference and learning techniques can be adapted for the new language. Our experiments demonstrate that DeepProbLog supports (i) both symbolic and subsymbolic representations and inference, (ii) program induction, (iii) probabilistic (logic) programming, and (iv) (deep) learning from examples. To the best of our knowledge, this work is the first to propose a framework where general-purpose neural networks and expressive probabilistic-logical modeling and reasoning are integrated in a way that exploits the full expressiveness and strengths of both worlds and can be trained end-to-end based on examples.</p>
+<p><strong>Meta-Learning MCMC Proposals</strong></p>
+<p><em>Tongzhou Wang, Yi Wu, Dave Moore, Stuart J. Russell</em></p>
+<p>Effective implementations of sampling-based probabilistic inference often require manually constructed, model-specific proposals. Inspired by recent progresses in meta-learning for training learning agents that can generalize to unseen environments, we propose a meta-learning approach to building effective and generalizable MCMC proposals. We parametrize the proposal as a neural network to provide fast approximations to block Gibbs conditionals. The learned neural proposals generalize to occurrences of common structural motifs across different models, allowing for the construction of a library of learned inference primitives that can accelerate inference on unseen models with no model-specific training required. We explore several applications including open-universe Gaussian mixture models, in which our learned proposals outperform a hand-tuned sampler, and a real-world named entity recognition task, in which our sampler yields higher final F1 scores than classical single-site Gibbs sampling.</p>
+<p><strong>Importance Weighting and Variational Inference</strong></p>
+<p><em>Justin Domke, Daniel R. Sheldon</em></p>
+<p>Recent work used importance sampling ideas for better variational bounds on likelihoods. We clarify the applicability of these ideas to pure probabilistic inference, by showing the resulting Importance Weighted Variational Inference (IWVI) technique is an instance of augmented variational inference, thus identifying the looseness in previous work. Experiments confirm IWVI’s practicality for probabilistic inference. As a second contribution, we investigate inference with elliptical distributions, which improves accuracy in low dimensions, and convergence in high dimensions.</p>
+<p><strong>GILBO: One Metric to Measure Them All</strong></p>
+<p><em>Alexander A. Alemi, Ian Fischer</em></p>
+<p>We propose a simple, tractable lower bound on the mutual information contained in the joint generative density of any latent variable generative model: the GILBO (Generative Information Lower BOund). It offers a data-independent measure of the complexity of the learned latent variable description, giving the log of the effective description length. It is well-defined for both VAEs and GANs. We compute the GILBO for 800 GANs and VAEs each trained on four datasets (MNIST, FashionMNIST, CIFAR-10 and CelebA) and discuss the results.</p>
+<p><strong>Graphical model inference: Sequential Monte Carlo meets deterministic approximations</strong></p>
+<p><em>Fredrik Lindsten, Jouni Helske, Matti Vihola</em></p>
+<p>Approximate inference in probabilistic graphical models (PGMs) can be grouped into deterministic methods and Monte-Carlo-based methods. The former can often provide accurate and rapid inferences, but are typically associated with biases that are hard to quantify. The latter enjoy asymptotic consistency, but can suffer from high computational costs. In this paper we present a way of bridging the gap between deterministic and stochastic inference. Specifically, we suggest an efficient sequential Monte Carlo (SMC) algorithm for PGMs which can leverage the output from deterministic inference methods. While generally applicable, we show explicitly how this can be done with loopy belief propagation, expectation propagation, and Laplace approximations. The resulting algorithm can be viewed as a post-correction of the biases associated with these methods and, indeed, numerical results show clear improvements over the baseline deterministic methods as well as over “plain” SMC.</p>
+<p><strong>A Bayesian Nonparametric View on Count-Min Sketch</strong></p>
+<p><em>Diana Cai, Michael Mitzenmacher, Ryan P. Adams</em></p>
+<p>The count-min sketch is a time- and memory-efficient randomized data structure that provides a point estimate of the number of times an item has appeared in a data stream. The count-min sketch and related hash-based data structures are ubiquitous in systems that must track frequencies of data such as URLs, IP addresses, and language n-grams. We present a Bayesian view on the count-min sketch, using the same data structure, but providing a posterior distribution over the frequencies that characterizes the uncertainty arising from the hash-based approximation. In particular, we take a nonparametric approach and consider tokens generated from a Dirichlet process (DP) random measure, which allows for an unbounded number of unique tokens. Using properties of the DP, we show that it is possible to straightforwardly compute posterior marginals of the unknown true counts and that the modes of these marginals recover the count-min sketch estimator, inheriting the associated probabilistic guarantees. Using simulated data with known ground truth, we investigate the properties of these estimators. Lastly, we also study a modified problem in which the observation stream consists of collections of tokens (i.e., documents) arising from a random measure drawn from a stable beta process, which allows for power law scaling behavior in the number of unique tokens.</p>
+<p><strong>Autoconj: Recognizing and Exploiting Conjugacy Without a Domain-Specific Language</strong></p>
+<p><em>Matthew D. Hoffman, Matthew J. Johnson, Dustin Tran</em></p>
+<p>Deriving conditional and marginal distributions using conjugacy relationships can be time consuming and error prone. In this paper, we propose a strategy for automating such derivations. Unlike previous systems which focus on relationships between pairs of random variables, our system (which we call Autoconj) operates directly on Python functions that compute log-joint distribution functions. Autoconj provides support for conjugacy-exploiting algorithms in any Python-embedded PPL. This paves the way for accelerating development of novel inference algorithms and structure-exploiting modeling strategies. The package can be downloaded at <a href="https://github.com/google-research/autoconj" class="uri">https://github.com/google-research/autoconj</a>.</p>
+<p><strong>Robust Hypothesis Testing Using Wasserstein Uncertainty Sets</strong></p>
+<p><em>Rui Gao, Liyan Xie, Yao Xie, Huan Xu</em></p>
+<p>We develop a novel computationally efficient and general framework for robust hypothesis testing. The new framework features a new way to construct uncertainty sets under the null and the alternative distributions, which are sets centered around the empirical distribution defined via Wasserstein metric, thus our approach is data-driven and free of distributional assumptions. We develop a convex safe approximation of the minimax formulation and show that such approximation renders a nearly-optimal detector among the family of all possible tests. By exploiting the structure of the least favorable distribution, we also develop a tractable reformulation of such approximation, with complexity independent of the dimension of observation space and can be nearly sample-size-independent in general. Real-data example using human activity data demonstrated the excellent performance of the new robust detector.</p>
+<p><strong>Geometrically Coupled Monte Carlo Sampling</strong></p>
+<p><em>Mark Rowland, Krzysztof M. Choromanski, François Chalus, Aldo Pacchiano, Tamas Sarlos, Richard E. Turner, Adrian Weller</em></p>
+<p>Monte Carlo sampling in high-dimensional, low-sample settings is important in many machine learning tasks. We improve current methods for sampling in Euclidean spaces by avoiding independence, and instead consider ways to couple samples. We show fundamental connections to optimal transport theory, leading to novel sampling algorithms, and providing new theoretical grounding for existing strategies. We compare our new strategies against prior methods for improving sample efficiency, including QMC, by studying discrepancy. We explore our findings empirically, and observe benefits of our sampling schemes for reinforcement learning and generative modelling.</p>
+<p><strong>Assessing Generative Models via Precision and Recall</strong></p>
+<p><em>Mehdi S. M. Sajjadi, Olivier Bachem, Mario Lucic, Olivier Bousquet, Sylvain Gelly</em></p>
+<p>Recent advances in generative modeling have led to an increased interest in the study of statistical divergences as means of model comparison. Commonly used evaluation methods, such as the Frechet Inception Distance (FID), correlate well with the perceived quality of samples and are sensitive to mode dropping. However, these metrics are unable to distinguish between different failure cases since they only yield one-dimensional scores. We propose a novel definition of precision and recall for distributions which disentangles the divergence into two separate dimensions. The proposed notion is intuitive, retains desirable properties, and naturally leads to an efficient algorithm that can be used to evaluate generative models. We relate this notion to total variation as well as to recent evaluation metrics such as Inception Score and FID. To demonstrate the practical utility of the proposed approach we perform an empirical study on several variants of Generative Adversarial Networks and Variational Autoencoders. In an extensive set of experiments we show that the proposed metric is able to disentangle the quality of generated samples from the coverage of the target distribution.</p>
+<p><strong>DAGs with NO TEARS: Continuous Optimization for Structure Learning</strong></p>
+<p><em>Xun Zheng, Bryon Aragam, Pradeep K. Ravikumar, Eric P. Xing</em></p>
+<p>Estimating the structure of directed acyclic graphs (DAGs, also known as Bayesian networks) is a challenging problem since the search space of DAGs is combinatorial and scales superexponentially with the number of nodes. Existing approaches rely on various local heuristics for enforcing the acyclicity constraint. In this paper, we introduce a fundamentally different strategy: we formulate the structure learning problem as a purely continuous optimization problem over real matrices that avoids this combinatorial constraint entirely. This is achieved by a novel characterization of acyclicity that is not only smooth but also exact. The resulting problem can be efficiently solved by standard numerical algorithms, which also makes implementation effortless. The proposed method outperforms existing ones, without imposing any structural assumptions on the graph such as bounded treewidth or in-degree.</p>
+<p><strong>Doubly Robust Bayesian Inference for Non-Stationary Streaming Data with β-Divergences</strong></p>
+<p><em>Jeremias Knoblauch, Jack E. Jewson, Theodoros Damoulas</em></p>
+<p>We present the very first robust Bayesian Online Changepoint Detection algorithm through General Bayesian Inference (GBI) with β-divergences. The resulting inference procedure is doubly robust for both the predictive and the changepoint (CP) posterior, with linear time and constant space complexity. We provide a construction for exponential models and demonstrate it on the Bayesian Linear Regression model. In so doing, we make two additional contributions: Firstly, we make GBI scalable using Structural Variational approximations that are exact as β→0. Secondly, we give a principled way of choosing the divergence parameter β by minimizing expected predictive loss on-line. Reducing False Discovery Rates of from up to 99% to 0% on real world data, this offers the state of the art.</p>
+<p><strong>The promises and pitfalls of Stochastic Gradient Langevin Dynamics</strong></p>
+<p><em>Nicolas Brosse, Alain Durmus, Eric Moulines</em></p>
+<p>Stochastic Gradient Langevin Dynamics (SGLD) has emerged as a key MCMC algorithm for Bayesian learning from large scale datasets. While SGLD with decreasing step sizes converges weakly to the posterior distribution, the algorithm is often used with a constant step size in practice and has demonstrated spectacular successes in machine learning tasks. The current practice is to set the step size inversely proportional to N where N is the number of training samples. As N becomes large, we show that the SGLD algorithm has an invariant probability measure which significantly departs from the target posterior and behaves like as Stochastic Gradient Descent (SGD). This difference is inherently due to the high variance of the stochastic gradients. Several strategies have been suggested to reduce this effect; among them, SGLD Fixed Point (SGLDFP) uses carefully designed control variates to reduce the variance of the stochastic gradients. We show that SGLDFP gives approximate samples from the posterior distribution, with an accuracy comparable to the Langevin Monte Carlo (LMC) algorithm for a computational cost sublinear in the number of data points. We provide a detailed analysis of the Wasserstein distances between LMC, SGLD, SGLDFP and SGD and explicit expressions of the means and covariance matrices of their invariant distributions. Our findings are supported by limited numerical experiments.</p>
+<p><strong>Reparameterization Gradient for Non-differentiable Models</strong></p>
+<p><em>Wonyeol Lee, Hangyeol Yu, Hongseok Yang</em></p>
+<p>We present a new algorithm for stochastic variational inference that targets at models with non-differentiable densities. One of the key challenges in stochastic variational inference is to come up with a low-variance estimator of the gradient of a variational objective. We tackle the challenge by generalizing the reparameterization trick, one of the most effective techniques for addressing the variance issue for differentiable models, so that the trick works for non-differentiable models as well. Our algorithm splits the space of latent variables into regions where the density of the variables is differentiable, and their boundaries where the density may fail to be differentiable. For each differentiable region, the algorithm applies the standard reparameterization trick and estimates the gradient restricted to the region. For each potentially non-differentiable boundary, it uses a form of manifold sampling and computes the direction for variational parameters that, if followed, would increase the boundary’s contribution to the variational objective. The sum of all the estimates becomes the gradient estimate of our algorithm. Our estimator enjoys the reduced variance of the reparameterization gradient while remaining unbiased even for non-differentiable models. The experiments with our preliminary implementation confirm the benefit of reduced variance and unbiasedness.</p>
+<p><strong>Improving Explorability in Variational Inference with Annealed Variational Objectives</strong></p>
+<p><em>Chin-Wei Huang, Shawn Tan, Alexandre Lacoste, Aaron C. Courville</em></p>
+<p>Despite the advances in the representational capacity of approximate distributions for variational inference, the optimization process can still limit the density that is ultimately learned. We demonstrate the drawbacks of biasing the true posterior to be unimodal, and introduce Annealed Variational Objectives (AVO) into the training of hierarchical variational methods. Inspired by Annealed Importance Sampling, the proposed method facilitates learning by incorporating energy tempering into the optimization objective. In our experiments, we demonstrate our method’s robustness to deterministic warm up, and the benefits of encouraging exploration in the latent space.</p>
+<a name="progsynth">
+<h3>
+Program Synthesis
+</h3>
+<p></a></p>
+<p><strong>Neural Guided Constraint Logic Programming for Program Synthesis</strong></p>
+<p><em>Lisa Zhang, Gregory Rosenblatt, Ethan Fetaya, Renjie Liao, William Byrd, Matthew Might, Raquel Urtasun, Richard Zemel</em></p>
+<p>Synthesizing programs using example input/outputs is a classic problem in artificial intelligence. We present a method for solving Programming By Example (PBE) problems by using a neural model to guide the search of a constraint logic programming system called miniKanren. Crucially, the neural model uses miniKanren’s internal representation as input; miniKanren represents a PBE problem as recursive constraints imposed by the provided examples. We explore Recurrent Neural Network and Graph Neural Network models. We contribute a modified miniKanren, drivable by an external agent, available at <a href="https://github.com/xuexue/neuralkanren" class="uri">https://github.com/xuexue/neuralkanren</a>. We show that our neural-guided approach using constraints can synthesize programs faster in many cases, and importantly, can generalize to larger problems.</p>
+<p><strong>Learning to Infer Graphics Programs from Hand-Drawn Images</strong></p>
+<p><em>Kevin Ellis, Daniel Ritchie, Armando Solar-Lezama, Josh Tenenbaum</em></p>
+<p>We introduce a model that learns to convert simple hand drawings into graphics programs written in a subset of .~The model combines techniques from deep learning and program synthesis. We learn a convolutional neural network that proposes plausible drawing primitives that explain an image. These drawing primitives are a specification (spec) of what the graphics program needs to draw. We learn a model that uses program synthesis techniques to recover a graphics program from that spec. These programs have constructs like variable bindings, iterative loops, or simple kinds of conditionals. With a graphics program in hand, we can correct errors made by the deep network and extrapolate drawings.</p>
+<p><strong>Learning Libraries of Subroutines for Neurally–Guided Bayesian Program Induction</strong></p>
+<p><em>Kevin Ellis, Lucas Morales, Mathias Sablé-Meyer, Armando Solar-Lezama, Josh Tenenbaum</em></p>
+<p>Successful approaches to program induction require a hand-engineered domain-specific language (DSL), constraining the space of allowed programs and imparting prior knowledge of the domain. We contribute a program induction algorithm that learns a DSL while jointly training a neural network to efficiently search for programs in the learned DSL. We use our model to synthesize functions on lists, edit text, and solve symbolic regression problems, showing how the model learns a domain-specific library of program components for expressing solutions to problems in the domain.</p>
+<p><strong>HOUDINI: Lifelong Learning as Program Synthesis</strong></p>
+<p><em>Lazar Valkov, Dipak Chaudhari, Akash Srivastava, Charles Sutton, Swarat Chaudhuri</em></p>
+<p>We present a neurosymbolic framework for the lifelong learning of algorithmic tasks that mix perception and procedural reasoning. Reusing high-level concepts across domains and learning complex procedures are key challenges in lifelong learning. We show that a program synthesis approach that combines gradient descent with combinatorial search over programs can be a more effective response to these challenges than purely neural methods. Our framework, called HOUDINI, represents neural networks as strongly typed, differentiable functional programs that use symbolic higher-order combinators to compose a library of neural functions. Our learning algorithm consists of: (1) a symbolic program synthesizer that performs a type-directed search over parameterized programs, and decides on the library functions to reuse, and the architectures to combine them, while learning a sequence of tasks; and (2) a neural module that trains these programs using stochastic gradient descent. We evaluate HOUDINI on three benchmarks that combine perception with the algorithmic tasks of counting, summing, and shortest-path computation. Our experiments show that HOUDINI transfers high-level concepts more effectively than traditional transfer learning and progressive neural networks, and that the typed representation of networks signiﬁcantly accelerates the search.</p>
+<p><strong>Neural Code Comprehension: A Learnable Representation of Code Semantics</strong></p>
+<p><em>Tal Ben-Nun, Alice Shoshana Jakobovits, Torsten Hoefler</em></p>
+<p>With the recent success of embeddings in natural language processing, research has been conducted into applying similar methods to code analysis. Most works attempt to process the code directly or use a syntactic tree representation, treating it like sentences written in a natural language. However, none of the existing methods are sufficient to comprehend program semantics robustly, due to structural features such as function calls, branching, and interchangeable order of statements. In this paper, we propose a novel processing technique to learn code semantics, and apply it to a variety of program analysis tasks. In particular, we stipulate that a robust distributional hypothesis of code applies to both human- and machine-generated programs. Following this hypothesis, we define an embedding space, inst2vec, based on an Intermediate Representation (IR) of the code that is independent of the source programming language. We provide a novel definition of contextual flow for this IR, leveraging both the underlying data- and control-flow of the program. We then analyze the embeddings qualitatively using analogies and clustering, and evaluate the learned representation on three different high-level tasks. We show that even without fine-tuning, a single RNN architecture and fixed inst2vec embeddings outperform specialized approaches for performance prediction (compute device mapping, optimal thread coarsening); and algorithm classification from raw code (104 classes), where we set a new state-of-the-art.</p>
+<p><strong>Tree-to-tree Neural Networks for Program Translation</strong></p>
+<p><em>Xinyun Chen, Chang Liu, Dawn Song</em></p>
+<p>Program translation is an important tool to migrate legacy code in one language into an ecosystem built in a different language. In this work, we are the first to employ deep neural networks toward tackling this problem. We observe that program translation is a modular procedure, in which a sub-tree of the source tree is translated into the corresponding target sub-tree at each step. To capture this intuition, we design a tree-to-tree neural network to translate a source tree into a target one. Meanwhile, we develop an attention mechanism for the tree-to-tree model, so that when the decoder expands one non-terminal in the target tree, the attention mechanism locates the corresponding sub-tree in the source tree to guide the expansion of the decoder. We evaluate the program translation capability of our tree-to-tree model against several state-of-the-art approaches. Compared against other neural translation models, we observe that our approach is consistently better than the baselines with a margin of up to 15 points. Further, our approach can improve the previous state-of-the-art program translation approaches by a margin of 20 points on the translation of real-world projects.</p>
+<p><strong>Improving Neural Program Synthesis with Inferred Execution Traces</strong></p>
+<p><em>Richard Shin, Illia Polosukhin, Dawn Song</em></p>
+<p>The task of program synthesis, or automatically generating programs that are consistent with a provided specification, remains a challenging task in artificial intelligence. As in other fields of AI, deep learning-based end-to-end approaches have made great advances in program synthesis. However, more so than other fields such as computer vision, program synthesis provides greater opportunities to explicitly exploit structured information such as execution traces, which contain a superset of the information input/output pairs. While they are highly useful for program synthesis, as execution traces are more difficult to obtain than input/output pairs, we use the insight that we can split the process into two parts: infer the trace from the input/output example, then infer the program from the trace. This simple modification leads to state-of-the-art results in program synthesis in the Karel domain, improving accuracy to 81.3% from the 77.12% of prior work.</p>
+<p><strong>Memory Augmented Policy Optimization for Program Synthesis and Semantic Parsing</strong></p>
+<p><em>Chen Liang, Mohammad Norouzi, Jonathan Berant, Quoc V. Le, Ni Lao</em></p>
+<p>We present Memory Augmented Policy Optimization (MAPO), a simple and novel way to leverage a memory buffer of promising trajectories to reduce the variance of policy gradient estimate. MAPO is applicable to deterministic environments with discrete actions, such as structured prediction and combinatorial optimization tasks. We express the expected return objective as a weighted sum of two terms: an expectation over the high-reward trajectories inside the memory buffer, and a separate expectation over trajectories outside the buffer. To make an efficient algorithm of MAPO, we propose: (1) memory weight clipping to accelerate and stabilize training; (2) systematic exploration to discover high-reward trajectories; (3) distributed sampling from inside and outside of the memory buffer to scale up training. MAPO improves the sample efficiency and robustness of policy gradient, especially on tasks with sparse rewards. We evaluate MAPO on weakly supervised program synthesis from natural language (semantic parsing). On the WikiTableQuestions benchmark, we improve the state-of-the-art by 2.6%, achieving an accuracy of 46.3%. On the WikiSQL benchmark, MAPO achieves an accuracy of 74.9% with only weak supervision, outperforming several strong baselines with full supervision. Our source code is available at <a href="https://goo.gl/TXBp4e" class="uri">https://goo.gl/TXBp4e</a></p>
+<p><strong>Automatic Program Synthesis of Long Programs with a Learned Garbage Collector</strong></p>
+<p><em>Amit Zohar, Lior Wolf</em></p>
+<p>We consider the problem of generating automatic code given sample input-output pairs. We train a neural network to map from the current state and the outputs to the program’s next statement. The neural network optimizes multiple tasks concurrently: the next operation out of a set of high level commands, the operands of the next statement, and which variables can be dropped from memory. Using our method we are able to create programs that are more than twice as long as existing state-of-the-art solutions, while improving the success rate for comparable lengths, and cutting the run-time by two orders of magnitude. Our code, including an implementation of various literature baselines, is publicly available at <a href="https://github.com/amitz25/PCCoder" class="uri">https://github.com/amitz25/PCCoder</a></p>
+<p><strong>Learning Loop Invariants for Program Verification</strong></p>
+<p><em>Xujie Si, Hanjun Dai, Mukund Raghothaman, Mayur Naik, Le Song</em></p>
+<p>A fundamental problem in program verification concerns inferring loop invariants. The problem is undecidable and even practical instances are challenging. Inspired by how human experts construct loop invariants, we propose a reasoning framework Code2Inv that constructs the solution by multi-step decision making and querying an external program graph memory block. By training with reinforcement learning, Code2Inv captures rich program features and avoids the need for ground truth solutions as supervision. Compared to previous learning tasks in domains with graph-structured data, it addresses unique challenges, such as a binary objective function and an extremely sparse reward that is given by an automated theorem prover only after the complete loop invariant is proposed. We evaluate Code2Inv on a suite of 133 benchmark problems and compare it to three state-of-the-art systems. It solves 106 problems compared to 73 by a stochastic search-based system, 77 by a heuristic search-based system, and 100 by a decision tree learning-based system. Moreover, the strategy learned can be generalized to new programs: compared to solving new instances from scratch, the pre-trained agent is more sample efficient in finding solutions.</p>
+<a name="app">
+<h3>
+Application papers
+</h3>
+<p></a></p>
+<p><strong>Scalable End-to-End Autonomous Vehicle Testing via Rare-event Simulation</strong></p>
+<p><em>Matthew O’Kelly, Aman Sinha, Hongseok Namkoong, Russ Tedrake, John C. Duchi</em></p>
+<p>While recent developments in autonomous vehicle (AV) technology highlight substantial progress, we lack tools for rigorous and scalable testing. Real-world testing, the de facto evaluation environment, places the public in danger, and, due to the rare nature of accidents, will require billions of miles in order to statistically validate performance claims. We implement a simulation framework that can test an entire modern autonomous driving system, including, in particular, systems that employ deep-learning perception and control algorithms. Using adaptive importance-sampling methods to accelerate rare-event probability evaluation, we estimate the probability of an accident under a base distribution governing standard traffic behavior. We demonstrate our framework on a highway scenario, accelerating system evaluation by 2-20 times over naive Monte Carlo sampling methods and 10-300P times (where P is the number of processors) over real-world testing.</p>
+<p><strong>Constrained Graph Variational Autoencoders for Molecule Design</strong></p>
+<p><em>Qi Liu, Miltiadis Allamanis, Marc Brockschmidt, Alexander Gaunt</em></p>
+<p>Graphs are ubiquitous data structures for representing interactions between entities. With an emphasis on applications in chemistry, we explore the task of learning to generate graphs that conform to a distribution observed in training data. We propose a variational autoencoder model in which both encoder and decoder are graph-structured. Our decoder assumes a sequential ordering of graph extension steps and we discuss and analyze design choices that mitigate the potential downsides of this linearization. Experiments compare our approach with a wide range of baselines on the molecule generation task and show that our method is successful at matching the statistics of the original dataset on semantically important metrics. Furthermore, we show that by using appropriate shaping of the latent space, our model allows us to design molecules that are (locally) optimal in desired properties.</p>
+<a name="misc">
+<h3>
+Misc
+</h3>
+<p></a></p>
+<p><strong>Neural Ordinary Differential Equations</strong></p>
+<p><em>Tian Qi Chen, Yulia Rubanova, Jesse Bettencourt, David K. Duvenaud</em></p>
+<p>We introduce a new family of deep neural network models. Instead of specifying a discrete sequence of hidden layers, we parameterize the derivative of the hidden state using a neural network. The output of the network is computed using a blackbox differential equation solver. These continuous-depth models have constant memory cost, adapt their evaluation strategy to each input, and can explicitly trade numerical precision for speed. We demonstrate these properties in continuous-depth residual networks and continuous-time latent variable models. We also construct continuous normalizing flows, a generative model that can train by maximum likelihood, without partitioning or ordering the data dimensions. For training, we show how to scalably backpropagate through any ODE solver, without access to its internal operations. This allows end-to-end training of ODEs within larger models.</p>
+<p><strong>A Unified Framework for Extensive-Form Game Abstraction with Bounds</strong></p>
+<p><em>Christian Kroer, Tuomas Sandholm</em></p>
+<p>Abstraction has long been a key component in the practical solving of large-scale extensive-form games. Despite this, abstraction remains poorly understood. There have been some recent theoretical results but they have been confined to specific assumptions on abstraction structure and are specific to various disjoint types of abstraction, and specific solution concepts, for example, exact Nash equilibria or strategies with bounded immediate regret. In this paper we present a unified framework for analyzing abstractions that can express all types of abstractions and solution concepts used in prior papers with performance guarantees—while maintaining comparable bounds on abstraction quality. Moreover, our framework gives an exact decomposition of abstraction error in a much broader class of games, albeit only in an ex-post sense, as our results depend on the specific strategy chosen. Nonetheless, we use this ex-post decomposition along with slightly weaker assumptions than prior work to derive generalizations of prior bounds on abstraction quality. We also show, via counterexample, that such assumptions are necessary for some games. Finally, we prove the first bounds for how ϵ-Nash equilibria computed in abstractions perform in the original game. This is important because often one cannot afford to compute an exact Nash equilibrium in the abstraction. All our results apply to general-sum n-player games.</p>
+<p><strong>Exponentiated Strongly Rayleigh Distributions</strong></p>
+<p><em>Zelda E. Mariet, Suvrit Sra, Stefanie Jegelka</em></p>
+<p>Strongly Rayleigh (SR) measures are discrete probability distributions over the subsets of a ground set. They enjoy strong negative dependence properties, as a result of which they assign higher probability to subsets of diverse elements. We introduce in this paper Exponentiated Strongly Rayleigh (ESR) measures, which sharpen (or smoothen) the negative dependence property of SR measures via a single parameter (the exponent) that can intuitively understood as an inverse temperature. We develop efficient MCMC procedures for approximate sampling from ESRs, and obtain explicit mixing time bounds for two concrete instances: exponentiated versions of Determinantal Point Processes and Dual Volume Sampling. We illustrate some of the potential of ESRs, by applying them to a few machine learning tasks; empirical results confirm that beyond their theoretical appeal, ESR-based models hold significant promise for these tasks.</p>
+<p><strong>Learning to Optimize Tensor Programs</strong></p>
+<p><em>Tianqi Chen, Lianmin Zheng, Eddie Yan, Ziheng Jiang, Thierry Moreau, Luis Ceze, Carlos Guestrin, Arvind Krishnamurthy</em></p>
+<p>We introduce a learning-based framework to optimize tensor programs for deep learning workloads. Efficient implementations of tensor operators, such as matrix multiplication and high dimensional convolution are key enablers of effective deep learning systems. However, existing systems rely on manually optimized libraries such as cuDNN where only a narrow range of server class GPUs are well-supported. The reliance on hardware specific operator libraries limits the applicability of high-level graph optimizations and incurs significant engineering costs when deploying to new hardware targets. We use learning to remove this engineering burden. We learn domain specific statistical cost models to guide the search of tensor operator implementations over billions of possible program variants. We further accelerate the search by effective model transfer across workloads. Experimental results show that our framework delivers performance competitive with state-of-the-art hand-tuned libraries for low-power CPU, mobile GPU, and server-class GPU.</p>
+<p><strong>Modelling sparsity, heterogeneity, reciprocity and community structure in temporal interaction data</strong></p>
+<p><em>Xenia Miscouridou, Francois Caron, Yee Whye Teh</em></p>
+<p>We propose a novel class of network models for temporal dyadic interaction data. Our objective is to capture important features often observed in social interactions: sparsity, degree heterogeneity, community structure and reciprocity. We use mutually-exciting Hawkes processes to model the interactions between each (directed) pair of individuals. The intensity of each process allows interactions to arise as responses to opposite interactions (reciprocity), or due to shared interests between individuals (community structure). For sparsity and degree heterogeneity, we build the non time dependent part of the intensity function on compound random measures following Todeschini et al., 2016. We conduct experiments on real-world temporal interaction data and show that the proposed model outperforms competing approaches for link prediction, and leads to interpretable parameters.</p>
+<h2 id="workshop-papers">Workshop papers:</h2>
+<p>Infer to Control workshop</p>
+<p><strong>VIREL: A Variational Inference Framework for Reinforcement Learning</strong></p>
+<p><em>Matthew Fellows, Anuj Mahajan, Tim G. J. Rudner, Shimon Whiteson</em></p>
+<p>Applying probabilistic models to reinforcement learning (RL) has become an exciting direction of research owing to powerful optimisation tools such as variational inference becoming applicable to RL. However, due to their formulation, existing inference frameworks and their algorithms pose significant challenges for learning optimal policies, for example, the absence of mode capturing behaviour in pseudo-likelihood methods and difficulties in optimisation of learning objective in maximum entropy RL based approaches. We propose VIREL, a novel, theoretically grounded probabilistic inference framework for RL that utilises the action-value function in a parametrised form to capture future dynamics of the underlying Markov decision process. Owing to its generality, our framework lends itself to current advances in variational inference. Applying the variational expectation-maximisation algorithm to our framework, we show that the actor-critic algorithm can be reduced to expectation-maximisation. We derive a family of methods from our framework, including state-of-the-art methods based on soft value functions. We evaluate two actor-critic algorithms derived from this family, which perform on par with soft actor critic, demonstrating that our framework offers a promising perspective on RL as inference.</p>
+
+</div>
+
+<div id="disqus_thread"></div>
+<script>
+    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+        var d = document, s = d.createElement('script');
+
+        // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        s.src = 'https://convexoptimized.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view the 
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+        comments powered by Disqus.
+    </a>
+</noscript>
+
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
+</html>
+]]></description>
+    <pubDate>Fri, 21 Dec 2018 00:00:00 UT</pubDate>
+    <guid>http://zinkov.com/posts/2018-12-21-nips-reviews/index.html</guid>
+    <dc:creator>Rob Zinkov</dc:creator>
+</item>
+<item>
     <title>Decomposing the ELBO</title>
     <link>http://zinkov.com/posts/2018-11-02-decomposing-the-elbo/index.html</link>
     <description><![CDATA[<!DOCTYPE html>
@@ -1072,386 +1359,6 @@ y &lt;~ uniform(x, 7)</code></pre>
 ]]></description>
     <pubDate>Tue, 25 Aug 2015 00:00:00 UT</pubDate>
     <guid>http://zinkov.com/posts/2015-08-25-building-a-probabilisitic-interpreter/index.html</guid>
-    <dc:creator>Rob Zinkov</dc:creator>
-</item>
-<item>
-    <title>Where priors come from</title>
-    <link>http://zinkov.com/posts/2015-06-09-where-priors-come-from/index.html</link>
-    <description><![CDATA[<!DOCTYPE html>
-<html lang="en-us">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Where priors come from</title>
-        <style>
-
-	  html body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: white;
-	  }
-
-	  :root {
-            --accent: #002147;
-            --border-width: 5px ;
-	  }
-	  
-        </style>
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
-<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
-<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
-
-<link rel="stylesheet" href="../../css/minimal.css">
-<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
-
-
-
-<script type="text/javascript">
-function toggle(id) {
-    el = document.getElementById(id);
-    if (el.style.display == 'none') {
-	el.style.display = 'block';
-    } else {
-	el.style.display = 'none';
-    }
-}
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-      TeX: {
-          extensions: ["AMSmath.js"],
-          Macros: {
-              Expect: '{\\mathbb E}',
-              real: '{\\mathbb R}',
-              v: ['{\\mathbf{#1}}',1],
-          }
-      },
-      tex2jax: {
-	  inlineMath: [	 ["\\(","\\)"], ],
-	  displayMath: [  ["\\[","\\]"] ]
-      },
-      displayAlign: 'center', // Change this to 'center' to center equations.
-      "HTML-CSS": {
-          styles: {'.MathJax_Display': {"margin": 4}}
-      }
-  });
-</script>
-
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-</head>
-
-<body>
-
-  <nav class="navbar navbar-default" role="navigation">
-    <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../../">Convex Optimized</a>
-      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
-	<span class="sr-only">Toggle navigation</span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
-      </button>
-    </div>
-    <div id="bs-navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-	<li><a href="../../archive/">Archive</a></li>
-	<li><a href="../../pubs/">Publications</a></li>
-	<li><a href="../../about/">About</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-    <li class="navbar-icon">
-      <a href="mailto:com.zinkov@rob"><i class="fa fa-envelope-o"></i></a>
-    </li>
-	<li class="navbar-icon">
-      <a href="https://github.com/zaxtax/"><i class="fa fa-github"></i></a>
-    </li>
-	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
-	<i class="fa fa-twitter"></i></a>
-    </li>
-      </ul>
-    </div>
-    </div>
-  </nav>
-
-  <main>
-  <div class="item">
-  <div class="item">
-<h2>Where priors come from</h2>
-<h5><strong>Rob Zinkov</strong></h5>
-<h5>2015-06-09</h5>
-</div>
-
-<div class="text-left">
-
-<p>When reading up on Bayesian modeling papers it can be bewildering to understand why a paricular prior was chosen. The distributions usually are named after people and the density equations are pretty scary. This makes it harder to see why the models were successful.</p>
-<p>The reality is that many of these distributions are making assumptions about the type of data we have. Although there are hundreds of probability distributions, its only a dozen or so that are used again and again. The others are often special cases of these dozen or can be created through a clever combination of two or three of these simpler distributions.</p>
-<p>I’d like to outline this small group of distributions and say what assumptions they encode, where our data came from, and why they get used. Often a prior is employed because the assumptions of the prior match what we know about the parameter generation process.</p>
-<p>Keep in mind, there are multiple effective priors for a particular problem. The best prior to use for a problem is not some wisdom set in stone. A particular prior is chosen as some combination of analytic tractability, computationally efficiency, and does it make other recognizable distributions when combined with popular likelihood functions. Better priors are always being discovered by researchers.</p>
-<p>Distributions are understandable in many different ways. The most intuitive for me is to plot a histogram of values. Here is some helper code for doing that.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="im">import</span> numpy.random <span class="im">as</span> r</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">def</span> config():</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    plt.style.use(<span class="st">'ggplot'</span>)</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw">def</span> display_histogram(dist, samples<span class="op">=</span><span class="dv">10000</span>, <span class="op">**</span>kwargs):</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">    plt.hist(dist(samples), <span class="op">**</span>kwargs)</a></code></pre></div>
-<h2 id="uniform-distribution">Uniform distribution</h2>
-<p>The uniform distribution is the simplest distribution to explain. Whether you use this one in its continuous case or its discrete case it is used for the same thing. You have a set of events that are equally likely. Note, the uniform distribution from <span class="math inline">\(\infty\)</span> to <span class="math inline">\(-\infty\)</span> is not a probability distribution. This requires you give lower and upper bounds for your values.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">def</span> uniform(lo, hi):</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="cf">return</span> <span class="kw">lambda</span> samples: r.uniform(lo, hi, samples)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">display_histogram(uniform(<span class="dv">1</span>, <span class="dv">3</span>))</a></code></pre></div>
-<p><img src="../../images/uniformhist.png" width="600" height="400"></p>
-<p>This distribution isn’t used as often as you’d think, since its rare we want hard boundaries on our values.</p>
-<h2 id="normal-distribution">Normal distribution</h2>
-<p>The normal distribution is possibly the most frequently used distribution. Sometimes called the <em>Gaussian</em> distribution. This has support over the entire real line. It makes it really convenient, because you don’t have to worry about checking boundaries. This is the distribution you want if you find yourself saying things like, “the sensor sayss 20 km/h +/- 5 km/h”. The normal distribution takes as arguments a center (<span class="math inline">\(\mu\)</span>) and spread or <em>standard deviation</em> (<span class="math inline">\(\sigma\)</span>). The value <span class="math inline">\(\sigma^2\)</span> comes up a lot is sometimes called the <em>variance</em>. Standard deviation states that 67% of your data is within one standard deviation of the center, and 95% is within two standard deviation. As an example, if I say my data comes from normal(0, 3) I mean that 95% of my data should be between -6 and 6.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">def</span> normal(mu, sd):</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">    <span class="cf">return</span> <span class="kw">lambda</span> s: r.normal(mu, sd, s)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">display_histogram(normal(<span class="dv">1</span>, <span class="dv">2</span>))</a></code></pre></div>
-<p><img src="../../images/normalhist.png" width="600" height="400"></p>
-<p>It will always have a single maximum value, so if the distribution you had in mind for your problem has multiple solutions, don’t use it. The normal also comes up a lot because if you have multiple signals that come from any distribution, with enough signals their average converges to the normal distribution. This is one version of what is called, <em>Central Limit Theorem</em>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">def</span> clt(samples):</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="cf">return</span> np.array([np.mean(r.uniform(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">100</span>))</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">                     <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(samples)])</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">display_histogram(clt)</a></code></pre></div>
-<p><img src="../../images/clthist.png" width="600" height="400"></p>
-<p>Feel free to change that uniform and its arguments to any other distribution and you’ll see its always a normal.</p>
-<h2 id="bernoulli-distribution">Bernoulli distribution</h2>
-<p>The bernoulli distribution is usually the first distribution people are taught in class. This is the distribution is for deciding two choices. It takes an argument <span class="math inline">\(\rho\)</span> which dictates how biased are we to select 0 and 1. These numbers are also considered stand-ins for success (1) and failure (0) and usually talked about in these terms. Bernoulli can be written in terms of uniform.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">def</span> bern(p):</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">        u <span class="op">=</span> r.uniform(<span class="dv">0</span>, <span class="dv">1</span>, s)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">        <span class="cf">return</span> np.where(u <span class="op">&lt;</span> p, <span class="dv">1</span>, <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">display_histogram(bern(<span class="fl">0.7</span>))</a></code></pre></div>
-<p>In that example, we made <span class="math inline">\(\rho\)</span> 0.7 and obtain this histogram:</p>
-<p><img src="../../images/bernhist.png" width="600" height="400"></p>
-<p>Bernoulli is also handy since you can define a bunch of distributions in terms of them. The <em>Binomial distribution</em> is a distribution on natural numbers from <span class="math inline">\(0\)</span> to <span class="math inline">\(n\)</span> inclusive. It takes a bias <span class="math inline">\(\rho\)</span> and counts how often a coin flip succeeds in n trials.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">def</span> binomial(n, p):</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">    k <span class="op">=</span> [np.<span class="bu">sum</span>(bern(p)(n)) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="cf">return</span> np.array(k)</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">display_histogram(binomial(<span class="dv">20</span>, <span class="fl">0.7</span>))</a></code></pre></div>
-<p><img src="../../images/binhist.png" width="600" height="400"></p>
-<p>Another distribution which can be encoded with bernoulli is the <em>Negative Binomial</em> distribution. This distribution counts how often the coin flip will succeed if you are allowed to fail up to <span class="math inline">\(r\)</span> times.</p>
-<h2 id="categorical-distribution">Categorical distribution</h2>
-<p>Categorical is the distribution when you have a variable that can take on a discrete set of values. Its arguments are the probability you believe for each value of appearing. This can be simulated by indexing these values with natural numbers.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">def</span> categorical(ps):</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">        <span class="cf">return</span> r.choice(<span class="bu">range</span>(<span class="bu">len</span>(ps)), s, p<span class="op">=</span>ps)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="op">&gt;&gt;</span> categorical([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>])</a></code></pre></div>
-<p>One thing to note, lots of folks like doing a One-Hot encoding so we represent which sample as a binary vector where our choice is one and all the other elements of the vector are zero.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">def</span> onehot(n, k):</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">    <span class="cf">return</span> np.eye(<span class="dv">1</span>, n, k<span class="op">=</span>k)[<span class="dv">0</span>]</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">def</span> categorical2(ps):</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">        l <span class="op">=</span> <span class="bu">len</span>(ps)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">        <span class="cf">return</span> np.array([onehot(l,</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">                                r.choice(<span class="bu">range</span>(l),  p<span class="op">=</span>ps))</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">                         <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="op">&gt;&gt;</span> categorical2([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">array([[ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">       [ <span class="fl">0.</span>,  <span class="fl">0.</span>,  <span class="fl">1.</span>]])</a></code></pre></div>
-<h2 id="gamma-distribution">Gamma distribution</h2>
-<p>The gamma distribution comes up all over the place. The intuition for the gamma is it is the prior on positive real numbers. Now there are many ways to get a distribution over positive numbers. We can take the absolute-value of a normal distribution and get what’s called a <em>Half-Normal</em> distribution. If we have a variable <span class="math inline">\(x\)</span> from the normal distribution, we can also do <span class="math inline">\(exp(x)\)</span> and <span class="math inline">\(x^2\)</span> to get distributions over positive numbers. These are the <em>Lognormal</em> and <span class="math inline">\(\chi^2\)</span> distributions.</p>
-<p>So why use the gamma distribution? Well when you use the other distributions, you are really saying you believe your variable has some latent property that spans the real-line and something made it one-sided. So if you use a lognormal, you are implicitly saying you believe that the log of this variable is symmetric. The assumption of <span class="math inline">\(\chi^2\)</span> is that your variable is the sum of k squared factors, where each factor came from the normal(0, 1) distribution.</p>
-<p>If you don’t believe this, why say it?</p>
-<p>Some people suggest using gamma because it is conjugate with lots of distributions. This means that when gamma is a used as prior to something like normal, the posterior of this distribution also is a gamma. I would hesitate to use a prior just because it makes performing a computation easier. It’s better to have your priors actually encode what you believe. You can always go back later and make something conjugate once you need something more efficient.</p>
-<p>The gamma distribution is the main way we encode something to be a postive number. It’s parameters shape <span class="math inline">\(k\)</span> and scale <span class="math inline">\(\theta\)</span> roughly let you tune gamma like the normal distribution. <span class="math inline">\(k \theta\)</span> specifies the mean value we expect, and <span class="math inline">\(k \theta^2\)</span> specifies the variance. This is a common theme in most distributions. We want two parameters so we can set the mean and variance. Distributions that don’t have this feature are usually generalized until they do.</p>
-<p>As an example, here is what gamma(5, 1) looks like. Note where it peaks and how it spreads out. Change the parameters and see how it changes</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">def</span> gamma(shape, scale):</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">    <span class="cf">return</span> <span class="kw">lambda</span> s: r.gamma(shape, scale, s)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">display_histogram(gamma(<span class="dv">5</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</a></code></pre></div>
-<p><img src="../../images/gammahist.png" width="600" height="400"></p>
-<p>Also distributions like <span class="math inline">\(\chi^2\)</span> (chi-squared) can be defined in terms of gamma. Actually many distributions can be built from gamma. Taking the reciprocal of a variable from the gamma gives you a value from the <em>Inv-gamma</em> distribution. If we normalize this positive number to be between 0 and 1, we get the Beta distribution.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">def</span> beta(a, b):</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">        x <span class="op">=</span> r.gamma(a, <span class="dv">1</span>, s)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">        y <span class="op">=</span> r.gamma(b, <span class="dv">1</span>, s)</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">        <span class="cf">return</span> x<span class="op">/</span>(x <span class="op">+</span> y)</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">display_histogram(beta(<span class="dv">10</span>, <span class="dv">2</span>), <span class="dv">10000</span>)</a></code></pre></div>
-<p><img src="../../images/betahist.png" width="600" height="400"></p>
-<p>If we want to a prior on say categorical, which takes as an argument a list of numbers that sum to 1, we can use a gamma to generate k-numbers and then normalize. This is precisely the definition of the <em>Dirichlet distribution</em>.</p>
-<h2 id="poisson-distribution">Poisson Distribution</h2>
-<p>The poisson distribution is seen as the distribution over event arrival times. It takes an average arrival rate <span class="math inline">\(\lambda\)</span> and returns the number of events you can expect. In this sense, it’s a distribution over natural numbers. It can be thought of as a discrete analog to the gamma distribution.</p>
-<p>Unfortunely, poisson in this form is a bit cumbersome to use. For one with poisson, mean and variance are both <span class="math inline">\(\lambda\)</span>. You can’t tune this distribution to have them be different. To do that, we note that <span class="math inline">\(\lambda\)</span> has to be a positive real number and put a gamma prior on it.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">def</span> overdispersed_poisson(shape,scale):</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">        lam <span class="op">=</span> r.gamma(shape, scale, s)</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">        <span class="cf">return</span> r.poisson(lam)</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">display_histogram(overdispersed(<span class="dv">3</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</a></code></pre></div>
-<p><img src="../../images/betterpoissonhist.png" width="600" height="400"></p>
-<p>This is distribution is sometimes called the Overdispersed Poisson, but its also a reparameterized Negative Binomial! Different concept same math equation.</p>
-<p>A related distribution to poisson is the exponential distribution. This distribution measures the time we can expect to elapse between events. If we can tune the rate events happen to change with time, we get distributions that are good at modeling how long until an object fails. One example of such a distribution is the <em>Weibull distribution</em>. It has a few forms, but the easiest is one that has <span class="math inline">\(\lambda\)</span> for the rate at which events in this case usually failure, and an extra argument <span class="math inline">\(k\)</span> which models if the rate of failure should increase as time goes on. A value of <span class="math inline">\(k=1\)</span> is just the exponential distribution. A value lower than 1 means failure gets less likely over time and a value over 1 means a failure gets more likely over time.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">def</span> weibull(lam, k):</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">        <span class="cf">return</span> lam<span class="op">*</span>r.weibull(k, s)</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">display_histogram(weibull(<span class="fl">1.0</span>, <span class="fl">1.5</span>), <span class="dv">10000</span>)</a></code></pre></div>
-<p><img src="../../images/weibullhist.png" width="600" height="400"></p>
-<p>For the more morbid, you can ask if human mortality is measured with a weibull distribution. Actually, its the <em>Gompertz distribution</em> that is used. It turns out to be the distribution you get when you call exp on samples from the weibull.</p>
-<h2 id="heavy-tailed-distributions">Heavy-tailed distributions</h2>
-<p>Often distributions are too optimistic about how close a value stays near the mean. The following are all distributions which are said to have heavy-tails. The major advantage of using a heavy-tail distribution is it’s more robust towards outliers.</p>
-<p>Cauchy is a nasty distribution. It has no well-defined mean or variance or any moments. Typically, this is used by people who are or were at one time physicists. You can make a cauchy by taking two samples from a normal distribution and dividing them. I hesitate to recommend it since its hard to work with and there are other heavy-tailed distributions that aren’t so intractable.</p>
-<p>Student-T or <span class="math inline">\(t\)</span> can be interpretted as the distribution over a subsampled population from the normal distribution. What’s going on here is that because our sample size is so small, atypical values can occur more often than they do in the general population. As your subpopulation grows, the membership looks more like the underlying population from the normal distribution and the t-distribution becomes the normal distribution. The parameter <span class="math inline">\(\nu\)</span> lets you state how large you believe this subpopulation to be. The t-distribution can also be generalized to not be centered at 0.</p>
-<p>Laplace distribution arises as an interesting modification to the normal distribution. Let’s look at the density function for normal</p>
-<p><span class="math display">\[ \frac{1}{\sigma\sqrt{2\pi}}\, exp\left({-\frac{(x - \mu)^2}{2 \sigma^2}}\right)\]</span></p>
-<p>That function inside <span class="math inline">\(exp(\dots)\)</span> can be seen as an L2 norm on our variable. If we replace it with an L1 norm and change the denominator so it all still sums to one we get the laplace. In this way, a laplace centered on 0 can be used to put a strong sparsity prior on a variable while leaving a heavy-tail for it if the value has strong support for another value. There are a whole family of distribution available by putting in different norms.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">def</span> laplace(loc, scale):</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">        <span class="cf">return</span> r.laplace(loc, scale, s)</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6">display_histogram(laplace(<span class="dv">0</span>,<span class="dv">2</span>), <span class="dv">10000</span>, bins<span class="op">=</span><span class="dv">50</span>)</a></code></pre></div>
-<p><img src="../../images/laplacehist.png" width="600" height="400"></p>
-<h2 id="multivariate-normal">Multivariate Normal</h2>
-<p>When working with multivariate distributions, most can be seen as generalizations of univariate distributions. All those assumptions, from those still hold. We already mentioned Dirichlet and Categorical as multivariate distributions. The big thing you get with a multivariate generalization is the ability to encode how you strongly you believe a collection of variables is correlated with each other.</p>
-<p>The <em>Multivariate Normal</em> generalizes the normal distribution to multiple variables. Now <span class="math inline">\(\mu\)</span> refers to the center of each of them. But <span class="math inline">\(\sigma\)</span>, our standard deviation isn’t just the standard deviation in each variable. Instead we get a covariance matrix that let’s us dictate how correlated each variable is with every other variable. To visualize this we need some helper code.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">def</span> display_histogram2d(dist, samples<span class="op">=</span><span class="dv">1000</span>, <span class="op">**</span>kwargs):</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">	x, y <span class="op">=</span> dist(samples)</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">    plt.hist2d(x, y,</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">               bins<span class="op">=</span><span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">               normed<span class="op">=</span><span class="va">False</span>,</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">               cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>,</a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">               <span class="op">**</span>kwargs)</a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="kw">def</span> multinorm(mean, cov):</a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb14-12" data-line-number="12">        <span class="cf">return</span> r.multivariate_normal(mean, cov, s).T</a>
-<a class="sourceLine" id="cb14-13" data-line-number="13">    <span class="cf">return</span> samples</a></code></pre></div>
-<p>So let’s see what happens when we say, the first and second variables are 0.5 correlated.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb15-1" data-line-number="1">cov <span class="op">=</span> [[<span class="fl">1.0</span>, <span class="fl">0.5</span>],</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">       [<span class="fl">0.5</span>, <span class="fl">1.0</span>]]</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">display_histogram2d(multinorm([<span class="dv">1</span>,<span class="dv">2</span>], cov), <span class="dv">5000</span>)</a></code></pre></div>
-<p><img src="../../images/multinormhist.png" width="600" height="400" /></p>
-<p>This shows that values in the first variable will be near values in the second. You don’t see them diverging too often from each other. Keep adjusting the matrix to see what it looks when other values are used.</p>
-<h2 id="wishart-and-lkj">Wishart and LKJ</h2>
-<p>The wishart distribution is the prior on symmetric matrices. It takes as arguments a multivariate normal distribution and a variable <span class="math inline">\(\nu\)</span> which called the degrees of freedom. I think its best to think of <span class="math inline">\(\nu\)</span> in terms of matrix factorization. The wishart is made by first making a <span class="math inline">\(\nu \times p\)</span> matrix <span class="math inline">\(X\)</span> by concat <span class="math inline">\(\nu\)</span> draws from the multivariate normal and then squaring it. The degrees of freedom let you set the what you think is the matrix’s true dimensionality.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">def</span> wishart(v, n):</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">	va <span class="op">=</span> np.asarray(v)</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">    <span class="kw">def</span> one_sample():</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">        X <span class="op">=</span> np.matrix(multinorm(np.zeros(va.shape[<span class="dv">0</span>]), va)(n).T)</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">        <span class="cf">return</span> X.T<span class="op">*</span>X</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb16-8" data-line-number="8">        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
-<a class="sourceLine" id="cb16-9" data-line-number="9">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11">m <span class="op">=</span> wishart(np.eye(<span class="dv">30</span>), <span class="dv">10</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]</a>
-<a class="sourceLine" id="cb16-12" data-line-number="12">plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</a></code></pre></div>
-<p><img src="../../images/wishhist.png" width="600" height="600" /></p>
-<p>This is commonly used as a prior on convariance matrices for multivariate normal distributions. But wait! What does this anything in its generative story have to do with covariance matrices? Lots of people have thought this. A more modern alternative is the <a href="http://www.sciencedirect.com/science/article/pii/S0047259X09000876">LKJ</a> distribution. It also takes a covariance matrix and tuning parameter. The difference is here is that the LKJ tuning parameter <span class="math inline">\(\eta\)</span> controls how independent are the variables. When it is set to 1, it is uniform over the entire matrix. As you set <span class="math inline">\(\eta\)</span> to larger and larger values, more and more weight is concentrated on the diagnol, meaning we believe that the variables are mostly independent. This prior is easier for some people to tune.</p>
-<p>The method for generating samples from this distribution is a little bit tedious. See this <a href="http://stats.stackexchange.com/a/125017">fantastic writeup</a> if you are interested in the details. It’s arguably better and more understandable than the original paper.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">def</span> vine(eta, d):</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">    <span class="kw">def</span> one_sample():</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">        b <span class="op">=</span> eta <span class="op">+</span> (d <span class="op">-</span> <span class="dv">1</span>)<span class="op">/</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">        P <span class="op">=</span> np.zeros((d, d))</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">        S <span class="op">=</span> np.eye(d)</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(d<span class="dv">-1</span>):</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8">            b <span class="op">=</span> b <span class="op">-</span> <span class="fl">0.5</span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9">            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k<span class="op">+</span><span class="dv">1</span>, d):</a>
-<a class="sourceLine" id="cb17-10" data-line-number="10">                P[k, i] <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>r.beta(b, b) <span class="op">-</span> <span class="dv">1</span></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11">                p <span class="op">=</span> P[k, i]</a>
-<a class="sourceLine" id="cb17-12" data-line-number="12">                <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">range</span>(k<span class="dv">-1</span>, <span class="dv">0</span>, <span class="dv">-1</span>):</a>
-<a class="sourceLine" id="cb17-13" data-line-number="13">                    p <span class="op">=</span> p <span class="op">*</span> np.sqrt((<span class="dv">1</span><span class="op">-</span>P[l, i]<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span></a>
-<a class="sourceLine" id="cb17-14" data-line-number="14">                                    (<span class="dv">1</span><span class="op">-</span>P[<span class="dv">1</span>, k]<span class="op">**</span><span class="dv">2</span>)) <span class="op">+</span> P[l, i]<span class="op">*</span>P[l, k]</a>
-<a class="sourceLine" id="cb17-15" data-line-number="15">                S[k, i] <span class="op">=</span> p</a>
-<a class="sourceLine" id="cb17-16" data-line-number="16">                S[i, k] <span class="op">=</span> p</a>
-<a class="sourceLine" id="cb17-17" data-line-number="17">        <span class="cf">return</span> S</a>
-<a class="sourceLine" id="cb17-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb17-19" data-line-number="19">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb17-20" data-line-number="20">        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
-<a class="sourceLine" id="cb17-21" data-line-number="21">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb17-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb17-23" data-line-number="23">m <span class="op">=</span> vine(<span class="fl">2.0</span>, <span class="dv">30</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]</a>
-<a class="sourceLine" id="cb17-24" data-line-number="24">plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</a></code></pre></div>
-<p><img src="../../images/lkjhist.png" width="600" height="600" /></p>
-<h2 id="multinomial">Multinomial</h2>
-<p>Categorical in the One-Hot encoding can also be seen as a special-case of the <em>Multinomial distribution</em>. The multinomial is related to the categorical like bernoulli is related to binomial. This distribution given <span class="math inline">\(n\)</span> trials with the categorical counts how often each of the outcomes happened.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">def</span> multinomial(n, ps):</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">        m <span class="op">=</span> [np.<span class="bu">sum</span>(categorical2(ps)(n), axis<span class="op">=</span><span class="dv">0</span>) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4">        <span class="cf">return</span> np.array(m)</a>
-<a class="sourceLine" id="cb18-5" data-line-number="5">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb18-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="op">&gt;&gt;</span> multinomial(<span class="dv">10</span>, [<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9">array([[ <span class="fl">2.</span>,  <span class="fl">4.</span>,  <span class="fl">4.</span>],</a>
-<a class="sourceLine" id="cb18-10" data-line-number="10">       [ <span class="fl">4.</span>,  <span class="fl">6.</span>,  <span class="fl">0.</span>],</a>
-<a class="sourceLine" id="cb18-11" data-line-number="11">       [ <span class="fl">2.</span>,  <span class="fl">4.</span>,  <span class="fl">4.</span>],</a>
-<a class="sourceLine" id="cb18-12" data-line-number="12">       [ <span class="fl">2.</span>,  <span class="fl">6.</span>,  <span class="fl">2.</span>],</a>
-<a class="sourceLine" id="cb18-13" data-line-number="13">       [ <span class="fl">2.</span>,  <span class="fl">5.</span>,  <span class="fl">3.</span>]])</a></code></pre></div>
-<p>This distribution appears often in natural language processing as a prior on bag-of-word representation for documents. A document can be represented as a list of how often each word occured in that document. The multinomial in that sense can be used to encode our beliefs about the vocabularies.</p>
-<h2 id="conclusions">Conclusions</h2>
-<p>This doesn’t cover all the distributions people are using for priors out there, but it should give an intuition for why the most common ones are in use.</p>
-
-</div>
-
-<div id="disqus_thread"></div>
-<script>
-    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-        var d = document, s = d.createElement('script');
-
-        // IMPORTANT: Replace EXAMPLE with your forum shortname!
-        s.src = 'https://convexoptimized.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>
-    Please enable JavaScript to view the 
-    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
-        comments powered by Disqus.
-    </a>
-</noscript>
-
-  </div>
-  </main>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
-  </body>
-</html>
-]]></description>
-    <pubDate>Tue, 09 Jun 2015 00:00:00 UT</pubDate>
-    <guid>http://zinkov.com/posts/2015-06-09-where-priors-come-from/index.html</guid>
     <dc:creator>Rob Zinkov</dc:creator>
 </item>
 
