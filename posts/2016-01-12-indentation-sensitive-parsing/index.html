@@ -117,197 +117,197 @@ function toggle(id) {
 <p>For this tutorial, I will use <code>indentation</code> and <code>parsec</code>.</p>
 <pre><code>cabal install indentation parsec</code></pre>
 <p>To get started import Parsec as you normally would</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">module</span> <span class="dt">Indent.Demo</span> <span class="kw">where</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">import</span>           <span class="dt">Data.Functor</span>                  ((&lt;$&gt;), (&lt;$))</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">import</span>           <span class="dt">Control.Applicative</span>           (<span class="dt">Applicative</span>(..))</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Control.Monad</span>                 <span class="kw">as</span> <span class="dt">M</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw">import</span>           <span class="dt">Data.Functor.Identity</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw">import</span>           <span class="dt">Data.Text</span>                     (<span class="dt">Text</span>)</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Text</span>                     <span class="kw">as</span> <span class="dt">Text</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="kw">import</span>           <span class="dt">Text.Parsec</span>                   <span class="kw">hiding</span> (<span class="dt">Empty</span>)</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">import</span>           <span class="dt">Text.Parsec.Text</span>              () <span class="co">-- instances only</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Text.Parsec.Expr</span>              <span class="kw">as</span> <span class="dt">Ex</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Text.Parsec.Token</span>             <span class="kw">as</span> <span class="dt">Tok</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">module</span> <span class="dt">Indent.Demo</span> <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">import</span>           <span class="dt">Data.Functor</span>                  ((&lt;$&gt;), (&lt;$))</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">import</span>           <span class="dt">Control.Applicative</span>           (<span class="dt">Applicative</span>(..))</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Control.Monad</span>                 <span class="kw">as</span> <span class="dt">M</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw">import</span>           <span class="dt">Data.Functor.Identity</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="kw">import</span>           <span class="dt">Data.Text</span>                     (<span class="dt">Text</span>)</a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Text</span>                     <span class="kw">as</span> <span class="dt">Text</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="kw">import</span>           <span class="dt">Text.Parsec</span>                   <span class="kw">hiding</span> (<span class="dt">Empty</span>)</a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="kw">import</span>           <span class="dt">Text.Parsec.Text</span>              () <span class="co">-- instances only</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Text.Parsec.Expr</span>              <span class="kw">as</span> <span class="dt">Ex</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Text.Parsec.Token</span>             <span class="kw">as</span> <span class="dt">Tok</span></a></code></pre></div>
 <p>And then add the following modules from <code>indentation</code></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">import</span>           <span class="dt">Text.Parsec.Indentation</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">import</span>           <span class="dt">Text.Parsec.Indentation.Char</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Text.Parsec.Indentation.Token</span> <span class="kw">as</span> <span class="dt">ITok</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">import</span>           <span class="dt">Text.Parsec.Indentation</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">import</span>           <span class="dt">Text.Parsec.Indentation.Char</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Text.Parsec.Indentation.Token</span> <span class="kw">as</span> <span class="dt">ITok</span></a></code></pre></div>
 <p>The key thing which needs to be changed is that the lexer needs to be indentation-sensitive. Sadly, there is no easy way to extend the existing LanguageDefs, so we make one from scratch.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ot">style ::</span> <span class="dt">Tok.GenLanguageDef</span> <span class="dt">ParserStream</span> st <span class="dt">Identity</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">style <span class="fu">=</span> ITok.makeIndentLanguageDef <span class="fu">$</span> <span class="dt">Tok.LanguageDef</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">    { Tok.commentStart    <span class="fu">=</span> <span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">    , Tok.commentEnd      <span class="fu">=</span> <span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">    , Tok.nestedComments  <span class="fu">=</span> <span class="dt">True</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">    , Tok.identStart      <span class="fu">=</span> letter <span class="fu">&lt;|&gt;</span> char <span class="ch">'_'</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">    , Tok.identLetter     <span class="fu">=</span> alphaNum <span class="fu">&lt;|&gt;</span> oneOf <span class="st">&quot;_'&quot;</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">    , Tok.opStart         <span class="fu">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">    , Tok.opLetter        <span class="fu">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">    , Tok.caseSensitive   <span class="fu">=</span> <span class="dt">True</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">    , Tok.commentLine     <span class="fu">=</span> <span class="st">&quot;#&quot;</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">    , Tok.reservedOpNames <span class="fu">=</span> [<span class="st">&quot;:&quot;</span>]</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">    , Tok.reservedNames   <span class="fu">=</span> [<span class="st">&quot;def&quot;</span>, <span class="st">&quot;add&quot;</span>]</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">    }</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="ot">lexer ::</span> <span class="dt">Tok.GenTokenParser</span> <span class="dt">ParserStream</span> () <span class="dt">Identity</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">lexer <span class="fu">=</span> ITok.makeTokenParser style</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" title="1"><span class="ot">style ::</span> <span class="dt">Tok.GenLanguageDef</span> <span class="dt">ParserStream</span> st <span class="dt">Identity</span></a>
+<a class="sourceLine" id="cb4-2" title="2">style <span class="ot">=</span> ITok.makeIndentLanguageDef <span class="op">$</span> <span class="dt">Tok.LanguageDef</span></a>
+<a class="sourceLine" id="cb4-3" title="3">    { Tok.commentStart    <span class="ot">=</span> <span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb4-4" title="4">    , Tok.commentEnd      <span class="ot">=</span> <span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb4-5" title="5">    , Tok.nestedComments  <span class="ot">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb4-6" title="6">    , Tok.identStart      <span class="ot">=</span> letter <span class="op">&lt;|&gt;</span> char <span class="ch">'_'</span></a>
+<a class="sourceLine" id="cb4-7" title="7">    , Tok.identLetter     <span class="ot">=</span> alphaNum <span class="op">&lt;|&gt;</span> oneOf <span class="st">&quot;_'&quot;</span></a>
+<a class="sourceLine" id="cb4-8" title="8">    , Tok.opStart         <span class="ot">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span></a>
+<a class="sourceLine" id="cb4-9" title="9">    , Tok.opLetter        <span class="ot">=</span> oneOf <span class="st">&quot;!#$%&amp;*+./&lt;=&gt;?@\\^|-~&quot;</span></a>
+<a class="sourceLine" id="cb4-10" title="10">    , Tok.caseSensitive   <span class="ot">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb4-11" title="11">    , Tok.commentLine     <span class="ot">=</span> <span class="st">&quot;#&quot;</span></a>
+<a class="sourceLine" id="cb4-12" title="12">    , Tok.reservedOpNames <span class="ot">=</span> [<span class="st">&quot;:&quot;</span>]</a>
+<a class="sourceLine" id="cb4-13" title="13">    , Tok.reservedNames   <span class="ot">=</span> [<span class="st">&quot;def&quot;</span>, <span class="st">&quot;add&quot;</span>]</a>
+<a class="sourceLine" id="cb4-14" title="14">    }</a>
+<a class="sourceLine" id="cb4-15" title="15"></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="ot">lexer ::</span> <span class="dt">Tok.GenTokenParser</span> <span class="dt">ParserStream</span> () <span class="dt">Identity</span></a>
+<a class="sourceLine" id="cb4-17" title="17">lexer <span class="ot">=</span> ITok.makeTokenParser style</a></code></pre></div>
 <p>Once you have an indentation-sensitive lexer, you can add the primitives you need in terms of it.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ot">integer ::</span> <span class="dt">Parser</span> <span class="dt">Integer</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">integer <span class="fu">=</span> Tok.integer lexer</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="ot">identifier ::</span> <span class="dt">Parser</span> <span class="dt">String</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">identifier <span class="fu">=</span> Tok.identifier lexer</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="ot">reserved ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">reserved <span class="fu">=</span> Tok.reserved lexer</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="ot">reservedOp ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">reservedOp <span class="fu">=</span> Tok.reservedOp lexer</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="ot">parens ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> a</a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">parens <span class="fu">=</span> Tok.parens lexer <span class="fu">.</span> localIndentation <span class="dt">Any</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="ot">commaSep ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> [a]</a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">commaSep <span class="fu">=</span> Tok.commaSep lexer</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" title="1"><span class="ot">integer ::</span> <span class="dt">Parser</span> <span class="dt">Integer</span></a>
+<a class="sourceLine" id="cb5-2" title="2">integer <span class="ot">=</span> Tok.integer lexer</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="ot">identifier ::</span> <span class="dt">Parser</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb5-5" title="5">identifier <span class="ot">=</span> Tok.identifier lexer</a>
+<a class="sourceLine" id="cb5-6" title="6"></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="ot">reserved ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()</a>
+<a class="sourceLine" id="cb5-8" title="8">reserved <span class="ot">=</span> Tok.reserved lexer</a>
+<a class="sourceLine" id="cb5-9" title="9"></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="ot">reservedOp ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Parser</span> ()</a>
+<a class="sourceLine" id="cb5-11" title="11">reservedOp <span class="ot">=</span> Tok.reservedOp lexer</a>
+<a class="sourceLine" id="cb5-12" title="12"></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="ot">parens ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> a</a>
+<a class="sourceLine" id="cb5-14" title="14">parens <span class="ot">=</span> Tok.parens lexer <span class="op">.</span> localIndentation <span class="dt">Any</span></a>
+<a class="sourceLine" id="cb5-15" title="15"></a>
+<a class="sourceLine" id="cb5-16" title="16"><span class="ot">commaSep ::</span> <span class="dt">Parser</span> a <span class="ot">-&gt;</span> <span class="dt">Parser</span> [a]</a>
+<a class="sourceLine" id="cb5-17" title="17">commaSep <span class="ot">=</span> Tok.commaSep lexer</a></code></pre></div>
 <p>All of these are boilerplate except for <code>parens</code>. You will notice, for it we call <code>localIndentation Any</code> before passing the input. This function indicates that indentation rules can be ignored when using this combinator. This gives parentheses the meaning they have in python which is to suspend indentation rules. We will go into more detail how the indentation primitives work, but for now let’s define AST for our language.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">type</span> <span class="dt">Name</span> <span class="fu">=</span> <span class="dt">String</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">type</span> <span class="dt">Args</span> <span class="fu">=</span> [<span class="dt">Name</span>]</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw">type</span> <span class="dt">ParserStream</span>    <span class="fu">=</span> <span class="dt">IndentStream</span> (<span class="dt">CharIndentStream</span> <span class="dt">String</span>)</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw">type</span> <span class="dt">Parser</span>          <span class="fu">=</span> <span class="dt">ParsecT</span>     <span class="dt">ParserStream</span> () <span class="dt">Identity</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw">data</span> <span class="dt">Expr</span> <span class="fu">=</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">     <span class="dt">Func</span> <span class="dt">Name</span> <span class="dt">Args</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">   <span class="fu">|</span> <span class="dt">Var</span>  <span class="dt">Name</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">   <span class="fu">|</span> <span class="dt">App</span>  <span class="dt">Expr</span> [<span class="dt">Expr</span>]</a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">   <span class="fu">|</span> <span class="dt">Add</span>  <span class="dt">Expr</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">   <span class="fu">|</span> <span class="dt">Lit</span>  <span class="dt">Integer</span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">   <span class="kw">deriving</span> (<span class="dt">Show</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">type</span> <span class="dt">Name</span> <span class="ot">=</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw">type</span> <span class="dt">Args</span> <span class="ot">=</span> [<span class="dt">Name</span>]</a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw">type</span> <span class="dt">ParserStream</span>    <span class="ot">=</span> <span class="dt">IndentStream</span> (<span class="dt">CharIndentStream</span> <span class="dt">String</span>)</a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">type</span> <span class="dt">Parser</span>          <span class="ot">=</span> <span class="dt">ParsecT</span>     <span class="dt">ParserStream</span> () <span class="dt">Identity</span></a>
+<a class="sourceLine" id="cb6-6" title="6"></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="kw">data</span> <span class="dt">Expr</span> <span class="ot">=</span></a>
+<a class="sourceLine" id="cb6-8" title="8">     <span class="dt">Func</span> <span class="dt">Name</span> <span class="dt">Args</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb6-9" title="9">   <span class="op">|</span> <span class="dt">Var</span>  <span class="dt">Name</span></a>
+<a class="sourceLine" id="cb6-10" title="10">   <span class="op">|</span> <span class="dt">App</span>  <span class="dt">Expr</span> [<span class="dt">Expr</span>]</a>
+<a class="sourceLine" id="cb6-11" title="11">   <span class="op">|</span> <span class="dt">Add</span>  <span class="dt">Expr</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb6-12" title="12">   <span class="op">|</span> <span class="dt">Lit</span>  <span class="dt">Integer</span></a>
+<a class="sourceLine" id="cb6-13" title="13">   <span class="kw">deriving</span> (<span class="dt">Show</span>)</a></code></pre></div>
 <p>Parsing this language doesn’t involve need to involve indentation rules</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ot">int ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">int <span class="fu">=</span> <span class="dt">Lit</span> <span class="fu">&lt;$&gt;</span> integer</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="ot">add ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">add <span class="fu">=</span> reserved <span class="st">&quot;add&quot;</span> <span class="fu">*&gt;</span> (<span class="dt">Add</span> <span class="fu">&lt;$&gt;</span> expr <span class="fu">&lt;*&gt;</span> expr)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="ot">var ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">var <span class="fu">=</span> <span class="dt">Var</span> <span class="fu">&lt;$&gt;</span> identifier</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="ot">app ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">app <span class="fu">=</span> <span class="dt">App</span> <span class="fu">&lt;$&gt;</span> var <span class="fu">&lt;*&gt;</span> parens (commaSep expr)</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">def <span class="fu">=</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">  reserved <span class="st">&quot;def&quot;</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">  name <span class="ot">&lt;-</span> identifier</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">  args <span class="ot">&lt;-</span> parens (commaSep identifier)</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18">  body <span class="ot">&lt;-</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> expr</a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">  return (<span class="dt">Func</span> name args body)</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="ot">expr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">expr <span class="fu">=</span> def</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">   <span class="fu">&lt;|&gt;</span> try app</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">   <span class="fu">&lt;|&gt;</span> try var</a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">   <span class="fu">&lt;|&gt;</span> try add</a>
-<a class="sourceLine" id="cb7-26" data-line-number="26">   <span class="fu">&lt;|&gt;</span> int</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27">   <span class="fu">&lt;|&gt;</span> parens expr</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" title="1"><span class="ot">int ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-2" title="2">int <span class="ot">=</span> <span class="dt">Lit</span> <span class="op">&lt;$&gt;</span> integer</a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="ot">add ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-5" title="5">add <span class="ot">=</span> reserved <span class="st">&quot;add&quot;</span> <span class="op">*&gt;</span> (<span class="dt">Add</span> <span class="op">&lt;$&gt;</span> expr <span class="op">&lt;*&gt;</span> expr)</a>
+<a class="sourceLine" id="cb7-6" title="6"></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="ot">var ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-8" title="8">var <span class="ot">=</span> <span class="dt">Var</span> <span class="op">&lt;$&gt;</span> identifier</a>
+<a class="sourceLine" id="cb7-9" title="9"></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="ot">app ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-11" title="11">app <span class="ot">=</span> <span class="dt">App</span> <span class="op">&lt;$&gt;</span> var <span class="op">&lt;*&gt;</span> parens (commaSep expr)</a>
+<a class="sourceLine" id="cb7-12" title="12"></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-14" title="14">def <span class="ot">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb7-15" title="15">  reserved <span class="st">&quot;def&quot;</span></a>
+<a class="sourceLine" id="cb7-16" title="16">  name <span class="ot">&lt;-</span> identifier</a>
+<a class="sourceLine" id="cb7-17" title="17">  args <span class="ot">&lt;-</span> parens (commaSep identifier)</a>
+<a class="sourceLine" id="cb7-18" title="18">  body <span class="ot">&lt;-</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="op">*&gt;</span> expr</a>
+<a class="sourceLine" id="cb7-19" title="19">  <span class="fu">return</span> (<span class="dt">Func</span> name args body)</a>
+<a class="sourceLine" id="cb7-20" title="20"></a>
+<a class="sourceLine" id="cb7-21" title="21"><span class="ot">expr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb7-22" title="22">expr <span class="ot">=</span> def</a>
+<a class="sourceLine" id="cb7-23" title="23">   <span class="op">&lt;|&gt;</span> try app</a>
+<a class="sourceLine" id="cb7-24" title="24">   <span class="op">&lt;|&gt;</span> try var</a>
+<a class="sourceLine" id="cb7-25" title="25">   <span class="op">&lt;|&gt;</span> try add</a>
+<a class="sourceLine" id="cb7-26" title="26">   <span class="op">&lt;|&gt;</span> int</a>
+<a class="sourceLine" id="cb7-27" title="27">   <span class="op">&lt;|&gt;</span> parens expr</a></code></pre></div>
 <p>Let’s add some helper code.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ot">indentConfig ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">ParserStream</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">indentConfig <span class="fu">=</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">    mkIndentStream <span class="dv">0</span> infIndentation <span class="dt">True</span> <span class="dt">Ge</span> <span class="fu">.</span> mkCharIndentStream</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="ot">parse ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> <span class="dt">ParseError</span> [<span class="dt">Expr</span>]</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">parse <span class="fu">=</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">    runParser (many expr <span class="fu">&lt;*</span> eof) () <span class="st">&quot;[input]&quot;</span> <span class="fu">.</span> indentConfig</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb8-1" title="1"><span class="ot">indentConfig ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">ParserStream</span></a>
+<a class="sourceLine" id="cb8-2" title="2">indentConfig <span class="ot">=</span></a>
+<a class="sourceLine" id="cb8-3" title="3">    mkIndentStream <span class="dv">0</span> infIndentation <span class="dt">True</span> <span class="dt">Ge</span> <span class="op">.</span> mkCharIndentStream</a>
+<a class="sourceLine" id="cb8-4" title="4"></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="ot">parse ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Either</span> <span class="dt">ParseError</span> [<span class="dt">Expr</span>]</a>
+<a class="sourceLine" id="cb8-6" title="6">parse <span class="ot">=</span></a>
+<a class="sourceLine" id="cb8-7" title="7">    runParser (many expr <span class="op">&lt;*</span> eof) () <span class="st">&quot;[input]&quot;</span> <span class="op">.</span> indentConfig</a></code></pre></div>
 <p>And this parses programs just fine.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb9-1" data-line-number="1">test1 <span class="fu">=</span> unlines</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">  [ <span class="st">&quot;def foo(x,y):&quot;</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">  , <span class="st">&quot;    add x y&quot;</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">  ]</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">parse test1</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb9-1" title="1">test1 <span class="ot">=</span> <span class="fu">unlines</span></a>
+<a class="sourceLine" id="cb9-2" title="2">  [ <span class="st">&quot;def foo(x,y):&quot;</span></a>
+<a class="sourceLine" id="cb9-3" title="3">  , <span class="st">&quot;    add x y&quot;</span></a>
+<a class="sourceLine" id="cb9-4" title="4">  ]</a>
+<a class="sourceLine" id="cb9-5" title="5"></a>
+<a class="sourceLine" id="cb9-6" title="6">parse test1</a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
 <p>The issue is also things which feel invalid.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb10-1" data-line-number="1">test2 <span class="fu">=</span> unlines</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">  [ <span class="st">&quot;def foo(x,y):&quot;</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">  , <span class="st">&quot;add x y&quot;</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">  ]</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">parse test2</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb10-1" title="1">test2 <span class="ot">=</span> <span class="fu">unlines</span></a>
+<a class="sourceLine" id="cb10-2" title="2">  [ <span class="st">&quot;def foo(x,y):&quot;</span></a>
+<a class="sourceLine" id="cb10-3" title="3">  , <span class="st">&quot;add x y&quot;</span></a>
+<a class="sourceLine" id="cb10-4" title="4">  ]</a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6">parse test2</a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
 <p>We need to change <code>def</code> so that its body must be indented at strictly greater than character where it starts.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="ot">blockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">blockExpr <span class="fu">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> localIndentation <span class="dt">Gt</span> expr</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">def <span class="fu">=</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">  reserved <span class="st">&quot;def&quot;</span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">  name <span class="ot">&lt;-</span> identifier</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8">  args <span class="ot">&lt;-</span> parens (commaSep identifier)</a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">  body <span class="ot">&lt;-</span> blockExpr</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10">  return (<span class="dt">Func</span> name args body)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb11-1" title="1"><span class="ot">blockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb11-2" title="2">blockExpr <span class="ot">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="op">*&gt;</span> localIndentation <span class="dt">Gt</span> expr</a>
+<a class="sourceLine" id="cb11-3" title="3"></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb11-5" title="5">def <span class="ot">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb11-6" title="6">  reserved <span class="st">&quot;def&quot;</span></a>
+<a class="sourceLine" id="cb11-7" title="7">  name <span class="ot">&lt;-</span> identifier</a>
+<a class="sourceLine" id="cb11-8" title="8">  args <span class="ot">&lt;-</span> parens (commaSep identifier)</a>
+<a class="sourceLine" id="cb11-9" title="9">  body <span class="ot">&lt;-</span> blockExpr</a>
+<a class="sourceLine" id="cb11-10" title="10">  <span class="fu">return</span> (<span class="dt">Func</span> name args body)</a></code></pre></div>
 <p>If you now look, we have defined a function for the body, <code>blockExpr</code>, which says we must have the body strictly greater. Now when we parse <code>test2</code> we get the following.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb12-1" data-line-number="1">parse test2</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">-- Left &quot;[input]&quot; (line 2, column 2):</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">-- expecting identifier</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">--</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">-- Invalid indentation.</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">--   Found a token at indentation 1.</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">--   Expecting a token at an indentation greater than or equal to 2.</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">--   IndentStream { indentationState =</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">--                   IndentationState { minIndentation = 2</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">--                                    , maxIndentation = 9223372036854775807</span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">--                                    , absMode = False</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">--                                    , tokenRel = Ge}</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">--                , tokenStream = &quot;&quot;}</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb12-1" title="1">parse test2</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="co">-- Left &quot;[input]&quot; (line 2, column 2):</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="co">-- expecting identifier</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="co">--</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="co">-- Invalid indentation.</span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="co">--   Found a token at indentation 1.</span></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="co">--   Expecting a token at an indentation greater than or equal to 2.</span></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="co">--   IndentStream { indentationState =</span></a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="co">--                   IndentationState { minIndentation = 2</span></a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="co">--                                    , maxIndentation = 9223372036854775807</span></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="co">--                                    , absMode = False</span></a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="co">--                                    , tokenRel = Ge}</span></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="co">--                , tokenStream = &quot;&quot;}</span></a></code></pre></div>
 <p><code>localIndentation</code> takes two arguments, what the indentation of an expression should be relative to the current indentation, and the expression itself. Relative indentations can be greater-than and equal (Ge), strictly greater-than (Gt), equal (Eq), a specific amount (Const 5), or anything (Any).</p>
 <p>While it seems like this is the only primitive you should need, sometimes the indentation level you want can’t be defined in terms of the parent.</p>
 <p>For example, the following is a valid program</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb13-1" data-line-number="1">test3 <span class="fu">=</span> unlines</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">  [ <span class="st">&quot;def foo(x, y):&quot;</span></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">  , <span class="st">&quot;    add x&quot;</span></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">  , <span class="st">&quot; y&quot;</span></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">  ]</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7">parse test4</a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb13-1" title="1">test3 <span class="ot">=</span> <span class="fu">unlines</span></a>
+<a class="sourceLine" id="cb13-2" title="2">  [ <span class="st">&quot;def foo(x, y):&quot;</span></a>
+<a class="sourceLine" id="cb13-3" title="3">  , <span class="st">&quot;    add x&quot;</span></a>
+<a class="sourceLine" id="cb13-4" title="4">  , <span class="st">&quot; y&quot;</span></a>
+<a class="sourceLine" id="cb13-5" title="5">  ]</a>
+<a class="sourceLine" id="cb13-6" title="6"></a>
+<a class="sourceLine" id="cb13-7" title="7">parse test4</a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
 <p>The issue is that “y” is indented greater than the “def” but, we really want it to be indented in terms of “add”. To do this we need to use absolute indentation. This mode says indentation is defined in terms of the first token parsed, and all indentation rules apply in terms of where that first token is found.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="ot">absBlockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">absBlockExpr <span class="fu">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="fu">*&gt;</span> localIndentation <span class="dt">Gt</span> (absoluteIndentation expr)</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">def <span class="fu">=</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">  reserved <span class="st">&quot;def&quot;</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8">  name <span class="ot">&lt;-</span> identifier</a>
-<a class="sourceLine" id="cb14-9" data-line-number="9">  args <span class="ot">&lt;-</span> parens (commaSep identifier)</a>
-<a class="sourceLine" id="cb14-10" data-line-number="10">  body <span class="ot">&lt;-</span> absBlockExpr</a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">  return (<span class="dt">Func</span> name args body)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb14-1" title="1"><span class="ot">absBlockExpr ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb14-2" title="2">absBlockExpr <span class="ot">=</span> reservedOp <span class="st">&quot;:&quot;</span> <span class="op">*&gt;</span> localIndentation <span class="dt">Gt</span> (absoluteIndentation expr)</a>
+<a class="sourceLine" id="cb14-3" title="3"></a>
+<a class="sourceLine" id="cb14-4" title="4"></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="ot">def ::</span> <span class="dt">Parser</span> <span class="dt">Expr</span></a>
+<a class="sourceLine" id="cb14-6" title="6">def <span class="ot">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb14-7" title="7">  reserved <span class="st">&quot;def&quot;</span></a>
+<a class="sourceLine" id="cb14-8" title="8">  name <span class="ot">&lt;-</span> identifier</a>
+<a class="sourceLine" id="cb14-9" title="9">  args <span class="ot">&lt;-</span> parens (commaSep identifier)</a>
+<a class="sourceLine" id="cb14-10" title="10">  body <span class="ot">&lt;-</span> absBlockExpr</a>
+<a class="sourceLine" id="cb14-11" title="11">  <span class="fu">return</span> (<span class="dt">Func</span> name args body)</a></code></pre></div>
 <p>We define a function absBlockExpr. You’ll notice we also used a <code>localIndentation</code>. The reason for that is <code>absolutionIndentation</code> normally defaults to the first token of the parent. In our case, this is <code>def</code> and we want instead for it to choose <code>add</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb15-1" data-line-number="1">parse test3</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">-- Left &quot;[input]&quot; (line 3, column 3):</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">-- expecting identifier</span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">--</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">-- Invalid indentation.</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">--   Found a token at indentation 2.</span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">--   Expecting a token at an indentation greater than or equal to 5.</span></a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">--   IndentStream { indentationState =</span></a>
-<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">--                   IndentationState { minIndentation = 5</span></a>
-<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">--                                    , maxIndentation = 5</span></a>
-<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">--                                    , absMode = False</span></a>
-<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">--                                    , tokenRel = Ge}</span></a>
-<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">--                , tokenStream = &quot;&quot;}</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb15-1" title="1">parse test3</a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="co">-- Left &quot;[input]&quot; (line 3, column 3):</span></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="co">-- expecting identifier</span></a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="co">--</span></a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="co">-- Invalid indentation.</span></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="co">--   Found a token at indentation 2.</span></a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="co">--   Expecting a token at an indentation greater than or equal to 5.</span></a>
+<a class="sourceLine" id="cb15-8" title="8"><span class="co">--   IndentStream { indentationState =</span></a>
+<a class="sourceLine" id="cb15-9" title="9"><span class="co">--                   IndentationState { minIndentation = 5</span></a>
+<a class="sourceLine" id="cb15-10" title="10"><span class="co">--                                    , maxIndentation = 5</span></a>
+<a class="sourceLine" id="cb15-11" title="11"><span class="co">--                                    , absMode = False</span></a>
+<a class="sourceLine" id="cb15-12" title="12"><span class="co">--                                    , tokenRel = Ge}</span></a>
+<a class="sourceLine" id="cb15-13" title="13"><span class="co">--                , tokenStream = &quot;&quot;}</span></a></code></pre></div>
 <p>Now it works as expected</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb16-1" data-line-number="1">test4 <span class="fu">=</span> unlines</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">  [ <span class="st">&quot;def foo(x, y):&quot;</span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">  , <span class="st">&quot;    add x&quot;</span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">  , <span class="st">&quot;     y&quot;</span></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">  ]</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7">parse test4</a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9">parse test1</a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb16-1" title="1">test4 <span class="ot">=</span> <span class="fu">unlines</span></a>
+<a class="sourceLine" id="cb16-2" title="2">  [ <span class="st">&quot;def foo(x, y):&quot;</span></a>
+<a class="sourceLine" id="cb16-3" title="3">  , <span class="st">&quot;    add x&quot;</span></a>
+<a class="sourceLine" id="cb16-4" title="4">  , <span class="st">&quot;     y&quot;</span></a>
+<a class="sourceLine" id="cb16-5" title="5">  ]</a>
+<a class="sourceLine" id="cb16-6" title="6"></a>
+<a class="sourceLine" id="cb16-7" title="7">parse test4</a>
+<a class="sourceLine" id="cb16-8" title="8"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a>
+<a class="sourceLine" id="cb16-9" title="9">parse test1</a>
+<a class="sourceLine" id="cb16-10" title="10"><span class="co">-- Right [Func &quot;foo&quot; [&quot;x&quot;,&quot;y&quot;] (Add (Var &quot;x&quot;) (Var &quot;y&quot;))]</span></a></code></pre></div>
 <p>This library has other bits to it, but this should give enough to figure out, how to add indentation sensitivity to your language.</p>
 <p>Special thanks to <a href="http://www.lambdageek.org/aleksey/">Aleksey Kliger</a> for helping me understand this library.</p>
 

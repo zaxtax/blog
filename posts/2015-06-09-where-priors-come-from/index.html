@@ -118,89 +118,89 @@ function toggle(id) {
 <p>I’d like to outline this small group of distributions and say what assumptions they encode, where our data came from, and why they get used. Often a prior is employed because the assumptions of the prior match what we know about the parameter generation process.</p>
 <p>Keep in mind, there are multiple effective priors for a particular problem. The best prior to use for a problem is not some wisdom set in stone. A particular prior is chosen as some combination of analytic tractability, computationally efficiency, and does it make other recognizable distributions when combined with popular likelihood functions. Better priors are always being discovered by researchers.</p>
 <p>Distributions are understandable in many different ways. The most intuitive for me is to plot a histogram of values. Here is some helper code for doing that.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="im">import</span> numpy.random <span class="im">as</span> r</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">def</span> config():</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    plt.style.use(<span class="st">'ggplot'</span>)</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw">def</span> display_histogram(dist, samples<span class="op">=</span><span class="dv">10000</span>, <span class="op">**</span>kwargs):</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">    plt.hist(dist(samples), <span class="op">**</span>kwargs)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="im">import</span> numpy.random <span class="im">as</span> r</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">def</span> config():</a>
+<a class="sourceLine" id="cb1-7" title="7">    plt.style.use(<span class="st">'ggplot'</span>)</a>
+<a class="sourceLine" id="cb1-8" title="8"></a>
+<a class="sourceLine" id="cb1-9" title="9"></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">def</span> display_histogram(dist, samples<span class="op">=</span><span class="dv">10000</span>, <span class="op">**</span>kwargs):</a>
+<a class="sourceLine" id="cb1-11" title="11">    plt.hist(dist(samples), <span class="op">**</span>kwargs)</a></code></pre></div>
 <h2 id="uniform-distribution">Uniform distribution</h2>
 <p>The uniform distribution is the simplest distribution to explain. Whether you use this one in its continuous case or its discrete case it is used for the same thing. You have a set of events that are equally likely. Note, the uniform distribution from <span class="math inline">\(\infty\)</span> to <span class="math inline">\(-\infty\)</span> is not a probability distribution. This requires you give lower and upper bounds for your values.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">def</span> uniform(lo, hi):</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="cf">return</span> <span class="kw">lambda</span> samples: r.uniform(lo, hi, samples)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">display_histogram(uniform(<span class="dv">1</span>, <span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">def</span> uniform(lo, hi):</a>
+<a class="sourceLine" id="cb2-2" title="2">    <span class="cf">return</span> <span class="kw">lambda</span> samples: r.uniform(lo, hi, samples)</a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4">display_histogram(uniform(<span class="dv">1</span>, <span class="dv">3</span>))</a></code></pre></div>
 <p><img src="../../images/uniformhist.png" width="600" height="400"></p>
 <p>This distribution isn’t used as often as you’d think, since its rare we want hard boundaries on our values.</p>
 <h2 id="normal-distribution">Normal distribution</h2>
 <p>The normal distribution is possibly the most frequently used distribution. Sometimes called the <em>Gaussian</em> distribution. This has support over the entire real line. It makes it really convenient, because you don’t have to worry about checking boundaries. This is the distribution you want if you find yourself saying things like, “the sensor sayss 20 km/h +/- 5 km/h”. The normal distribution takes as arguments a center (<span class="math inline">\(\mu\)</span>) and spread or <em>standard deviation</em> (<span class="math inline">\(\sigma\)</span>). The value <span class="math inline">\(\sigma^2\)</span> comes up a lot is sometimes called the <em>variance</em>. Standard deviation states that 67% of your data is within one standard deviation of the center, and 95% is within two standard deviation. As an example, if I say my data comes from normal(0, 3) I mean that 95% of my data should be between -6 and 6.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">def</span> normal(mu, sd):</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">    <span class="cf">return</span> <span class="kw">lambda</span> s: r.normal(mu, sd, s)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">display_histogram(normal(<span class="dv">1</span>, <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">def</span> normal(mu, sd):</a>
+<a class="sourceLine" id="cb3-2" title="2">    <span class="cf">return</span> <span class="kw">lambda</span> s: r.normal(mu, sd, s)</a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4">display_histogram(normal(<span class="dv">1</span>, <span class="dv">2</span>))</a></code></pre></div>
 <p><img src="../../images/normalhist.png" width="600" height="400"></p>
 <p>It will always have a single maximum value, so if the distribution you had in mind for your problem has multiple solutions, don’t use it. The normal also comes up a lot because if you have multiple signals that come from any distribution, with enough signals their average converges to the normal distribution. This is one version of what is called, <em>Central Limit Theorem</em>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">def</span> clt(samples):</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="cf">return</span> np.array([np.mean(r.uniform(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">100</span>))</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">                     <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(samples)])</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">display_histogram(clt)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">def</span> clt(samples):</a>
+<a class="sourceLine" id="cb4-2" title="2">    <span class="cf">return</span> np.array([np.mean(r.uniform(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb4-3" title="3">                     <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(samples)])</a>
+<a class="sourceLine" id="cb4-4" title="4"></a>
+<a class="sourceLine" id="cb4-5" title="5">display_histogram(clt)</a></code></pre></div>
 <p><img src="../../images/clthist.png" width="600" height="400"></p>
 <p>Feel free to change that uniform and its arguments to any other distribution and you’ll see its always a normal.</p>
 <h2 id="bernoulli-distribution">Bernoulli distribution</h2>
 <p>The bernoulli distribution is usually the first distribution people are taught in class. This is the distribution is for deciding two choices. It takes an argument <span class="math inline">\(\rho\)</span> which dictates how biased are we to select 0 and 1. These numbers are also considered stand-ins for success (1) and failure (0) and usually talked about in these terms. Bernoulli can be written in terms of uniform.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">def</span> bern(p):</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">        u <span class="op">=</span> r.uniform(<span class="dv">0</span>, <span class="dv">1</span>, s)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">        <span class="cf">return</span> np.where(u <span class="op">&lt;</span> p, <span class="dv">1</span>, <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">display_histogram(bern(<span class="fl">0.7</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">def</span> bern(p):</a>
+<a class="sourceLine" id="cb5-2" title="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb5-3" title="3">        u <span class="op">=</span> r.uniform(<span class="dv">0</span>, <span class="dv">1</span>, s)</a>
+<a class="sourceLine" id="cb5-4" title="4">        <span class="cf">return</span> np.where(u <span class="op">&lt;</span> p, <span class="dv">1</span>, <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb5-5" title="5">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb5-6" title="6"></a>
+<a class="sourceLine" id="cb5-7" title="7">display_histogram(bern(<span class="fl">0.7</span>))</a></code></pre></div>
 <p>In that example, we made <span class="math inline">\(\rho\)</span> 0.7 and obtain this histogram:</p>
 <p><img src="../../images/bernhist.png" width="600" height="400"></p>
 <p>Bernoulli is also handy since you can define a bunch of distributions in terms of them. The <em>Binomial distribution</em> is a distribution on natural numbers from <span class="math inline">\(0\)</span> to <span class="math inline">\(n\)</span> inclusive. It takes a bias <span class="math inline">\(\rho\)</span> and counts how often a coin flip succeeds in n trials.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">def</span> binomial(n, p):</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">    k <span class="op">=</span> [np.<span class="bu">sum</span>(bern(p)(n)) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="cf">return</span> np.array(k)</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">display_histogram(binomial(<span class="dv">20</span>, <span class="fl">0.7</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">def</span> binomial(n, p):</a>
+<a class="sourceLine" id="cb6-2" title="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb6-3" title="3">    k <span class="op">=</span> [np.<span class="bu">sum</span>(bern(p)(n)) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]</a>
+<a class="sourceLine" id="cb6-4" title="4">    <span class="cf">return</span> np.array(k)</a>
+<a class="sourceLine" id="cb6-5" title="5">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb6-6" title="6"></a>
+<a class="sourceLine" id="cb6-7" title="7">display_histogram(binomial(<span class="dv">20</span>, <span class="fl">0.7</span>))</a></code></pre></div>
 <p><img src="../../images/binhist.png" width="600" height="400"></p>
 <p>Another distribution which can be encoded with bernoulli is the <em>Negative Binomial</em> distribution. This distribution counts how often the coin flip will succeed if you are allowed to fail up to <span class="math inline">\(r\)</span> times.</p>
 <h2 id="categorical-distribution">Categorical distribution</h2>
 <p>Categorical is the distribution when you have a variable that can take on a discrete set of values. Its arguments are the probability you believe for each value of appearing. This can be simulated by indexing these values with natural numbers.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">def</span> categorical(ps):</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">        <span class="cf">return</span> r.choice(<span class="bu">range</span>(<span class="bu">len</span>(ps)), s, p<span class="op">=</span>ps)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="op">&gt;&gt;</span> categorical([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">def</span> categorical(ps):</a>
+<a class="sourceLine" id="cb7-2" title="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb7-3" title="3">        <span class="cf">return</span> r.choice(<span class="bu">range</span>(<span class="bu">len</span>(ps)), s, p<span class="op">=</span>ps)</a>
+<a class="sourceLine" id="cb7-4" title="4">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb7-5" title="5"></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="op">&gt;&gt;</span> categorical([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb7-7" title="7">array([<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>])</a></code></pre></div>
 <p>One thing to note, lots of folks like doing a One-Hot encoding so we represent which sample as a binary vector where our choice is one and all the other elements of the vector are zero.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">def</span> onehot(n, k):</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">    <span class="cf">return</span> np.eye(<span class="dv">1</span>, n, k<span class="op">=</span>k)[<span class="dv">0</span>]</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">def</span> categorical2(ps):</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">        l <span class="op">=</span> <span class="bu">len</span>(ps)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">        <span class="cf">return</span> np.array([onehot(l,</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">                                r.choice(<span class="bu">range</span>(l),  p<span class="op">=</span>ps))</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">                         <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="op">&gt;&gt;</span> categorical2([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">array([[ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">       [ <span class="fl">0.</span>,  <span class="fl">0.</span>,  <span class="fl">1.</span>]])</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">def</span> onehot(n, k):</a>
+<a class="sourceLine" id="cb8-2" title="2">    <span class="cf">return</span> np.eye(<span class="dv">1</span>, n, k<span class="op">=</span>k)[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4"></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="kw">def</span> categorical2(ps):</a>
+<a class="sourceLine" id="cb8-6" title="6">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb8-7" title="7">        l <span class="op">=</span> <span class="bu">len</span>(ps)</a>
+<a class="sourceLine" id="cb8-8" title="8">        <span class="cf">return</span> np.array([onehot(l,</a>
+<a class="sourceLine" id="cb8-9" title="9">                                r.choice(<span class="bu">range</span>(l),  p<span class="op">=</span>ps))</a>
+<a class="sourceLine" id="cb8-10" title="10">                         <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
+<a class="sourceLine" id="cb8-11" title="11">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb8-12" title="12"></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="op">&gt;&gt;</span> categorical2([<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb8-14" title="14">array([[ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
+<a class="sourceLine" id="cb8-15" title="15">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
+<a class="sourceLine" id="cb8-16" title="16">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
+<a class="sourceLine" id="cb8-17" title="17">       [ <span class="fl">0.</span>,  <span class="fl">1.</span>,  <span class="fl">0.</span>],</a>
+<a class="sourceLine" id="cb8-18" title="18">       [ <span class="fl">0.</span>,  <span class="fl">0.</span>,  <span class="fl">1.</span>]])</a></code></pre></div>
 <h2 id="gamma-distribution">Gamma distribution</h2>
 <p>The gamma distribution comes up all over the place. The intuition for the gamma is it is the prior on positive real numbers. Now there are many ways to get a distribution over positive numbers. We can take the absolute-value of a normal distribution and get what’s called a <em>Half-Normal</em> distribution. If we have a variable <span class="math inline">\(x\)</span> from the normal distribution, we can also do <span class="math inline">\(exp(x)\)</span> and <span class="math inline">\(x^2\)</span> to get distributions over positive numbers. These are the <em>Lognormal</em> and <span class="math inline">\(\chi^2\)</span> distributions.</p>
 <p>So why use the gamma distribution? Well when you use the other distributions, you are really saying you believe your variable has some latent property that spans the real-line and something made it one-sided. So if you use a lognormal, you are implicitly saying you believe that the log of this variable is symmetric. The assumption of <span class="math inline">\(\chi^2\)</span> is that your variable is the sum of k squared factors, where each factor came from the normal(0, 1) distribution.</p>
@@ -208,42 +208,42 @@ function toggle(id) {
 <p>Some people suggest using gamma because it is conjugate with lots of distributions. This means that when gamma is a used as prior to something like normal, the posterior of this distribution also is a gamma. I would hesitate to use a prior just because it makes performing a computation easier. It’s better to have your priors actually encode what you believe. You can always go back later and make something conjugate once you need something more efficient.</p>
 <p>The gamma distribution is the main way we encode something to be a postive number. It’s parameters shape <span class="math inline">\(k\)</span> and scale <span class="math inline">\(\theta\)</span> roughly let you tune gamma like the normal distribution. <span class="math inline">\(k \theta\)</span> specifies the mean value we expect, and <span class="math inline">\(k \theta^2\)</span> specifies the variance. This is a common theme in most distributions. We want two parameters so we can set the mean and variance. Distributions that don’t have this feature are usually generalized until they do.</p>
 <p>As an example, here is what gamma(5, 1) looks like. Note where it peaks and how it spreads out. Change the parameters and see how it changes</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">def</span> gamma(shape, scale):</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">    <span class="cf">return</span> <span class="kw">lambda</span> s: r.gamma(shape, scale, s)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">display_histogram(gamma(<span class="dv">5</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">def</span> gamma(shape, scale):</a>
+<a class="sourceLine" id="cb9-2" title="2">    <span class="cf">return</span> <span class="kw">lambda</span> s: r.gamma(shape, scale, s)</a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4">display_histogram(gamma(<span class="dv">5</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</a></code></pre></div>
 <p><img src="../../images/gammahist.png" width="600" height="400"></p>
 <p>Also distributions like <span class="math inline">\(\chi^2\)</span> (chi-squared) can be defined in terms of gamma. Actually many distributions can be built from gamma. Taking the reciprocal of a variable from the gamma gives you a value from the <em>Inv-gamma</em> distribution. If we normalize this positive number to be between 0 and 1, we get the Beta distribution.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">def</span> beta(a, b):</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">        x <span class="op">=</span> r.gamma(a, <span class="dv">1</span>, s)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">        y <span class="op">=</span> r.gamma(b, <span class="dv">1</span>, s)</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">        <span class="cf">return</span> x<span class="op">/</span>(x <span class="op">+</span> y)</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">display_histogram(beta(<span class="dv">10</span>, <span class="dv">2</span>), <span class="dv">10000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">def</span> beta(a, b):</a>
+<a class="sourceLine" id="cb10-2" title="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb10-3" title="3">        x <span class="op">=</span> r.gamma(a, <span class="dv">1</span>, s)</a>
+<a class="sourceLine" id="cb10-4" title="4">        y <span class="op">=</span> r.gamma(b, <span class="dv">1</span>, s)</a>
+<a class="sourceLine" id="cb10-5" title="5">        <span class="cf">return</span> x<span class="op">/</span>(x <span class="op">+</span> y)</a>
+<a class="sourceLine" id="cb10-6" title="6">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb10-7" title="7"></a>
+<a class="sourceLine" id="cb10-8" title="8">display_histogram(beta(<span class="dv">10</span>, <span class="dv">2</span>), <span class="dv">10000</span>)</a></code></pre></div>
 <p><img src="../../images/betahist.png" width="600" height="400"></p>
 <p>If we want to a prior on say categorical, which takes as an argument a list of numbers that sum to 1, we can use a gamma to generate k-numbers and then normalize. This is precisely the definition of the <em>Dirichlet distribution</em>.</p>
 <h2 id="poisson-distribution">Poisson Distribution</h2>
 <p>The poisson distribution is seen as the distribution over event arrival times. It takes an average arrival rate <span class="math inline">\(\lambda\)</span> and returns the number of events you can expect. In this sense, it’s a distribution over natural numbers. It can be thought of as a discrete analog to the gamma distribution.</p>
 <p>Unfortunely, poisson in this form is a bit cumbersome to use. For one with poisson, mean and variance are both <span class="math inline">\(\lambda\)</span>. You can’t tune this distribution to have them be different. To do that, we note that <span class="math inline">\(\lambda\)</span> has to be a positive real number and put a gamma prior on it.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">def</span> overdispersed_poisson(shape,scale):</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">        lam <span class="op">=</span> r.gamma(shape, scale, s)</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">        <span class="cf">return</span> r.poisson(lam)</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">display_histogram(overdispersed(<span class="dv">3</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">def</span> overdispersed_poisson(shape,scale):</a>
+<a class="sourceLine" id="cb11-2" title="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb11-3" title="3">        lam <span class="op">=</span> r.gamma(shape, scale, s)</a>
+<a class="sourceLine" id="cb11-4" title="4">        <span class="cf">return</span> r.poisson(lam)</a>
+<a class="sourceLine" id="cb11-5" title="5">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb11-6" title="6"></a>
+<a class="sourceLine" id="cb11-7" title="7">display_histogram(overdispersed(<span class="dv">3</span>, <span class="dv">1</span>), <span class="dv">10000</span>)</a></code></pre></div>
 <p><img src="../../images/betterpoissonhist.png" width="600" height="400"></p>
 <p>This is distribution is sometimes called the Overdispersed Poisson, but its also a reparameterized Negative Binomial! Different concept same math equation.</p>
 <p>A related distribution to poisson is the exponential distribution. This distribution measures the time we can expect to elapse between events. If we can tune the rate events happen to change with time, we get distributions that are good at modeling how long until an object fails. One example of such a distribution is the <em>Weibull distribution</em>. It has a few forms, but the easiest is one that has <span class="math inline">\(\lambda\)</span> for the rate at which events in this case usually failure, and an extra argument <span class="math inline">\(k\)</span> which models if the rate of failure should increase as time goes on. A value of <span class="math inline">\(k=1\)</span> is just the exponential distribution. A value lower than 1 means failure gets less likely over time and a value over 1 means a failure gets more likely over time.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">def</span> weibull(lam, k):</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">        <span class="cf">return</span> lam<span class="op">*</span>r.weibull(k, s)</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">display_histogram(weibull(<span class="fl">1.0</span>, <span class="fl">1.5</span>), <span class="dv">10000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">def</span> weibull(lam, k):</a>
+<a class="sourceLine" id="cb12-2" title="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb12-3" title="3">        <span class="cf">return</span> lam<span class="op">*</span>r.weibull(k, s)</a>
+<a class="sourceLine" id="cb12-4" title="4">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb12-5" title="5"></a>
+<a class="sourceLine" id="cb12-6" title="6"></a>
+<a class="sourceLine" id="cb12-7" title="7">display_histogram(weibull(<span class="fl">1.0</span>, <span class="fl">1.5</span>), <span class="dv">10000</span>)</a></code></pre></div>
 <p><img src="../../images/weibullhist.png" width="600" height="400"></p>
 <p>For the more morbid, you can ask if human mortality is measured with a weibull distribution. Actually, its the <em>Gompertz distribution</em> that is used. It turns out to be the distribution you get when you call exp on samples from the weibull.</p>
 <h2 id="heavy-tailed-distributions">Heavy-tailed distributions</h2>
@@ -253,93 +253,93 @@ function toggle(id) {
 <p>Laplace distribution arises as an interesting modification to the normal distribution. Let’s look at the density function for normal</p>
 <p><span class="math display">\[ \frac{1}{\sigma\sqrt{2\pi}}\, exp\left({-\frac{(x - \mu)^2}{2 \sigma^2}}\right)\]</span></p>
 <p>That function inside <span class="math inline">\(exp(\dots)\)</span> can be seen as an L2 norm on our variable. If we replace it with an L1 norm and change the denominator so it all still sums to one we get the laplace. In this way, a laplace centered on 0 can be used to put a strong sparsity prior on a variable while leaving a heavy-tail for it if the value has strong support for another value. There are a whole family of distribution available by putting in different norms.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">def</span> laplace(loc, scale):</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">        <span class="cf">return</span> r.laplace(loc, scale, s)</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6">display_histogram(laplace(<span class="dv">0</span>,<span class="dv">2</span>), <span class="dv">10000</span>, bins<span class="op">=</span><span class="dv">50</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">def</span> laplace(loc, scale):</a>
+<a class="sourceLine" id="cb13-2" title="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb13-3" title="3">        <span class="cf">return</span> r.laplace(loc, scale, s)</a>
+<a class="sourceLine" id="cb13-4" title="4">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb13-5" title="5"></a>
+<a class="sourceLine" id="cb13-6" title="6">display_histogram(laplace(<span class="dv">0</span>,<span class="dv">2</span>), <span class="dv">10000</span>, bins<span class="op">=</span><span class="dv">50</span>)</a></code></pre></div>
 <p><img src="../../images/laplacehist.png" width="600" height="400"></p>
 <h2 id="multivariate-normal">Multivariate Normal</h2>
 <p>When working with multivariate distributions, most can be seen as generalizations of univariate distributions. All those assumptions, from those still hold. We already mentioned Dirichlet and Categorical as multivariate distributions. The big thing you get with a multivariate generalization is the ability to encode how you strongly you believe a collection of variables is correlated with each other.</p>
 <p>The <em>Multivariate Normal</em> generalizes the normal distribution to multiple variables. Now <span class="math inline">\(\mu\)</span> refers to the center of each of them. But <span class="math inline">\(\sigma\)</span>, our standard deviation isn’t just the standard deviation in each variable. Instead we get a covariance matrix that let’s us dictate how correlated each variable is with every other variable. To visualize this we need some helper code.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">def</span> display_histogram2d(dist, samples<span class="op">=</span><span class="dv">1000</span>, <span class="op">**</span>kwargs):</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">	x, y <span class="op">=</span> dist(samples)</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">    plt.hist2d(x, y,</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">               bins<span class="op">=</span><span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">               normed<span class="op">=</span><span class="va">False</span>,</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">               cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>,</a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">               <span class="op">**</span>kwargs)</a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="kw">def</span> multinorm(mean, cov):</a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb14-12" data-line-number="12">        <span class="cf">return</span> r.multivariate_normal(mean, cov, s).T</a>
-<a class="sourceLine" id="cb14-13" data-line-number="13">    <span class="cf">return</span> samples</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">def</span> display_histogram2d(dist, samples<span class="op">=</span><span class="dv">1000</span>, <span class="op">**</span>kwargs):</a>
+<a class="sourceLine" id="cb14-2" title="2">	x, y <span class="op">=</span> dist(samples)</a>
+<a class="sourceLine" id="cb14-3" title="3">    plt.hist2d(x, y,</a>
+<a class="sourceLine" id="cb14-4" title="4">               bins<span class="op">=</span><span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb14-5" title="5">               normed<span class="op">=</span><span class="va">False</span>,</a>
+<a class="sourceLine" id="cb14-6" title="6">               cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>,</a>
+<a class="sourceLine" id="cb14-7" title="7">               <span class="op">**</span>kwargs)</a>
+<a class="sourceLine" id="cb14-8" title="8"></a>
+<a class="sourceLine" id="cb14-9" title="9"></a>
+<a class="sourceLine" id="cb14-10" title="10"><span class="kw">def</span> multinorm(mean, cov):</a>
+<a class="sourceLine" id="cb14-11" title="11">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb14-12" title="12">        <span class="cf">return</span> r.multivariate_normal(mean, cov, s).T</a>
+<a class="sourceLine" id="cb14-13" title="13">    <span class="cf">return</span> samples</a></code></pre></div>
 <p>So let’s see what happens when we say, the first and second variables are 0.5 correlated.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb15-1" data-line-number="1">cov <span class="op">=</span> [[<span class="fl">1.0</span>, <span class="fl">0.5</span>],</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">       [<span class="fl">0.5</span>, <span class="fl">1.0</span>]]</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">display_histogram2d(multinorm([<span class="dv">1</span>,<span class="dv">2</span>], cov), <span class="dv">5000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb15-1" title="1">cov <span class="op">=</span> [[<span class="fl">1.0</span>, <span class="fl">0.5</span>],</a>
+<a class="sourceLine" id="cb15-2" title="2">       [<span class="fl">0.5</span>, <span class="fl">1.0</span>]]</a>
+<a class="sourceLine" id="cb15-3" title="3"></a>
+<a class="sourceLine" id="cb15-4" title="4">display_histogram2d(multinorm([<span class="dv">1</span>,<span class="dv">2</span>], cov), <span class="dv">5000</span>)</a></code></pre></div>
 <p><img src="../../images/multinormhist.png" width="600" height="400" /></p>
 <p>This shows that values in the first variable will be near values in the second. You don’t see them diverging too often from each other. Keep adjusting the matrix to see what it looks when other values are used.</p>
 <h2 id="wishart-and-lkj">Wishart and LKJ</h2>
 <p>The wishart distribution is the prior on symmetric matrices. It takes as arguments a multivariate normal distribution and a variable <span class="math inline">\(\nu\)</span> which called the degrees of freedom. I think its best to think of <span class="math inline">\(\nu\)</span> in terms of matrix factorization. The wishart is made by first making a <span class="math inline">\(\nu \times p\)</span> matrix <span class="math inline">\(X\)</span> by concat <span class="math inline">\(\nu\)</span> draws from the multivariate normal and then squaring it. The degrees of freedom let you set the what you think is the matrix’s true dimensionality.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">def</span> wishart(v, n):</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">	va <span class="op">=</span> np.asarray(v)</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">    <span class="kw">def</span> one_sample():</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">        X <span class="op">=</span> np.matrix(multinorm(np.zeros(va.shape[<span class="dv">0</span>]), va)(n).T)</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">        <span class="cf">return</span> X.T<span class="op">*</span>X</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb16-8" data-line-number="8">        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
-<a class="sourceLine" id="cb16-9" data-line-number="9">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11">m <span class="op">=</span> wishart(np.eye(<span class="dv">30</span>), <span class="dv">10</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]</a>
-<a class="sourceLine" id="cb16-12" data-line-number="12">plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">def</span> wishart(v, n):</a>
+<a class="sourceLine" id="cb16-2" title="2">	va <span class="op">=</span> np.asarray(v)</a>
+<a class="sourceLine" id="cb16-3" title="3">    <span class="kw">def</span> one_sample():</a>
+<a class="sourceLine" id="cb16-4" title="4">        X <span class="op">=</span> np.matrix(multinorm(np.zeros(va.shape[<span class="dv">0</span>]), va)(n).T)</a>
+<a class="sourceLine" id="cb16-5" title="5">        <span class="cf">return</span> X.T<span class="op">*</span>X</a>
+<a class="sourceLine" id="cb16-6" title="6"></a>
+<a class="sourceLine" id="cb16-7" title="7">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb16-8" title="8">        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
+<a class="sourceLine" id="cb16-9" title="9">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb16-10" title="10"></a>
+<a class="sourceLine" id="cb16-11" title="11">m <span class="op">=</span> wishart(np.eye(<span class="dv">30</span>), <span class="dv">10</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb16-12" title="12">plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</a></code></pre></div>
 <p><img src="../../images/wishhist.png" width="600" height="600" /></p>
 <p>This is commonly used as a prior on convariance matrices for multivariate normal distributions. But wait! What does this anything in its generative story have to do with covariance matrices? Lots of people have thought this. A more modern alternative is the <a href="http://www.sciencedirect.com/science/article/pii/S0047259X09000876">LKJ</a> distribution. It also takes a covariance matrix and tuning parameter. The difference is here is that the LKJ tuning parameter <span class="math inline">\(\eta\)</span> controls how independent are the variables. When it is set to 1, it is uniform over the entire matrix. As you set <span class="math inline">\(\eta\)</span> to larger and larger values, more and more weight is concentrated on the diagnol, meaning we believe that the variables are mostly independent. This prior is easier for some people to tune.</p>
 <p>The method for generating samples from this distribution is a little bit tedious. See this <a href="http://stats.stackexchange.com/a/125017">fantastic writeup</a> if you are interested in the details. It’s arguably better and more understandable than the original paper.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">def</span> vine(eta, d):</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">    <span class="kw">def</span> one_sample():</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">        b <span class="op">=</span> eta <span class="op">+</span> (d <span class="op">-</span> <span class="dv">1</span>)<span class="op">/</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">        P <span class="op">=</span> np.zeros((d, d))</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">        S <span class="op">=</span> np.eye(d)</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(d<span class="dv">-1</span>):</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8">            b <span class="op">=</span> b <span class="op">-</span> <span class="fl">0.5</span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9">            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k<span class="op">+</span><span class="dv">1</span>, d):</a>
-<a class="sourceLine" id="cb17-10" data-line-number="10">                P[k, i] <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>r.beta(b, b) <span class="op">-</span> <span class="dv">1</span></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11">                p <span class="op">=</span> P[k, i]</a>
-<a class="sourceLine" id="cb17-12" data-line-number="12">                <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">range</span>(k<span class="dv">-1</span>, <span class="dv">0</span>, <span class="dv">-1</span>):</a>
-<a class="sourceLine" id="cb17-13" data-line-number="13">                    p <span class="op">=</span> p <span class="op">*</span> np.sqrt((<span class="dv">1</span><span class="op">-</span>P[l, i]<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span></a>
-<a class="sourceLine" id="cb17-14" data-line-number="14">                                    (<span class="dv">1</span><span class="op">-</span>P[<span class="dv">1</span>, k]<span class="op">**</span><span class="dv">2</span>)) <span class="op">+</span> P[l, i]<span class="op">*</span>P[l, k]</a>
-<a class="sourceLine" id="cb17-15" data-line-number="15">                S[k, i] <span class="op">=</span> p</a>
-<a class="sourceLine" id="cb17-16" data-line-number="16">                S[i, k] <span class="op">=</span> p</a>
-<a class="sourceLine" id="cb17-17" data-line-number="17">        <span class="cf">return</span> S</a>
-<a class="sourceLine" id="cb17-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb17-19" data-line-number="19">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb17-20" data-line-number="20">        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
-<a class="sourceLine" id="cb17-21" data-line-number="21">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb17-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb17-23" data-line-number="23">m <span class="op">=</span> vine(<span class="fl">2.0</span>, <span class="dv">30</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]</a>
-<a class="sourceLine" id="cb17-24" data-line-number="24">plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">def</span> vine(eta, d):</a>
+<a class="sourceLine" id="cb17-2" title="2">    <span class="kw">def</span> one_sample():</a>
+<a class="sourceLine" id="cb17-3" title="3">        b <span class="op">=</span> eta <span class="op">+</span> (d <span class="op">-</span> <span class="dv">1</span>)<span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb17-4" title="4">        P <span class="op">=</span> np.zeros((d, d))</a>
+<a class="sourceLine" id="cb17-5" title="5">        S <span class="op">=</span> np.eye(d)</a>
+<a class="sourceLine" id="cb17-6" title="6"></a>
+<a class="sourceLine" id="cb17-7" title="7">        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(d<span class="dv">-1</span>):</a>
+<a class="sourceLine" id="cb17-8" title="8">            b <span class="op">=</span> b <span class="op">-</span> <span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb17-9" title="9">            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(k<span class="op">+</span><span class="dv">1</span>, d):</a>
+<a class="sourceLine" id="cb17-10" title="10">                P[k, i] <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>r.beta(b, b) <span class="op">-</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb17-11" title="11">                p <span class="op">=</span> P[k, i]</a>
+<a class="sourceLine" id="cb17-12" title="12">                <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">range</span>(k<span class="dv">-1</span>, <span class="dv">0</span>, <span class="dv">-1</span>):</a>
+<a class="sourceLine" id="cb17-13" title="13">                    p <span class="op">=</span> p <span class="op">*</span> np.sqrt((<span class="dv">1</span><span class="op">-</span>P[l, i]<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span></a>
+<a class="sourceLine" id="cb17-14" title="14">                                    (<span class="dv">1</span><span class="op">-</span>P[<span class="dv">1</span>, k]<span class="op">**</span><span class="dv">2</span>)) <span class="op">+</span> P[l, i]<span class="op">*</span>P[l, k]</a>
+<a class="sourceLine" id="cb17-15" title="15">                S[k, i] <span class="op">=</span> p</a>
+<a class="sourceLine" id="cb17-16" title="16">                S[i, k] <span class="op">=</span> p</a>
+<a class="sourceLine" id="cb17-17" title="17">        <span class="cf">return</span> S</a>
+<a class="sourceLine" id="cb17-18" title="18"></a>
+<a class="sourceLine" id="cb17-19" title="19">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb17-20" title="20">        <span class="cf">return</span> np.array([one_sample() <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(s)])</a>
+<a class="sourceLine" id="cb17-21" title="21">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb17-22" title="22"></a>
+<a class="sourceLine" id="cb17-23" title="23">m <span class="op">=</span> vine(<span class="fl">2.0</span>, <span class="dv">30</span>)(<span class="dv">1</span>)[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb17-24" title="24">plt.matshow(m, cmap<span class="op">=</span><span class="st">&quot;BuPu&quot;</span>)</a></code></pre></div>
 <p><img src="../../images/lkjhist.png" width="600" height="600" /></p>
 <h2 id="multinomial">Multinomial</h2>
 <p>Categorical in the One-Hot encoding can also be seen as a special-case of the <em>Multinomial distribution</em>. The multinomial is related to the categorical like bernoulli is related to binomial. This distribution given <span class="math inline">\(n\)</span> trials with the categorical counts how often each of the outcomes happened.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">def</span> multinomial(n, ps):</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">    <span class="kw">def</span> samples(s):</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">        m <span class="op">=</span> [np.<span class="bu">sum</span>(categorical2(ps)(n), axis<span class="op">=</span><span class="dv">0</span>) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4">        <span class="cf">return</span> np.array(m)</a>
-<a class="sourceLine" id="cb18-5" data-line-number="5">    <span class="cf">return</span> samples</a>
-<a class="sourceLine" id="cb18-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="op">&gt;&gt;</span> multinomial(<span class="dv">10</span>, [<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9">array([[ <span class="fl">2.</span>,  <span class="fl">4.</span>,  <span class="fl">4.</span>],</a>
-<a class="sourceLine" id="cb18-10" data-line-number="10">       [ <span class="fl">4.</span>,  <span class="fl">6.</span>,  <span class="fl">0.</span>],</a>
-<a class="sourceLine" id="cb18-11" data-line-number="11">       [ <span class="fl">2.</span>,  <span class="fl">4.</span>,  <span class="fl">4.</span>],</a>
-<a class="sourceLine" id="cb18-12" data-line-number="12">       [ <span class="fl">2.</span>,  <span class="fl">6.</span>,  <span class="fl">2.</span>],</a>
-<a class="sourceLine" id="cb18-13" data-line-number="13">       [ <span class="fl">2.</span>,  <span class="fl">5.</span>,  <span class="fl">3.</span>]])</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">def</span> multinomial(n, ps):</a>
+<a class="sourceLine" id="cb18-2" title="2">    <span class="kw">def</span> samples(s):</a>
+<a class="sourceLine" id="cb18-3" title="3">        m <span class="op">=</span> [np.<span class="bu">sum</span>(categorical2(ps)(n), axis<span class="op">=</span><span class="dv">0</span>) <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(s)]</a>
+<a class="sourceLine" id="cb18-4" title="4">        <span class="cf">return</span> np.array(m)</a>
+<a class="sourceLine" id="cb18-5" title="5">    <span class="cf">return</span> samples</a>
+<a class="sourceLine" id="cb18-6" title="6"></a>
+<a class="sourceLine" id="cb18-7" title="7"></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="op">&gt;&gt;</span> multinomial(<span class="dv">10</span>, [<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>])(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb18-9" title="9">array([[ <span class="fl">2.</span>,  <span class="fl">4.</span>,  <span class="fl">4.</span>],</a>
+<a class="sourceLine" id="cb18-10" title="10">       [ <span class="fl">4.</span>,  <span class="fl">6.</span>,  <span class="fl">0.</span>],</a>
+<a class="sourceLine" id="cb18-11" title="11">       [ <span class="fl">2.</span>,  <span class="fl">4.</span>,  <span class="fl">4.</span>],</a>
+<a class="sourceLine" id="cb18-12" title="12">       [ <span class="fl">2.</span>,  <span class="fl">6.</span>,  <span class="fl">2.</span>],</a>
+<a class="sourceLine" id="cb18-13" title="13">       [ <span class="fl">2.</span>,  <span class="fl">5.</span>,  <span class="fl">3.</span>]])</a></code></pre></div>
 <p>This distribution appears often in natural language processing as a prior on bag-of-word representation for documents. A document can be represented as a list of how often each word occured in that document. The multinomial in that sense can be used to encode our beliefs about the vocabularies.</p>
 <h2 id="conclusions">Conclusions</h2>
 <p>This doesn’t cover all the distributions people are using for priors out there, but it should give an intuition for why the most common ones are in use.</p>

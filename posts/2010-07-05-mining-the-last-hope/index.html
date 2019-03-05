@@ -115,7 +115,7 @@ function toggle(id) {
 
 <p>With The Next Hope less than two weeks away, its a great to look back at The Last Hope and the data that was collected during it. This article will explore what was released to the public and some of the cool data mining that is possible with this data.</p>
 <h3 id="getting-the-data">Getting the data</h3>
-<p>To start we can obtain this data from the Crawdad wireless dataset project. The last hope data can be found at <a href="http://crawdad.org/meta.php?name=hope/amd" class="uri">http://crawdad.org/meta.php?name=hope/amd</a></p>
+<p>To start we can obtain this data from the Crawdad wireless dataset project. The last hope data can be found at <a href="http://crawdad.org/meta.php?name=hope/amd">http://crawdad.org/meta.php?name=hope/amd</a></p>
 <p>In browsing the dataset we will concentrate on different files as we need to relate users in different ways. As this data is heavily normalized, we will usually need two or three files to get at the relationships we are interested in.</p>
 <p>Some of the more interesting csv files are:</p>
 <ul>
@@ -128,118 +128,118 @@ function toggle(id) {
 <h3 id="pings-graph">Pings graph</h3>
 <p>One of the simplest things we can do is start by observing that people are connected by the pings they send each other. We can make a graph of the conference attendees, using these pings as edges. In the following examples I will be using a <a href="http://python.org">python</a> library <a href="http://networkx.lanl.gov/">networkx</a> to analyze and display our graphs. To draw the graphs you will need <a href="http://matplotlib.sourceforge.net/">matplotlib</a>.</p>
 <p>Loading this graph is fairly trivial:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#!/usr/bin/env python</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="im">import</span> networkx <span class="im">as</span> nx</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="im">import</span> csv</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">reader <span class="op">=</span> csv.reader(<span class="bu">file</span>(<span class="st">&quot;ping.csv&quot;</span>))</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">headers <span class="op">=</span> reader.<span class="bu">next</span>()</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">G <span class="op">=</span> nx.Graph()</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="cf">for</span> line <span class="kw">in</span> reader:</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">    G.add_edge(line[<span class="dv">0</span>],line[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">nx.draw_spring(G,</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">               node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="kw">in</span> G],</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">               node_size<span class="op">=</span><span class="dv">40</span>,</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">               with_labels<span class="op">=</span><span class="va">False</span>,</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">               cmap<span class="op">=</span>plt.cm.Reds,</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">               )</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">plt.show()</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1"><span class="co">#!/usr/bin/env python</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="im">import</span> networkx <span class="im">as</span> nx</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="im">import</span> csv</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6">reader <span class="op">=</span> csv.reader(<span class="bu">file</span>(<span class="st">&quot;ping.csv&quot;</span>))</a>
+<a class="sourceLine" id="cb1-7" title="7">headers <span class="op">=</span> reader.<span class="bu">next</span>()</a>
+<a class="sourceLine" id="cb1-8" title="8"></a>
+<a class="sourceLine" id="cb1-9" title="9">G <span class="op">=</span> nx.Graph()</a>
+<a class="sourceLine" id="cb1-10" title="10"></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="cf">for</span> line <span class="kw">in</span> reader:</a>
+<a class="sourceLine" id="cb1-12" title="12">    G.add_edge(line[<span class="dv">0</span>],line[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb1-13" title="13"></a>
+<a class="sourceLine" id="cb1-14" title="14">nx.draw_spring(G,</a>
+<a class="sourceLine" id="cb1-15" title="15">               node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="kw">in</span> G],</a>
+<a class="sourceLine" id="cb1-16" title="16">               node_size<span class="op">=</span><span class="dv">40</span>,</a>
+<a class="sourceLine" id="cb1-17" title="17">               with_labels<span class="op">=</span><span class="va">False</span>,</a>
+<a class="sourceLine" id="cb1-18" title="18">               cmap<span class="op">=</span>plt.cm.Reds,</a>
+<a class="sourceLine" id="cb1-19" title="19">               )</a>
+<a class="sourceLine" id="cb1-20" title="20">plt.show()</a></code></pre></div>
 <p>Running this code, greets us with a graph similar to the one below. <img src="../../images/ping_graphtotalpng.png" width="470" height="390" /></p>
 <p>This display shows that there is a main social network that the majority of users belong. The rest of the users are mostly in their own disjointed cliques. Zooming in we see the structure of the main clique. <img src="../../images/ping_graphpng.png" /></p>
 <p>Careful observation shows there are a few key users through which users are connected. These users might play a role in the hacker social scene. Unfortunately, there are too few nodes and edges to deduce that from the ping network. We will instead explore other possible graphs to find that out.</p>
 <h3 id="talks-graph">Talks graph</h3>
 <p>Another way we can link users is if they attended many of the same talks. The relevant code to create this weighted graph is</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" data-line-number="1">        <span class="kw">def</span> jaccard(a, b):</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">            c <span class="op">=</span> a.intersection(b)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">            <span class="cf">return</span> <span class="bu">float</span>(<span class="bu">len</span>(c)) <span class="op">/</span> (<span class="bu">len</span>(a) <span class="op">+</span> <span class="bu">len</span>(b) <span class="op">-</span> <span class="bu">len</span>(c))</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">        <span class="kw">def</span> load_talk_graph():</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">            reader <span class="op">=</span> csv.reader(<span class="bu">file</span>(<span class="st">&quot;talk_presence.csv&quot;</span>))</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">            headers <span class="op">=</span> reader.<span class="bu">next</span>()</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">        </a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">            talks_seen <span class="op">=</span> {}</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">            G <span class="op">=</span> nx.Graph()</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">        </a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">            <span class="cf">for</span> line <span class="kw">in</span> reader:</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">                <span class="cf">if</span> line[<span class="dv">0</span>] <span class="kw">not</span> <span class="kw">in</span> talks_seen:</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">                    talks_seen[line[<span class="dv">0</span>]] <span class="op">=</span> <span class="bu">set</span>(line[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">                <span class="cf">else</span>: talks_seen[line[<span class="dv">0</span>]].add(line[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">            <span class="cf">for</span> t <span class="kw">in</span> talks_seen:</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">                <span class="cf">for</span> u <span class="kw">in</span> talks_seen:</a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">                    <span class="cf">if</span> t <span class="kw">is</span> <span class="kw">not</span> u:</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">                        weight <span class="op">=</span> jaccard(talks_seen[t],</a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">                                         talks_seen[u])</a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">                        <span class="cf">if</span> weight <span class="op">&gt;</span> <span class="fl">0.4</span>:                </a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">                            G.add_edge(t,u,weight<span class="op">=</span>weight)</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">            pos <span class="op">=</span> nx.spring_layout(G,weighted<span class="op">=</span><span class="va">True</span>)     </a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">            nx.draw(G,</a>
-<a class="sourceLine" id="cb2-25" data-line-number="25">                    pos,</a>
-<a class="sourceLine" id="cb2-26" data-line-number="26">                    edge_color<span class="op">=</span>[<span class="bu">float</span>(G[e1][e2][<span class="st">'weight'</span>]<span class="op">+</span><span class="fl">0.1</span>) <span class="cf">for</span> e1,e2 <span class="kw">in</span> G.edges()],</a>
-<a class="sourceLine" id="cb2-27" data-line-number="27">                    width<span class="op">=</span><span class="dv">4</span>,</a>
-<a class="sourceLine" id="cb2-28" data-line-number="28">                    node_size<span class="op">=</span><span class="dv">40</span>,</a>
-<a class="sourceLine" id="cb2-29" data-line-number="29">                    edge_cmap<span class="op">=</span>plt.cm.Blues,</a>
-<a class="sourceLine" id="cb2-30" data-line-number="30">                    with_labels<span class="op">=</span><span class="va">False</span>,</a>
-<a class="sourceLine" id="cb2-31" data-line-number="31">        </a>
-<a class="sourceLine" id="cb2-32" data-line-number="32">                    node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="kw">in</span> G],</a>
-<a class="sourceLine" id="cb2-33" data-line-number="33">                    cmap<span class="op">=</span>plt.cm.Blues,</a>
-<a class="sourceLine" id="cb2-34" data-line-number="34">                    )</a>
-<a class="sourceLine" id="cb2-35" data-line-number="35">            <span class="bu">print</span> <span class="st">&quot;Nodes:</span><span class="sc">%d</span><span class="st"> Edges: </span><span class="sc">%d</span><span class="ch">\n</span><span class="st">&quot;</span> <span class="op">%</span> (<span class="bu">len</span>(G.nodes()),<span class="bu">len</span>(G.edges()))</a>
-<a class="sourceLine" id="cb2-36" data-line-number="36">            plt.show()</a>
-<a class="sourceLine" id="cb2-37" data-line-number="37"></a>
-<a class="sourceLine" id="cb2-38" data-line-number="38">        Out[<span class="dv">1</span>]: Nodes:<span class="dv">822</span> Edges: <span class="dv">1903</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1">        <span class="kw">def</span> jaccard(a, b):</a>
+<a class="sourceLine" id="cb2-2" title="2">            c <span class="op">=</span> a.intersection(b)</a>
+<a class="sourceLine" id="cb2-3" title="3">            <span class="cf">return</span> <span class="bu">float</span>(<span class="bu">len</span>(c)) <span class="op">/</span> (<span class="bu">len</span>(a) <span class="op">+</span> <span class="bu">len</span>(b) <span class="op">-</span> <span class="bu">len</span>(c))</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">        <span class="kw">def</span> load_talk_graph():</a>
+<a class="sourceLine" id="cb2-6" title="6">            reader <span class="op">=</span> csv.reader(<span class="bu">file</span>(<span class="st">&quot;talk_presence.csv&quot;</span>))</a>
+<a class="sourceLine" id="cb2-7" title="7">            headers <span class="op">=</span> reader.<span class="bu">next</span>()</a>
+<a class="sourceLine" id="cb2-8" title="8">        </a>
+<a class="sourceLine" id="cb2-9" title="9">            talks_seen <span class="op">=</span> {}</a>
+<a class="sourceLine" id="cb2-10" title="10">            G <span class="op">=</span> nx.Graph()</a>
+<a class="sourceLine" id="cb2-11" title="11">        </a>
+<a class="sourceLine" id="cb2-12" title="12">            <span class="cf">for</span> line <span class="kw">in</span> reader:</a>
+<a class="sourceLine" id="cb2-13" title="13">                <span class="cf">if</span> line[<span class="dv">0</span>] <span class="kw">not</span> <span class="kw">in</span> talks_seen:</a>
+<a class="sourceLine" id="cb2-14" title="14">                    talks_seen[line[<span class="dv">0</span>]] <span class="op">=</span> <span class="bu">set</span>(line[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb2-15" title="15">                <span class="cf">else</span>: talks_seen[line[<span class="dv">0</span>]].add(line[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb2-16" title="16">            <span class="cf">for</span> t <span class="kw">in</span> talks_seen:</a>
+<a class="sourceLine" id="cb2-17" title="17">                <span class="cf">for</span> u <span class="kw">in</span> talks_seen:</a>
+<a class="sourceLine" id="cb2-18" title="18">                    <span class="cf">if</span> t <span class="kw">is</span> <span class="kw">not</span> u:</a>
+<a class="sourceLine" id="cb2-19" title="19">                        weight <span class="op">=</span> jaccard(talks_seen[t],</a>
+<a class="sourceLine" id="cb2-20" title="20">                                         talks_seen[u])</a>
+<a class="sourceLine" id="cb2-21" title="21">                        <span class="cf">if</span> weight <span class="op">&gt;</span> <span class="fl">0.4</span>:                </a>
+<a class="sourceLine" id="cb2-22" title="22">                            G.add_edge(t,u,weight<span class="op">=</span>weight)</a>
+<a class="sourceLine" id="cb2-23" title="23">            pos <span class="op">=</span> nx.spring_layout(G,weighted<span class="op">=</span><span class="va">True</span>)     </a>
+<a class="sourceLine" id="cb2-24" title="24">            nx.draw(G,</a>
+<a class="sourceLine" id="cb2-25" title="25">                    pos,</a>
+<a class="sourceLine" id="cb2-26" title="26">                    edge_color<span class="op">=</span>[<span class="bu">float</span>(G[e1][e2][<span class="st">'weight'</span>]<span class="op">+</span><span class="fl">0.1</span>) <span class="cf">for</span> e1,e2 <span class="kw">in</span> G.edges()],</a>
+<a class="sourceLine" id="cb2-27" title="27">                    width<span class="op">=</span><span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb2-28" title="28">                    node_size<span class="op">=</span><span class="dv">40</span>,</a>
+<a class="sourceLine" id="cb2-29" title="29">                    edge_cmap<span class="op">=</span>plt.cm.Blues,</a>
+<a class="sourceLine" id="cb2-30" title="30">                    with_labels<span class="op">=</span><span class="va">False</span>,</a>
+<a class="sourceLine" id="cb2-31" title="31">        </a>
+<a class="sourceLine" id="cb2-32" title="32">                    node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="kw">in</span> G],</a>
+<a class="sourceLine" id="cb2-33" title="33">                    cmap<span class="op">=</span>plt.cm.Blues,</a>
+<a class="sourceLine" id="cb2-34" title="34">                    )</a>
+<a class="sourceLine" id="cb2-35" title="35">            <span class="bu">print</span> <span class="st">&quot;Nodes:</span><span class="sc">%d</span><span class="st"> Edges: </span><span class="sc">%d</span><span class="ch">\n</span><span class="st">&quot;</span> <span class="op">%</span> (<span class="bu">len</span>(G.nodes()),<span class="bu">len</span>(G.edges()))</a>
+<a class="sourceLine" id="cb2-36" title="36">            plt.show()</a>
+<a class="sourceLine" id="cb2-37" title="37"></a>
+<a class="sourceLine" id="cb2-38" title="38">        Out[<span class="dv">1</span>]: Nodes:<span class="dv">822</span> Edges: <span class="dv">1903</span></a></code></pre></div>
 <p>This code computes the <a href="http://en.wikipedia.org/wiki/Jaccard_index">jaccard index</a> as defined by the set of talks they attended. Then uses them as edge weights. Darker edges mean stronger links. Due to the sheer number of weights, edges are only added if similarity is above a certain threshold. Below is a thumbnail of the resulting graph. <a href="../../images/talk0.4_large.png" title="fullsize"><img src="../../images/talk0.4_small.png" /></a></p>
 <p>The full-size graph is worth study as it reveals the subtle and detailed structure implicit in this network. If we only accept weights at 0.5 and above, the clusters are even more apparent. <img src="../../images/talk0.5.png" " /></p>
 <p>This graph reveals a great deal about our attendees, but its biased towards those that went to talks. To get a more complete picture, we need to make more use of our data.</p>
 <h3 id="locations-graph">Locations graph</h3>
 <p>The principles that applied to linking by talks applies to linking by zones. Ideally the (x,y,z) tuples would have been preserved and a cumulative euclidian distance could have been used. We netheless can extract useful insights from just what we have.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" data-line-number="1">        <span class="kw">def</span> load_location_graph():</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">            reader <span class="op">=</span> csv.reader(<span class="bu">file</span>(<span class="st">&quot;position_snapshot.csv&quot;</span>))</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">            headers <span class="op">=</span> reader.<span class="bu">next</span>()</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">        </a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">            last_time <span class="op">=</span> <span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">        </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">            zones <span class="op">=</span> {}</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">            edges <span class="op">=</span> {}</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">            nodes <span class="op">=</span> {}</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">        </a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">            <span class="cf">for</span> line <span class="kw">in</span> reader:</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">                nodes[line[<span class="dv">1</span>]] <span class="op">=</span> nodes.get(line[<span class="dv">1</span>],<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">                <span class="cf">if</span> line[<span class="dv">0</span>] <span class="op">!=</span> last_time:</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">                    <span class="cf">for</span> z <span class="kw">in</span> zones:</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">                        <span class="cf">for</span> i <span class="kw">in</span> zones[z]:</a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">                            <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: x<span class="op">!=</span>i,zones[z]):</a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">                                edges[(i,j)] <span class="op">=</span> edges.get((i,j),<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">                                edges[(j,i)] <span class="op">=</span> edges.get((j,i),<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span>                       </a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">                    last_time <span class="op">=</span> line[<span class="dv">0</span>]</a>
-<a class="sourceLine" id="cb3-20" data-line-number="20">                    zones <span class="op">=</span> {}</a>
-<a class="sourceLine" id="cb3-21" data-line-number="21">                <span class="cf">else</span>:</a>
-<a class="sourceLine" id="cb3-22" data-line-number="22">                    zones[line[<span class="dv">2</span>]] <span class="op">=</span> zones.get(line[<span class="dv">2</span>],<span class="bu">set</span>()).union([line[<span class="dv">1</span>]])</a>
-<a class="sourceLine" id="cb3-23" data-line-number="23">            G <span class="op">=</span> nx.Graph()</a>
-<a class="sourceLine" id="cb3-24" data-line-number="24">            <span class="cf">for</span> (e1,e2) <span class="kw">in</span> edges:</a>
-<a class="sourceLine" id="cb3-25" data-line-number="25">                weight <span class="op">=</span>         edges[(e1,e2)]<span class="op">/</span>(nodes[e1]<span class="op">+</span>nodes[e2]<span class="op">-</span>edges[(e1,e2)])</a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">                <span class="cf">if</span> weight <span class="op">&gt;</span> <span class="fl">0.08</span>:</a>
-<a class="sourceLine" id="cb3-27" data-line-number="27">                    G.add_edge(e1,e2,weight<span class="op">=</span>weight)</a>
-<a class="sourceLine" id="cb3-28" data-line-number="28">            <span class="bu">print</span> <span class="st">&quot;Nodes:</span><span class="sc">%d</span><span class="st"> Edges: </span><span class="sc">%d</span><span class="ch">\n</span><span class="st">&quot;</span> <span class="op">%</span> (<span class="bu">len</span>(G.nodes()),<span class="bu">len</span>(G.edges()))</a>
-<a class="sourceLine" id="cb3-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb3-30" data-line-number="30">            pos <span class="op">=</span> nx.spring_layout(G,weighted<span class="op">=</span><span class="va">True</span>)     </a>
-<a class="sourceLine" id="cb3-31" data-line-number="31">            nx.draw(G,</a>
-<a class="sourceLine" id="cb3-32" data-line-number="32">                    pos,</a>
-<a class="sourceLine" id="cb3-33" data-line-number="33">                    node_size<span class="op">=</span><span class="dv">40</span>,</a>
-<a class="sourceLine" id="cb3-34" data-line-number="34">                    with_labels<span class="op">=</span><span class="va">False</span>,</a>
-<a class="sourceLine" id="cb3-35" data-line-number="35">                    alpha <span class="op">=</span> <span class="fl">0.5</span>,</a>
-<a class="sourceLine" id="cb3-36" data-line-number="36">                    node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="kw">in</span> G],</a>
-<a class="sourceLine" id="cb3-37" data-line-number="37">                    cmap<span class="op">=</span>plt.cm.Greens,</a>
-<a class="sourceLine" id="cb3-38" data-line-number="38">                    )</a>
-<a class="sourceLine" id="cb3-39" data-line-number="39">            plt.show()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1">        <span class="kw">def</span> load_location_graph():</a>
+<a class="sourceLine" id="cb3-2" title="2">            reader <span class="op">=</span> csv.reader(<span class="bu">file</span>(<span class="st">&quot;position_snapshot.csv&quot;</span>))</a>
+<a class="sourceLine" id="cb3-3" title="3">            headers <span class="op">=</span> reader.<span class="bu">next</span>()</a>
+<a class="sourceLine" id="cb3-4" title="4">        </a>
+<a class="sourceLine" id="cb3-5" title="5">            last_time <span class="op">=</span> <span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb3-6" title="6">        </a>
+<a class="sourceLine" id="cb3-7" title="7">            zones <span class="op">=</span> {}</a>
+<a class="sourceLine" id="cb3-8" title="8">            edges <span class="op">=</span> {}</a>
+<a class="sourceLine" id="cb3-9" title="9">            nodes <span class="op">=</span> {}</a>
+<a class="sourceLine" id="cb3-10" title="10">        </a>
+<a class="sourceLine" id="cb3-11" title="11">            <span class="cf">for</span> line <span class="kw">in</span> reader:</a>
+<a class="sourceLine" id="cb3-12" title="12">                nodes[line[<span class="dv">1</span>]] <span class="op">=</span> nodes.get(line[<span class="dv">1</span>],<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb3-13" title="13">                <span class="cf">if</span> line[<span class="dv">0</span>] <span class="op">!=</span> last_time:</a>
+<a class="sourceLine" id="cb3-14" title="14">                    <span class="cf">for</span> z <span class="kw">in</span> zones:</a>
+<a class="sourceLine" id="cb3-15" title="15">                        <span class="cf">for</span> i <span class="kw">in</span> zones[z]:</a>
+<a class="sourceLine" id="cb3-16" title="16">                            <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: x<span class="op">!=</span>i,zones[z]):</a>
+<a class="sourceLine" id="cb3-17" title="17">                                edges[(i,j)] <span class="op">=</span> edges.get((i,j),<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb3-18" title="18">                                edges[(j,i)] <span class="op">=</span> edges.get((j,i),<span class="dv">0</span>)<span class="op">+</span><span class="dv">1</span>                       </a>
+<a class="sourceLine" id="cb3-19" title="19">                    last_time <span class="op">=</span> line[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb3-20" title="20">                    zones <span class="op">=</span> {}</a>
+<a class="sourceLine" id="cb3-21" title="21">                <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb3-22" title="22">                    zones[line[<span class="dv">2</span>]] <span class="op">=</span> zones.get(line[<span class="dv">2</span>],<span class="bu">set</span>()).union([line[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb3-23" title="23">            G <span class="op">=</span> nx.Graph()</a>
+<a class="sourceLine" id="cb3-24" title="24">            <span class="cf">for</span> (e1,e2) <span class="kw">in</span> edges:</a>
+<a class="sourceLine" id="cb3-25" title="25">                weight <span class="op">=</span>         edges[(e1,e2)]<span class="op">/</span>(nodes[e1]<span class="op">+</span>nodes[e2]<span class="op">-</span>edges[(e1,e2)])</a>
+<a class="sourceLine" id="cb3-26" title="26">                <span class="cf">if</span> weight <span class="op">&gt;</span> <span class="fl">0.08</span>:</a>
+<a class="sourceLine" id="cb3-27" title="27">                    G.add_edge(e1,e2,weight<span class="op">=</span>weight)</a>
+<a class="sourceLine" id="cb3-28" title="28">            <span class="bu">print</span> <span class="st">&quot;Nodes:</span><span class="sc">%d</span><span class="st"> Edges: </span><span class="sc">%d</span><span class="ch">\n</span><span class="st">&quot;</span> <span class="op">%</span> (<span class="bu">len</span>(G.nodes()),<span class="bu">len</span>(G.edges()))</a>
+<a class="sourceLine" id="cb3-29" title="29"></a>
+<a class="sourceLine" id="cb3-30" title="30">            pos <span class="op">=</span> nx.spring_layout(G,weighted<span class="op">=</span><span class="va">True</span>)     </a>
+<a class="sourceLine" id="cb3-31" title="31">            nx.draw(G,</a>
+<a class="sourceLine" id="cb3-32" title="32">                    pos,</a>
+<a class="sourceLine" id="cb3-33" title="33">                    node_size<span class="op">=</span><span class="dv">40</span>,</a>
+<a class="sourceLine" id="cb3-34" title="34">                    with_labels<span class="op">=</span><span class="va">False</span>,</a>
+<a class="sourceLine" id="cb3-35" title="35">                    alpha <span class="op">=</span> <span class="fl">0.5</span>,</a>
+<a class="sourceLine" id="cb3-36" title="36">                    node_color<span class="op">=</span>[<span class="bu">float</span>(G.degree(v)) <span class="cf">for</span> v <span class="kw">in</span> G],</a>
+<a class="sourceLine" id="cb3-37" title="37">                    cmap<span class="op">=</span>plt.cm.Greens,</a>
+<a class="sourceLine" id="cb3-38" title="38">                    )</a>
+<a class="sourceLine" id="cb3-39" title="39">            plt.show()</a></code></pre></div>
 <p>The location graph drawn in a similar way as the talk graph is amazingly dense and hard to read. The <em>weight</em> variable had to be tuned to see anything at all. <a href="../../images/location_large.png" title="fullsize"><img src="../../images/location_small.png" /></a></p>
 <p>Instead we opt for a slightly different metric, and are rewarded with additional insight. Sadly, its not clear if this graph accurately reflects what is going on. Further analysis is clearly required before we can confidently assert anything more about this graph.</p>
 <p>Changing:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" data-line-number="1">        <span class="co"># weight = edges[(e1,e2)]/(nodes[e1]+nodes[e2]-edges[(e1,e2)])</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">        weight <span class="op">=</span> edges[(e1,e2)]<span class="op">/</span><span class="bu">min</span>(nodes[e1],nodes[e2])</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" title="1">        <span class="co"># weight = edges[(e1,e2)]/(nodes[e1]+nodes[e2]-edges[(e1,e2)])</span></a>
+<a class="sourceLine" id="cb4-2" title="2">        weight <span class="op">=</span> edges[(e1,e2)]<span class="op">/</span><span class="bu">min</span>(nodes[e1],nodes[e2])</a></code></pre></div>
 <p><img src="../../images/min_location.png" /></p>
 <p>Similar graphs can be drawn for overlaps in interest data and anything else we can use to relate users.</p>
 <h3 id="centrality-metrics">Centrality metrics</h3>
@@ -300,36 +300,36 @@ function toggle(id) {
 <p>Having singled out individual people, an obvious next step is singling out groups of people. There is no standard way to do <a href="http://en.wikipedia.org/wiki/Community_structure">Community Detection</a>, but there are some decent <a href="http://arxiv.org/abs/0902.3788">survey</a> papers on the common approaches. We won’t do anything fancy like <a href="http://www.cs.unm.edu/~aaron/research/fastmodularity.htm">Newman-Moore</a>, and instead concentrate on simple algorithms to start.</p>
 <h4 id="cliques">Cliques</h4>
 <p>Cliques are sets of nodes in a graph that are all connected to each other. They are also decent for finding social cliques.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" data-line-number="1">        cliques <span class="op">=</span> <span class="bu">sorted</span>(nx.find_cliques(G),key<span class="op">=</span><span class="bu">len</span>,reverse<span class="op">=</span><span class="va">True</span>)[:<span class="dv">10</span>]</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">        <span class="cf">for</span> c <span class="kw">in</span> cliques:</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">            c <span class="op">=</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: name[x] <span class="kw">is</span> <span class="kw">not</span> <span class="st">&quot;&quot;</span>,c)</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">            <span class="bu">print</span> <span class="bu">map</span>(<span class="kw">lambda</span> x: name[x], c)</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>]</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'FrodoNJ'</span>]</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'twelve88'</span>]</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'aestetix'</span>]</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'AtomicSunset'</span>]</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>, <span class="st">'Exposure101'</span>, <span class="st">'vol'</span>]</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>, <span class="st">'firstohit'</span>]</a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>, <span class="st">'dvalued'</span>]</a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>]</a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">        [<span class="st">'EJL'</span>, <span class="st">'devolut'</span>, <span class="st">'moonmaster9000'</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" title="1">        cliques <span class="op">=</span> <span class="bu">sorted</span>(nx.find_cliques(G),key<span class="op">=</span><span class="bu">len</span>,reverse<span class="op">=</span><span class="va">True</span>)[:<span class="dv">10</span>]</a>
+<a class="sourceLine" id="cb9-2" title="2">        <span class="cf">for</span> c <span class="kw">in</span> cliques:</a>
+<a class="sourceLine" id="cb9-3" title="3">            c <span class="op">=</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: name[x] <span class="kw">is</span> <span class="kw">not</span> <span class="st">&quot;&quot;</span>,c)</a>
+<a class="sourceLine" id="cb9-4" title="4">            <span class="bu">print</span> <span class="bu">map</span>(<span class="kw">lambda</span> x: name[x], c)</a>
+<a class="sourceLine" id="cb9-5" title="5">        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>]</a>
+<a class="sourceLine" id="cb9-6" title="6">        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'FrodoNJ'</span>]</a>
+<a class="sourceLine" id="cb9-7" title="7">        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'twelve88'</span>]</a>
+<a class="sourceLine" id="cb9-8" title="8">        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'aestetix'</span>]</a>
+<a class="sourceLine" id="cb9-9" title="9">        [<span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'AtomicSunset'</span>]</a>
+<a class="sourceLine" id="cb9-10" title="10">        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>, <span class="st">'Exposure101'</span>, <span class="st">'vol'</span>]</a>
+<a class="sourceLine" id="cb9-11" title="11">        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>, <span class="st">'firstohit'</span>]</a>
+<a class="sourceLine" id="cb9-12" title="12">        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>, <span class="st">'dvalued'</span>]</a>
+<a class="sourceLine" id="cb9-13" title="13">        [<span class="st">'origami'</span>, <span class="st">'MR H'</span>, <span class="st">'earthling'</span>, <span class="st">'Someone else got my bag'</span>]</a>
+<a class="sourceLine" id="cb9-14" title="14">        [<span class="st">'EJL'</span>, <span class="st">'devolut'</span>, <span class="st">'moonmaster9000'</span>]</a></code></pre></div>
 <h4 id="connected-components">Connected components</h4>
 <p>Groups nodes into sets based on whether they are reachable from each other.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" data-line-number="1">        parts <span class="op">=</span> nx.connected_components(G)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">        <span class="cf">for</span> p <span class="kw">in</span> parts[:<span class="dv">10</span>]:</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">            p <span class="op">=</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: name[x] <span class="kw">is</span> <span class="kw">not</span> <span class="st">&quot;&quot;</span>,p)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">            <span class="bu">print</span> <span class="bu">map</span>(<span class="kw">lambda</span> x: name[x], p)</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">        [<span class="st">'grapefruit'</span>, <span class="st">'trinisite'</span>, <span class="st">'Flarocket'</span>, <span class="st">'jay'</span>, <span class="st">'bunshri'</span>, <span class="st">'sirloopy'</span>, <span class="st">'orospakr'</span>, <span class="st">'faeriebeliever'</span>, <span class="st">'sloanroyal'</span>, <span class="st">'i80386'</span>, <span class="st">'brob'</span>, <span class="st">'ash'</span>, <span class="st">'LapTop006'</span>, <span class="st">'efk2'</span>]</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">        [<span class="st">'pmhesse'</span>, <span class="st">'Exposure101'</span>, <span class="st">'origami'</span>, <span class="st">'meee'</span>, <span class="st">'firstohit'</span>, <span class="st">'vol'</span>, <span class="st">'dvalued'</span>, <span class="st">'earthling'</span>, <span class="st">'MR H'</span>, <span class="st">'Someone else got my bag'</span>]</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">        [<span class="st">'echo'</span>, <span class="st">'Rop'</span>, <span class="st">'THE NIGHTSTALKER'</span>, <span class="st">'techDarko'</span>, <span class="st">'kupo'</span>, <span class="st">'bigjosh'</span>, <span class="st">'Bunni3burn'</span>, <span class="st">'shogun'</span>, <span class="st">'bocci'</span>]</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">        [<span class="st">'Milosch'</span>, <span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'AtomicSunset'</span>, <span class="st">'FrodoNJ'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'twelve88'</span>, <span class="st">'aestetix'</span>]</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">        [<span class="st">'roadtrip'</span>, <span class="st">'moonmaster9000'</span>, <span class="st">'EJL'</span>, <span class="st">'devolut'</span>, <span class="st">'pv2k'</span>, <span class="st">'nightarrow'</span>, <span class="st">'HorseShit'</span>]</a>
-<a class="sourceLine" id="cb10-11" data-line-number="11">        [<span class="st">'serif'</span>, <span class="st">'wazntme379'</span>, <span class="st">'Vyrus'</span>, <span class="st">'caselaredo'</span>]</a>
-<a class="sourceLine" id="cb10-12" data-line-number="12">        [<span class="st">'fddi'</span>, <span class="st">'MissInformation'</span>, <span class="st">'das'</span>, <span class="st">'fenrir'</span>, <span class="st">'Cyanide'</span>, <span class="st">'catfish'</span>, <span class="st">'asciimo'</span>]</a>
-<a class="sourceLine" id="cb10-13" data-line-number="13">        [<span class="st">'jesse'</span>, <span class="st">'missdellion'</span>, <span class="st">'jefigun'</span>]</a>
-<a class="sourceLine" id="cb10-14" data-line-number="14">        [<span class="st">'benkudria'</span>, <span class="st">'bockman'</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" title="1">        parts <span class="op">=</span> nx.connected_components(G)</a>
+<a class="sourceLine" id="cb10-2" title="2">        <span class="cf">for</span> p <span class="kw">in</span> parts[:<span class="dv">10</span>]:</a>
+<a class="sourceLine" id="cb10-3" title="3">            p <span class="op">=</span> <span class="bu">filter</span>(<span class="kw">lambda</span> x: name[x] <span class="kw">is</span> <span class="kw">not</span> <span class="st">&quot;&quot;</span>,p)</a>
+<a class="sourceLine" id="cb10-4" title="4">            <span class="bu">print</span> <span class="bu">map</span>(<span class="kw">lambda</span> x: name[x], p)</a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6">        [<span class="st">'grapefruit'</span>, <span class="st">'trinisite'</span>, <span class="st">'Flarocket'</span>, <span class="st">'jay'</span>, <span class="st">'bunshri'</span>, <span class="st">'sirloopy'</span>, <span class="st">'orospakr'</span>, <span class="st">'faeriebeliever'</span>, <span class="st">'sloanroyal'</span>, <span class="st">'i80386'</span>, <span class="st">'brob'</span>, <span class="st">'ash'</span>, <span class="st">'LapTop006'</span>, <span class="st">'efk2'</span>]</a>
+<a class="sourceLine" id="cb10-7" title="7">        [<span class="st">'pmhesse'</span>, <span class="st">'Exposure101'</span>, <span class="st">'origami'</span>, <span class="st">'meee'</span>, <span class="st">'firstohit'</span>, <span class="st">'vol'</span>, <span class="st">'dvalued'</span>, <span class="st">'earthling'</span>, <span class="st">'MR H'</span>, <span class="st">'Someone else got my bag'</span>]</a>
+<a class="sourceLine" id="cb10-8" title="8">        [<span class="st">'echo'</span>, <span class="st">'Rop'</span>, <span class="st">'THE NIGHTSTALKER'</span>, <span class="st">'techDarko'</span>, <span class="st">'kupo'</span>, <span class="st">'bigjosh'</span>, <span class="st">'Bunni3burn'</span>, <span class="st">'shogun'</span>, <span class="st">'bocci'</span>]</a>
+<a class="sourceLine" id="cb10-9" title="9">        [<span class="st">'Milosch'</span>, <span class="st">'testuser'</span>, <span class="st">'autoexec'</span>, <span class="st">'daravinne'</span>, <span class="st">'AtomicSunset'</span>, <span class="st">'FrodoNJ'</span>, <span class="st">'n1nj4j0'</span>, <span class="st">'twelve88'</span>, <span class="st">'aestetix'</span>]</a>
+<a class="sourceLine" id="cb10-10" title="10">        [<span class="st">'roadtrip'</span>, <span class="st">'moonmaster9000'</span>, <span class="st">'EJL'</span>, <span class="st">'devolut'</span>, <span class="st">'pv2k'</span>, <span class="st">'nightarrow'</span>, <span class="st">'HorseShit'</span>]</a>
+<a class="sourceLine" id="cb10-11" title="11">        [<span class="st">'serif'</span>, <span class="st">'wazntme379'</span>, <span class="st">'Vyrus'</span>, <span class="st">'caselaredo'</span>]</a>
+<a class="sourceLine" id="cb10-12" title="12">        [<span class="st">'fddi'</span>, <span class="st">'MissInformation'</span>, <span class="st">'das'</span>, <span class="st">'fenrir'</span>, <span class="st">'Cyanide'</span>, <span class="st">'catfish'</span>, <span class="st">'asciimo'</span>]</a>
+<a class="sourceLine" id="cb10-13" title="13">        [<span class="st">'jesse'</span>, <span class="st">'missdellion'</span>, <span class="st">'jefigun'</span>]</a>
+<a class="sourceLine" id="cb10-14" title="14">        [<span class="st">'benkudria'</span>, <span class="st">'bockman'</span>]</a></code></pre></div>
 <h3 id="protovis-graph">Protovis graph</h3>
 <p>These visualizations have shed light on the nature of the attendees at the last hope. Still, sometimes we want a more interactive way of working with these networks. So let’s pop the talk graph into <a href="http://vis.stanford.edu/protovis">protovis</a> and display it.</p>
 <p>Due to the size of the graph. I am displaying it on a separate page. Click the image to get to the full display.</p>
