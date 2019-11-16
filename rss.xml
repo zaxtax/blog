@@ -458,10 +458,13 @@ function toggle(id) {
 <p><span class="math display">\[ \overline{q}_\phi(\v{z}) = \Expect_{p_d(\v{x})} \big[ q_\phi(\v{z} \mid \v{x}) \big] \]</span></p>
 <p>This is sometimes called the aggregate posterior.</p>
 <p>With that we can decompose our KL on the prior into a mutual information term that encourages each <span class="math inline">\(q_\phi(\v{z} \mid \v{x})\)</span> we create to be near the average one <span class="math inline">\(\overline{q}_\phi(\v{z})\)</span> and a KL between this average distribution and the prior. The encourages the representation generated for <span class="math inline">\(\v{z}\)</span> to be useful.</p>
-<p><span class="math display">\[ \mathcal{L}(\phi) = \Expect_{q_\phi(\v{z} \mid \v{x})}[\log p(\v{x} \mid \v{z})] - \mathbb{I}_q(\v{x},\v{z})  - \text{KL}(\overline{q}_\phi(\v{z}) \;\|\; p(\v{z})) \]</span></p>
+<p><span class="math display">\[ w\mathcal{L}(\phi) = \Expect_{q_\phi(\v{z} \mid \v{x})}[\log p(\v{x} \mid \v{z})] - \mathbb{I}_q(\v{x},\v{z})  - \text{KL}(\overline{q}_\phi(\v{z}) \;\|\; p(\v{z})) \]</span></p>
 <p>where</p>
 <p><span class="math display">\[ \mathbb{I}_q(\v{x},\v{z}) \triangleq \Expect_{p_d}\big[\Expect_{q_\phi(\v{z} \mid \v{x})} \big[\log q_\phi(\v{z} \mid \v{x})\big] \big]
 - \Expect_{\overline{q}_\phi(\v{z})} \log \overline{q}_\phi(\v{z}) \]</span></p>
+<h2 id="difference-of-two-kl-divergences">Difference of two KL divergences</h2>
+<p>With something like <span class="math inline">\(p_d\)</span> around it is also possible to pull out the relationship between <span class="math inline">\(p\)</span> and <span class="math inline">\(p_d\)</span>. This is particularly relevant if you intend to learn <span class="math inline">\(p\)</span>.</p>
+<p><span class="math display">\[ \mathcal{L}(\phi) = - \text{KL}(q_\phi(\v{z} \mid \v{x}) \;\|\; p(\v{z} \mid \v{x})) - \text{KL}(p_d(\v{x}) \;\|\; p(\v{x})) \]</span></p>
 <h2 id="full-decomposition">Full decomposition</h2>
 <p>Of course with more aggressive rearranging, we can just have a term to encourage learning better latent representations. In a setting where you aren’t learning <span class="math inline">\(p\)</span> some of these terms are constant and can generally be ignored. I provide them here for completeness.</p>
 <p><span class="math display">\[ \mathcal{L}(\phi) = \Expect_{q_\phi(\v{z} \mid \v{x})}\left[ \log\frac{p(\v{x} \mid \v{z})}{p(\v{x})}
@@ -477,6 +480,7 @@ function toggle(id) {
 <li><a href="https://arxiv.org/pdf/1711.00464.pdf">Fixing a Broken ELBO</a></li>
 <li><a href="https://arxiv.org/pdf/1804.02086.pdf">Structured Disentangled Representations</a></li>
 <li><a href="https://arxiv.org/abs/1511.06349">Generating Sentences from a Continuous Space</a></li>
+<li><a href="https://arxiv.org/abs/1702.08658">Towards Deeper Understanding of Variational Autoencoding Models</a></li>
 </ul>
 
 </div>
