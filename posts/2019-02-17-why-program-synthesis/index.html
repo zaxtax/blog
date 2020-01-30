@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Why care about Program Synthesis</title>
+        <style>
+
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
+
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+	  
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+          extensions: ["AMSmath.js"],
+          Macros: {
+              Expect: '{\\mathbb E}',
+              real: '{\\mathbb R}',
+              v: ['{\\mathbf{#1}}',1],
+          }
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+          styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+    <li class="navbar-icon">
+      <a href="mailto:com.zinkov@rob"><i class="fa fa-envelope-o"></i></a>
+    </li>
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/" rel="me"><i class="fa fa-github"></i></a>
+    </li>
+	<li class="navbar-icon"><a href="https://twitter.com/zaxtax/">
+	<i class="fa fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>Why care about Program Synthesis</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2019-02-17</h5>
+</div>
+
+<div class="text-left">
+
+<p>Program synthesis is now emerging as an exciting new area of research not just in the programming languages community, but also the machine learning community. In this post, I’d like to convince you why this area of study has the potential to solve precisely the kinds of problems existing approaches built around differential programming struggle with.</p>
+<h2 id="basics-of-program-synthesis">Basics of Program Synthesis</h2>
+<p>To start let’s informally and somewhat formally define what makes something a program synthesis problem. Informally, program synthesis is where given a some language <span class="math inline">\(\mathcal{L}\)</span> and specification <span class="math inline">\(\mathcal{S}\)</span> we return a program <span class="math inline">\(\mathcal{P} \in \mathcal{L}\)</span> which meets that specification.</p>
+<p>So what languages (<span class="math inline">\(\mathcal{L}\)</span>) will we use? In principle, any language can be used. So we can synthesize Python code. In practice, because it is difficult these days to create programs much longer than 20-30 lines of code, we concentrate on domain-specific languages (DSLs). DSLs are languages like SQL, Regexes, or OpenGL shaders. If we are willing to be a bit loose about what defines a language, this can include synthesizing a set of library calls like <a href="https://autopandas.io/">Autopandas</a>. All the matters is we can define a grammar that covers the space of programs we wish to consider.</p>
+<pre>
+   &lt;regex&gt; ::= &lt;term&gt; '|' &lt;regex&gt;
+            |  &lt;term&gt;
+
+   &lt;term&gt; ::= { &lt;factor&gt; }
+
+   &lt;factor&gt; ::= &lt;base&gt; { '*' }
+             
+   &lt;base&gt; ::= &lt;char&gt;
+           |  '\' &lt;char&gt;
+           |  '(' &lt;regex&gt; ')'  
+</pre>
+<p><strong>Regex grammar</strong></p>
+<p>What do we mean by a specification (<span class="math inline">\(\mathcal{S}\)</span>)?</p>
+<p>This can actually be a wide variety of things. <span class="math inline">\(\mathcal{S}\)</span> can be in particular order one or more of the following:</p>
+<ul>
+<li>A formal specification of the problem including things like theorems that must be proved along with other formal verification steps.</li>
+<li>A set of input/output examples</li>
+<li>A set of unit tests and <a href="https://hypothesis.works/articles/what-is-property-based-testing/">property-based</a> tests</li>
+<li>A natural language description of the problem</li>
+<li>A set of execution traces of the desired program</li>
+<li>A sketch of a program where we have a partial program and some blanks we would like to fill in</li>
+<li>A correct but inefficient implementation of the desire program</li>
+</ul>
+<p>While not strictly necessary, we may also have some side information like: * Similar but incorrect programs * A set of other programs in <span class="math inline">\(\mathcal{L}\)</span></p>
+<p>If we restrict ourselves to a specification that consists of input/output examples and a language of pure functions we get something pretty similar to supervised machine learning. But because the specification can be much richer we actually tackle problems that are hard to pose in a way amendable to traditional machine learning algorithms.</p>
+<h2 id="program-synthesis-is-good-for">Program synthesis is good for</h2>
+<h3 id="introduction">Introduction</h3>
+<p>Now while it is a nice generic formalism that isn’t very compelling if there aren’t problems that benefit from being posed that way. Deep Learning and other optimization methods can now be used to solve a diverse set of problems. What problems tend to easier to solve with program syntheis? As things stand today that main advantages of specifically wanting to generate a program have to do with <em>interpretability</em>, <em>generalisability</em>, <em>verification</em>, <em>combinatorial problems</em>, and <em>output needs to be a program</em>.</p>
+<h3 id="interpretability">Interpretability</h3>
+<p>Consider the task of automatically grading assignments. How would you go about doing this? You might treat this as a classification task where you find the errors. The challenge with this problem is there can be multiple valid solutions, and the fix for the assignment will depend on which solution you think the student was attempting.</p>
+<p>Instead, we can synthesize the correct program but exploring the space of small edits that get us from the incorrect program to a correct program that satisfies an already written specification. These edits can then be presented to the student. This is precisely what the paper <a href="https://arxiv.org/abs/1204.1751">Automated Feedback Generation for Introductory Programming Assignments</a> does on a subset of the Python language, and the paper <a href="https://openreview.net/pdf?id=B1iZRFkwz">Towards Specification-Directed Program Repair</a> which does it for the robot manipulation DSL Karel.</p>
+<p>If we didn’t treat this as a program we would have likely ended up with some character edits which as much less interpretable.</p>
+<h3 id="generalisability">Generalisability</h3>
+<p>Many deep learning models struggle with generalisibility. They tend not to be very robust to small distribution differences between the training and the testing set as well as being prone to adversarial examples where small imperceptible changes to the input radically change the prediction.</p>
+<p>But for many domains if we represent our function as a program it can be made more robust to perturbations of the input like that as can be seen in <a href="https://arxiv.org/abs/1707.09627">Learning to Infer Graphics Programs from Hand-Drawn Images</a></p>
+<p>There are actually particular challenges that face the most popular machine learning models which give program synthesis approaches no problems. We know LSTM have trouble with copy and reverse functions as seen in the <a href="https://deepmind.com/blog/article/differentiable-neural-computers">Differentiable Neural computers</a> paper.</p>
+<p>LSTM models have trouble generalising to test data longer than training data as can be seen in <a href="Neural%20Logic%20Machines">https://arxiv.org/abs/1904.11694</a></p>
+<p>In contrast the papers <a href="https://arxiv.org/abs/1704.06611">Making Neural Programming Architectures Generalize via Recursion</a> and <a href="https://arxiv.org/abs/1706.01284">Towards Synthesizing Complex Programs from Input-Output Examples</a> show no issues with either of those tasks.</p>
+<p><img src="../../images/genres1.png" /></p>
+<h3 id="verification">Verification</h3>
+<p>Another advantage comes from our output artifact from a program. Neural networks are difficult to formally verify and at present often require major restrictions be placed on the models. In contrast, with programs we can reuse existing infrastructure for verifying deterministic programs. We can thus verify these programs terminate or obey a formal spec. In some domains like robotics we can check if the program has controlability.</p>
+<h3 id="problems-with-combinatorial-shape">Problems with combinatorial shape</h3>
+<p>Problems that require dealing with graphs, trees, and permutations still remain fairly challenging for existing machine learning algorithms. Programs are a natural representation for manipulating combinatorial structures. <a href="https://arxiv.org/abs/1506.03134">Pointer networks</a>, <a href="https://arxiv.org/abs/1802.08665">Sinkhorn networks</a> along with work with Memory networks and Neural Turing Machines shows that at the moment it is difficult to learn a function that can handle anything beyond toy problems which themselves have trouble generalizing to larger domains.</p>
+<h3 id="required-to-use-some-api-output-must-be-program">Required to use some api / output must be program</h3>
+<p>And finally, sometimes for one reason or another you need an output that must satisfy some grammar. This might be learning to generate a phone number or a URL. We might have some API we need to conform like if we are trying to generate mobile software that needs to call out to Android or IOS primitives.</p>
+<p>We could be using program synthesis for compiler optimization so we must generate a valid program as output. We could be learning to <a href="https://www.sri.inf.ethz.ch/publications/raychev2015predicting">deobfuscate code</a>. Or learning to generate code that would automatically <a href="https://security.ece.cmu.edu/aeg/aeg-current.pdf">hack a system</a>.</p>
+<p>Any other approach will need to model the grammar to make output that is acceptable and at that point could also be argued is performing program synthesis.</p>
+<h2 id="conclusions">Conclusions</h2>
+<p>None of this is meant to say that these problems couldn’t be solved with other methods, but program synthesis has distinct advantages that enables them to solve them particularly well.</p>
+
+</div>
+
+<div id="disqus_thread"></div>
+<script>
+    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+        var d = document, s = d.createElement('script');
+
+        // IMPORTANT: Replace EXAMPLE with your forum shortname!
+        s.src = 'https://convexoptimized.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view the 
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+        comments powered by Disqus.
+    </a>
+</noscript>
+
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
+</html>
