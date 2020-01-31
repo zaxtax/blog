@@ -143,6 +143,7 @@ function toggle(id) {
            |  '(' &lt;regex&gt; ')'  
 </pre>
 <p><strong>Regex grammar</strong></p>
+<p><img src="../../images/grammar_graphics.png" /></p>
 <p>What do we mean by a specification (<span class="math inline">\(\mathcal{S}\)</span>)?</p>
 <p>This can actually be a wide variety of things. <span class="math inline">\(\mathcal{S}\)</span> can be in particular order one or more of the following:</p>
 <ul>
@@ -163,6 +164,8 @@ function toggle(id) {
 <p>Consider the task of automatically grading assignments. How would you go about doing this? You might treat this as a classification task where you find the errors. The challenge with this problem is there can be multiple valid solutions, and the fix for the assignment will depend on which solution you think the student was attempting.</p>
 <p>Instead, we can synthesize the correct program but exploring the space of small edits that get us from the incorrect program to a correct program that satisfies an already written specification. These edits can then be presented to the student. This is precisely what the paper <a href="https://arxiv.org/abs/1204.1751">Automated Feedback Generation for Introductory Programming Assignments</a> does on a subset of the Python language, and the paper <a href="https://openreview.net/pdf?id=B1iZRFkwz">Towards Specification-Directed Program Repair</a> which does it for the robot manipulation DSL Karel.</p>
 <p>If we didn’t treat this as a program we would have likely ended up with some character edits which as much less interpretable.</p>
+<p>This can be seen more strikingly in <a href="https://arxiv.org/abs/1707.09627">Learning to Infer Graphics Programs from Hand-Drawn Images</a> where the program we learn in being a program better communicates the structure in the image.</p>
+<p><img src="../../images/infer_graphics.png" /></p>
 <h3 id="generalisability">Generalisability</h3>
 <p>Many deep learning models struggle with generalisibility. They tend not to be very robust to small distribution differences between the training and the testing set as well as being prone to adversarial examples where small imperceptible changes to the input radically change the prediction.</p>
 <p>But for many domains if we represent our function as a program it can be made more robust to perturbations of the input like that as can be seen in <a href="https://arxiv.org/abs/1707.09627">Learning to Infer Graphics Programs from Hand-Drawn Images</a></p>
