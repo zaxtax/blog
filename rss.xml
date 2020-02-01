@@ -155,7 +155,11 @@ function toggle(id) {
 <li>A sketch of a program where we have a partial program and some blanks we would like to fill in</li>
 <li>A correct but inefficient implementation of the desire program</li>
 </ul>
-<p>While not strictly necessary, we may also have some side information like: * Similar but incorrect programs * A set of other programs in <span class="math inline">\(\mathcal{L}\)</span></p>
+<p>While not strictly necessary, we may also have some side information like:</p>
+<ul>
+<li>Similar but incorrect programs</li>
+<li>A set of other programs in <span class="math inline">\(\mathcal{L}\)</span></li>
+</ul>
 <p>If we restrict ourselves to a specification that consists of input/output examples and a language of pure functions we get something pretty similar to supervised machine learning. But because the specification can be much richer we actually tackle problems that are hard to pose in a way amendable to traditional machine learning algorithms.</p>
 <h2 id="program-synthesis-is-good-for">Program synthesis is good for</h2>
 <h3 id="introduction">Introduction</h3>
