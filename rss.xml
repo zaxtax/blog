@@ -190,25 +190,6 @@ function toggle(id) {
 
 </div>
 
-<div id="disqus_thread"></div>
-<script>
-    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-        var d = document, s = d.createElement('script');
-
-        // IMPORTANT: Replace EXAMPLE with your forum shortname!
-        s.src = 'https://convexoptimized.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>
-    Please enable JavaScript to view the 
-    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
-        comments powered by Disqus.
-    </a>
-</noscript>
-
   </div>
   </main>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
@@ -483,25 +464,6 @@ Misc
 
 </div>
 
-<div id="disqus_thread"></div>
-<script>
-    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-        var d = document, s = d.createElement('script');
-
-        // IMPORTANT: Replace EXAMPLE with your forum shortname!
-        s.src = 'https://convexoptimized.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>
-    Please enable JavaScript to view the 
-    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
-        comments powered by Disqus.
-    </a>
-</noscript>
-
   </div>
   </main>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
@@ -696,25 +658,6 @@ function toggle(id) {
 
 </div>
 
-<div id="disqus_thread"></div>
-<script>
-    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-        var d = document, s = d.createElement('script');
-
-        // IMPORTANT: Replace EXAMPLE with your forum shortname!
-        s.src = 'https://convexoptimized.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>
-    Please enable JavaScript to view the 
-    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
-        comments powered by Disqus.
-    </a>
-</noscript>
-
   </div>
   </main>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
@@ -875,25 +818,6 @@ Someone want to Bayesian switchpoint model this? See first chapter of BMH <a hre
 <p>Apologies in advance for not using more Simpsons jokes in this post. You can find the code and data I used on <a href="https://github.com/zaxtax/simpsons_changepoint">github</a>.</p>
 
 </div>
-
-<div id="disqus_thread"></div>
-<script>
-    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-        var d = document, s = d.createElement('script');
-
-        // IMPORTANT: Replace EXAMPLE with your forum shortname!
-        s.src = 'https://convexoptimized.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>
-    Please enable JavaScript to view the 
-    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
-        comments powered by Disqus.
-    </a>
-</noscript>
 
   </div>
   </main>
@@ -1222,25 +1146,6 @@ function toggle(id) {
 <p>Special thanks to <a href="http://www.lambdageek.org/aleksey/">Aleksey Kliger</a> for helping me understand this library.</p>
 
 </div>
-
-<div id="disqus_thread"></div>
-<script>
-    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-        var d = document, s = d.createElement('script');
-
-        // IMPORTANT: Replace EXAMPLE with your forum shortname!
-        s.src = 'https://convexoptimized.disqus.com/embed.js';
-
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>
-    Please enable JavaScript to view the 
-    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
-        comments powered by Disqus.
-    </a>
-</noscript>
 
   </div>
   </main>
