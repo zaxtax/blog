@@ -114,7 +114,7 @@ function toggle(id) {
 <div class="text-left">
 
 <p>There is this practice in many machine learning papers to describe the statistical model using a graphical representation called <a href="http://en.wikipedia.org/wiki/Plate_notation">Plate Notation</a>. Many people use it as a clear and compact way to summarize their models. I would like to argue that plate notation is largely useless, and hinders more than helps readers understand what was done.</p>
-<p>The primary issues with this notation is doesn’t handle complex model very well, it hides too many details while in many ways not hiding enough of them all while being very hard to read and comprehend.</p>
+<p>The primary issues with this notation is it doesn’t handle complex models very well, it hides too many details while in many ways not hiding enough of them all while being very hard to read and comprehend.</p>
 <h2 id="basic-example">Basic Example</h2>
 <p>What do I mean by hard to read? Quick tell me what these models do?</p>
 <p><img src="../../images/asym_lda.png" /></p>
@@ -123,7 +123,7 @@ function toggle(id) {
 <p>Does that help? Do you know everything you need now to understand the model that was used?</p>
 <p>Well, you know everything the caption bothered to tell you. You don’t know the distribution that all the random variables came from.</p>
 <p>Now this isn’t a slight against the research behind <a href="http://people.cs.umass.edu/~wallach/publications/wallach09rethinking.pdf">this paper</a>. Wallach and friends have a cool model on their hands, they just chose a bad way to represent it.</p>
-<p>Keep in the mind plate notation, while good at grouping variables that share a latent variable, it is very bad at compacting models where there are long chains of dependencies. This is most obvious in something like a hidden markov model.</p>
+<p>Keep in the mind plate notation, while good at grouping variables that share a latent variable, it is very bad at expressing models where there are long chains of dependencies. This is most obvious in something like a hidden markov model.</p>
 <p><img src="../../images/ihmm.png" /></p>
 <p>Now you could say, it’s ok to just expand things out when the notation is failing, but these are common models that simply aren’t being expressed compactly. And you want that compactness especially when lots of repeating elements start happening. Something like TrueSkill with its repeating elements is not something you want in its raw form.</p>
 <p><img src="../../images/trueskill.png" /></p>
