@@ -249,7 +249,7 @@ function toggle(id) {
 <a class="sourceLine" id="cb17-26" title="26">ax.<span class="bu">set</span>(ylabel<span class="op">=</span><span class="st">&quot;Probability of $y=1$&quot;</span>, xlabel<span class="op">=</span><span class="st">&quot;x value&quot;</span>)</a>
 <a class="sourceLine" id="cb17-27" title="27">plt.show()</a></code></pre></div>
 <p><img src="../../images/AltPyMC/output_29_0.png" /></p>
-<p>While I personally think changes simplify the models and speed-up up the interactive workflow, that’s not the main reason I share them. I share them because more of us should be doing little experiments like these. There are certainly more low-hanging fruits to be had for people are willing to join in!</p>
+<p>While I personally think changes simplify the models and speed-up up the interactive workflow, that’s not the main reason I share them. I share them because more of us should be doing little experiments like these. There are certainly more low-hanging fruits to be had for people who are willing to join in!</p>
 
 </div>
 
