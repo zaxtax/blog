@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Alternative Frontends for PyMC</title>
+        <style>
+
+	  html body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+	  }
+
+	  :root {
+            --accent: #002147;
+            --border-width: 5px ;
+	  }
+	  
+        </style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+
+<link rel="feed" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml" />
+
+<link rel="stylesheet" href="../../css/minimal.css">
+<link rel="stylesheet" type="text/css" href="../../css/code2.css" />
+
+
+
+<script type="text/javascript">
+function toggle(id) {
+    el = document.getElementById(id);
+    if (el.style.display == 'none') {
+	el.style.display = 'block';
+    } else {
+	el.style.display = 'none';
+    }
+}
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      TeX: {
+          extensions: ["AMSmath.js"],
+          Macros: {
+              Expect: '{\\mathbb E}',
+              real: '{\\mathbb R}',
+              v: ['{\\mathbf{#1}}',1],
+          }
+      },
+      tex2jax: {
+	  inlineMath: [	 ["\\(","\\)"], ],
+	  displayMath: [  ["\\[","\\]"] ]
+      },
+      displayAlign: 'center', // Change this to 'center' to center equations.
+      "HTML-CSS": {
+          styles: {'.MathJax_Display': {"margin": 4}}
+      }
+  });
+</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../">Convex Optimized</a>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar">
+	<span class="sr-only">Toggle navigation</span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="bs-navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+	<li><a href="../../archive/">Archive</a></li>
+	<li><a href="../../pubs/">Publications</a></li>
+	<li><a href="../../about/">About</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+    <li class="navbar-icon">
+      <a href="mailto:com.zinkov@rob"><i class="far fa-envelope"></i></a>
+    </li>
+	<li class="navbar-icon">
+      <a href="https://github.com/zaxtax/" rel="me"><i class="fab fa-github"></i></a>
+    </li>
+	<li class="navbar-icon">
+      <a href="https://bayes.club/@z" rel="me"><i class="fab fa-mastodon"></i></a>
+    </li>
+	<li class="navbar-icon">
+      <a href="https://twitter.com/zaxtax/"> <i class="fab fa-twitter"></i></a>
+    </li>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+  <div class="item">
+  <div class="item">
+<h2>Alternative Frontends for PyMC</h2>
+<h5><strong>Rob Zinkov</strong></h5>
+<h5>2023-11-19</h5>
+</div>
+
+<div class="text-left">
+
+<p>When people are starting to learn <code>pymc</code> they often assume the syntax and workflow for the library is something that’s unchangeable. But thanks to the modular way the library is implemented, I’m going to show that it’s fairly easy to use it in a totally different way!</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1"><span class="im">from</span> functools <span class="im">import</span> wraps</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="im">import</span> pymc <span class="im">as</span> pm</a></code></pre></div>
+<h2 id="sample-as-a-method-on-the-model">Sample as a method on the model</h2>
+<p>Some people see sampling as more a method on the model than a function. We can always extend <code>pm.Model</code> for those that find that more intuitive</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">class</span> Model(pm.Model):</a>
+<a class="sourceLine" id="cb2-2" title="2">    <span class="kw">def</span> sample(<span class="va">self</span>, <span class="op">*</span>args, <span class="op">**</span>kwargs):</a>
+<a class="sourceLine" id="cb2-3" title="3">        <span class="cf">return</span> pm.sample(<span class="op">*</span>args, model<span class="op">=</span><span class="va">self</span>, <span class="op">**</span>kwargs)</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="kw">def</span> sample_posterior_predictive(<span class="va">self</span>, <span class="op">*</span>args, <span class="op">**</span>kwargs):</a>
+<a class="sourceLine" id="cb2-6" title="6">        <span class="cf">return</span> pm.sample_posterior_predictive(</a>
+<a class="sourceLine" id="cb2-7" title="7">            <span class="op">*</span>args,</a>
+<a class="sourceLine" id="cb2-8" title="8">            model<span class="op">=</span><span class="va">self</span>,</a>
+<a class="sourceLine" id="cb2-9" title="9">            <span class="op">**</span>kwargs,</a>
+<a class="sourceLine" id="cb2-10" title="10">        )</a></code></pre></div>
+<p>Here is a simple example of it in action</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1"><span class="cf">with</span> Model() <span class="im">as</span> basic_model:</a>
+<a class="sourceLine" id="cb3-2" title="2">    x <span class="op">=</span> pm.Normal(<span class="st">&quot;x&quot;</span>, <span class="fl">0.</span>, <span class="fl">1.</span>)</a>
+<a class="sourceLine" id="cb3-3" title="3">    y <span class="op">=</span> pm.Normal(<span class="st">&quot;y&quot;</span>, x, <span class="fl">1.</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4"></a>
+<a class="sourceLine" id="cb3-5" title="5">idata <span class="op">=</span> basic_model.sample(draws<span class="op">=</span><span class="dv">1000</span>)</a></code></pre></div>
+<h2 id="models-as-parameterised-functions">Models as parameterised functions</h2>
+<p>The idea here is to create models by just using a decorator. This change in practice removes all need to think about context managers</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">def</span> model(f):</a>
+<a class="sourceLine" id="cb4-2" title="2">    <span class="at">@wraps</span>(f)</a>
+<a class="sourceLine" id="cb4-3" title="3">    <span class="kw">def</span> make_model(<span class="op">*</span>args, <span class="op">**</span>kwargs):</a>
+<a class="sourceLine" id="cb4-4" title="4">        <span class="cf">with</span> Model() <span class="im">as</span> m:</a>
+<a class="sourceLine" id="cb4-5" title="5">            f(<span class="op">*</span>args, <span class="op">**</span>kwargs)</a>
+<a class="sourceLine" id="cb4-6" title="6">            <span class="cf">return</span> m</a>
+<a class="sourceLine" id="cb4-7" title="7">    <span class="cf">return</span> make_model</a></code></pre></div>
+<p>With this change our previous model becomes:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" title="1"><span class="at">@model</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">def</span> basic_model(mu):</a>
+<a class="sourceLine" id="cb5-3" title="3">    x <span class="op">=</span> pm.Normal(<span class="st">&quot;x&quot;</span>, <span class="fl">0.</span>, <span class="fl">1.</span>)</a>
+<a class="sourceLine" id="cb5-4" title="4">	y <span class="op">=</span> pm.Normal(<span class="st">&quot;y&quot;</span>, x, <span class="fl">1.</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1">m <span class="op">=</span> basic_model(mu<span class="op">=</span><span class="fl">0.</span>)</a>
+<a class="sourceLine" id="cb6-2" title="2">idata <span class="op">=</span> m.sample(draws<span class="op">=</span><span class="dv">1000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1">pm.plot_trace(idata)<span class="op">;</span></a></code></pre></div>
+<p><img src="../../images/AltPyMC/output_14_0.png" /></p>
+<p>But the real composition happens with how readily helper methods can be used</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">def</span> hyperprior(name, <span class="op">**</span>kwargs):</a>
+<a class="sourceLine" id="cb8-2" title="2">    mu <span class="op">=</span> pm.Normal(name <span class="op">+</span> <span class="st">&quot;_mu&quot;</span>, mu<span class="op">=</span><span class="dv">0</span>, sigma<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb8-3" title="3">    sd <span class="op">=</span> pm.HalfNormal(name <span class="op">+</span> <span class="st">&quot;_sd&quot;</span>, sigma<span class="op">=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb8-4" title="4">    <span class="cf">return</span> pm.Normal(name, mu<span class="op">=</span>mu, sigma<span class="op">=</span>sd, <span class="op">**</span>kwargs)</a>
+<a class="sourceLine" id="cb8-5" title="5"></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="at">@model</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="kw">def</span> model_with_helper():</a>
+<a class="sourceLine" id="cb8-8" title="8">    y <span class="op">=</span> hyperprior(<span class="st">&quot;y&quot;</span>)</a>
+<a class="sourceLine" id="cb8-9" title="9">    z <span class="op">=</span> hyperprior(<span class="st">&quot;z&quot;</span>, observed<span class="op">=</span><span class="fl">2.</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" title="1">m <span class="op">=</span> model_with_helper()</a>
+<a class="sourceLine" id="cb9-2" title="2">idata <span class="op">=</span> pm.sample(model<span class="op">=</span>m)</a></code></pre></div>
+<p><img src="../../images/AltPyMC/output_18_0.png" /></p>
+<p>And since the model return is an ordinary pymc model object, it can be readily used for things like posterior predictive checks</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" title="1">y_data <span class="op">=</span> np.random.normal(size<span class="op">=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2"></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="at">@model</span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="kw">def</span> ppc_model():</a>
+<a class="sourceLine" id="cb10-5" title="5">    x <span class="op">=</span> pm.Normal(<span class="st">&quot;x&quot;</span>)</a>
+<a class="sourceLine" id="cb10-6" title="6">    y <span class="op">=</span> pm.Normal(<span class="st">&quot;y&quot;</span>, x, <span class="fl">1.</span>, observed<span class="op">=</span>y_data)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" title="1">m <span class="op">=</span> ppc_model()</a>
+<a class="sourceLine" id="cb11-2" title="2">idata <span class="op">=</span> pm.sample(draws<span class="op">=</span><span class="dv">1000</span>, model<span class="op">=</span>m)</a>
+<a class="sourceLine" id="cb11-3" title="3">idata <span class="op">=</span> pm.sample_posterior_predictive(trace<span class="op">=</span>idata, model<span class="op">=</span>m)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1">pm.plot_ppc(idata)<span class="op">;</span></a></code></pre></div>
+<p><img src="../../images/AltPyMC/output_22_1.png" /></p>
+<p>Finally, one underappreciated aspect of this functional approach to defining model is avoids the need for <code>pm.MutableData</code> in simpler models. Porting an <a href="https://www.pymc.io/projects/examples/en/latest/fundamentals/data_container.html#applied-example-using-mutabledata-as-input-to-a-binomial-glm">example</a> from the documentation</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" title="1">n_obs <span class="op">=</span> <span class="dv">100</span></a>
+<a class="sourceLine" id="cb13-2" title="2">true_beta <span class="op">=</span> <span class="fl">2.5</span></a>
+<a class="sourceLine" id="cb13-3" title="3">true_alpha <span class="op">=</span> <span class="fl">0.25</span></a>
+<a class="sourceLine" id="cb13-4" title="4"></a>
+<a class="sourceLine" id="cb13-5" title="5">x <span class="op">=</span> np.random.normal(size<span class="op">=</span>n_obs)</a>
+<a class="sourceLine" id="cb13-6" title="6">true_p <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>(true_alpha <span class="op">+</span> true_beta <span class="op">*</span> x)))</a>
+<a class="sourceLine" id="cb13-7" title="7">y <span class="op">=</span> np.random.binomial(n<span class="op">=</span><span class="dv">1</span>, p<span class="op">=</span>true_p)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb14-1" title="1"><span class="at">@model</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="kw">def</span> logistic_model(x, y):</a>
+<a class="sourceLine" id="cb14-3" title="3">    alpha <span class="op">=</span> pm.Normal(<span class="st">&quot;alpha&quot;</span>)</a>
+<a class="sourceLine" id="cb14-4" title="4">    beta <span class="op">=</span> pm.Normal(<span class="st">&quot;beta&quot;</span>)</a>
+<a class="sourceLine" id="cb14-5" title="5">    p <span class="op">=</span> pm.Deterministic(<span class="st">&quot;p&quot;</span>, pm.math.sigmoid(alpha <span class="op">+</span> beta <span class="op">*</span> x))</a>
+<a class="sourceLine" id="cb14-6" title="6">    obs <span class="op">=</span> pm.Bernoulli(<span class="st">&quot;obs&quot;</span>, p<span class="op">=</span>p, observed<span class="op">=</span>y, shape<span class="op">=</span>x.shape[<span class="dv">0</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb15-1" title="1">lm <span class="op">=</span> logistic_model(x, y)</a>
+<a class="sourceLine" id="cb15-2" title="2">idata <span class="op">=</span> lm.sample()</a>
+<a class="sourceLine" id="cb15-3" title="3"></a>
+<a class="sourceLine" id="cb15-4" title="4">idata <span class="op">=</span> lm.sample_posterior_predictive(</a>
+<a class="sourceLine" id="cb15-5" title="5">    idata, extend_inferencedata<span class="op">=</span><span class="va">True</span>,</a>
+<a class="sourceLine" id="cb15-6" title="6">)</a></code></pre></div>
+<p>We call the <code>logistic_model</code> function with different arguments changing to use <code>x_grid</code> instead of <code>x</code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" title="1">grid_size <span class="op">=</span> <span class="dv">250</span></a>
+<a class="sourceLine" id="cb16-2" title="2">x_grid <span class="op">=</span> np.linspace(x.<span class="bu">min</span>(), x.<span class="bu">max</span>(), grid_size)</a>
+<a class="sourceLine" id="cb16-3" title="3">lm_grid <span class="op">=</span> logistic_model(x_grid, y)</a>
+<a class="sourceLine" id="cb16-4" title="4">post_idata <span class="op">=</span> lm_grid.sample_posterior_predictive(</a>
+<a class="sourceLine" id="cb16-5" title="5">    idata, var_names<span class="op">=</span>[<span class="st">&quot;p&quot;</span>, <span class="st">&quot;obs&quot;</span>],</a>
+<a class="sourceLine" id="cb16-6" title="6">)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb17-1" title="1">fig, ax <span class="op">=</span> plt.subplots()</a>
+<a class="sourceLine" id="cb17-2" title="2">hdi <span class="op">=</span> az.hdi(post_idata.posterior_predictive.p).p</a>
+<a class="sourceLine" id="cb17-3" title="3"></a>
+<a class="sourceLine" id="cb17-4" title="4">ax.scatter(</a>
+<a class="sourceLine" id="cb17-5" title="5">    x,</a>
+<a class="sourceLine" id="cb17-6" title="6">    y,</a>
+<a class="sourceLine" id="cb17-7" title="7">    facecolor<span class="op">=</span><span class="st">&quot;none&quot;</span>,</a>
+<a class="sourceLine" id="cb17-8" title="8">    edgecolor<span class="op">=</span><span class="st">&quot;k&quot;</span>,</a>
+<a class="sourceLine" id="cb17-9" title="9">    label<span class="op">=</span><span class="st">&quot;Observed Data&quot;</span>,</a>
+<a class="sourceLine" id="cb17-10" title="10">)</a>
+<a class="sourceLine" id="cb17-11" title="11">p_mean <span class="op">=</span> post_idata.posterior_predictive.p.mean(dim<span class="op">=</span>[<span class="st">&quot;chain&quot;</span>, <span class="st">&quot;draw&quot;</span>])</a>
+<a class="sourceLine" id="cb17-12" title="12">ax.plot(</a>
+<a class="sourceLine" id="cb17-13" title="13">    x_grid,</a>
+<a class="sourceLine" id="cb17-14" title="14">    p_mean,</a>
+<a class="sourceLine" id="cb17-15" title="15">    color<span class="op">=</span><span class="st">&quot;tab:red&quot;</span>,</a>
+<a class="sourceLine" id="cb17-16" title="16">    label<span class="op">=</span><span class="st">&quot;Mean Posterior Probability&quot;</span>,</a>
+<a class="sourceLine" id="cb17-17" title="17">)</a>
+<a class="sourceLine" id="cb17-18" title="18">ax.fill_between(</a>
+<a class="sourceLine" id="cb17-19" title="19">    x_grid,</a>
+<a class="sourceLine" id="cb17-20" title="20">    <span class="op">*</span>hdi.values.T,</a>
+<a class="sourceLine" id="cb17-21" title="21">    color<span class="op">=</span><span class="st">&quot;tab:orange&quot;</span>,</a>
+<a class="sourceLine" id="cb17-22" title="22">    alpha<span class="op">=</span><span class="fl">0.25</span>,</a>
+<a class="sourceLine" id="cb17-23" title="23">    label<span class="op">=</span><span class="st">&quot;94% HDI&quot;</span>,</a>
+<a class="sourceLine" id="cb17-24" title="24">)</a>
+<a class="sourceLine" id="cb17-25" title="25">ax.legend()</a>
+<a class="sourceLine" id="cb17-26" title="26">ax.<span class="bu">set</span>(ylabel<span class="op">=</span><span class="st">&quot;Probability of $y=1$&quot;</span>, xlabel<span class="op">=</span><span class="st">&quot;x value&quot;</span>)</a>
+<a class="sourceLine" id="cb17-27" title="27">plt.show()</a></code></pre></div>
+<p><img src="../../images/AltPyMC/output_29_0.png" /></p>
+<p>While I personally think changes simplify the models and speed-up up the interactive workflow, that’s not the main reason I share them. I share them because more of us should be doing little experiments like these. There are certainly more low-hanging fruits to be had with people are willing to join in!</p>
+
+</div>
+
+  </div>
+  </main>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.15/bootstrap-native.min.js"></script>
+  </body>
+</html>
