@@ -151,10 +151,10 @@ function toggle(id) {
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" title="1"><span class="at">@model</span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="kw">def</span> basic_model(mu):</a>
 <a class="sourceLine" id="cb5-3" title="3">    x <span class="op">=</span> pm.Normal(<span class="st">&quot;x&quot;</span>, <span class="fl">0.</span>, <span class="fl">1.</span>)</a>
-<a class="sourceLine" id="cb5-4" title="4">	y <span class="op">=</span> pm.Normal(<span class="st">&quot;y&quot;</span>, x, <span class="fl">1.</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb5-4" title="4">    y <span class="op">=</span> pm.Normal(<span class="st">&quot;y&quot;</span>, x, <span class="fl">1.</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1">m <span class="op">=</span> basic_model(mu<span class="op">=</span><span class="fl">0.</span>)</a>
 <a class="sourceLine" id="cb6-2" title="2">idata <span class="op">=</span> m.sample(draws<span class="op">=</span><span class="dv">1000</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1">pm.plot_trace(idata)<span class="op">;</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1">pm.plot_trace(idata)</a></code></pre></div>
 <p><img src="../../images/AltPyMC/output_14_0.png" /></p>
 <p>But the real composition happens with how readily helper methods can be used</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">def</span> hyperprior(name, <span class="op">**</span>kwargs):</a>
@@ -179,7 +179,7 @@ function toggle(id) {
 <div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" title="1">m <span class="op">=</span> ppc_model()</a>
 <a class="sourceLine" id="cb11-2" title="2">idata <span class="op">=</span> pm.sample(draws<span class="op">=</span><span class="dv">1000</span>, model<span class="op">=</span>m)</a>
 <a class="sourceLine" id="cb11-3" title="3">idata <span class="op">=</span> pm.sample_posterior_predictive(trace<span class="op">=</span>idata, model<span class="op">=</span>m)</a></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1">pm.plot_ppc(idata)<span class="op">;</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1">pm.plot_ppc(idata)</a></code></pre></div>
 <p><img src="../../images/AltPyMC/output_22_1.png" /></p>
 <p>Finally, one underappreciated aspect of this functional approach to defining model is avoids the need for <code>pm.MutableData</code> in simpler models. Porting an <a href="https://www.pymc.io/projects/examples/en/latest/fundamentals/data_container.html#applied-example-using-mutabledata-as-input-to-a-binomial-glm">example</a> from the documentation</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" title="1">n_obs <span class="op">=</span> <span class="dv">100</span></a>
@@ -236,7 +236,7 @@ function toggle(id) {
 <a class="sourceLine" id="cb17-26" title="26">ax.<span class="bu">set</span>(ylabel<span class="op">=</span><span class="st">&quot;Probability of $y=1$&quot;</span>, xlabel<span class="op">=</span><span class="st">&quot;x value&quot;</span>)</a>
 <a class="sourceLine" id="cb17-27" title="27">plt.show()</a></code></pre></div>
 <p><img src="../../images/AltPyMC/output_29_0.png" /></p>
-<p>While I personally think changes simplify the models and speed-up up the interactive workflow, that’s not the main reason I share them. I share them because more of us should be doing little experiments like these. There are certainly more low-hanging fruits to be had with people are willing to join in!</p>
+<p>While I personally think changes simplify the models and speed-up up the interactive workflow, that’s not the main reason I share them. I share them because more of us should be doing little experiments like these. There are certainly more low-hanging fruits to be had for people are willing to join in!</p>
 
 </div>
 
