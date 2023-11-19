@@ -139,7 +139,7 @@ function toggle(id) {
 <a class="sourceLine" id="cb3-4" title="4"></a>
 <a class="sourceLine" id="cb3-5" title="5">idata <span class="op">=</span> basic_model.sample(draws<span class="op">=</span><span class="dv">1000</span>)</a></code></pre></div>
 <h2 id="models-as-parameterised-functions">Models as parameterised functions</h2>
-<p>The idea here is to create models by just using a decorator. This change in practice removes all need to think about context managers</p>
+<p>The idea here is to create models by just using a decorator.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">def</span> model(f):</a>
 <a class="sourceLine" id="cb4-2" title="2">    <span class="at">@wraps</span>(f)</a>
 <a class="sourceLine" id="cb4-3" title="3">    <span class="kw">def</span> make_model(<span class="op">*</span>args, <span class="op">**</span>kwargs):</a>
@@ -152,6 +152,7 @@ function toggle(id) {
 <a class="sourceLine" id="cb5-2" title="2"><span class="kw">def</span> basic_model(mu):</a>
 <a class="sourceLine" id="cb5-3" title="3">    x <span class="op">=</span> pm.Normal(<span class="st">&quot;x&quot;</span>, <span class="fl">0.</span>, <span class="fl">1.</span>)</a>
 <a class="sourceLine" id="cb5-4" title="4">    y <span class="op">=</span> pm.Normal(<span class="st">&quot;y&quot;</span>, x, <span class="fl">1.</span>)</a></code></pre></div>
+<p>In practice, this removes all need to think about context managers</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1">m <span class="op">=</span> basic_model(mu<span class="op">=</span><span class="fl">0.</span>)</a>
 <a class="sourceLine" id="cb6-2" title="2">idata <span class="op">=</span> m.sample(draws<span class="op">=</span><span class="dv">1000</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1">pm.plot_trace(idata)</a></code></pre></div>
@@ -236,7 +237,7 @@ function toggle(id) {
 <a class="sourceLine" id="cb17-26" title="26">ax.<span class="bu">set</span>(ylabel<span class="op">=</span><span class="st">&quot;Probability of $y=1$&quot;</span>, xlabel<span class="op">=</span><span class="st">&quot;x value&quot;</span>)</a>
 <a class="sourceLine" id="cb17-27" title="27">plt.show()</a></code></pre></div>
 <p><img src="../../images/AltPyMC/output_29_0.png" /></p>
-<p>While I personally think changes simplify the models and speed-up up the interactive workflow, that’s not the main reason I share them. I share them because more of us should be doing little experiments like these. There are certainly more low-hanging fruits to be had for people who are willing to join in!</p>
+<p>While I personally think these changes simplify the models and speed-up up the interactive workflow, that’s not the main reason I share them. I share them because more of us should be doing little experiments like these. There are certainly more low-hanging fruits to be had for people who are willing to join in!</p>
 
 </div>
 
