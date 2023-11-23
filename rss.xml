@@ -196,7 +196,7 @@ function toggle(id) {
 <a class="sourceLine" id="cb11-3" title="3">idata <span class="op">=</span> pm.sample_posterior_predictive(trace<span class="op">=</span>idata, model<span class="op">=</span>m)</a></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1">pm.plot_ppc(idata)</a></code></pre></div>
 <p><img src="../../images/AltPyMC/output_22_1.png" /></p>
-<p>Finally, one underappreciated aspect of this functional approach to defining model is avoids the need for <code>pm.MutableData</code> in simpler models. Porting an <a href="https://www.pymc.io/projects/examples/en/latest/fundamentals/data_container.html#applied-example-using-mutabledata-as-input-to-a-binomial-glm">example</a> from the documentation</p>
+<p>Finally, one underappreciated aspect of this functional approach to defining model is it avoids the need for <code>pm.MutableData</code> in simpler models. Porting an <a href="https://www.pymc.io/projects/examples/en/latest/fundamentals/data_container.html#applied-example-using-mutabledata-as-input-to-a-binomial-glm">example</a> from the documentation</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" title="1">n_obs <span class="op">=</span> <span class="dv">100</span></a>
 <a class="sourceLine" id="cb13-2" title="2">true_beta <span class="op">=</span> <span class="fl">2.5</span></a>
 <a class="sourceLine" id="cb13-3" title="3">true_alpha <span class="op">=</span> <span class="fl">0.25</span></a>
