@@ -274,7 +274,7 @@ function toggle(id) {
 <a class="sourceLine" id="cb20-6" title="6">    </a>
 <a class="sourceLine" id="cb20-7" title="7">    pm.Normal(<span class="st">&quot;y&quot;</span>, a <span class="op">+</span> b <span class="op">*</span> x, sigma, observed<span class="op">=</span>y, dims<span class="op">=</span><span class="st">&quot;year&quot;</span>)</a>
 <a class="sourceLine" id="cb20-8" title="8"></a>
-<a class="sourceLine" id="cb20-9" title="9">m <span class="op">=</span> linreg_model(x, {<span class="st">&quot;year&quot;</span>: year})</a>
+<a class="sourceLine" id="cb20-9" title="9">m <span class="op">=</span> linreg_model(x, coords<span class="op">=</span>{<span class="st">&quot;year&quot;</span>: year})</a>
 <a class="sourceLine" id="cb20-10" title="10">linreg_idata <span class="op">=</span> pm.sample(model<span class="op">=</span>m)</a></code></pre></div>
 <p>We can then update the coords seamlessly</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb21-1" title="1">m2 <span class="op">=</span> linreg_model(x[<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> x[<span class="dv">1</span>:<span class="dv">3</span>], coords<span class="op">=</span>{<span class="st">&quot;year&quot;</span>: [<span class="dv">2022</span>, <span class="dv">2023</span>]})</a>
